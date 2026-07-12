@@ -67,6 +67,11 @@ def url_to_local_path(url):
     
     path = path.strip()
     if not path:
+        if parsed.query:
+            safe_query = parsed.query.replace('=', '_').replace('&', '_').replace('/', '_')
+            for char in ['<', '>', ':', '"', '|', '?', '*']:
+                safe_query = safe_query.replace(char, '_')
+            return f"query_{safe_query}/index.html"
         return "index.html"
     
     # Check if this is a directory/page (no extension)
@@ -98,24 +103,24 @@ def download_url(url, retries=3):
     for i in range(retries):
         try:
             with urllib.request.urlopen(req, timeout=15) as response:
-                return response.read()
+                return response.read(), response.geturl()
         except Exception as e:
             if i == retries - 1:
                 safe_print(f"Failed to download {url}: {e}")
                 with state_lock:
                     failed_urls.add(url)
-                return None
+                return None, None
             time.sleep(1)
-    return None
+    return None, None
 
 def parse_sitemaps():
     safe_print("Discovering URLs from sitemap...")
     root_sitemap = f"{BASE_URL}/wp-sitemap.xml"
-    data = download_url(root_sitemap)
+    data, _ = download_url(root_sitemap)
     if not data:
         # Fallback to main sitemap.xml
         root_sitemap = f"{BASE_URL}/sitemap.xml"
-        data = download_url(root_sitemap)
+        data, _ = download_url(root_sitemap)
         
     if not data:
         safe_print("No sitemaps found, starting crawl from homepage.")
@@ -136,7 +141,7 @@ def parse_sitemaps():
         # Fetch each sub-sitemap
         for sm in sub_sitemaps:
             safe_print(f"Fetching sub-sitemap: {sm}")
-            sm_data = download_url(sm)
+            sm_data, _ = download_url(sm)
             if sm_data:
                 sm_urls = re.findall(r'<loc>(.*?)</loc>', sm_data.decode('utf-8', errors='ignore'))
                 for u in sm_urls:
@@ -149,6 +154,15 @@ def parse_sitemaps():
     safe_print(f"Found {len(pages_to_crawl)} unique pages from sitemaps.")
 
 def process_html_content(html_content, page_url, page_local_path):
+    # Extract script blocks to prevent regex modifications inside script tags
+    script_pattern = re.compile(r'<script\b[^>]*>([\s\S]*?)</script>', re.IGNORECASE)
+    scripts = []
+    def script_extractor(match):
+        scripts.append(match.group(0))
+        return f"<!--SCRIPT_PLACEHOLDER_{len(scripts)-1}-->"
+    
+    html_content = script_pattern.sub(script_extractor, html_content)
+
     # 1. Rewrite url(...) in styles
     css_pattern = re.compile(r'url\s*\(\s*["\']?([^"\'\)]+)["\']?\s*\)', re.IGNORECASE)
     def css_replacer(match):
@@ -219,6 +233,11 @@ def process_html_content(html_content, page_url, page_local_path):
         return match.group(0)
         
     html_content = attr_pattern.sub(attr_replacer, html_content)
+
+    # Restore script blocks
+    for i, script in enumerate(scripts):
+        html_content = html_content.replace(f"<!--SCRIPT_PLACEHOLDER_{i}-->", script)
+
     return html_content
 
 def process_css_content(css_content, css_url, css_local_path):
@@ -252,20 +271,20 @@ def save_file(local_path, content):
         safe_print(f"Error saving {local_path}: {e}")
 
 def crawl_page_worker(url):
-    local_path = url_to_local_path(url)
-    safe_print(f"Crawling page: {url} -> {local_path}")
-    
-    data = download_url(url)
+    data, final_url = download_url(url)
     if not data:
         return url, False
         
+    local_path = url_to_local_path(final_url)
+    safe_print(f"Crawling page: {url} -> {local_path} (Final: {final_url})")
+    
     try:
         html_content = data.decode('utf-8', errors='ignore')
     except Exception as e:
         safe_print(f"Failed to decode page {url}: {e}")
         return url, False
         
-    processed_html = process_html_content(html_content, url, local_path)
+    processed_html = process_html_content(html_content, final_url, local_path)
     save_file(local_path, processed_html)
     return url, True
 
@@ -277,7 +296,7 @@ def download_asset_worker(url):
         return url, True
         
     safe_print(f"Downloading asset: {url} -> {local_path}")
-    data = download_url(url)
+    data, _ = download_url(url)
     if not data:
         return url, False
         

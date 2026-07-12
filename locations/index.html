@@ -126,8 +126,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 <link rel='stylesheet' id='elementor-post-272-css' href="../wp-content/uploads/elementor/css/post-272.css" media='all' />
 <link rel='stylesheet' id='newtechwood-extra-style-css' href="../wp-content/plugins/newtechwood/assets/iconfont/iconfont.css" media='all' />
 <link rel='stylesheet' id='newtechwood-style-css' href="../wp-content/plugins/newtechwood/assets/css/newtechwood.css" media='all' />
-<script src="../wp-includes/js/jquery/jquery.min.js" id="jquery-core-js"></script>
-<script src="../wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
 
 <!-- Google tag (gtag.js) snippet added by Site Kit -->
 <!-- Google Analytics snippet added by Site Kit -->
@@ -142,31 +142,20 @@ gtag("config", "GT-WVG7T9T");
 </script>
 <link rel="https://api.w.org/" href="../wp-json/index.html" /><link rel="alternate" title="JSON" type="application/json" href="../wp-json/wp/v2/pages/649/index.html" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php?rsd" />
 <meta name="generator" content="WordPress 6.8.1" />
-<link rel='shortlink' href="../index.html?p=649" />
+<link rel='shortlink' href="../query_p_649/index.html?p=649" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2Fwww.newtechwoodintl.com%2Flocations%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2Fwww.newtechwoodintl.com%2Flocations%2F&#038;format=xml" />
-<meta name="generator" content="Site Kit by Google 1.167.0" /><script>
-
-  window.intercomSettings = {
-
-    api_base: "https://api-iam.intercom.io",
-
-    app_id: "a174cd76",
-
-  };
-
-</script>
-
-
-
-
-
-<script>
-
-  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
-
-  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-
+<meta name="generator" content="Site Kit by Google 1.167.0" /><script>
+  window.intercomSettings = {
+    api_base: "https://api-iam.intercom.io",
+    app_id: "a174cd76",
+  };
+</script>
+
+
+<script>
+  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
 </script><meta name="generator" content="Elementor 3.33.2; features: e_font_icon_svg, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
 			<style>
 				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
@@ -495,553 +484,287 @@ gtag("config", "GT-WVG7T9T");
 				<div class="elementor-element elementor-element-2c379dd e-con-full real-full-width e-flex e-con e-parent" data-id="2c379dd" data-element_type="container">
 				<div class="elementor-element elementor-element-1a54c74 elementor-widget elementor-widget-Logic_Widget_Distributor" data-id="1a54c74" data-element_type="widget" data-widget_type="Logic_Widget_Distributor.default">
 				<div class="elementor-widget-container">
-					        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCchh803zFa3S06dWfaBPCzMZ5Km4SH3Z8" async defer></script>
-
-        <div class="distributors" id="distributors-1a54c74">
-
-            <div class="google-map" id="google-map-1a54c74"></div>
-
-            <div class="distributors-lists glass" id="distributors-lists-1a54c74" style="opacity: 0;">
-
-                <div class="distributors-search-box">
-
-                    <div class="distributors-title">
-
-                        <div class="title">
-
-                            <h1>Find a Distributor</h1>
-
-                        </div>
-
-                        <div class="icon iconfont icon-location-mine get-location" @click="getLocation()"></div>
-
-                    </div>
-
-                    <div class="distributors-search">
-
-                        <input type="text" v-model="keyword" :class="{active:associateWord.length>0}" part="search" placeholder="Input to Search" @blur="onBlur" @focus="onFocus"  @input="debouncedSearchCountry" @keyup.enter="onEnter" @keydown.down="onArrowDown" @keydown.up="onArrowUp">
-
-                        <div class="icon iconfont icon-Search-Distributor" @click="onEnter"></div>
-
-                        <div class="associate-word" :class="{active:associateWord.length>0}">
-
-                            <div class="prediction" :class="{active:currentAssociateWord == i+1}" v-for="(location,i) in associateWord" @click="keywordClick(location)" :alt="location.description" :title="location.description">
-
-                                {{location.description}}
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="distributors-list">
-
-                    <div class="distributor" v-for="(item,index) in distributors" @click="goToLoaction(item)">
-
-                        <div class="distance" v-if="item.distanceKm">{{item.distanceKm}} km</div>
-
-                        <div class="title">{{item.country}}</div>
-
-                        <div class="name">{{item.post_title}}</div>
-
-                        <div class="infos">
-
-                            <div class="info">
-
-                                <i class="icon iconfont icon-location"></i>{{item.address}}
-
-                            </div>
-
-                            <div class="info" v-if="item.phones.length <= 0 && null != item.phone">
-
-                                <i class="icon iconfont icon-phone"></i>{{item.phone}}
-
-                            </div>
-
-                            <div class="info" v-if="item.phones.length > 0 " v-for="(phone,i) in item.phones">
-
-                                <div v-if="phone.type == 'tel'">
-
-                                    <i class="icon iconfont icon-phone"></i>{{phone.phone}}
-
-                                </div>
-
-                                <div v-if="phone.type == 'fax'">
-
-                                    <i class="icon iconfont icon-fax"></i>{{phone.phone}}
-
-                                </div>
-
-                            </div>
-
-                            <div class="info" v-if="item.emails.length <= 0 && null != item.email">
-
-                                <i class="icon iconfont icon-emaile"></i><a :href="'mailto:'+item.email">{{item.email}}</a> 
-
-                            </div>
-
-                            <div class="info" v-if="item.emails.length > 0 " v-for="(email,i) in item.emails">
-
-                                <i class="icon iconfont icon-emaile"></i><a :href="'mailto:'+email.email">{{email.email}}</a> 
-
-                            </div>
-
-                            <div class="info" v-if="null !== item.website && item.website.length > 0">
-
-                                <i class="icon iconfont icon-web"></i><a :href="item.website" target="_blank">{{item.website}}</a> 
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="colors-loading" v-if="loading">
-
-                <div class="icon iconfont icon-laoding_1"></div>
-
-            </div>
-
-        </div>
-
-        <script>
-
-            // 定义 initMap 函数，供 Google Maps 回调使用
-
-            var $ = jQuery;
-
-            $(document).ready(function() {
-
-                $('.distributors-lists').css('opacity','100');
-
-                const app = new Vue({
-
-                    el: '#distributors-1a54c74',
-
-                    data: {
-
-                        distributors: [],
-
-                        loading: true,
-
-                        address: '',
-
-                        map: null,
-
-                        zoom:3,
-
-                        userPosition:null,
-
-                        country:'ALL',
-
-                        markersArray:[],
-
-                        associateWord:[],
-
-                        keyword:'',
-
+					        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCchh803zFa3S06dWfaBPCzMZ5Km4SH3Z8" async defer></script>
+        <div class="distributors" id="distributors-1a54c74">
+            <div class="google-map" id="google-map-1a54c74"></div>
+            <div class="distributors-lists glass" id="distributors-lists-1a54c74" style="opacity: 0;">
+                <div class="distributors-search-box">
+                    <div class="distributors-title">
+                        <div class="title">
+                            <h1>Find a Distributor</h1>
+                        </div>
+                        <div class="icon iconfont icon-location-mine get-location" @click="getLocation()"></div>
+                    </div>
+                    <div class="distributors-search">
+                        <input type="text" v-model="keyword" :class="{active:associateWord.length>0}" part="search" placeholder="Input to Search" @blur="onBlur" @focus="onFocus"  @input="debouncedSearchCountry" @keyup.enter="onEnter" @keydown.down="onArrowDown" @keydown.up="onArrowUp">
+                        <div class="icon iconfont icon-Search-Distributor" @click="onEnter"></div>
+                        <div class="associate-word" :class="{active:associateWord.length>0}">
+                            <div class="prediction" :class="{active:currentAssociateWord == i+1}" v-for="(location,i) in associateWord" @click="keywordClick(location)" :alt="location.description" :title="location.description">
+                                {{location.description}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="distributors-list">
+                    <div class="distributor" v-for="(item,index) in distributors" @click="goToLoaction(item)">
+                        <div class="distance" v-if="item.distanceKm">{{item.distanceKm}} km</div>
+                        <div class="title">{{item.country}}</div>
+                        <div class="name">{{item.post_title}}</div>
+                        <div class="infos">
+                            <div class="info">
+                                <i class="icon iconfont icon-location"></i>{{item.address}}
+                            </div>
+                            <div class="info" v-if="item.phones.length <= 0 && null != item.phone">
+                                <i class="icon iconfont icon-phone"></i>{{item.phone}}
+                            </div>
+                            <div class="info" v-if="item.phones.length > 0 " v-for="(phone,i) in item.phones">
+                                <div v-if="phone.type == 'tel'">
+                                    <i class="icon iconfont icon-phone"></i>{{phone.phone}}
+                                </div>
+                                <div v-if="phone.type == 'fax'">
+                                    <i class="icon iconfont icon-fax"></i>{{phone.phone}}
+                                </div>
+                            </div>
+                            <div class="info" v-if="item.emails.length <= 0 && null != item.email">
+                                <i class="icon iconfont icon-emaile"></i><a :href="'mailto:'+item.email">{{item.email}}</a> 
+                            </div>
+                            <div class="info" v-if="item.emails.length > 0 " v-for="(email,i) in item.emails">
+                                <i class="icon iconfont icon-emaile"></i><a :href="'mailto:'+email.email">{{email.email}}</a> 
+                            </div>
+                            <div class="info" v-if="null !== item.website && item.website.length > 0">
+                                <i class="icon iconfont icon-web"></i><a :href="item.website" target="_blank">{{item.website}}</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="colors-loading" v-if="loading">
+                <div class="icon iconfont icon-laoding_1"></div>
+            </div>
+        </div>
+        <script>
+            // 定义 initMap 函数，供 Google Maps 回调使用
+            var $ = jQuery;
+            $(document).ready(function() {
+                $('.distributors-lists').css('opacity','100');
+                const app = new Vue({
+                    el: '#distributors-1a54c74',
+                    data: {
+                        distributors: [],
+                        loading: true,
+                        address: '',
+                        map: null,
+                        zoom:3,
+                        userPosition:null,
+                        country:'ALL',
+                        markersArray:[],
+                        associateWord:[],
+                        keyword:'',
                         debounceTimer: null,
                         currentAssociateWord:null,
                         onBlurTimer: null,
                         userMarker:null,
                         skipAllCountrySort:false
                     },
-                    mounted() {
-
-                        var that = this;
-
-                        
-
-                        //写一个循环函数，直至this.isGoogleMapsReady()为true
-
-                        const intervalId = setInterval(() => {
-
-                            if (this.isGoogleMapsReady()) {
-
-                                clearInterval(intervalId);
-
-                                this.createMap();
-
-                                that.initImages();
-
-                            }else{
-
-                                console.log('waiting for google maps ready')
-
-                            }
-
-                        }, 100);
-
-                    },
-
-                    methods: {
-
-                        onFocus(){
-
-                            if(this.onBlurTimer){
-
-                                clearTimeout(this.onBlurTimer);
-
-                            }
-
-                        },
-
-                        onBlur(){
-
-                            this.onBlurTimer = setTimeout(() => {
-
-                                this.associateWord = []
-
-                            }, 2000);
-
-                        },
-
-                        isGoogleMapsReady() {
-
-                            return (
-
-                                typeof window.google !== "undefined" &&
-
-                                typeof window.google.maps !== "undefined" &&
-
-                                typeof window.google.maps.Map === "function"
-
-                            );
-
-                        },
-
-                        onArrowDown(){
-
-                            this.currentAssociateWord = this.currentAssociateWord ===null? 0 : this.currentAssociateWord;
-
-                            if(this.associateWord.length <= 0 || this.currentAssociateWord >= this.associateWord.length){
-
-                                return;
-
-                            }
-
-                            this.currentAssociateWord++;
-
-
-
-                        },
-
-                        onArrowUp(){
-
-                            this.currentAssociateWord = this.currentAssociateWord ===null? 0 : this.currentAssociateWord;
-
-                            if(this.associateWord.length <= 0 || this.currentAssociateWord <= 1){
-
-                                return;
-
-                            }
-
-                            this.currentAssociateWord--;
-
-                        },
-
-                        onEnter(){
-
-                            if(('' == this.keyword || this.keyword.length < 2) && null == this.currentAssociateWord){
-
-                                return;
-
-                            }
-
-                            if(this.currentAssociateWord > 0){
-
-                                this.keyword = this.associateWord[this.currentAssociateWord-1].description;
-
-                                this.currentAssociateWord = 0;
-
-                            }
-
-                            this.associateWord = []
-
-                            console.log('onEnter',this.keyword);
-
-                            this.country = this.keyword
-
-                            this.initImages();
-
-                        },
-
-                        keywordClick(location){
-
-                            this.associateWord = []
-
-                            this.country = location.description;
-
-                            this.initImages();
-
-                            console.log('keywordClick', location);
-
-                        },
-
-                        getPositionByAddress(address){
-
-                            "https://maps.googleapis.com/maps/api/geocode/json?address=地址文本&key=你的API_KEY"
-
-                        },
-
-                        searchCountry(){
-
-                            var that = this;
-
-                            const  url = "/wp-json/locations/v1/get_countries?keyword=" + this.keyword
-
-                            $.get(url, {}, (res) => {
-
-                                if(res.code == 0){
-
-                                    that.associateWord = res.data.predictions;
-
-                                }
-
-                            }, 'json');
-
-                        },
-
-                        debouncedSearchCountry() {
-
-                            clearTimeout(this.debounceTimer);
-
-                            this.debounceTimer = setTimeout(() => {
-
-                                if('' !== this.keyword){
-
-                                    this.searchCountry();
-
-                                }else{
-
-                                    this.associateWord = []
-
-                                    this.country = 'ALL'
-
-                                    this.initImages();
-
-                                }
-
-                                
-
-                            }, 500);
-
-                        },
-
-                        goToLoaction(item){
-
-                            const lat = item.lat;
-
-                            const lng = item.lng;
-
-                            const myLatlng = new google.maps.LatLng(lat, lng);
-
-                            this.map.setCenter(myLatlng);
-
-                            this.map.setZoom(9);
-
-                        },
-
-                        getLocation(){
-
-                            var that = this
-
-                            if (navigator.geolocation) {
-
-                                navigator.geolocation.getCurrentPosition(
-
-                                    function(position) {
-
-                                        console.log('position', position);
-
-                                        const lat = position.coords.latitude;
-
-                                        const lng = position.coords.longitude;
-
-                                        that.userPosition = {lat:lat,lng:lng}
-
-                                        var Position = new google.maps.LatLng(lat, lng);
-
-                                        that.map.setCenter(Position);
-
-                                        //zoom也要设置
-
+                    mounted() {
+                        var that = this;
+                        
+                        //写一个循环函数，直至this.isGoogleMapsReady()为true
+                        const intervalId = setInterval(() => {
+                            if (this.isGoogleMapsReady()) {
+                                clearInterval(intervalId);
+                                this.createMap();
+                                that.initImages();
+                            }else{
+                                console.log('waiting for google maps ready')
+                            }
+                        }, 100);
+                    },
+                    methods: {
+                        onFocus(){
+                            if(this.onBlurTimer){
+                                clearTimeout(this.onBlurTimer);
+                            }
+                        },
+                        onBlur(){
+                            this.onBlurTimer = setTimeout(() => {
+                                this.associateWord = []
+                            }, 2000);
+                        },
+                        isGoogleMapsReady() {
+                            return (
+                                typeof window.google !== "undefined" &&
+                                typeof window.google.maps !== "undefined" &&
+                                typeof window.google.maps.Map === "function"
+                            );
+                        },
+                        onArrowDown(){
+                            this.currentAssociateWord = this.currentAssociateWord ===null? 0 : this.currentAssociateWord;
+                            if(this.associateWord.length <= 0 || this.currentAssociateWord >= this.associateWord.length){
+                                return;
+                            }
+                            this.currentAssociateWord++;
+
+                        },
+                        onArrowUp(){
+                            this.currentAssociateWord = this.currentAssociateWord ===null? 0 : this.currentAssociateWord;
+                            if(this.associateWord.length <= 0 || this.currentAssociateWord <= 1){
+                                return;
+                            }
+                            this.currentAssociateWord--;
+                        },
+                        onEnter(){
+                            if(('' == this.keyword || this.keyword.length < 2) && null == this.currentAssociateWord){
+                                return;
+                            }
+                            if(this.currentAssociateWord > 0){
+                                this.keyword = this.associateWord[this.currentAssociateWord-1].description;
+                                this.currentAssociateWord = 0;
+                            }
+                            this.associateWord = []
+                            console.log('onEnter',this.keyword);
+                            this.country = this.keyword
+                            this.initImages();
+                        },
+                        keywordClick(location){
+                            this.associateWord = []
+                            this.country = location.description;
+                            this.initImages();
+                            console.log('keywordClick', location);
+                        },
+                        getPositionByAddress(address){
+                            "https://maps.googleapis.com/maps/api/geocode/json?address=地址文本&key=你的API_KEY"
+                        },
+                        searchCountry(){
+                            var that = this;
+                            const  url = "/wp-json/locations/v1/get_countries?keyword=" + this.keyword
+                            $.get(url, {}, (res) => {
+                                if(res.code == 0){
+                                    that.associateWord = res.data.predictions;
+                                }
+                            }, 'json');
+                        },
+                        debouncedSearchCountry() {
+                            clearTimeout(this.debounceTimer);
+                            this.debounceTimer = setTimeout(() => {
+                                if('' !== this.keyword){
+                                    this.searchCountry();
+                                }else{
+                                    this.associateWord = []
+                                    this.country = 'ALL'
+                                    this.initImages();
+                                }
+                                
+                            }, 500);
+                        },
+                        goToLoaction(item){
+                            const lat = item.lat;
+                            const lng = item.lng;
+                            const myLatlng = new google.maps.LatLng(lat, lng);
+                            this.map.setCenter(myLatlng);
+                            this.map.setZoom(9);
+                        },
+                        getLocation(){
+                            var that = this
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(
+                                    function(position) {
+                                        console.log('position', position);
+                                        const lat = position.coords.latitude;
+                                        const lng = position.coords.longitude;
+                                        that.userPosition = {lat:lat,lng:lng}
+                                        var Position = new google.maps.LatLng(lat, lng);
+                                        that.map.setCenter(Position);
+                                        //zoom也要设置
                                         that.map.setZoom(9);
                                         that.skipAllCountrySort = true;
                                         that.initImages();
-                                    },
-
-                                    function(error) {
-
-                                        switch(error.code) {
-
-                                            case error.PERMISSION_DENIED:
-
-                                                alert("Permission denied to access location.");
-
-                                                break;
-
-                                            case error.POSITION_UNAVAILABLE:
-
-                                                alert("Location information is unavailable.");
-
-                                                break;
-
-                                            case error.TIMEOUT:
-
-                                                alert("Location request timed out.");
-
-                                                break;
-
-                                            case error.UNKNOWN_ERROR:
-
-                                                alert("An unknown error occurred.");
-
-                                                break;
-
-                                        }
-
-                                    }
-
-                                );
-
-                            } else {
-
-                                alert("Geolocation is not supported by this browser.");
-
-                            }
-
-                        },
-
-                        clearUserMarker(){
-
-                            if(this.userMarker){
-
-                                this.userMarker.setMap(null);
-
-                            }
-
-                        },
-
-                        setUserIcon(lat,lng){
-
-                            if(this.userMarker){
-
-                                this.clearUserMarker();
-
-                                this.userMarker = null;
-
-                            }
-
-                            console.log('setUserIcon',lat,lng);
-
-                            const myLatlng = new google.maps.LatLng(lat, lng);
-
-                            var icon = {
-
-                                url: "/wp-content/uploads/2025/08/location-user.png", // url
-
-                                scaledSize: new google.maps.Size(32, 36), // scaled size
-
-                                origin: new google.maps.Point(0, 0), // origin
-
-                                anchor: new google.maps.Point(16, 36) // anchor
-
-                            };
-
-                            this.userMarker = new google.maps.Marker({
-
-                                position: myLatlng,
-
-                                map: this.map,
-
-                                icon: icon
-
-                            });
-
-                            this.userMarker.setMap(this.map);
-
-                        },
-
-                        async createMap() {
-
-                            const myCenter = new google.maps.LatLng(22.6391, 114.0191);
-
-                            const mapProp = {
-
-                                center: myCenter,
-
-                                zoom: this.zoom,
-
-                                mapTypeId: google.maps.MapTypeId.TERRAIN,
-
-                                disableDefaultUI: true,
-
-                                rotateControl: true,
-
-                            };
-
-                            this.map = new google.maps.Map(
-
-                                document.getElementById("google-map-1a54c74"),
-
-                                mapProp
-
-                            );
-
-                            
-
-                            console.log('map created')
-
-                        },
-
+                                    },
+                                    function(error) {
+                                        switch(error.code) {
+                                            case error.PERMISSION_DENIED:
+                                                alert("Permission denied to access location.");
+                                                break;
+                                            case error.POSITION_UNAVAILABLE:
+                                                alert("Location information is unavailable.");
+                                                break;
+                                            case error.TIMEOUT:
+                                                alert("Location request timed out.");
+                                                break;
+                                            case error.UNKNOWN_ERROR:
+                                                alert("An unknown error occurred.");
+                                                break;
+                                        }
+                                    }
+                                );
+                            } else {
+                                alert("Geolocation is not supported by this browser.");
+                            }
+                        },
+                        clearUserMarker(){
+                            if(this.userMarker){
+                                this.userMarker.setMap(null);
+                            }
+                        },
+                        setUserIcon(lat,lng){
+                            if(this.userMarker){
+                                this.clearUserMarker();
+                                this.userMarker = null;
+                            }
+                            console.log('setUserIcon',lat,lng);
+                            const myLatlng = new google.maps.LatLng(lat, lng);
+                            var icon = {
+                                url: "/wp-content/uploads/2025/08/location-user.png", // url
+                                scaledSize: new google.maps.Size(32, 36), // scaled size
+                                origin: new google.maps.Point(0, 0), // origin
+                                anchor: new google.maps.Point(16, 36) // anchor
+                            };
+                            this.userMarker = new google.maps.Marker({
+                                position: myLatlng,
+                                map: this.map,
+                                icon: icon
+                            });
+                            this.userMarker.setMap(this.map);
+                        },
+                        async createMap() {
+                            const myCenter = new google.maps.LatLng(22.6391, 114.0191);
+                            const mapProp = {
+                                center: myCenter,
+                                zoom: this.zoom,
+                                mapTypeId: google.maps.MapTypeId.TERRAIN,
+                                disableDefaultUI: true,
+                                rotateControl: true,
+                            };
+                            this.map = new google.maps.Map(
+                                document.getElementById("google-map-1a54c74"),
+                                mapProp
+                            );
+                            
+                            console.log('map created')
+                        },
                         initImages() {
                             var that = this
                             const skipAllCountrySort = this.skipAllCountrySort;
                             this.skipAllCountrySort = false;
                             that.clearMarket();
                             this.loading = true;
-                            const  url = "/wp-json/locations/v1/get?country=" + this.country
-
-                            const params = {};
-
-                            this.distributors = [];
-
-                            $.get(url, params, (res) => {
-
-                                console.log('res', res);
-
-                                that.loading = false;
-
-                                that.distributors = res.data;
-
-                                if(this.country != 'ALL'){
-
-                                    var countryLat,countryLag
-
-                                    if(null !== res.country_positon){
-
-                                        countryLat = res.country_positon.lat;
-
-                                        countryLag = res.country_positon.lng;
-
-                                        that.setUserIcon(countryLat,countryLag);
-
-                                        const target = { lat: res.country_positon.lat, lng: res.country_positon.lng };
-
-                                        that.distributors = that.sortByDistance(that.distributors, target);
-
-                                    }
-
-                                }else{
-
+                            const  url = "/wp-json/locations/v1/get?country=" + this.country
+                            const params = {};
+                            this.distributors = [];
+                            $.get(url, params, (res) => {
+                                console.log('res', res);
+                                that.loading = false;
+                                that.distributors = res.data;
+                                if(this.country != 'ALL'){
+                                    var countryLat,countryLag
+                                    if(null !== res.country_positon){
+                                        countryLat = res.country_positon.lat;
+                                        countryLag = res.country_positon.lng;
+                                        that.setUserIcon(countryLat,countryLag);
+                                        const target = { lat: res.country_positon.lat, lng: res.country_positon.lng };
+                                        that.distributors = that.sortByDistance(that.distributors, target);
+                                    }
+                                }else{
                                     if(null != that.userPosition){
                                         const target = that.userPosition;
                                         that.setUserIcon(that.userPosition.lat,that.userPosition.lng);
@@ -1052,370 +775,188 @@ gtag("config", "GT-WVG7T9T");
                                     }
                                     
                                 }
-                                that.distributors.forEach((item, index) => {
-
-                                    if(item.marker_lat && item.marker_lng){
-
-                                        item.lat = item.marker_lat;
-
-                                        item.lng = item.marker_lng;
-
-                                    }
-
-                                    that.distributors[index] = item;
-
-                                    ///wp-content/uploads/2025/07/lacation-distributor.png
-
-                                    //添加market
-
-                                    that.addMarker(item);
-
-                                })
-
-                                if(this.country != 'ALL'){
-
-                                    const lat = that.distributors[0].lat;
-
-                                    const lng = that.distributors[0].lng;
-
-                                    const myLatlng = new google.maps.LatLng(lat, lng);
-
-                                    this.map.setCenter(myLatlng);
-
-                                    this.map.setZoom(7);
-
-                                }else{
-
-                                    this.map.setZoom(this.zoom);
-
-                                }
-
-                                that.associateWord = []
-
-                            }, 'json');
-
-                        },
-
-                        clearMarket(){
-
-                            this.markersArray.forEach(marker => {
-
-                                marker.setMap(null);
-
-                            });
-
-                        },
-
-                        addMarker(item) {
-
-                            var that = this;
-
-                            const myLatlng = new google.maps.LatLng(item.lat, item.lng);
-
-                            var icon = {
-
-                                url: "/wp-content/uploads/2025/07/lacation-distributor.png", // url
-
-                                scaledSize: new google.maps.Size(32, 36), // scaled size
-
-                                origin: new google.maps.Point(0, 0), // origin
-
-                                anchor: new google.maps.Point(16, 36) // anchor
-
-                            };
-
-                            const marker = new google.maps.Marker({
-
-                                position: myLatlng,
-
-                                map: this.map,
-
-                                icon: icon
-
-                            });
-
-                            marker.setMap(this.map);
-
-                            this.markersArray.push(marker);
-
-                            that.currentInfoWindow = that.currentInfoWindow || null;
-
-                            const contentString = this.buildWindowContent(item);
-
-                            const infowindow = new google.maps.InfoWindow({
-
-                                content: contentString
-
-                            });
-
-                            marker.addListener("click", () => {
-
-                                if (that.currentInfoWindow) {
-
-                                    that.currentInfoWindow.close();
-
-                                }
-
-                                infowindow.open(that.map, marker);
-
-                                that.currentInfoWindow = infowindow;
-
-                                google.maps.event.addListenerOnce(infowindow, 'domready', () => {
-
-                                    const closeBtn = document.querySelector('.distributors-close');
-
-                                    if (closeBtn) {
-
-                                        closeBtn.addEventListener('click', () => {
-
-                                            infowindow.close();
-
-                                        });
-
-                                    }
-
-                                });
-
-                            });
-
-                        },
-
-                        buildWindowContent(item) {
-
-                            let contentString = `
-
-                                <div class="distributor distributor-window">
-
-                                    <div class="title">${item.country || ''}</div>
-
-                                    <div class="name">${item.post_title || ''}</div>
-
-                                    <div class="infos">
-
-                                        <div class="info">
-
-                                            <i class="icon iconfont icon-location"></i>${item.address || ''}
-
-                                        </div>
-
-                            `;
-
-
-
-                            // 电话（旧字段）
-
-                            if ((!item.phones || item.phones.length === 0) && item.phone) {
-
-                                contentString += `
-
-                                    <div class="info">
-
-                                        <i class="icon iconfont icon-phone"></i>${item.phone}
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            // 电话（数组字段）
-
-                            if (item.phones && item.phones.length > 0) {
-
-                                item.phones.forEach(phone => {
-
-                                    if (phone.type === 'tel') {
-
-                                        contentString += `
-
-                                            <div class="info">
-
-                                                <i class="icon iconfont icon-phone"></i>${phone.phone}
-
-                                            </div>
-
-                                        `;
-
-                                    } else if (phone.type === 'fax') {
-
-                                        contentString += `
-
-                                            <div class="info">
-
-                                                <i class="icon iconfont icon-fax"></i>${phone.phone}
-
-                                            </div>
-
-                                        `;
-
-                                    }
-
-                                });
-
-                            }
-
-
-
-                            // 邮箱（旧字段）
-
-                            if ((!item.emails || item.emails.length === 0) && item.email) {
-
-                                contentString += `
-
-                                    <div class="info">
-
-                                        <i class="icon iconfont icon-emaile"></i>
-
-                                        <a href="mailto:${item.email}" target="_blank">${item.email}</a>
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            // 邮箱（数组字段）
-
-                            if (item.emails && item.emails.length > 0) {
-
-                                item.emails.forEach(email => {
-
-                                    contentString += `
-
-                                        <div class="info">
-
-                                            <i class="icon iconfont icon-emaile"></i>
-
-                                            <a href="mailto:${email.email}" target="_blank">${email.email}</a>
-
-                                        </div>
-
-                                    `;
-
-                                });
-
-                            }
-
-
-
-                            // 网站
-
-                            if (item.website) {
-
-                                contentString += `
-
-                                    <div class="info">
-
-                                        <i class="icon iconfont icon-web"></i>
-
-                                        <a href="${item.website}" target="_blank">${item.website}</a>
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            contentString += `
-
-                                    </div> <!-- .infos -->
-
-                                    <div class="icon iconfont icon-close distributors-close"></div>
-
-                                </div> <!-- .distributor -->
-
-                            `;
-
-
-
-                            return contentString;
-
-                        },
-
-                        haversineDistance(lat1, lng1, lat2, lng2) {
-
-                            const toRad = deg => deg * Math.PI / 180;
-
-                            const R = 6371000; // 地球半径（米）
-
-
-
-                            const dLat = toRad(lat2 - lat1);
-
-                            const dLng = toRad(lng2 - lng1);
-
-                            const a = Math.sin(dLat/2) ** 2
-
-                                    + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2))
-
-                                    * Math.sin(dLng/2) ** 2;
-
-                            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                            return R * c;
-
-                        },
-
-                        sortByDistance(data, target) {
-
-                            const tLat = parseFloat(target.lat);
-
-                            const tLng = parseFloat(target.lng);
-
-
-
-                            // 1) 先把 distance 写入每一项
-
-                            data.forEach(item => {
-
-                                const lat = parseFloat(item.lat);
-
-                                const lng = parseFloat(item.lng);
-
-                                // 原始距离（米）
-
-                                const meters = this.haversineDistance(tLat, tLng, lat, lng);
-
-                                item.distanceMeters = meters;
-
-
-
-                                // 转千米、保留两位小数，并转成数值
-
-                                item.distanceKm = parseFloat((meters / 1000).toFixed(2));
-
-                                item.distance = this.haversineDistance(tLat, tLng, lat, lng);
-
-                            });
-
-
-
-                            // 2) 再按距离排序
-
-                            data.sort((a, b) => a.distance - b.distance);
-
-
-
-                            return data;
-
-                        },
-
-                        sortAllDistributors(data) {
-
-                            if (!Array.isArray(data) || data.length <= 1) {
-
-                                return data;
-
-                            }
-
-
-
+                                that.distributors.forEach((item, index) => {
+                                    if(item.marker_lat && item.marker_lng){
+                                        item.lat = item.marker_lat;
+                                        item.lng = item.marker_lng;
+                                    }
+                                    that.distributors[index] = item;
+                                    ///wp-content/uploads/2025/07/lacation-distributor.png
+                                    //添加market
+                                    that.addMarker(item);
+                                })
+                                if(this.country != 'ALL'){
+                                    const lat = that.distributors[0].lat;
+                                    const lng = that.distributors[0].lng;
+                                    const myLatlng = new google.maps.LatLng(lat, lng);
+                                    this.map.setCenter(myLatlng);
+                                    this.map.setZoom(7);
+                                }else{
+                                    this.map.setZoom(this.zoom);
+                                }
+                                that.associateWord = []
+                            }, 'json');
+                        },
+                        clearMarket(){
+                            this.markersArray.forEach(marker => {
+                                marker.setMap(null);
+                            });
+                        },
+                        addMarker(item) {
+                            var that = this;
+                            const myLatlng = new google.maps.LatLng(item.lat, item.lng);
+                            var icon = {
+                                url: "/wp-content/uploads/2025/07/lacation-distributor.png", // url
+                                scaledSize: new google.maps.Size(32, 36), // scaled size
+                                origin: new google.maps.Point(0, 0), // origin
+                                anchor: new google.maps.Point(16, 36) // anchor
+                            };
+                            const marker = new google.maps.Marker({
+                                position: myLatlng,
+                                map: this.map,
+                                icon: icon
+                            });
+                            marker.setMap(this.map);
+                            this.markersArray.push(marker);
+                            that.currentInfoWindow = that.currentInfoWindow || null;
+                            const contentString = this.buildWindowContent(item);
+                            const infowindow = new google.maps.InfoWindow({
+                                content: contentString
+                            });
+                            marker.addListener("click", () => {
+                                if (that.currentInfoWindow) {
+                                    that.currentInfoWindow.close();
+                                }
+                                infowindow.open(that.map, marker);
+                                that.currentInfoWindow = infowindow;
+                                google.maps.event.addListenerOnce(infowindow, 'domready', () => {
+                                    const closeBtn = document.querySelector('.distributors-close');
+                                    if (closeBtn) {
+                                        closeBtn.addEventListener('click', () => {
+                                            infowindow.close();
+                                        });
+                                    }
+                                });
+                            });
+                        },
+                        buildWindowContent(item) {
+                            let contentString = `
+                                <div class="distributor distributor-window">
+                                    <div class="title">${item.country || ''}</div>
+                                    <div class="name">${item.post_title || ''}</div>
+                                    <div class="infos">
+                                        <div class="info">
+                                            <i class="icon iconfont icon-location"></i>${item.address || ''}
+                                        </div>
+                            `;
+
+                            // 电话（旧字段）
+                            if ((!item.phones || item.phones.length === 0) && item.phone) {
+                                contentString += `
+                                    <div class="info">
+                                        <i class="icon iconfont icon-phone"></i>${item.phone}
+                                    </div>
+                                `;
+                            }
+
+                            // 电话（数组字段）
+                            if (item.phones && item.phones.length > 0) {
+                                item.phones.forEach(phone => {
+                                    if (phone.type === 'tel') {
+                                        contentString += `
+                                            <div class="info">
+                                                <i class="icon iconfont icon-phone"></i>${phone.phone}
+                                            </div>
+                                        `;
+                                    } else if (phone.type === 'fax') {
+                                        contentString += `
+                                            <div class="info">
+                                                <i class="icon iconfont icon-fax"></i>${phone.phone}
+                                            </div>
+                                        `;
+                                    }
+                                });
+                            }
+
+                            // 邮箱（旧字段）
+                            if ((!item.emails || item.emails.length === 0) && item.email) {
+                                contentString += `
+                                    <div class="info">
+                                        <i class="icon iconfont icon-emaile"></i>
+                                        <a href="mailto:${item.email}" target="_blank">${item.email}</a>
+                                    </div>
+                                `;
+                            }
+
+                            // 邮箱（数组字段）
+                            if (item.emails && item.emails.length > 0) {
+                                item.emails.forEach(email => {
+                                    contentString += `
+                                        <div class="info">
+                                            <i class="icon iconfont icon-emaile"></i>
+                                            <a href="mailto:${email.email}" target="_blank">${email.email}</a>
+                                        </div>
+                                    `;
+                                });
+                            }
+
+                            // 网站
+                            if (item.website) {
+                                contentString += `
+                                    <div class="info">
+                                        <i class="icon iconfont icon-web"></i>
+                                        <a href="${item.website}" target="_blank">${item.website}</a>
+                                    </div>
+                                `;
+                            }
+
+                            contentString += `
+                                    </div> <!-- .infos -->
+                                    <div class="icon iconfont icon-close distributors-close"></div>
+                                </div> <!-- .distributor -->
+                            `;
+
+                            return contentString;
+                        },
+                        haversineDistance(lat1, lng1, lat2, lng2) {
+                            const toRad = deg => deg * Math.PI / 180;
+                            const R = 6371000; // 地球半径（米）
+
+                            const dLat = toRad(lat2 - lat1);
+                            const dLng = toRad(lng2 - lng1);
+                            const a = Math.sin(dLat/2) ** 2
+                                    + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2))
+                                    * Math.sin(dLng/2) ** 2;
+                            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                            return R * c;
+                        },
+                        sortByDistance(data, target) {
+                            const tLat = parseFloat(target.lat);
+                            const tLng = parseFloat(target.lng);
+
+                            // 1) 先把 distance 写入每一项
+                            data.forEach(item => {
+                                const lat = parseFloat(item.lat);
+                                const lng = parseFloat(item.lng);
+                                // 原始距离（米）
+                                const meters = this.haversineDistance(tLat, tLng, lat, lng);
+                                item.distanceMeters = meters;
+
+                                // 转千米、保留两位小数，并转成数值
+                                item.distanceKm = parseFloat((meters / 1000).toFixed(2));
+                                item.distance = this.haversineDistance(tLat, tLng, lat, lng);
+                            });
+
+                            // 2) 再按距离排序
+                            data.sort((a, b) => a.distance - b.distance);
+
+                            return data;
+                        },
+                        sortAllDistributors(data) {
+                            if (!Array.isArray(data) || data.length <= 1) {
+                                return data;
+                            }
+
                             const [firstItem, ...restItems] = data;
                             restItems.sort((a, b) => {
                                 const titleA = (a.country || '').trim();
@@ -1423,20 +964,13 @@ gtag("config", "GT-WVG7T9T");
 
                                 return titleA.localeCompare(titleB, undefined, { sensitivity: 'base' });
                             });
-
-
-                            return [firstItem, ...restItems];
-
-                        }
-
-                    }
-
-                });
-
-            });
-
-        </script>
-
+
+                            return [firstItem, ...restItems];
+                        }
+                    }
+                });
+            });
+        </script>
         				</div>
 				</div>
 				</div>
@@ -1521,46 +1055,26 @@ gtag("config", "GT-WVG7T9T");
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/hello-elementor\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
-		<script type="text/javascript">
-
-			document.addEventListener("DOMContentLoaded", function() {
-
-				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
-
-					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
-
-				}
-
-			});
-
-		</script>
-
-		
-
-    <div class="show-box">
-
-        <div class="close">
-
-            <i class="icon iconfont icon-close close-show-box"></i>
-
-        </div>
-
-        <div class="show-div">
-
-            <img src="" alt="">
-
-            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
-
-        </div>
-
-        <div class="show-title"></div>
-
-    </div>
-
-    <!--引入-->
-
-    <script src="../wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
-
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", function() {
+				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
+					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
+				}
+			});
+		</script>
+		
+    <div class="show-box">
+        <div class="close">
+            <i class="icon iconfont icon-close close-show-box"></i>
+        </div>
+        <div class="show-div">
+            <img src="" alt="">
+            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
+        </div>
+        <div class="show-title"></div>
+    </div>
+    <!--引入-->
+    <script src="/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
     			<script>
 				const lazyloadRunObserver = () => {
 					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
@@ -1587,14 +1101,14 @@ gtag("config", "GT-WVG7T9T");
 					document.addEventListener( event, lazyloadRunObserver );
 				} );
 			</script>
-			<script src="../wp-content/plugins/newtechwood/assets/js/vue.js" id="logic-vue-js-js"></script>
-<script src="../wp-content/plugins/newtechwood/assets/js/form.js" id="logic-form-js-js"></script>
-<script src="../wp-includes/js/dist/hooks.min.js" id="wp-hooks-js"></script>
-<script src="../wp-includes/js/dist/i18n.min.js" id="wp-i18n-js"></script>
+			<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/vue.js" id="logic-vue-js-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/form.js?ver=1753752449" id="logic-form-js-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
 <script id="wp-i18n-js-after">
 wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 </script>
-<script src="../wp-content/plugins/contact-form-7/includes/swv/js/index.js" id="swv-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=6.1" id="swv-js"></script>
 <script id="contact-form-7-js-before">
 var wpcf7 = {
     "api": {
@@ -1603,27 +1117,27 @@ var wpcf7 = {
     }
 };
 </script>
-<script src="../wp-content/plugins/contact-form-7/includes/js/index.js" id="contact-form-7-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/contact-form-7/includes/js/index.js?ver=6.1" id="contact-form-7-js"></script>
 <script id="codedropz-uploader-js-extra">
 var dnd_cf7_uploader = {"ajax_url":"https:\/\/www.newtechwoodintl.com\/wp-admin\/admin-ajax.php","ajax_nonce":"880a1b3941","drag_n_drop_upload":{"tag":"h3","text":"Drag & Drop Files Here","or_separator":"or","browse":"Browse Files","server_max_error":"The uploaded file exceeds the maximum upload size of your server.","large_file":"Uploaded file is too large","inavalid_type":"Uploaded file is not allowed for file type","max_file_limit":"Note : Some of the files are not uploaded ( Only %count% files allowed )","required":"This field is required.","delete":{"text":"deleting","title":"Remove"}},"dnd_text_counter":"of","disable_btn":""};
 </script>
-<script src="../wp-content/plugins/drag-and-drop-multiple-file-upload-contact-form-7/assets/js/codedropz-uploader-min.js" id="codedropz-uploader-js"></script>
-<script src="../wp-content/themes/hello-elementor/assets/js/hello-frontend.js" id="hello-theme-frontend-js"></script>
-<script src="../wp-content/plugins/elementor/assets/js/webpack.runtime.min.js" id="elementor-webpack-runtime-js"></script>
-<script src="../wp-content/plugins/elementor/assets/js/frontend-modules.min.js" id="elementor-frontend-modules-js"></script>
-<script src="../wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/drag-and-drop-multiple-file-upload-contact-form-7/assets/js/codedropz-uploader-min.js?ver=1.3.9.0" id="codedropz-uploader-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/themes/hello-elementor/assets/js/hello-frontend.js?ver=3.4.4" id="hello-theme-frontend-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.33.2" id="elementor-webpack-runtime-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.33.2" id="elementor-frontend-modules-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js"></script>
 <script id="elementor-frontend-js-before">
 var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close","a11yCarouselPrevSlideMessage":"Previous slide","a11yCarouselNextSlideMessage":"Next slide","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1179,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1178,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"hasCustomBreakpoints":true},"version":"3.33.2","is_static":false,"experimentalFeatures":{"e_font_icon_svg":true,"additional_custom_breakpoints":true,"container":true,"e_optimized_markup":true,"theme_builder_v2":true,"hello-theme-header-footer":true,"nested-elements":true,"home_screen":true,"global_classes_should_enforce_capabilities":true,"e_variables":true,"cloud-library":true,"e_opt_in_v4_page":true,"import-export-customization":true,"mega-menu":true,"e_pro_variables":true},"urls":{"assets":"https:\/\/www.newtechwoodintl.com\/wp-content\/plugins\/elementor\/assets\/","ajaxurl":"https:\/\/www.newtechwoodintl.com\/wp-admin\/admin-ajax.php","uploadUrl":"https:\/\/www.newtechwoodintl.com\/wp-content\/uploads"},"nonces":{"floatingButtonsClickTracking":"38b9682635"},"swiperClass":"swiper","settings":{"page":[],"editorPreferences":[]},"kit":{"lightbox_title_src":"alt","viewport_tablet":1178,"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","hello_header_logo_type":"logo","hello_footer_logo_type":"logo"},"post":{"id":649,"title":"Find%20a%20Distributor%20-%20NewTechWood","excerpt":"","featuredImage":"https:\/\/www.newtechwoodintl.com\/wp-content\/uploads\/2025\/07\/newtechwood-site-logo.svg"}};
 </script>
-<script src="../wp-content/plugins/elementor/assets/js/frontend.min.js" id="elementor-frontend-js"></script>
-<script src="../wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js" id="e-sticky-js"></script>
-<script src="../wp-content/plugins/google-site-kit/dist/assets/js/googlesitekit-events-provider-contact-form-7-40476021fb6e59177033.js" id="googlesitekit-events-provider-contact-form-7-js" defer></script>
-<script src="../wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js" id="elementor-pro-webpack-runtime-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.33.2" id="elementor-frontend-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.32.1" id="e-sticky-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/google-site-kit/dist/assets/js/googlesitekit-events-provider-contact-form-7-40476021fb6e59177033.js" id="googlesitekit-events-provider-contact-form-7-js" defer></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.32.1" id="elementor-pro-webpack-runtime-js"></script>
 <script id="elementor-pro-frontend-js-before">
 var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/wp-admin\/admin-ajax.php","nonce":"f0b67c56a8","urls":{"assets":"https:\/\/www.newtechwoodintl.com\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/www.newtechwoodintl.com\/wp-json\/"},"settings":{"lazy_load_background_images":true},"popup":{"hasPopUps":false},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/www.newtechwoodintl.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
 </script>
-<script src="../wp-content/plugins/elementor-pro/assets/js/frontend.min.js" id="elementor-pro-frontend-js"></script>
-<script src="../wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js" id="pro-elements-handlers-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.32.1" id="elementor-pro-frontend-js"></script>
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.32.1" id="pro-elements-handlers-js"></script>
 
 </body>
 </html>
