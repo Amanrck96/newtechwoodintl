@@ -143,53 +143,100 @@ gtag("config", "GT-WVG7T9T");
 </script>
 <link rel="https://api.w.org/" href="../../../wp-json/index.html" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../../xmlrpc.php?rsd" />
 <meta name="generator" content="WordPress 6.8.1" />
-<meta name="generator" content="Site Kit by Google 1.167.0" />        <script>
-                    //获取get参数
-            function getQueryString(name) {
-                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-                var r = window.location.search.substr(1).match(reg);
-                if (r != null) return unescape(r[2]); return null;
-            }
-
-            var source = getQueryString('source');
-            console.log('source',source);
-            if (window.XMLHttpRequest) { 
-                xmlHttp = new XMLHttpRequest(); //FireFox、Opera等浏览器支持的创建方式 
-            } else { 
-                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");//IE浏览器支持的创建方式 
-            } 
-            xmlHttp.open("GET",'https://ipapi.co/json/',true);
-            xmlHttp.setRequestHeader("Accept","application/json");
-            xmlHttp.send(null); 
-            xmlHttp.onreadystatechange = function() {
-                if (xmlHttp.readyState == 4) {
-                    if(xmlHttp.getResponseHeader('content-type')==='application/json'){
-                        var data = JSON.parse(xmlHttp.responseText);  
-                        //根据返回结果判断验证码是否正确
-                        getJumpUrl(data.country,window.location.protocol+'//'+document.domain,data.timezone);
-                    }
-                }else{
-                            //console.log("error timeout");
-                }
-            }
-            function getJumpUrl(country_code,url,timezoneString){
-                if(country_code=='CA'){
-                    window.location.href = "https://www.newtechwood.ca/";
-                }
-                                console.log("country_code",country_code)
-            }
-        </script>
-        <script>
-  window.intercomSettings = {
-    api_base: "https://api-iam.intercom.io",
-    app_id: "a174cd76",
-  };
-</script>
-
-
-<script>
-  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
-  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+<meta name="generator" content="Site Kit by Google 1.167.0" />        <script>
+
+                    //获取get参数
+
+            function getQueryString(name) {
+
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+
+                var r = window.location.search.substr(1).match(reg);
+
+                if (r != null) return unescape(r[2]); return null;
+
+            }
+
+
+
+            var source = getQueryString('source');
+
+            console.log('source',source);
+
+            if (window.XMLHttpRequest) { 
+
+                xmlHttp = new XMLHttpRequest(); //FireFox、Opera等浏览器支持的创建方式 
+
+            } else { 
+
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");//IE浏览器支持的创建方式 
+
+            } 
+
+            xmlHttp.open("GET",'https://ipapi.co/json/',true);
+
+            xmlHttp.setRequestHeader("Accept","application/json");
+
+            xmlHttp.send(null); 
+
+            xmlHttp.onreadystatechange = function() {
+
+                if (xmlHttp.readyState == 4) {
+
+                    if(xmlHttp.getResponseHeader('content-type')==='application/json'){
+
+                        var data = JSON.parse(xmlHttp.responseText);  
+
+                        //根据返回结果判断验证码是否正确
+
+                        getJumpUrl(data.country,window.location.protocol+'//'+document.domain,data.timezone);
+
+                    }
+
+                }else{
+
+                            //console.log("error timeout");
+
+                }
+
+            }
+
+            function getJumpUrl(country_code,url,timezoneString){
+
+                if(country_code=='CA'){
+
+                    window.location.href = "https://www.newtechwood.ca/";
+
+                }
+
+                                console.log("country_code",country_code)
+
+            }
+
+        </script>
+
+        <script>
+
+  window.intercomSettings = {
+
+    api_base: "https://api-iam.intercom.io",
+
+    app_id: "a174cd76",
+
+  };
+
+</script>
+
+
+
+
+
+<script>
+
+  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
+
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+
 </script><meta name="generator" content="Elementor 3.33.2; features: e_font_icon_svg, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
 			<style>
 				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
@@ -692,26 +739,46 @@ gtag("config", "GT-WVG7T9T");
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/hello-elementor\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
-		<script type="text/javascript">
-			document.addEventListener("DOMContentLoaded", function() {
-				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
-					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
-				}
-			});
-		</script>
-		
-    <div class="show-box">
-        <div class="close">
-            <i class="icon iconfont icon-close close-show-box"></i>
-        </div>
-        <div class="show-div">
-            <img src="" alt="">
-            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
-        </div>
-        <div class="show-title"></div>
-    </div>
-    <!--引入-->
-    <script src="/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
+		<script type="text/javascript">
+
+			document.addEventListener("DOMContentLoaded", function() {
+
+				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
+
+					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
+
+				}
+
+			});
+
+		</script>
+
+		
+
+    <div class="show-box">
+
+        <div class="close">
+
+            <i class="icon iconfont icon-close close-show-box"></i>
+
+        </div>
+
+        <div class="show-div">
+
+            <img src="" alt="">
+
+            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
+
+        </div>
+
+        <div class="show-title"></div>
+
+    </div>
+
+    <!--引入-->
+
+    <script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
+
     			<script>
 				const lazyloadRunObserver = () => {
 					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );

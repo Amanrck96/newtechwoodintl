@@ -148,17 +148,28 @@ gtag("config", "GT-WVG7T9T");
 <link rel='shortlink' href="../query_p_651/index.html?p=651" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2Fwww.newtechwoodintl.com%2Fdownload%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2Fwww.newtechwoodintl.com%2Fdownload%2F&#038;format=xml" />
-<meta name="generator" content="Site Kit by Google 1.167.0" /><script>
-  window.intercomSettings = {
-    api_base: "https://api-iam.intercom.io",
-    app_id: "a174cd76",
-  };
-</script>
-
-
-<script>
-  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
-  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+<meta name="generator" content="Site Kit by Google 1.167.0" /><script>
+
+  window.intercomSettings = {
+
+    api_base: "https://api-iam.intercom.io",
+
+    app_id: "a174cd76",
+
+  };
+
+</script>
+
+
+
+
+
+<script>
+
+  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
+
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+
 </script><meta name="generator" content="Elementor 3.33.2; features: e_font_icon_svg, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
 			<style>
 				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
@@ -495,184 +506,362 @@ gtag("config", "GT-WVG7T9T");
 		<div class="elementor-element elementor-element-cc9a73f e-con-full real-full-width e-flex e-con e-parent" data-id="cc9a73f" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 				<div class="elementor-element elementor-element-da2b33e elementor-widget elementor-widget-Logic_Widget_Download" data-id="da2b33e" data-element_type="widget" data-widget_type="Logic_Widget_Download.default">
 				<div class="elementor-widget-container">
-					
-        <div class="downloads" id="download-da2b33e">
-            <div class="gallery-filter">
-                <div class="main-width gallery-filter-center">
-                    <div class="filter-button"@click="setCategories()">
-                        <i class="icon iconfont icon-Filter"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="main-width main-content" style="min-height: 640px;">
-                <div class="cates" v-for="(item,item_index) in filterDatas" :key="item_index" v-if="filterDatas.length > 0">
-                    <div v-if="type == 'libraries_category'">
-                        <div class="video_titles">
-                            <div class="title"><h2>{{item.name}}</h2></div>
-                        </div>
-                        <div class="downloads_list downloads_list_flex" v-if="item.types.length > 0">
-                            <div style="margin-bottom: 36px;"  v-for="(sub_item,sub_item_index) in item.types" :key="sub_item_index">
-                                <div class="downloads_sub_title"  v-if="sub_item.datas.length > 0">
-                                    <h4>{{sub_item.name}}</h4>
-                                </div>
-                                <div v-for="(file,index) in sub_item.datas" :key="index" v-if="sub_item.datas.length > 0">
-                                    <div class="download_line" >
-                                        <div class="title">{{file.post_title}}</div>
-                                        <div class="button" @click="download(file)">Download</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="type != 'libraries_category'">
-                        <div class="video_titles">
-                            <div class="title"><h2>{{item.name}}</h2></div>
-                        </div>
-                        <div class="downloads_list downloads_list_flex" v-if="item.types.length > 0">
-                            <div style="margin-bottom: 36px;"  v-for="(sub_item,sub_item_index) in item.types" :key="sub_item_index">
-                                <div class="downloads_sub_title"  v-if="sub_item.datas.length > 0">
-                                    <h4>{{sub_item.name}}</h4>
-                                </div>
-                                <div v-for="(file,index) in sub_item.datas" :key="index" v-if="sub_item.datas.length > 0" :data-id="file.ID">
-                                    <div class="download_line" >
-                                        <div class="title">{{file.post_title}}</div>
-                                        <div class="button" v-for="(_file,i) in file.files" :key="i" @click="downloadFileurl('../_file/index.html')">{{_file.file_type}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-categories" :class="{'active': showCategories}">
-                <div class="close" @click="setCategories()">
-                    <span class="filter_title_text">Filter</span>
-                    <i class="icon iconfont icon-close"></i>
-                </div>
-                <div class="categories">
-                    <div class="category" :class="{'active': inCategory== 0}" @click="setFilterDatas('All')" >All</div>
-                    <div class="category" :class="{'active': inCategory==cate.term_id}" @click="setFilterDatas(cate.term_id)" v-for="(cate,index) in categories">{{cate.name}}</div>
-                </div>
-            </div>
-        </div>
-        
-        <script>
-            var $ = jQuery;
-            var categories = [{"term_id":6,"name":"Decking","slug":"decking","term_group":0,"term_taxonomy_id":6,"taxonomy":"libraries_category","description":"","parent":0,"count":25,"filter":"raw"},{"term_id":7,"name":"Cladding","slug":"siding","term_group":0,"term_taxonomy_id":7,"taxonomy":"libraries_category","description":"","parent":0,"count":27,"filter":"raw"},{"term_id":8,"name":"Beams","slug":"beams","term_group":0,"term_taxonomy_id":8,"taxonomy":"libraries_category","description":"","parent":0,"count":13,"filter":"raw"},{"term_id":11,"name":"Deck Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":11,"taxonomy":"libraries_category","description":"","parent":0,"count":15,"filter":"raw"},{"term_id":9,"name":"Fencing","slug":"fencing","term_group":0,"term_taxonomy_id":9,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"},{"term_id":10,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":10,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"}];
-            var categories_da2b33e = [{"term_id":6,"name":"Decking","slug":"decking","term_group":0,"term_taxonomy_id":6,"taxonomy":"libraries_category","description":"","parent":0,"count":25,"filter":"raw"},{"term_id":7,"name":"Cladding","slug":"siding","term_group":0,"term_taxonomy_id":7,"taxonomy":"libraries_category","description":"","parent":0,"count":27,"filter":"raw"},{"term_id":8,"name":"Beams","slug":"beams","term_group":0,"term_taxonomy_id":8,"taxonomy":"libraries_category","description":"","parent":0,"count":13,"filter":"raw"},{"term_id":11,"name":"Deck Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":11,"taxonomy":"libraries_category","description":"","parent":0,"count":15,"filter":"raw"},{"term_id":9,"name":"Fencing","slug":"fencing","term_group":0,"term_taxonomy_id":9,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"},{"term_id":10,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":10,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"}];
-            
-            $(document).ready(function() {
-                
-                var app = new Vue({
-                    el: '#download-da2b33e',
-                    data: {
-                        categories: categories_da2b33e,
-                        types:[],
-                        loading: true,
-                        showCategories: false,
-                        inCategory:0,
-                        page:1,
-                        perPage:10,
-                        isend:false,
-                        type: 'libraries_category',
-                        categories:[],
-                        datas:[],
-                        filterDatas:[]
-                        // categories:[
-                        //     {
-                        //         count:100,
-                        //         name:'All',
-                        //         term_id:0,
-                        //         types:[]
-                        //     }
-                        // ]
-                    },
-                    created() {
-                        console.log('categordories', this.categories);
-                        console.log('type', this.type);
-                        this.initImages();
-                    },
-                    methods: {
-                        setFilterDatas(category){
-                            this.inCategory = category;
-                            this.filterDatas = [];
-                            if(category == 'All'){
-                                this.filterDatas.push(...this.datas)
-                            }else{
-                                const datas = this.datas.find(item => item.term_id == category)
-                                this.filterDatas = [datas]
-                            }
-                            this.showCategories = false
-                        },
-                        downloadFileUrl(file){
-                            console.log('file',file)
-                            if(file.file_url && file.file_url.length > 0){
-                                window.open(file.file_url,'_blank');
-                                return;
-                            }
-                            if(file.cate_file_url && file.cate_file_url.length > 0){
-                                window.open(file.cate_file_url,'_blank');
-                                return;
-                            }
-                        },
-                        download(post){
-                            if(this.type == 'libraries_category'){
-                                //新窗口打开
-                                window.open(post.file_url,'_blank');
-                            }
-                            
-                        },
-                        goTop(){
-                            $('html,body').animate({scrollTop:0},500);
-                        },
-                        handleResize() {
-                            // 强制重新布局
-                            setTimeout(() => {
-
-                            }, 1000);
-                        },
-                        setCategories(){
-                            console.log('setCategories',this.showCategories);
-                            this.showCategories = !this.showCategories;
-                        },
-                        chanageCategory(cate_id){
-                            this.inCategory = cate_id;
-                            console.log('this.inCategory',this.inCategory)
-                            console.log('this.categories',this.categories)
-                            const category = this.categories.find(item => item.term_id == cate_id)
-                            this.types = category.types
-                            this.showCategories = false
-                        },
-                        initImages(){
-                            var that = this
-                            if(this.isend){
-                                return;
-                            }
-                            this.loading = true;
-                            var url = '/wp-json/newtechwood/v1/downloads';
-
-                            var params = {
-                                type:this.type
-                            }
-                            $.get(url, params, function(res) {
-                                console.log('res downloads', res);
-                                that.datas = res.datas
-                                that.datas.splice(0, 1)
-                                console.log('that.datas',that.datas)
-                                that.filterDatas.push(...that.datas)
-                                //that.categories = res.datas
-                                that.categories.push(...res.datas)
-                                that.types.push(...res.datas[0].types)
-                                //that.inCategory = res.datas[0].term_id
-                            }, 'json');
-                        }
-                    }
-                })
-            })
-            
-
-            
-        </script>  
+					
+
+        <div class="downloads" id="download-da2b33e">
+
+            <div class="gallery-filter">
+
+                <div class="main-width gallery-filter-center">
+
+                    <div class="filter-button"@click="setCategories()">
+
+                        <i class="icon iconfont icon-Filter"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="main-width main-content" style="min-height: 640px;">
+
+                <div class="cates" v-for="(item,item_index) in filterDatas" :key="item_index" v-if="filterDatas.length > 0">
+
+                    <div v-if="type == 'libraries_category'">
+
+                        <div class="video_titles">
+
+                            <div class="title"><h2>{{item.name}}</h2></div>
+
+                        </div>
+
+                        <div class="downloads_list downloads_list_flex" v-if="item.types.length > 0">
+
+                            <div style="margin-bottom: 36px;"  v-for="(sub_item,sub_item_index) in item.types" :key="sub_item_index">
+
+                                <div class="downloads_sub_title"  v-if="sub_item.datas.length > 0">
+
+                                    <h4>{{sub_item.name}}</h4>
+
+                                </div>
+
+                                <div v-for="(file,index) in sub_item.datas" :key="index" v-if="sub_item.datas.length > 0">
+
+                                    <div class="download_line" >
+
+                                        <div class="title">{{file.post_title}}</div>
+
+                                        <div class="button" @click="download(file)">Download</div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div v-if="type != 'libraries_category'">
+
+                        <div class="video_titles">
+
+                            <div class="title"><h2>{{item.name}}</h2></div>
+
+                        </div>
+
+                        <div class="downloads_list downloads_list_flex" v-if="item.types.length > 0">
+
+                            <div style="margin-bottom: 36px;"  v-for="(sub_item,sub_item_index) in item.types" :key="sub_item_index">
+
+                                <div class="downloads_sub_title"  v-if="sub_item.datas.length > 0">
+
+                                    <h4>{{sub_item.name}}</h4>
+
+                                </div>
+
+                                <div v-for="(file,index) in sub_item.datas" :key="index" v-if="sub_item.datas.length > 0" :data-id="file.ID">
+
+                                    <div class="download_line" >
+
+                                        <div class="title">{{file.post_title}}</div>
+
+                                        <div class="button" v-for="(_file,i) in file.files" :key="i" @click="downloadFileurl('../_file/index.html')">{{_file.file_type}}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="gallery-categories" :class="{'active': showCategories}">
+
+                <div class="close" @click="setCategories()">
+
+                    <span class="filter_title_text">Filter</span>
+
+                    <i class="icon iconfont icon-close"></i>
+
+                </div>
+
+                <div class="categories">
+
+                    <div class="category" :class="{'active': inCategory== 0}" @click="setFilterDatas('All')" >All</div>
+
+                    <div class="category" :class="{'active': inCategory==cate.term_id}" @click="setFilterDatas(cate.term_id)" v-for="(cate,index) in categories">{{cate.name}}</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <script>
+
+            var $ = jQuery;
+
+            var categories = [{"term_id":6,"name":"Decking","slug":"decking","term_group":0,"term_taxonomy_id":6,"taxonomy":"libraries_category","description":"","parent":0,"count":25,"filter":"raw"},{"term_id":7,"name":"Cladding","slug":"siding","term_group":0,"term_taxonomy_id":7,"taxonomy":"libraries_category","description":"","parent":0,"count":27,"filter":"raw"},{"term_id":8,"name":"Beams","slug":"beams","term_group":0,"term_taxonomy_id":8,"taxonomy":"libraries_category","description":"","parent":0,"count":13,"filter":"raw"},{"term_id":11,"name":"Deck Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":11,"taxonomy":"libraries_category","description":"","parent":0,"count":15,"filter":"raw"},{"term_id":9,"name":"Fencing","slug":"fencing","term_group":0,"term_taxonomy_id":9,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"},{"term_id":10,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":10,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"}];
+
+            var categories_da2b33e = [{"term_id":6,"name":"Decking","slug":"decking","term_group":0,"term_taxonomy_id":6,"taxonomy":"libraries_category","description":"","parent":0,"count":25,"filter":"raw"},{"term_id":7,"name":"Cladding","slug":"siding","term_group":0,"term_taxonomy_id":7,"taxonomy":"libraries_category","description":"","parent":0,"count":27,"filter":"raw"},{"term_id":8,"name":"Beams","slug":"beams","term_group":0,"term_taxonomy_id":8,"taxonomy":"libraries_category","description":"","parent":0,"count":13,"filter":"raw"},{"term_id":11,"name":"Deck Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":11,"taxonomy":"libraries_category","description":"","parent":0,"count":15,"filter":"raw"},{"term_id":9,"name":"Fencing","slug":"fencing","term_group":0,"term_taxonomy_id":9,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"},{"term_id":10,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":10,"taxonomy":"libraries_category","description":"","parent":0,"count":17,"filter":"raw"}];
+
+            
+
+            $(document).ready(function() {
+
+                
+
+                var app = new Vue({
+
+                    el: '#download-da2b33e',
+
+                    data: {
+
+                        categories: categories_da2b33e,
+
+                        types:[],
+
+                        loading: true,
+
+                        showCategories: false,
+
+                        inCategory:0,
+
+                        page:1,
+
+                        perPage:10,
+
+                        isend:false,
+
+                        type: 'libraries_category',
+
+                        categories:[],
+
+                        datas:[],
+
+                        filterDatas:[]
+
+                        // categories:[
+
+                        //     {
+
+                        //         count:100,
+
+                        //         name:'All',
+
+                        //         term_id:0,
+
+                        //         types:[]
+
+                        //     }
+
+                        // ]
+
+                    },
+
+                    created() {
+
+                        console.log('categordories', this.categories);
+
+                        console.log('type', this.type);
+
+                        this.initImages();
+
+                    },
+
+                    methods: {
+
+                        setFilterDatas(category){
+
+                            this.inCategory = category;
+
+                            this.filterDatas = [];
+
+                            if(category == 'All'){
+
+                                this.filterDatas.push(...this.datas)
+
+                            }else{
+
+                                const datas = this.datas.find(item => item.term_id == category)
+
+                                this.filterDatas = [datas]
+
+                            }
+
+                            this.showCategories = false
+
+                        },
+
+                        downloadFileUrl(file){
+
+                            console.log('file',file)
+
+                            if(file.file_url && file.file_url.length > 0){
+
+                                window.open(file.file_url,'_blank');
+
+                                return;
+
+                            }
+
+                            if(file.cate_file_url && file.cate_file_url.length > 0){
+
+                                window.open(file.cate_file_url,'_blank');
+
+                                return;
+
+                            }
+
+                        },
+
+                        download(post){
+
+                            if(this.type == 'libraries_category'){
+
+                                //新窗口打开
+
+                                window.open(post.file_url,'_blank');
+
+                            }
+
+                            
+
+                        },
+
+                        goTop(){
+
+                            $('html,body').animate({scrollTop:0},500);
+
+                        },
+
+                        handleResize() {
+
+                            // 强制重新布局
+
+                            setTimeout(() => {
+
+
+
+                            }, 1000);
+
+                        },
+
+                        setCategories(){
+
+                            console.log('setCategories',this.showCategories);
+
+                            this.showCategories = !this.showCategories;
+
+                        },
+
+                        chanageCategory(cate_id){
+
+                            this.inCategory = cate_id;
+
+                            console.log('this.inCategory',this.inCategory)
+
+                            console.log('this.categories',this.categories)
+
+                            const category = this.categories.find(item => item.term_id == cate_id)
+
+                            this.types = category.types
+
+                            this.showCategories = false
+
+                        },
+
+                        initImages(){
+
+                            var that = this
+
+                            if(this.isend){
+
+                                return;
+
+                            }
+
+                            this.loading = true;
+
+                            var url = '/wp-json/newtechwood/v1/downloads';
+
+
+
+                            var params = {
+
+                                type:this.type
+
+                            }
+
+                            $.get(url, params, function(res) {
+
+                                console.log('res downloads', res);
+
+                                that.datas = res.datas
+
+                                that.datas.splice(0, 1)
+
+                                console.log('that.datas',that.datas)
+
+                                that.filterDatas.push(...that.datas)
+
+                                //that.categories = res.datas
+
+                                that.categories.push(...res.datas)
+
+                                that.types.push(...res.datas[0].types)
+
+                                //that.inCategory = res.datas[0].term_id
+
+                            }, 'json');
+
+                        }
+
+                    }
+
+                })
+
+            })
+
+            
+
+
+
+            
+
+        </script>  
+
         				</div>
 				</div>
 				</div>
@@ -757,26 +946,46 @@ gtag("config", "GT-WVG7T9T");
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/hello-elementor\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
-		<script type="text/javascript">
-			document.addEventListener("DOMContentLoaded", function() {
-				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
-					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
-				}
-			});
-		</script>
-		
-    <div class="show-box">
-        <div class="close">
-            <i class="icon iconfont icon-close close-show-box"></i>
-        </div>
-        <div class="show-div">
-            <img src="" alt="">
-            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
-        </div>
-        <div class="show-title"></div>
-    </div>
-    <!--引入-->
-    <script src="/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
+		<script type="text/javascript">
+
+			document.addEventListener("DOMContentLoaded", function() {
+
+				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
+
+					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
+
+				}
+
+			});
+
+		</script>
+
+		
+
+    <div class="show-box">
+
+        <div class="close">
+
+            <i class="icon iconfont icon-close close-show-box"></i>
+
+        </div>
+
+        <div class="show-div">
+
+            <img src="" alt="">
+
+            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
+
+        </div>
+
+        <div class="show-title"></div>
+
+    </div>
+
+    <!--引入-->
+
+    <script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
+
     			<script>
 				const lazyloadRunObserver = () => {
 					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );

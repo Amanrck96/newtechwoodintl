@@ -1,92 +1,181 @@
-<style>
-    /* 隐藏无关元素 */
-    #wpadminbar, header, .top_header, .header_v2, .top_header_buttons, .page-footer, .mobile_bottom_div {
-        display: none !important;
-    }
-    .product-catalog-container {
-        width: 100%;
-        min-height: 100vh;
-    }
-    body.page .page-content {
-        padding: 0 !important;
-    }
-    #backToTop {
-        display: none !important;
-    }
-    html {
-        margin-top: 0 !important;
-    }
-    .about_us_arrow {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 36%;
-        width: 3.6rem;
-        height: 3.6rem;
-        border-radius: 50%;
-        border: #fff 1px solid;
-        text-align: center;
-        line-height: 3.6rem;
-        margin: auto;
-        opacity: 1;
-        transition: all .3s;
-    }
-    .about_us_arrow .iconfont {
-        font-size: 1.6rem;
-    }
-    .about_us_arrow .about_us_text {
-        opacity: 0;
-    }
-    .about_us_pic_active .about_us_arrow {
-        opacity: 0;
-    }
-    @media(max-width: 1024px) {
-        .about_us_arrow {
-            width: 4rem;
-            height: 4rem;
-            line-height: 4rem;
-        }
-        .about_us_arrow .iconfont {
-            font-size: 1.2rem;
-        }
-    }
-    .book_div {
-        min-height: calc(100vh - 41rem - 6.4rem);
-        margin: 0 auto;
-        background: #fff;
-        display: flex; /* 让翻页容器居中对齐 */
-        align-items: center;
-        justify-content: center;
-    }
-    #magazine {
-        width: 100%;
-        margin: 0 auto; /* 保证容器水平居中 */
-    }
-    #magazine .turn-page, #magazine .page_turn {
-        background-color: #fff;
-        z-index: 35;
-    }
-    .page_turn {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
-    .page_turn canvas {
-        width: 100% !important;
-    }
-    
-    /* ========== 修改点: 图片自适应且不变形 ========== */
-    .page_turn img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* 保证图片不变形且填满容器 */
-        display: block;
-    }
-
+<style>
+
+    /* 隐藏无关元素 */
+
+    #wpadminbar, header, .top_header, .header_v2, .top_header_buttons, .page-footer, .mobile_bottom_div {
+
+        display: none !important;
+
+    }
+
+    .product-catalog-container {
+
+        width: 100%;
+
+        min-height: 100vh;
+
+    }
+
+    body.page .page-content {
+
+        padding: 0 !important;
+
+    }
+
+    #backToTop {
+
+        display: none !important;
+
+    }
+
+    html {
+
+        margin-top: 0 !important;
+
+    }
+
+    .about_us_arrow {
+
+        position: absolute;
+
+        left: 0;
+
+        right: 0;
+
+        bottom: 36%;
+
+        width: 3.6rem;
+
+        height: 3.6rem;
+
+        border-radius: 50%;
+
+        border: #fff 1px solid;
+
+        text-align: center;
+
+        line-height: 3.6rem;
+
+        margin: auto;
+
+        opacity: 1;
+
+        transition: all .3s;
+
+    }
+
+    .about_us_arrow .iconfont {
+
+        font-size: 1.6rem;
+
+    }
+
+    .about_us_arrow .about_us_text {
+
+        opacity: 0;
+
+    }
+
+    .about_us_pic_active .about_us_arrow {
+
+        opacity: 0;
+
+    }
+
+    @media(max-width: 1024px) {
+
+        .about_us_arrow {
+
+            width: 4rem;
+
+            height: 4rem;
+
+            line-height: 4rem;
+
+        }
+
+        .about_us_arrow .iconfont {
+
+            font-size: 1.2rem;
+
+        }
+
+    }
+
+    .book_div {
+
+        min-height: calc(100vh - 41rem - 6.4rem);
+
+        margin: 0 auto;
+
+        background: #fff;
+
+        display: flex; /* 让翻页容器居中对齐 */
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+    #magazine {
+
+        width: 100%;
+
+        margin: 0 auto; /* 保证容器水平居中 */
+
+    }
+
+    #magazine .turn-page, #magazine .page_turn {
+
+        background-color: #fff;
+
+        z-index: 35;
+
+    }
+
+    .page_turn {
+
+        position: relative;
+
+        width: 100%;
+
+        height: 100%;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        overflow: hidden;
+
+    }
+
+    .page_turn canvas {
+
+        width: 100% !important;
+
+    }
+
+    
+
+    /* ========== 修改点: 图片自适应且不变形 ========== */
+
+    .page_turn img {
+
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: contain; /* 保证图片不变形且填满容器 */
+
+        display: block;
+
+    }
+
+
+
     .book_div .about_us_arrow {
         left: unset;
         right: 2.4rem;
@@ -101,255 +190,502 @@
         backdrop-filter: blur(12px) saturate(160%);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
-    .book_div .about_us_arrow_left {
-        left: 2.4rem;
-        right: unset;
-        transform: rotateY(180deg);
-    }
+    .book_div .about_us_arrow_left {
+
+        left: 2.4rem;
+
+        right: unset;
+
+        transform: rotateY(180deg);
+
+    }
+
     .book_div .about_us_arrow .iconfont {
         color: #fff;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     }
-    .shadow_center {
-        width: 3.6rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(161, 159, 159, 0.5) 50%, rgba(161, 159, 159, 0.5) 50%, rgba(255, 255, 255, 0));
-        z-index: 36;
-        height: 100% !important;
-    }
-    @media(max-width: 1024px) {
-        .shadow_center {
-            display: none !important;
-        }
-    }
-    .pdf_canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-</style>
-
-<!-- 引入Vue、turn.js、pdf.js等依赖 -->
-<script src="/wp-content/plugins/newtechwood/assets/js/jquery-3.6.0.min.js"></script>
-<script src="/wp-content/plugins/newtechwood/assets/js/vue.js"></script>
-<script src="/wp-content/plugins/newtechwood/assets/js/turn.min.js"></script>
-<script src="/wp-content/plugins/newtechwood/assets/js/pdf.min.js"></script>
-<script src="/wp-content/plugins/newtechwood/assets/js/pdf.worker.min.js"></script>
-
-<!-- 预加载页面翻动音效 -->
-<audio id="pageTurnSound1" src="../wp-content/plugins/newtechwood/assets/videos/flipbook.mp3" preload="auto"></audio>
-<audio id="pageTurnSound2" src="../wp-content/plugins/newtechwood/assets/videos/flipbook_2.mp3" preload="auto"></audio>
-<audio id="pageTurnSound3" src="../wp-content/plugins/newtechwood/assets/videos/flipbook_3.mp3" preload="auto"></audio>
-<audio id="pageTurnSound4" src="../wp-content/plugins/newtechwood/assets/videos/flipbook_4.mp3" preload="auto"></audio>
-
-<div class="w100 book_div" style="min-height: 100vh;" id="app">
-    <div class="w100" style="position: relative; overflow: hidden; width: 100%; display: flex; align-items: center;">
-        <div id="magazine" style="overflow: hidden;" :style="{ height: magazineHeight + 'px' }">
-            <div class="page_turn" v-for="n in pageCount" :key="n">
-                <img :ref="`img_${n}`" :data-index="n" :src="renderedPages.has(n)? imagePath(n) :"'" />
-            </div>
-        </div>
-        <div class="shadow_center" style="display: none;"></div>
-        <div class="about_us_arrow about_us_arrow_left">
-            <span class="iconfont icon">→</span>
-        </div>
-        <div class="about_us_arrow about_us_arrow_right">
-            <span class="iconfont icon">→</span>
-        </div>
-    </div>
-</div>
-
-<script>
-    $('.formloading').show();
-    $('.loading_progress').hide(); 
-
-    $(document).ready(function() {
-        var pdfwidth = 1362;
-        var pdfheight = 1864;
-        var lastIsPortrait = window.innerHeight > window.innerWidth;
-        var resizeTimeout;
-
-        var app = new Vue({
-            el: '#app',
-            data: {
-                pageCount: 328,
-                userCurrentPage: 0,
-                showPage: 0,
-                renderedPages: new Set(),
-                preloadRange: 15,          
-                targetTurnPage: 1,
-                currentDisplay: lastIsPortrait ? 'single' : 'double',
-                magazineHeight: 0
-            },
-            mounted() {
-                var hashValue = window.location.hash.substring(1);
-                console.log('hashValue 1', hashValue);
-                if(hashValue == '39'){
-                    hashValue = false;
-                }
-                console.log('hashValue 2', hashValue);
-                if (hashValue && !isNaN(parseInt(hashValue))) {
-                    let hashInt = parseInt(hashValue);
-                    this.targetTurnPage = hashInt <= 0 ? 1 : hashInt + 1;
-                } else {
-                    const savedPage = parseInt(this.getCookie('newtechwood_catalog_page'));
-                    if (savedPage > 0 && savedPage <= this.pageCount) {
-                        this.targetTurnPage = savedPage;
-                    } else {
-                        this.targetTurnPage = 1;
-                    }
-                }
-                
-                window.addEventListener('hashchange', this.handleHashChange);
-                window.addEventListener('resize', this.handleResize);
-                
-                this.initBook();
-            },
-            beforeDestroy() {
-                window.removeEventListener('hashchange', this.handleHashChange);
-                window.removeEventListener('resize', this.handleResize);
-            },
-            methods: {
-                setCookie(name, value, days) {
-                    let expires = "";
-                    if (days) {
-                        let date = new Date();
-                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                        expires = "; expires=" + date.toUTCString();
-                    }
-                    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-                },
-                getCookie(name) {
-                    let nameEQ = name + "=";
-                    let ca = document.cookie.split(';');
-                    for(let i = 0; i < ca.length; i++) {
-                        let c = ca[i];
-                        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-                    }
-                    return null;
-                },
-                imagePath(n) {
-                    const idx = String(n).padStart(3, '0');
-                    return `/wp-content/plugins/newtechwood/assets/images/catelog/${idx}.jpg`;
-                },
-                handleHashChange() {
-                    const hashValue = window.location.hash.substring(1);
-                    const targetPage = parseInt(hashValue) || 0;
-                    if (targetPage >= 0) {
-                        let jumpPage = targetPage <= 0 ? 1 : targetPage + 1;
-                        if (jumpPage > this.pageCount) jumpPage = this.pageCount;
-                        $('#magazine').turn('page', jumpPage);
-                    }
-                },
-                initBook() {
-                    const lowerBound = Math.max(1, this.targetTurnPage - this.preloadRange);
-                    const upperBound = Math.min(this.pageCount, this.targetTurnPage + this.preloadRange);
-
-                    this.renderWindow(lowerBound, upperBound);
-                    this.$nextTick(() => {
-                        this.initializeMagazine();
-                    });
-                },
-                renderWindow(low, high) {
-                    for (let i = low; i <= high; i++) {
-                        if (!this.renderedPages.has(i)) {
-                            const imgArray = this.$refs[`img_${i}`];
-                            if (imgArray && imgArray[0]) {
-                                imgArray[0].src = this.imagePath(i);
-                                this.renderedPages.add(i);
-                            }
-                        }
-                    }
-                    for (let i = 1; i <= this.pageCount; i++) {
-                        if (i < low || i > high) {
-                            if (this.renderedPages.has(i)) {
-                                const imgArray = this.$refs[`img_${i}`];
-                                if (imgArray && imgArray[0]) {
-                                    imgArray[0].src = ''; 
-                                    this.renderedPages.delete(i);
-                                }
-                            }
-                        }
-                    }
-                },
-                initializeMagazine() {
-                    const isPortrait = window.innerHeight > window.innerWidth;
-                    this.currentDisplay = isPortrait ? 'single' : 'double';
-                    this.showPage = isPortrait ? 1 : 2;
-
-                    let turnWidth, turnHeight;
-                    let sw = window.innerWidth;
-                    let sh = window.innerHeight;
-                    
-                    if (isPortrait) {
-                        // 竖屏逻辑：占满宽度，计算高度
-                        let pageW = sw;
-                        let pageH = pdfheight * (pageW / pdfwidth);
-                        turnWidth = pageW;
-                        turnHeight = pageH;
-                    } else {
-                        // ========== 修改点: 横屏按高度 100vh 动态比例计算宽度 ==========
-                        let pageH = sh; // 强制图片高度为屏幕高度 (100vh)
-                        let pageW = pageH * (pdfwidth / pdfheight); // 严格计算出单页无变形宽度
-                        
-                        // 兜底设计：如果在非常规比例的屏幕下，根据100vh计算出的“双页总宽”大于屏幕真实宽度
-                        // 则改用最大宽度占满去等比缩放高度，避免横向超出屏幕导致体验糟糕
-                        if (pageW * 2 > sw) {
-                            pageW = sw / 2;
-                            pageH = pageW * (pdfheight / pdfwidth);
-                        }
-                        
-                        turnWidth = pageW * 2; // 横屏为双页，所以总宽度乘 2
-                        turnHeight = pageH;
-                    }
-
-                    this.magazineHeight = turnHeight;
-
-                    $('#magazine').turn({
-                        page: this.targetTurnPage,
-                        display: this.currentDisplay,
-                        width: turnWidth,        
-                        height: turnHeight,      
-                        gradients: true,
-                        acceleration: true,
-                        duration: 1000,
-                        zoom: true,
-                        when: {
-                            turned: (e, page) => {
-                                this.userCurrentPage = page;
-                                this.setCookie('newtechwood_catalog_page', page, 30);
-                                const low = Math.max(1, page - this.preloadRange);
-                                const high = Math.min(this.pageCount, page + this.preloadRange);
-                                this.renderWindow(low, high);
-                            }
-                        }
-                    });
-
-                    $('#magazine').height(turnHeight);
-
-                    $('.book_div .about_us_arrow_right').off('click').on('click', () => {
-                        $('#magazine').turn('next');
-                    });
-                    $('.book_div .about_us_arrow_left').off('click').on('click', () => {
-                        $('#magazine').turn('previous');
-                    });
-
-                    $('.formloading').hide();
-                },
-                handleResize() {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => {
-                        const isPortrait = window.innerHeight > window.innerWidth;
-                        if (isPortrait !== lastIsPortrait) {
-                            location.reload(); 
-                        }
-                        lastIsPortrait = isPortrait;
-                    }, 300);
-                }
-            }
-        });
-    });
+    .shadow_center {
+
+        width: 3.6rem;
+
+        position: absolute;
+
+        top: 50%;
+
+        left: 50%;
+
+        transform: translateX(-50%) translateY(-50%);
+
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(161, 159, 159, 0.5) 50%, rgba(161, 159, 159, 0.5) 50%, rgba(255, 255, 255, 0));
+
+        z-index: 36;
+
+        height: 100% !important;
+
+    }
+
+    @media(max-width: 1024px) {
+
+        .shadow_center {
+
+            display: none !important;
+
+        }
+
+    }
+
+    .pdf_canvas {
+
+        width: 100% !important;
+
+        height: 100% !important;
+
+    }
+
+</style>
+
+
+
+<!-- 引入Vue、turn.js、pdf.js等依赖 -->
+
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/jquery-3.6.0.min.js"></script>
+
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/vue.js"></script>
+
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/turn.min.js"></script>
+
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/pdf.min.js"></script>
+
+<script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/pdf.worker.min.js"></script>
+
+
+
+<!-- 预加载页面翻动音效 -->
+
+<audio id="pageTurnSound1" src="../wp-content/plugins/newtechwood/assets/videos/flipbook.mp3" preload="auto"></audio>
+
+<audio id="pageTurnSound2" src="../wp-content/plugins/newtechwood/assets/videos/flipbook_2.mp3" preload="auto"></audio>
+
+<audio id="pageTurnSound3" src="../wp-content/plugins/newtechwood/assets/videos/flipbook_3.mp3" preload="auto"></audio>
+
+<audio id="pageTurnSound4" src="../wp-content/plugins/newtechwood/assets/videos/flipbook_4.mp3" preload="auto"></audio>
+
+
+
+<div class="w100 book_div" style="min-height: 100vh;" id="app">
+
+    <div class="w100" style="position: relative; overflow: hidden; width: 100%; display: flex; align-items: center;">
+
+        <div id="magazine" style="overflow: hidden;" :style="{ height: magazineHeight + 'px' }">
+
+            <div class="page_turn" v-for="n in pageCount" :key="n">
+
+                <img :ref="`img_${n}`" :data-index="n" :src="renderedPages.has(n)? imagePath(n) :"'" />
+
+            </div>
+
+        </div>
+
+        <div class="shadow_center" style="display: none;"></div>
+
+        <div class="about_us_arrow about_us_arrow_left">
+
+            <span class="iconfont icon">→</span>
+
+        </div>
+
+        <div class="about_us_arrow about_us_arrow_right">
+
+            <span class="iconfont icon">→</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    $('.formloading').show();
+
+    $('.loading_progress').hide(); 
+
+
+
+    $(document).ready(function() {
+
+        var pdfwidth = 1362;
+
+        var pdfheight = 1864;
+
+        var lastIsPortrait = window.innerHeight > window.innerWidth;
+
+        var resizeTimeout;
+
+
+
+        var app = new Vue({
+
+            el: '#app',
+
+            data: {
+
+                pageCount: 328,
+
+                userCurrentPage: 0,
+
+                showPage: 0,
+
+                renderedPages: new Set(),
+
+                preloadRange: 15,          
+
+                targetTurnPage: 1,
+
+                currentDisplay: lastIsPortrait ? 'single' : 'double',
+
+                magazineHeight: 0
+
+            },
+
+            mounted() {
+
+                var hashValue = window.location.hash.substring(1);
+
+                console.log('hashValue 1', hashValue);
+
+                if(hashValue == '39'){
+
+                    hashValue = false;
+
+                }
+
+                console.log('hashValue 2', hashValue);
+
+                if (hashValue && !isNaN(parseInt(hashValue))) {
+
+                    let hashInt = parseInt(hashValue);
+
+                    this.targetTurnPage = hashInt <= 0 ? 1 : hashInt + 1;
+
+                } else {
+
+                    const savedPage = parseInt(this.getCookie('newtechwood_catalog_page'));
+
+                    if (savedPage > 0 && savedPage <= this.pageCount) {
+
+                        this.targetTurnPage = savedPage;
+
+                    } else {
+
+                        this.targetTurnPage = 1;
+
+                    }
+
+                }
+
+                
+
+                window.addEventListener('hashchange', this.handleHashChange);
+
+                window.addEventListener('resize', this.handleResize);
+
+                
+
+                this.initBook();
+
+            },
+
+            beforeDestroy() {
+
+                window.removeEventListener('hashchange', this.handleHashChange);
+
+                window.removeEventListener('resize', this.handleResize);
+
+            },
+
+            methods: {
+
+                setCookie(name, value, days) {
+
+                    let expires = "";
+
+                    if (days) {
+
+                        let date = new Date();
+
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+
+                        expires = "; expires=" + date.toUTCString();
+
+                    }
+
+                    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+
+                },
+
+                getCookie(name) {
+
+                    let nameEQ = name + "=";
+
+                    let ca = document.cookie.split(';');
+
+                    for(let i = 0; i < ca.length; i++) {
+
+                        let c = ca[i];
+
+                        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+
+                    }
+
+                    return null;
+
+                },
+
+                imagePath(n) {
+
+                    const idx = String(n).padStart(3, '0');
+
+                    return `/wp-content/plugins/newtechwood/assets/images/catelog/${idx}.jpg`;
+
+                },
+
+                handleHashChange() {
+
+                    const hashValue = window.location.hash.substring(1);
+
+                    const targetPage = parseInt(hashValue) || 0;
+
+                    if (targetPage >= 0) {
+
+                        let jumpPage = targetPage <= 0 ? 1 : targetPage + 1;
+
+                        if (jumpPage > this.pageCount) jumpPage = this.pageCount;
+
+                        $('#magazine').turn('page', jumpPage);
+
+                    }
+
+                },
+
+                initBook() {
+
+                    const lowerBound = Math.max(1, this.targetTurnPage - this.preloadRange);
+
+                    const upperBound = Math.min(this.pageCount, this.targetTurnPage + this.preloadRange);
+
+
+
+                    this.renderWindow(lowerBound, upperBound);
+
+                    this.$nextTick(() => {
+
+                        this.initializeMagazine();
+
+                    });
+
+                },
+
+                renderWindow(low, high) {
+
+                    for (let i = low; i <= high; i++) {
+
+                        if (!this.renderedPages.has(i)) {
+
+                            const imgArray = this.$refs[`img_${i}`];
+
+                            if (imgArray && imgArray[0]) {
+
+                                imgArray[0].src = this.imagePath(i);
+
+                                this.renderedPages.add(i);
+
+                            }
+
+                        }
+
+                    }
+
+                    for (let i = 1; i <= this.pageCount; i++) {
+
+                        if (i < low || i > high) {
+
+                            if (this.renderedPages.has(i)) {
+
+                                const imgArray = this.$refs[`img_${i}`];
+
+                                if (imgArray && imgArray[0]) {
+
+                                    imgArray[0].src = ''; 
+
+                                    this.renderedPages.delete(i);
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                initializeMagazine() {
+
+                    const isPortrait = window.innerHeight > window.innerWidth;
+
+                    this.currentDisplay = isPortrait ? 'single' : 'double';
+
+                    this.showPage = isPortrait ? 1 : 2;
+
+
+
+                    let turnWidth, turnHeight;
+
+                    let sw = window.innerWidth;
+
+                    let sh = window.innerHeight;
+
+                    
+
+                    if (isPortrait) {
+
+                        // 竖屏逻辑：占满宽度，计算高度
+
+                        let pageW = sw;
+
+                        let pageH = pdfheight * (pageW / pdfwidth);
+
+                        turnWidth = pageW;
+
+                        turnHeight = pageH;
+
+                    } else {
+
+                        // ========== 修改点: 横屏按高度 100vh 动态比例计算宽度 ==========
+
+                        let pageH = sh; // 强制图片高度为屏幕高度 (100vh)
+
+                        let pageW = pageH * (pdfwidth / pdfheight); // 严格计算出单页无变形宽度
+
+                        
+
+                        // 兜底设计：如果在非常规比例的屏幕下，根据100vh计算出的“双页总宽”大于屏幕真实宽度
+
+                        // 则改用最大宽度占满去等比缩放高度，避免横向超出屏幕导致体验糟糕
+
+                        if (pageW * 2 > sw) {
+
+                            pageW = sw / 2;
+
+                            pageH = pageW * (pdfheight / pdfwidth);
+
+                        }
+
+                        
+
+                        turnWidth = pageW * 2; // 横屏为双页，所以总宽度乘 2
+
+                        turnHeight = pageH;
+
+                    }
+
+
+
+                    this.magazineHeight = turnHeight;
+
+
+
+                    $('#magazine').turn({
+
+                        page: this.targetTurnPage,
+
+                        display: this.currentDisplay,
+
+                        width: turnWidth,        
+
+                        height: turnHeight,      
+
+                        gradients: true,
+
+                        acceleration: true,
+
+                        duration: 1000,
+
+                        zoom: true,
+
+                        when: {
+
+                            turned: (e, page) => {
+
+                                this.userCurrentPage = page;
+
+                                this.setCookie('newtechwood_catalog_page', page, 30);
+
+                                const low = Math.max(1, page - this.preloadRange);
+
+                                const high = Math.min(this.pageCount, page + this.preloadRange);
+
+                                this.renderWindow(low, high);
+
+                            }
+
+                        }
+
+                    });
+
+
+
+                    $('#magazine').height(turnHeight);
+
+
+
+                    $('.book_div .about_us_arrow_right').off('click').on('click', () => {
+
+                        $('#magazine').turn('next');
+
+                    });
+
+                    $('.book_div .about_us_arrow_left').off('click').on('click', () => {
+
+                        $('#magazine').turn('previous');
+
+                    });
+
+
+
+                    $('.formloading').hide();
+
+                },
+
+                handleResize() {
+
+                    clearTimeout(resizeTimeout);
+
+                    resizeTimeout = setTimeout(() => {
+
+                        const isPortrait = window.innerHeight > window.innerWidth;
+
+                        if (isPortrait !== lastIsPortrait) {
+
+                            location.reload(); 
+
+                        }
+
+                        lastIsPortrait = isPortrait;
+
+                    }, 300);
+
+                }
+
+            }
+
+        });
+
+    });
+
 </script>

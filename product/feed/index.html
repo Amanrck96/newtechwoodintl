@@ -1650,132 +1650,258 @@
 									<p>NewTechWood has the widest array of colors in the industry, ranging from magnificent primary colors to deep browns and infectious grays.</p>								</div>
 				<div class="elementor-element elementor-element-c1ea502 elementor-widget elementor-widget-logic_widget_colors" data-id="c1ea502" data-element_type="widget" data-widget_type="logic_widget_colors.default">
 				<div class="elementor-widget-container">
-					        <div class="colors-main" id="colors-c1ea502">
-            <div class="colors-icons">
-                <div class="icon iconfont icon-a-angleleft-B colors-icons-left left-c1ea502"></div>
-                <div class="colors-icons-scroll">
-                    <!-- <div class="visualizer-icon" v-for="(color,index) in colors">
-                        <img :src="color.color_icon.url" alt="">
-                    </div> -->
-                    <div class="swiper colors-swiper-c1ea502">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="(color,index) in colors" @click="colorChange(color)">
-                                <div class="colors-icon" :class="{'active':color._id==colorActive}">
-                                    <img :src="color.color_icon.url" alt="">
-                                </div>
-                                <div class="colors-name">{{color.color_name}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="icon iconfont icon-a-angleright-B colors-icons-right right-c1ea502"></div>
-            </div>
-            <div class="colors-images">
-                <div class="colors-image-scene">
-                    <img :src="color_scene/index.html" alt="">
-                </div>
-                <div class="colors-image-texture" :style="{ backgroundImage: 'url('+ color_texture +/index.html')' }"></div>
-                <div class="colors-loading" v-if="loading">
-                    <div class="icon iconfont icon-laoding_1"></div>
-                </div>
-            </div>
-        </div>
-        
-        <script>
-            var $ = jQuery;
-            var colors_c1ea502 = [{"_id":"dfd783b","color_name":"Teak","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Teak-TK.png","id":"","size":"","alt":"Teak","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-tk.jpg","id":"","size":"","alt":"Composite Picket-teak","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/07\/tk-6.jpg","id":"","size":"","alt":"Teak","source":"url"}},{"color_name":"lpe","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Ipe-IP.png","id":"","size":"","alt":"Ipe","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-IP-1.jpg","id":"","size":"","alt":"Composite Picket-Ipe","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/08\/ip.jpg","id":"","size":"","alt":"Ipe","source":"url"},"_id":"5fe6d42"},{"color_name":"Silver Gray","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Silver_Gray-SI.png","id":"","size":"","alt":"Silver Gray","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-si-1.jpg","id":"","size":"","alt":"Composite Picket-Silver Gray","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/08\/si.jpg","id":"","size":"","alt":"Silver Gray","source":"url"},"_id":"7e63156"},{"color_name":"Ebony","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Ebony-EB.png","id":"","size":"","alt":"Ebony","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-eb.jpg","id":"","size":"","alt":"Composite Picket-Ebony","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/08\/eb.jpg","id":"","size":"","alt":"Ebony","source":"url"},"_id":"e5413e2"}];
-            $(document).ready(function() {
-                var app = new Vue({
-                    el: '#colors-c1ea502',
-                    data: {
-                        colors: colors_c1ea502,
-                        color_scene:'',
-                        color_texture:'',
-                        loading:true,
-                        colorActive:''
-                    },
-                    created() {
-                        console.log('colors', this.colors);
-                        this.color_scene = this.colors[0].color_scene.url;
-                        this.color_texture = this.colors[0].color_texture.url;
-                        this.loading = false;
-                        this.colorActive = this.colors[0]._id;
-                    },
-                    methods: {
-                        colorChange(color) {
-                            this.loading = true;
-                            console.log('colorChange', color);
-                            const sceneUrl = color.color_scene.url;
-                            const textureUrl = color.color_texture.url;
-                            this.colorActive = color._id;
-
-                            // 创建两个图片加载 Promise
-                            const loadImage = (url) => {
-                                return new Promise((resolve, reject) => {
-                                    const img = new Image();
-                                    img.src = url;
-                                    img.onload = resolve;
-                                    img.onerror = reject;
-                                });
-                            };
-
-                            // 开始加载
-                            Promise.all([
-                                loadImage(sceneUrl),
-                                loadImage(textureUrl)
-                            ]).then(() => {
-                                // 两张图都加载完后再赋值
-                                this.color_scene = sceneUrl;
-                                this.color_texture = textureUrl;
-                                this.loading = false;
-                            }).catch((error) => {
-                                console.error('图片加载失败', error);
-                                this.loading = false;
-                            });
-                        }
-                    }
-                })
-
-                var swiper = new Swiper('.colors-swiper-c1ea502', {
-                    slidesPerView: 12,
-                    spaceBetween: 10,
-                    // centeredSlides: true,
-                    centerInsufficientSlides: true, 
-                    // loop: true,
-                    // freeMode: true,
-                    // autoplay: {
-                    //     delay: 6000,
-                    //     disableOnInteraction: false,
-                    // },
-                    navigation: {
-                        nextEl: '.right-c1ea502',
-                        prevEl: '.left-c1ea502',
-                    },
-                    breakpoints: {
-                        // 当屏幕宽度 >= 320px
-                        320: {
-                            slidesPerView: 4,
-                        },
-                        // 当屏幕宽度 >= 480px
-                        480: {
-                            slidesPerView: 4,
-                        },
-                        // 当屏幕宽度 >= 768px
-                        768: {
-                            slidesPerView: 6,
-                        },
-                        // 当屏幕宽度 >= 1024px
-                        1024: {
-                            slidesPerView: 8,
-                        },
-                        // 当屏幕宽度 >= 1440px
-                        1440: {
-                            slidesPerView: 12,
-                        }
-                    }
-                });
-            });
-        </script>
+					        <div class="colors-main" id="colors-c1ea502">
+
+            <div class="colors-icons">
+
+                <div class="icon iconfont icon-a-angleleft-B colors-icons-left left-c1ea502"></div>
+
+                <div class="colors-icons-scroll">
+
+                    <!-- <div class="visualizer-icon" v-for="(color,index) in colors">
+
+                        <img :src="color.color_icon.url" alt="">
+
+                    </div> -->
+
+                    <div class="swiper colors-swiper-c1ea502">
+
+                        <div class="swiper-wrapper">
+
+                            <div class="swiper-slide" v-for="(color,index) in colors" @click="colorChange(color)">
+
+                                <div class="colors-icon" :class="{'active':color._id==colorActive}">
+
+                                    <img :src="color.color_icon.url" alt="">
+
+                                </div>
+
+                                <div class="colors-name">{{color.color_name}}</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="icon iconfont icon-a-angleright-B colors-icons-right right-c1ea502"></div>
+
+            </div>
+
+            <div class="colors-images">
+
+                <div class="colors-image-scene">
+
+                    <img :src="color_scene/index.html" alt="">
+
+                </div>
+
+                <div class="colors-image-texture" :style="{ backgroundImage: 'url('+ color_texture +/index.html')' }"></div>
+
+                <div class="colors-loading" v-if="loading">
+
+                    <div class="icon iconfont icon-laoding_1"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <script>
+
+            var $ = jQuery;
+
+            var colors_c1ea502 = [{"_id":"dfd783b","color_name":"Teak","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Teak-TK.png","id":"","size":"","alt":"Teak","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-tk.jpg","id":"","size":"","alt":"Composite Picket-teak","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/07\/tk-6.jpg","id":"","size":"","alt":"Teak","source":"url"}},{"color_name":"lpe","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Ipe-IP.png","id":"","size":"","alt":"Ipe","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-IP-1.jpg","id":"","size":"","alt":"Composite Picket-Ipe","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/08\/ip.jpg","id":"","size":"","alt":"Ipe","source":"url"},"_id":"5fe6d42"},{"color_name":"Silver Gray","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Silver_Gray-SI.png","id":"","size":"","alt":"Silver Gray","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-si-1.jpg","id":"","size":"","alt":"Composite Picket-Silver Gray","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/08\/si.jpg","id":"","size":"","alt":"Silver Gray","source":"url"},"_id":"7e63156"},{"color_name":"Ebony","color_icon":{"url":"\/wp-content\/uploads\/2025\/07\/Ebony-EB.png","id":"","size":"","alt":"Ebony","source":"url"},"color_scene":{"url":"\/wp-content\/uploads\/2025\/08\/Composite-Picket-eb.jpg","id":"","size":"","alt":"Composite Picket-Ebony","source":"url"},"color_texture":{"url":"\/wp-content\/uploads\/2025\/08\/eb.jpg","id":"","size":"","alt":"Ebony","source":"url"},"_id":"e5413e2"}];
+
+            $(document).ready(function() {
+
+                var app = new Vue({
+
+                    el: '#colors-c1ea502',
+
+                    data: {
+
+                        colors: colors_c1ea502,
+
+                        color_scene:'',
+
+                        color_texture:'',
+
+                        loading:true,
+
+                        colorActive:''
+
+                    },
+
+                    created() {
+
+                        console.log('colors', this.colors);
+
+                        this.color_scene = this.colors[0].color_scene.url;
+
+                        this.color_texture = this.colors[0].color_texture.url;
+
+                        this.loading = false;
+
+                        this.colorActive = this.colors[0]._id;
+
+                    },
+
+                    methods: {
+
+                        colorChange(color) {
+
+                            this.loading = true;
+
+                            console.log('colorChange', color);
+
+                            const sceneUrl = color.color_scene.url;
+
+                            const textureUrl = color.color_texture.url;
+
+                            this.colorActive = color._id;
+
+
+
+                            // 创建两个图片加载 Promise
+
+                            const loadImage = (url) => {
+
+                                return new Promise((resolve, reject) => {
+
+                                    const img = new Image();
+
+                                    img.src = url;
+
+                                    img.onload = resolve;
+
+                                    img.onerror = reject;
+
+                                });
+
+                            };
+
+
+
+                            // 开始加载
+
+                            Promise.all([
+
+                                loadImage(sceneUrl),
+
+                                loadImage(textureUrl)
+
+                            ]).then(() => {
+
+                                // 两张图都加载完后再赋值
+
+                                this.color_scene = sceneUrl;
+
+                                this.color_texture = textureUrl;
+
+                                this.loading = false;
+
+                            }).catch((error) => {
+
+                                console.error('图片加载失败', error);
+
+                                this.loading = false;
+
+                            });
+
+                        }
+
+                    }
+
+                })
+
+
+
+                var swiper = new Swiper('.colors-swiper-c1ea502', {
+
+                    slidesPerView: 12,
+
+                    spaceBetween: 10,
+
+                    // centeredSlides: true,
+
+                    centerInsufficientSlides: true, 
+
+                    // loop: true,
+
+                    // freeMode: true,
+
+                    // autoplay: {
+
+                    //     delay: 6000,
+
+                    //     disableOnInteraction: false,
+
+                    // },
+
+                    navigation: {
+
+                        nextEl: '.right-c1ea502',
+
+                        prevEl: '.left-c1ea502',
+
+                    },
+
+                    breakpoints: {
+
+                        // 当屏幕宽度 >= 320px
+
+                        320: {
+
+                            slidesPerView: 4,
+
+                        },
+
+                        // 当屏幕宽度 >= 480px
+
+                        480: {
+
+                            slidesPerView: 4,
+
+                        },
+
+                        // 当屏幕宽度 >= 768px
+
+                        768: {
+
+                            slidesPerView: 6,
+
+                        },
+
+                        // 当屏幕宽度 >= 1024px
+
+                        1024: {
+
+                            slidesPerView: 8,
+
+                        },
+
+                        // 当屏幕宽度 >= 1440px
+
+                        1440: {
+
+                            slidesPerView: 12,
+
+                        }
+
+                    }
+
+                });
+
+            });
+
+        </script>
+
 				</div>
 				</div>
 					</div>

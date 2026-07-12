@@ -148,17 +148,28 @@ gtag("config", "GT-WVG7T9T");
 <link rel='shortlink' href="../query_p_665/index.html?p=665" />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2Fwww.newtechwoodintl.com%2Fvideo-gallery%2F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embed/index.html?url=https%3A%2F%2Fwww.newtechwoodintl.com%2Fvideo-gallery%2F&#038;format=xml" />
-<meta name="generator" content="Site Kit by Google 1.167.0" /><script>
-  window.intercomSettings = {
-    api_base: "https://api-iam.intercom.io",
-    app_id: "a174cd76",
-  };
-</script>
-
-
-<script>
-  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
-  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+<meta name="generator" content="Site Kit by Google 1.167.0" /><script>
+
+  window.intercomSettings = {
+
+    api_base: "https://api-iam.intercom.io",
+
+    app_id: "a174cd76",
+
+  };
+
+</script>
+
+
+
+
+
+<script>
+
+  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/a174cd76'
+
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/a174cd76';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+
 </script><meta name="generator" content="Elementor 3.33.2; features: e_font_icon_svg, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
 			<style>
 				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
@@ -495,167 +506,328 @@ gtag("config", "GT-WVG7T9T");
 		<div class="elementor-element elementor-element-feb9fc8 e-con-full real-full-width e-flex e-con e-parent" data-id="feb9fc8" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 				<div class="elementor-element elementor-element-71124c1 elementor-widget__width-inherit real-full-width elementor-widget elementor-widget-Logic_Widget_Videos" data-id="71124c1" data-element_type="widget" data-widget_type="Logic_Widget_Videos.default">
 				<div class="elementor-widget-container">
-					        <!-- 2. Masonry 核心 -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
-        <!-- 3. vue-masonry window 版 -->
-        <script src="https://unpkg.com/vue-masonry@0.11.3/dist/vue-masonry-plugin-window.js"></script>
-        
-        <div class="videos" id="gallery-71124c1">
-            <div class="gallery-filter">
-                <div class="main-width gallery-filter-center">
-                    <div class="filter-button"@click="setCategories()">
-                        <i class="icon iconfont icon-Filter"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="main-width gallery-main" style="min-height: 640px;">
-                <div class="cates" v-for="(cate,index) in categories" :id="cate.slug">
-                    <div class="video_titles">
-                        <div class="title"><h2>{{cate.name}}</h2></div>
-                    </div>
-                    <div class="videos">
-                        <div class="video" v-for="(video,i) in cate.videos" :data-show-video="'https://www.youtube-nocookie.com/embed/'+video.video_id+'?autoplay=1&autohide=1&fs=1&rel=0&hd=1&wmode=transparent&enablejsapi=1&html5=1'" :data-show-title="video.post_title">
-                            <div class="video-img">
-                                <img :src="video.imageUrl" alt="">
-                            </div>
-                            <div class="video-title">{{video.post_title}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-categories" :class="{'active': showCategories}">
-                <div class="close" @click="setCategories()">
-                    <span class="filter_title_text">Filter</span>
-                    <i class="icon iconfont icon-close"></i>
-                </div>
-                <div class="categories">
-                    <!-- <div class="category" :class="{'active': inCategory==0}" @click="chanageCategory(0)">All</div> -->
-                    <div class="category" :class="{'active': inCategory==cate.term_id}" @click="chanageCategory(cate)" v-for="(cate,index) in categories">{{cate.name}}</div>
-                </div>
-            </div>
-        </div>
-        
-        <script>
-            var $ = jQuery;
-            var categories = [{"term_id":34,"name":"Exhibition and Public Media","slug":"exhibition-and-public-media","term_group":0,"term_taxonomy_id":34,"taxonomy":"videos_category","description":"","parent":0,"count":6,"filter":"raw","videos":[]},{"term_id":33,"name":"Decking","slug":"composite-decking","term_group":0,"term_taxonomy_id":33,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":29,"name":"Cladding","slug":"composite-siding","term_group":0,"term_taxonomy_id":29,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":32,"name":"Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":32,"taxonomy":"videos_category","description":"","parent":0,"count":9,"filter":"raw","videos":[]},{"term_id":30,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":30,"taxonomy":"videos_category","description":"","parent":0,"count":4,"filter":"raw","videos":[]},{"term_id":31,"name":"Deep Dive","slug":"deep-dive","term_group":0,"term_taxonomy_id":31,"taxonomy":"videos_category","description":"","parent":0,"count":5,"filter":"raw","videos":[]}];
-            var categories_71124c1 = [{"term_id":34,"name":"Exhibition and Public Media","slug":"exhibition-and-public-media","term_group":0,"term_taxonomy_id":34,"taxonomy":"videos_category","description":"","parent":0,"count":6,"filter":"raw","videos":[]},{"term_id":33,"name":"Decking","slug":"composite-decking","term_group":0,"term_taxonomy_id":33,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":29,"name":"Cladding","slug":"composite-siding","term_group":0,"term_taxonomy_id":29,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":32,"name":"Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":32,"taxonomy":"videos_category","description":"","parent":0,"count":9,"filter":"raw","videos":[]},{"term_id":30,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":30,"taxonomy":"videos_category","description":"","parent":0,"count":4,"filter":"raw","videos":[]},{"term_id":31,"name":"Deep Dive","slug":"deep-dive","term_group":0,"term_taxonomy_id":31,"taxonomy":"videos_category","description":"","parent":0,"count":5,"filter":"raw","videos":[]}];
-            
-            $(document).ready(function() {
-                const VueMasonryPlugin = window['vue-masonry-plugin'].VueMasonryPlugin;
-                Vue.use(VueMasonryPlugin);
-                var app = new Vue({
-                    el: '#gallery-71124c1',
-                    data: {
-                        categories: categories_71124c1,
-                        images:[],
-                        loading: true,
-                        showCategories: false,
-                        inCategory:0,
-                        page:1,
-                        perPage:10,
-                        isend:false,
-                    },
-                    created() {
-                        console.log('categories', this.categories);
-                        this.initImages();
-                    },
-                    mounted() {
-                        window.addEventListener('resize', this.handleResize);
-                        window.addEventListener('scroll', this.checkScrollToBottom);
-                    },
-                    beforeDestroy() {
-                        window.removeEventListener('resize', this.handleResize);
-                        window.removeEventListener('scroll', this.checkScrollToBottom);
-                    },
-                    methods: {
-                        goTop(){
-                            $('html,body').animate({scrollTop:0},500);
-                        },
-                        handleResize() {
-
-                        },
-                        setCategories(){
-                            console.log('setCategories',this.showCategories);
-                            this.showCategories = !this.showCategories;
-                        },
-                        chanageCategory(cate){
-                            this.inCategory = cate.term_id;
-                            //页面平滑滚动到html锚点
-                            const target = document.getElementById(cate.slug);
-                            if (target) {
-                                const offset = 210; // 距离顶部偏移量，单位 px（比如导航栏高度）
-                                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-
-                                window.scrollTo({
-                                top: top,
-                                behavior: 'smooth'
-                                });
-                            }
-                            this.showCategories = false;
-                        },
-                        initImages(){
-                            var that = this
-                            if(this.isend){
-                                return;
-                            }
-                            this.loading = true;
-                            //发起get请求/wp-json/newtechwood/v1/gallery
-                            var url = '/wp-json/newtechwood/v1/videos';
-
-                            var params = {
-                                cate_id:this.inCategory,
-                                page:this.page,
-                                per_page:this.perPage
-                            }
-                            $.get(url, params, function(res) {
-                                console.log('res', res.datas);
-                                const videos = res.datas;
-                                if(videos.length > 0){
-                                    videos.map((item,index,arr)=>{
-                                        item.imageUrl = 'https://img.youtube.com/vi/'+item.video_id+'/maxresdefault.jpg';
-                                        if(item.thumbnail){
-                                            item.imageUrl = item.thumbnail;
-                                        }
-                                        if(item.terms.length > 0){
-                                            that.checkCategory(item)
-                                        }
-                                    })
-                                    console.log('that.categories', that.categories);
-                                }
-
-                            }, 'json');
-                        },
-                        checkCategory(video){
-                            var inCate = false;
-                            var that = this;
-                            that.categories.map((cate,i,a)=>{
-                                if(!cate.videos){
-                                        that.categories[i].videos = [];
-                                }
-                                if(video.terms.length > 0){
-                                    video.terms.map((item,index,arr)=>{
-                                        if(item.term_id == cate.term_id){
-                                            inCate = true;
-                                            that.categories[i].videos.push(video);
-                                        }
-                                    })
-                                }
-                            })
-                            return inCate;
-                        },
-                        checkScrollToBottom() {
- 
-                        },
-                        onScrollToBottom() {
-       
-                        }
-                    }
-                })
-            })
-            
-
-            
-        </script>  
+					        <!-- 2. Masonry 核心 -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+
+        <!-- 3. vue-masonry window 版 -->
+
+        <script src="https://unpkg.com/vue-masonry@0.11.3/dist/vue-masonry-plugin-window.js"></script>
+
+        
+
+        <div class="videos" id="gallery-71124c1">
+
+            <div class="gallery-filter">
+
+                <div class="main-width gallery-filter-center">
+
+                    <div class="filter-button"@click="setCategories()">
+
+                        <i class="icon iconfont icon-Filter"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="main-width gallery-main" style="min-height: 640px;">
+
+                <div class="cates" v-for="(cate,index) in categories" :id="cate.slug">
+
+                    <div class="video_titles">
+
+                        <div class="title"><h2>{{cate.name}}</h2></div>
+
+                    </div>
+
+                    <div class="videos">
+
+                        <div class="video" v-for="(video,i) in cate.videos" :data-show-video="'https://www.youtube-nocookie.com/embed/'+video.video_id+'?autoplay=1&autohide=1&fs=1&rel=0&hd=1&wmode=transparent&enablejsapi=1&html5=1'" :data-show-title="video.post_title">
+
+                            <div class="video-img">
+
+                                <img :src="video.imageUrl" alt="">
+
+                            </div>
+
+                            <div class="video-title">{{video.post_title}}</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="gallery-categories" :class="{'active': showCategories}">
+
+                <div class="close" @click="setCategories()">
+
+                    <span class="filter_title_text">Filter</span>
+
+                    <i class="icon iconfont icon-close"></i>
+
+                </div>
+
+                <div class="categories">
+
+                    <!-- <div class="category" :class="{'active': inCategory==0}" @click="chanageCategory(0)">All</div> -->
+
+                    <div class="category" :class="{'active': inCategory==cate.term_id}" @click="chanageCategory(cate)" v-for="(cate,index) in categories">{{cate.name}}</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <script>
+
+            var $ = jQuery;
+
+            var categories = [{"term_id":34,"name":"Exhibition and Public Media","slug":"exhibition-and-public-media","term_group":0,"term_taxonomy_id":34,"taxonomy":"videos_category","description":"","parent":0,"count":6,"filter":"raw","videos":[]},{"term_id":33,"name":"Decking","slug":"composite-decking","term_group":0,"term_taxonomy_id":33,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":29,"name":"Cladding","slug":"composite-siding","term_group":0,"term_taxonomy_id":29,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":32,"name":"Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":32,"taxonomy":"videos_category","description":"","parent":0,"count":9,"filter":"raw","videos":[]},{"term_id":30,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":30,"taxonomy":"videos_category","description":"","parent":0,"count":4,"filter":"raw","videos":[]},{"term_id":31,"name":"Deep Dive","slug":"deep-dive","term_group":0,"term_taxonomy_id":31,"taxonomy":"videos_category","description":"","parent":0,"count":5,"filter":"raw","videos":[]}];
+
+            var categories_71124c1 = [{"term_id":34,"name":"Exhibition and Public Media","slug":"exhibition-and-public-media","term_group":0,"term_taxonomy_id":34,"taxonomy":"videos_category","description":"","parent":0,"count":6,"filter":"raw","videos":[]},{"term_id":33,"name":"Decking","slug":"composite-decking","term_group":0,"term_taxonomy_id":33,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":29,"name":"Cladding","slug":"composite-siding","term_group":0,"term_taxonomy_id":29,"taxonomy":"videos_category","description":"","parent":0,"count":8,"filter":"raw","videos":[]},{"term_id":32,"name":"Tiles","slug":"deck-tiles","term_group":0,"term_taxonomy_id":32,"taxonomy":"videos_category","description":"","parent":0,"count":9,"filter":"raw","videos":[]},{"term_id":30,"name":"Railing","slug":"railing","term_group":0,"term_taxonomy_id":30,"taxonomy":"videos_category","description":"","parent":0,"count":4,"filter":"raw","videos":[]},{"term_id":31,"name":"Deep Dive","slug":"deep-dive","term_group":0,"term_taxonomy_id":31,"taxonomy":"videos_category","description":"","parent":0,"count":5,"filter":"raw","videos":[]}];
+
+            
+
+            $(document).ready(function() {
+
+                const VueMasonryPlugin = window['vue-masonry-plugin'].VueMasonryPlugin;
+
+                Vue.use(VueMasonryPlugin);
+
+                var app = new Vue({
+
+                    el: '#gallery-71124c1',
+
+                    data: {
+
+                        categories: categories_71124c1,
+
+                        images:[],
+
+                        loading: true,
+
+                        showCategories: false,
+
+                        inCategory:0,
+
+                        page:1,
+
+                        perPage:10,
+
+                        isend:false,
+
+                    },
+
+                    created() {
+
+                        console.log('categories', this.categories);
+
+                        this.initImages();
+
+                    },
+
+                    mounted() {
+
+                        window.addEventListener('resize', this.handleResize);
+
+                        window.addEventListener('scroll', this.checkScrollToBottom);
+
+                    },
+
+                    beforeDestroy() {
+
+                        window.removeEventListener('resize', this.handleResize);
+
+                        window.removeEventListener('scroll', this.checkScrollToBottom);
+
+                    },
+
+                    methods: {
+
+                        goTop(){
+
+                            $('html,body').animate({scrollTop:0},500);
+
+                        },
+
+                        handleResize() {
+
+
+
+                        },
+
+                        setCategories(){
+
+                            console.log('setCategories',this.showCategories);
+
+                            this.showCategories = !this.showCategories;
+
+                        },
+
+                        chanageCategory(cate){
+
+                            this.inCategory = cate.term_id;
+
+                            //页面平滑滚动到html锚点
+
+                            const target = document.getElementById(cate.slug);
+
+                            if (target) {
+
+                                const offset = 210; // 距离顶部偏移量，单位 px（比如导航栏高度）
+
+                                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+
+
+                                window.scrollTo({
+
+                                top: top,
+
+                                behavior: 'smooth'
+
+                                });
+
+                            }
+
+                            this.showCategories = false;
+
+                        },
+
+                        initImages(){
+
+                            var that = this
+
+                            if(this.isend){
+
+                                return;
+
+                            }
+
+                            this.loading = true;
+
+                            //发起get请求/wp-json/newtechwood/v1/gallery
+
+                            var url = '/wp-json/newtechwood/v1/videos';
+
+
+
+                            var params = {
+
+                                cate_id:this.inCategory,
+
+                                page:this.page,
+
+                                per_page:this.perPage
+
+                            }
+
+                            $.get(url, params, function(res) {
+
+                                console.log('res', res.datas);
+
+                                const videos = res.datas;
+
+                                if(videos.length > 0){
+
+                                    videos.map((item,index,arr)=>{
+
+                                        item.imageUrl = 'https://img.youtube.com/vi/'+item.video_id+'/maxresdefault.jpg';
+
+                                        if(item.thumbnail){
+
+                                            item.imageUrl = item.thumbnail;
+
+                                        }
+
+                                        if(item.terms.length > 0){
+
+                                            that.checkCategory(item)
+
+                                        }
+
+                                    })
+
+                                    console.log('that.categories', that.categories);
+
+                                }
+
+
+
+                            }, 'json');
+
+                        },
+
+                        checkCategory(video){
+
+                            var inCate = false;
+
+                            var that = this;
+
+                            that.categories.map((cate,i,a)=>{
+
+                                if(!cate.videos){
+
+                                        that.categories[i].videos = [];
+
+                                }
+
+                                if(video.terms.length > 0){
+
+                                    video.terms.map((item,index,arr)=>{
+
+                                        if(item.term_id == cate.term_id){
+
+                                            inCate = true;
+
+                                            that.categories[i].videos.push(video);
+
+                                        }
+
+                                    })
+
+                                }
+
+                            })
+
+                            return inCate;
+
+                        },
+
+                        checkScrollToBottom() {
+
+ 
+
+                        },
+
+                        onScrollToBottom() {
+
+       
+
+                        }
+
+                    }
+
+                })
+
+            })
+
+            
+
+
+
+            
+
+        </script>  
+
         				</div>
 				</div>
 				</div>
@@ -740,26 +912,46 @@ gtag("config", "GT-WVG7T9T");
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/hello-elementor\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
-		<script type="text/javascript">
-			document.addEventListener("DOMContentLoaded", function() {
-				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
-					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
-				}
-			});
-		</script>
-		
-    <div class="show-box">
-        <div class="close">
-            <i class="icon iconfont icon-close close-show-box"></i>
-        </div>
-        <div class="show-div">
-            <img src="" alt="">
-            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
-        </div>
-        <div class="show-title"></div>
-    </div>
-    <!--引入-->
-    <script src="/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
+		<script type="text/javascript">
+
+			document.addEventListener("DOMContentLoaded", function() {
+
+				if ( ! document.cookie.includes("wpcf7_guest_user_id")) {
+
+					document.cookie = "wpcf7_guest_user_id=" + crypto.randomUUID() + "; path=/; max-age=" + (12 * 3600) + "; samesite=Lax";
+
+				}
+
+			});
+
+		</script>
+
+		
+
+    <div class="show-box">
+
+        <div class="close">
+
+            <i class="icon iconfont icon-close close-show-box"></i>
+
+        </div>
+
+        <div class="show-div">
+
+            <img src="" alt="">
+
+            <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" scrolling="no" title=""></iframe>
+
+        </div>
+
+        <div class="show-title"></div>
+
+    </div>
+
+    <!--引入-->
+
+    <script src="https://www.newtechwoodintl.com/wp-content/plugins/newtechwood/assets/js/newtechwood.js"></script>
+
     			<script>
 				const lazyloadRunObserver = () => {
 					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
