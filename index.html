@@ -273,6 +273,358 @@ gtag("config", "GT-WVG7T9T");
 <link rel="icon" href="https://www.newtechwoodintl.com/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" sizes="192x192" />
 <link rel="apple-touch-icon" href="https://www.newtechwoodintl.com/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" />
 <meta name="msapplication-TileImage" content="https://www.newtechwoodintl.com/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style id="ll-premium-styles">
+  /* ==========================================
+     LUMBER LIFE / NEWTECH INDIA PREMIUM STYLES
+     ========================================== */
+
+  :root {
+    --ll-green: #2d6a2d;
+    --ll-green-light: #4a9e4a;
+    --ll-gold: #c9a84c;
+    --ll-dark: #1a1a1a;
+    --ll-bg: #f8f6f1;
+    --ll-white: #ffffff;
+    --ll-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    --ll-radius: 16px;
+    --ll-transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* --- Experience Centre Section --- */
+  .ll-experience-centre {
+    background: linear-gradient(135deg, #0d2b0d 0%, #1a4a1a 50%, #0d2b0d 100%);
+    padding: 80px 20px;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .ll-experience-centre::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ll-experience-centre::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(74,158,74,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ll-ec-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .ll-ec-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .ll-ec-eyebrow {
+    display: inline-block;
+    background: rgba(201,168,76,0.18);
+    color: var(--ll-gold);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    border: 1px solid rgba(201,168,76,0.3);
+    margin-bottom: 20px;
+  }
+  .ll-ec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--ll-white);
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+  .ll-ec-title span {
+    color: var(--ll-gold);
+  }
+  .ll-ec-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .ll-ec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .ll-ec-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: var(--ll-radius);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--ll-transition);
+    backdrop-filter: blur(8px);
+  }
+  .ll-ec-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(201,168,76,0.40);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.25);
+  }
+  .ll-ec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ll-gold), var(--ll-green-light));
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .ll-ec-card:hover::before {
+    opacity: 1;
+  }
+  .ll-ec-card.coming-soon {
+    opacity: 0.60;
+  }
+  .ll-ec-card.coming-soon:hover {
+    opacity: 0.75;
+    transform: none;
+  }
+  .ll-ec-city-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ll-gold);
+    margin-bottom: 16px;
+  }
+  .ll-ec-city-badge svg {
+    width: 10px;
+    height: 10px;
+    fill: currentColor;
+  }
+  .ll-ec-card-city {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ll-white);
+    margin: 0 0 6px;
+  }
+  .ll-ec-card-partner {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ll-green-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .ll-ec-card-address {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+    min-height: 60px;
+  }
+  .ll-ec-coming-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.50);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 12px;
+  }
+  .ll-ec-divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ll-gold), transparent);
+    margin: 14px 0 16px;
+  }
+
+  /* --- 2015 History Highlight (Split Layout) --- */
+  .ll-history-highlight {
+    background-color: #fbfaf8;
+    padding: 80px 20px;
+    font-family: 'Inter', sans-serif;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .ll-hh-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .ll-hh-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .ll-hh-img-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: var(--ll-transition);
+  }
+  .ll-hh-img-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  }
+  .ll-hh-img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .ll-hh-content {
+    padding-left: 10px;
+  }
+  .ll-hh-tag {
+    display: inline-block;
+    color: var(--ll-green);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    position: relative;
+    padding-left: 24px;
+  }
+  .ll-hh-tag::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 2px;
+    background: var(--ll-gold);
+  }
+  .ll-hh-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--ll-dark);
+    line-height: 1.25;
+    margin: 0 0 18px;
+  }
+  .ll-hh-desc {
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.7;
+    margin: 0 0 28px;
+  }
+  .ll-hh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ll-green);
+    color: var(--ll-white) !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 100px;
+    transition: var(--ll-transition);
+    box-shadow: 0 4px 15px rgba(45,106,45,0.15);
+  }
+  .ll-hh-btn:hover {
+    background: #204b20;
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px rgba(45,106,45,0.25);
+  }
+
+  /* --- Footer Lumber Life Block --- */
+  .ll-footer-brand {
+    background: linear-gradient(135deg, #0a1f0a 0%, #142814 100%);
+    padding: 40px 40px 32px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Inter', sans-serif;
+  }
+  .ll-footer-brand img {
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+  }
+  .ll-footer-brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ll-footer-brand-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ll-gold);
+    opacity: 0.85;
+  }
+  .ll-footer-brand-address {
+    font-size: 13px;
+    color: rgba(255,255,255,0.70);
+    line-height: 1.6;
+  }
+  .ll-footer-brand-contact {
+    font-size: 13px;
+    color: rgba(255,255,255,0.70);
+    line-height: 1.6;
+  }
+  .ll-footer-brand-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* --- General Premium Tweaks --- */
+  .elementor-section, .e-con {
+    font-family: 'Inter', 'Muli', sans-serif;
+  }
+
+  @media (max-width: 991px) {
+    .ll-hh-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .ll-hh-content {
+      padding-left: 0;
+      text-align: center;
+    }
+    .ll-hh-tag {
+      padding-left: 0;
+    }
+    .ll-hh-tag::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ll-experience-centre { padding: 56px 16px; }
+    .ll-ec-grid { grid-template-columns: 1fr; }
+    .ll-footer-brand { padding: 28px 24px; }
+  }
+</style>
 </head>
 <body class="home wp-singular page-template page-template-elementor_header_footer page page-id-10 wp-custom-logo wp-embed-responsive wp-theme-hello-elementor hello-elementor-default elementor-default elementor-template-full-width elementor-kit-7 elementor-page elementor-page-10">
 
@@ -293,8 +645,6 @@ gtag("config", "GT-WVG7T9T");
 									<p><a href="/blog/category/faqs/">FAQ</a></p>								</div>
 				<div class="elementor-element elementor-element-2079cce elementor-widget elementor-widget-text-editor" data-id="2079cce" data-element_type="widget" data-widget_type="text-editor.default">
 									<p><a href="/blog/category/blog/">Blogs</a></p>								</div>
-				<div class="elementor-element elementor-element-41abd95 elementor-widget elementor-widget-text-editor" data-id="41abd95" data-element_type="widget" data-widget_type="text-editor.default">
-									<p><a href="/blog/category/exhibitions/">Exhibitions</a></p>								</div>
 				</div>
 				</div>
 		<div class="elementor-element elementor-element-a9e1494 e-flex e-con-boxed e-con e-child" data-id="a9e1494" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
@@ -491,7 +841,7 @@ gtag("config", "GT-WVG7T9T");
 								<span class="icon-inactive"><svg xmlns="http://www.w3.org/2000/svg" id="_&#x56FE;&#x5C42;_1" data-name="&#x56FE;&#x5C42; 1" viewBox="0 0 23.36 27.29"><path d="M11.68,0C5.23,0,0,5.31,0,11.85c0,6.04,6.67,12.18,9.93,14.82,1.02.83,2.48.83,3.51,0,3.26-2.64,9.92-8.78,9.92-14.82C23.36,5.31,18.13,0,11.68,0ZM11.68,16.89c-2.98,0-5.4-2.41-5.4-5.39s2.42-5.4,5.4-5.4,5.4,2.42,5.4,5.4-2.42,5.39-5.4,5.39Z" fill="#333" stroke-width="0"></path></svg></span>
 							</span>
 												<span class="e-n-menu-title-text">
-							FIND A DISTRIBUTOR						</span>
+							EXPERIENCE CENTRE						</span>
 					</a>									</div>
 							</li>
 						</ul>
@@ -1205,6 +1555,121 @@ gtag("config", "GT-WVG7T9T");
 					</div>
 				</div>
 				</div>
+
+	<!-- ======================================================
+	     2015 HISTORY HIGHLIGHT — Global Distributors Conference
+	     ====================================================== -->
+	<section class="ll-history-highlight" id="history-2015" aria-label="NewTechWood 2015 Milestone">
+	  <div class="ll-hh-inner">
+	    <div class="ll-hh-grid">
+	      <div class="ll-hh-img-container">
+	        <img src="wp-content/uploads/distributors-conference-2015.png" alt="Global Distributors Conference 2015 — NewTechWood" loading="lazy" />
+	      </div>
+	      <div class="ll-hh-content">
+	        <span class="ll-hh-tag">2015 Milestone</span>
+	        <h2 class="ll-hh-title">Global Distributors Conference</h2>
+	        <p class="ll-hh-desc">NewTechWood hosted its milestone Global Distributors Conference, strengthening collaboration with international partners, sharing future product roadmaps, and cementing our commitment to providing cutting-edge outdoor composite wood solutions worldwide.</p>
+	        <a href="/history/" class="ll-hh-btn">
+	          Explore Our Journey
+	          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+	        </a>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+	<!-- ======================================================
+	     EXPERIENCE CENTRE SECTION
+	     ====================================================== -->
+	<section class="ll-experience-centre" id="experience-centre" aria-label="Experience Centres across India">
+	  <div class="ll-ec-inner">
+	    <div class="ll-ec-header">
+	      <div class="ll-ec-eyebrow">&#x2706; Visit Us In Person</div>
+	      <h2 class="ll-ec-title">Our <span>Experience Centres</span></h2>
+	      <p class="ll-ec-subtitle">Touch, feel, and explore NewTechWood's premium composite products at our experience centres across India.</p>
+	    </div>
+	    <div class="ll-ec-grid">
+
+	      <!-- Nagpur -->
+	      <div class="ll-ec-card">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Nagpur
+	        </div>
+	        <h3 class="ll-ec-card-city">Nagpur</h3>
+	        <div class="ll-ec-card-partner">Lumber Life</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">[Lumber Life Address &amp; Contact — to be filled]</p>
+	      </div>
+
+	      <!-- Bengaluru -->
+	      <div class="ll-ec-card">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Bengaluru
+	        </div>
+	        <h3 class="ll-ec-card-city">Bengaluru</h3>
+	        <div class="ll-ec-card-partner">Aaren Intpro</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">[Aaren Intpro Address &amp; Contact — to be filled]</p>
+	      </div>
+
+	      <!-- Delhi -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Delhi
+	        </div>
+	        <h3 class="ll-ec-card-city">Delhi</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Details coming soon. Stay tuned for our upcoming Experience Centre in the capital.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	      <!-- Mumbai -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Mumbai
+	        </div>
+	        <h3 class="ll-ec-card-city">Mumbai</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Our Mumbai Experience Centre is coming. We look forward to welcoming you soon.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	      <!-- Pune -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Pune
+	        </div>
+	        <h3 class="ll-ec-card-city">Pune</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Opening soon — Pune's first NewTechWood Experience Centre.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	      <!-- Chennai -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Chennai
+	        </div>
+	        <h3 class="ll-ec-card-city">Chennai</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Watch this space — Chennai Experience Centre coming soon.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	    </div><!-- /ll-ec-grid -->
+	  </div><!-- /ll-ec-inner -->
+	</section>
+
 				<footer data-elementor-type="footer" data-elementor-id="272" class="elementor elementor-272 elementor-location-footer" data-elementor-post-type="elementor_library">
 			<div class="elementor-element elementor-element-c708bca e-flex e-con-boxed e-con e-parent" data-id="c708bca" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 					<div class="e-con-inner">
@@ -1231,8 +1696,20 @@ gtag("config", "GT-WVG7T9T");
 				<div class="elementor-element elementor-element-c9625d2 elementor-widget elementor-widget-heading" data-id="c9625d2" data-element_type="widget" data-widget_type="heading.default">
 					<h5 class="elementor-heading-title elementor-size-default">Contact</h5>				</div>
 				<div class="elementor-element elementor-element-0c8c31b elementor-widget elementor-widget-text-editor" data-id="0c8c31b" data-element_type="widget" data-widget_type="text-editor.default">
-									<p><a href="/contact-us/">Contact us</a></p><p><a href="/locations/">Find a Distributor</a></p>								</div>
+									<p><a href="/contact-us/">Contact us</a></p><p><a href="/locations/">Experience Centre</a></p>								</div>
 				</div>
+		<!-- Lumber Life Branding Block -->
+		<div class="e-con-full e-flex e-con e-child" style="min-width:260px;">
+		  <div class="ll-footer-brand">
+		    <img src="wp-content/uploads/lumber-life-logo.png" alt="Lumber Life - Delivering Nature" onerror="this.style.display='none'" />
+		    <div class="ll-footer-brand-divider"></div>
+		    <div class="ll-footer-brand-info">
+		      <span class="ll-footer-brand-label">Experience Centre — Nagpur</span>
+		      <span class="ll-footer-brand-address">[Lumber Life Address — to be filled]</span>
+		      <span class="ll-footer-brand-contact">[Phone &amp; Email — to be filled]</span>
+		    </div>
+		  </div>
+		</div>
 		<div class="elementor-element elementor-element-416c4f0 e-con-full e-flex e-con e-child" data-id="416c4f0" data-element_type="container">
 				<div class="elementor-element elementor-element-6f9b124 e-grid-align-right e-grid-align-mobile-center elementor-shape-rounded elementor-grid-0 elementor-widget elementor-widget-social-icons" data-id="6f9b124" data-element_type="widget" data-widget_type="social-icons.default">
 							<div class="elementor-social-icons-wrapper elementor-grid" role="list">
