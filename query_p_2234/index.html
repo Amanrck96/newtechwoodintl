@@ -160,11 +160,9 @@ gtag("config", "GT-WVG7T9T");
 <meta name="generator" content="Site Kit by Google 1.167.0" /><script>
 
   window.intercomSettings = {
-
     api_base: "https://api-iam.intercom.io",
-
     app_id: "a174cd76",
-
+    hide_default_launcher: true
   };
 
 </script>
@@ -753,5 +751,10 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/
 <script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.32.1" id="elementor-pro-frontend-js"></script>
 <script src="https://www.newtechwoodintl.com/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.32.1" id="pro-elements-handlers-js"></script>
 
+
+	<!-- Custom Floating Intercom Messenger Trigger -->
+	<div id="custom-intercom-launcher" style="position:fixed;bottom:24px;right:24px;z-index:9999;cursor:pointer;background:#fff;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,0.15);width:60px;height:60px;display:flex;align-items:center;justify-content:center;transition:transform 0.2s ease,box-shadow 0.2s ease;" onclick="if(window.Intercom){Intercom('show');}" onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
+	  <img src="/wp-content/uploads/lumber-life-logo.png" alt="Lumber Life" style="width:38px;height:38px;object-fit:contain;" />
+	</div>
 </body>
 </html>
