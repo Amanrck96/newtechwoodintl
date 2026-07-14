@@ -8,13 +8,13 @@
 	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
 	
 	<!-- This site is optimized with the Yoast SEO plugin v25.7 - https://yoast.com/wordpress/plugins/seo/ -->
-	<title>Find a Distributor - NewTechWood</title>
-	<meta name="description" content="Locate authorized NewTechWood distributors worldwide! Easily find local suppliers for our products—simply select your location." />
+	<title>Experience Centre - NewTechWood</title>
+	<meta name="description" content="Explore NewTechWood's Experience Centres across India. Visit our partner locations in Nagpur, Bengaluru, Delhi, Mumbai, Pune, and Chennai." />
 	<link rel="canonical" href="index.html" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:type" content="article" />
-	<meta property="og:title" content="Find a Distributor - NewTechWood" />
-	<meta property="og:description" content="Locate authorized NewTechWood distributors worldwide! Easily find local suppliers for our products—simply select your location." />
+	<meta property="og:title" content="Experience Centre - NewTechWood" />
+	<meta property="og:description" content="Explore NewTechWood's Experience Centres across India. Visit our partner locations in Nagpur, Bengaluru, Delhi, Mumbai, Pune, and Chennai." />
 	<meta property="og:url" content="https://www.newtechwoodintl.com/locations/" />
 	<meta property="og:site_name" content="NewTechWood" />
 	<meta property="article:publisher" content="https://www.facebook.com/NewTechWood/" />
@@ -84,6 +84,242 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 	font-weight: 900;
 	src: url('../wp-content/uploads/2025/08/Butler-Black-8.otf') format('OpenType');
 }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style id="ll-premium-styles">
+  :root {
+    --ll-green: #2d6a2d;
+    --ll-green-light: #4a9e4a;
+    --ll-gold: #c9a84c;
+    --ll-dark: #1a1a1a;
+    --ll-bg: #f8f6f1;
+    --ll-white: #ffffff;
+    --ll-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    --ll-radius: 16px;
+    --ll-transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* --- Experience Centre Section --- */
+  .ll-experience-centre {
+    background: linear-gradient(135deg, #0d2b0d 0%, #1a4a1a 50%, #0d2b0d 100%);
+    padding: 100px 20px;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+  }
+  .ll-experience-centre::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ll-experience-centre::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(74,158,74,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .ll-ec-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  .ll-ec-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .ll-ec-eyebrow {
+    display: inline-block;
+    background: rgba(201,168,76,0.18);
+    color: var(--ll-gold);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    border: 1px solid rgba(201,168,76,0.3);
+    margin-bottom: 20px;
+  }
+  .ll-ec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    color: var(--ll-white);
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+  .ll-ec-title span {
+    color: var(--ll-gold);
+  }
+  .ll-ec-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .ll-ec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+  }
+  .ll-ec-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: var(--ll-radius);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--ll-transition);
+    backdrop-filter: blur(8px);
+  }
+  .ll-ec-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(201,168,76,0.40);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.25);
+  }
+  .ll-ec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ll-gold), var(--ll-green-light));
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .ll-ec-card:hover::before {
+    opacity: 1;
+  }
+  .ll-ec-card.coming-soon {
+    opacity: 0.60;
+  }
+  .ll-ec-card.coming-soon:hover {
+    opacity: 0.75;
+    transform: none;
+  }
+  .ll-ec-city-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ll-gold);
+    margin-bottom: 20px;
+  }
+  .ll-ec-city-badge svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+  .ll-ec-card-city {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ll-white);
+    margin: 0 0 6px;
+  }
+  .ll-ec-card-partner {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ll-green-light);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+  }
+  .ll-ec-card-address {
+    font-size: 15px;
+    color: rgba(255,255,255,0.70);
+    line-height: 1.7;
+    min-height: 60px;
+  }
+  .ll-ec-coming-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.50);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 16px;
+  }
+  .ll-ec-divider {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ll-gold), transparent);
+    margin: 18px 0 20px;
+  }
+
+  /* --- Footer Lumber Life Block --- */
+  .ll-footer-brand {
+    background: linear-gradient(135deg, #0a1f0a 0%, #142814 100%);
+    padding: 40px 40px 32px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Inter', sans-serif;
+  }
+  .ll-footer-brand img {
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+  }
+  .ll-footer-brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ll-footer-brand-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ll-gold);
+    opacity: 0.85;
+  }
+  .ll-footer-brand-address {
+    font-size: 13px;
+    color: rgba(255,255,255,0.70);
+    line-height: 1.6;
+  }
+  .ll-footer-brand-contact {
+    font-size: 13px;
+    color: rgba(255,255,255,0.70);
+    line-height: 1.6;
+  }
+  .ll-footer-brand-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  @media (max-width: 768px) {
+    .ll-experience-centre { padding: 60px 16px; }
+    .ll-ec-grid { grid-template-columns: 1fr; }
+    .ll-footer-brand { padding: 28px 24px; }
+  }
 </style>
 <style id='wp-emoji-styles-inline-css'>
 
@@ -210,8 +446,7 @@ gtag("config", "GT-WVG7T9T");
 									<p><a href="../blog/category/faqs/index.html">FAQ</a></p>								</div>
 				<div class="elementor-element elementor-element-2079cce elementor-widget elementor-widget-text-editor" data-id="2079cce" data-element_type="widget" data-widget_type="text-editor.default">
 									<p><a href="../blog/category/blog/index.html">Blogs</a></p>								</div>
-				<div class="elementor-element elementor-element-41abd95 elementor-widget elementor-widget-text-editor" data-id="41abd95" data-element_type="widget" data-widget_type="text-editor.default">
-									<p><a href="../blog/category/exhibitions/index.html">Exhibitions</a></p>								</div>
+
 				</div>
 				</div>
 		<div class="elementor-element elementor-element-a9e1494 e-flex e-con-boxed e-con e-child" data-id="a9e1494" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
@@ -221,7 +456,7 @@ gtag("config", "GT-WVG7T9T");
 			<img src="../wp-content/uploads/2025/07/newtechwood-site-logo.svg" class="attachment-full size-full wp-image-13" alt="NewTechWood" />				</a>
 											</div>
 		<div class="elementor-element elementor-element-440c307 e-con-full e-flex e-con e-child" data-id="440c307" data-element_type="container">
-				<div class="elementor-element elementor-element-b14dd59 elementor-widget-tablet__width-initial e-full_width e-n-menu-layout-horizontal e-n-menu-tablet elementor-widget elementor-widget-n-menu" data-id="b14dd59" data-element_type="widget" data-settings="{&quot;menu_items&quot;:[{&quot;item_title&quot;:&quot;WHY NEWTECHWOOD?&quot;,&quot;_id&quot;:&quot;b70b934&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;PRODUCTS&quot;,&quot;_id&quot;:&quot;7442002&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;INSPIRATIONS&quot;,&quot;_id&quot;:&quot;1e190fb&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;RESOURCES&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;_id&quot;:&quot;5555037&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;FIND A DISTRIBUTOR&quot;,&quot;item_dropdown_content&quot;:&quot;&quot;,&quot;item_icon&quot;:{&quot;value&quot;:{&quot;url&quot;:&quot;https:\/\/www.newtechwoodintl.com\/wp-content\/uploads\/2025\/07\/NTW_location-1.svg&quot;,&quot;id&quot;:191},&quot;library&quot;:&quot;svg&quot;},&quot;_id&quot;:&quot;55f0c57&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;\/locations\/&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon_active&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;element_id&quot;:&quot;&quot;}],&quot;item_position_horizontal&quot;:&quot;center&quot;,&quot;menu_item_title_distance_from_content&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;item_position_horizontal_tablet&quot;:&quot;start&quot;,&quot;horizontal_scroll_tablet&quot;:&quot;disable&quot;,&quot;menu_item_title_distance_from_content_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;content_width&quot;:&quot;full_width&quot;,&quot;item_layout&quot;:&quot;horizontal&quot;,&quot;open_on&quot;:&quot;hover&quot;,&quot;horizontal_scroll&quot;:&quot;disable&quot;,&quot;breakpoint_selector&quot;:&quot;tablet&quot;,&quot;menu_item_title_distance_from_content_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]}}" data-widget_type="mega-menu.default">
+				<div class="elementor-element elementor-element-b14dd59 elementor-widget-tablet__width-initial e-full_width e-n-menu-layout-horizontal e-n-menu-tablet elementor-widget elementor-widget-n-menu" data-id="b14dd59" data-element_type="widget" data-settings="{&quot;menu_items&quot;:[{&quot;item_title&quot;:&quot;WHY NEWTECHWOOD?&quot;,&quot;_id&quot;:&quot;b70b934&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;PRODUCTS&quot;,&quot;_id&quot;:&quot;7442002&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;INSPIRATIONS&quot;,&quot;_id&quot;:&quot;1e190fb&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;RESOURCES&quot;,&quot;item_dropdown_content&quot;:&quot;yes&quot;,&quot;_id&quot;:&quot;5555037&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;item_icon_active&quot;:null,&quot;element_id&quot;:&quot;&quot;},{&quot;item_title&quot;:&quot;EXPERIENCE CENTRE&quot;,&quot;item_dropdown_content&quot;:&quot;&quot;,&quot;item_icon&quot;:{&quot;value&quot;:{&quot;url&quot;:&quot;https:\/\/www.newtechwoodintl.com\/wp-content\/uploads\/2025\/07\/NTW_location-1.svg&quot;,&quot;id&quot;:191},&quot;library&quot;:&quot;svg&quot;},&quot;_id&quot;:&quot;55f0c57&quot;,&quot;item_link&quot;:{&quot;url&quot;:&quot;\/locations\/&quot;,&quot;is_external&quot;:&quot;&quot;,&quot;nofollow&quot;:&quot;&quot;,&quot;custom_attributes&quot;:&quot;&quot;},&quot;item_icon_active&quot;:{&quot;value&quot;:&quot;&quot;,&quot;library&quot;:&quot;&quot;},&quot;element_id&quot;:&quot;&quot;}],&quot;item_position_horizontal&quot;:&quot;center&quot;,&quot;menu_item_title_distance_from_content&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;item_position_horizontal_tablet&quot;:&quot;start&quot;,&quot;horizontal_scroll_tablet&quot;:&quot;disable&quot;,&quot;menu_item_title_distance_from_content_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:0,&quot;sizes&quot;:[]},&quot;content_width&quot;:&quot;full_width&quot;,&quot;item_layout&quot;:&quot;horizontal&quot;,&quot;open_on&quot;:&quot;hover&quot;,&quot;horizontal_scroll&quot;:&quot;disable&quot;,&quot;breakpoint_selector&quot;:&quot;tablet&quot;,&quot;menu_item_title_distance_from_content_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]}}" data-widget_type="mega-menu.default">
 							<nav class="e-n-menu" data-widget-number="185" aria-label="Menu">
 					<button class="e-n-menu-toggle" id="menu-toggle-185" aria-haspopup="true" aria-expanded="false" aria-controls="menubar-185" aria-label="Menu Toggle">
 			<span class="e-n-menu-toggle-icon e-open">
@@ -408,7 +643,7 @@ gtag("config", "GT-WVG7T9T");
 								<span class="icon-inactive"><svg xmlns="http://www.w3.org/2000/svg" id="_&#x56FE;&#x5C42;_1" data-name="&#x56FE;&#x5C42; 1" viewBox="0 0 23.36 27.29"><path d="M11.68,0C5.23,0,0,5.31,0,11.85c0,6.04,6.67,12.18,9.93,14.82,1.02.83,2.48.83,3.51,0,3.26-2.64,9.92-8.78,9.92-14.82C23.36,5.31,18.13,0,11.68,0ZM11.68,16.89c-2.98,0-5.4-2.41-5.4-5.39s2.42-5.4,5.4-5.4,5.4,2.42,5.4,5.4-2.42,5.39-5.4,5.39Z" fill="#333" stroke-width="0"></path></svg></span>
 							</span>
 												<span class="e-n-menu-title-text">
-							FIND A DISTRIBUTOR						</span>
+							EXPERIENCE CENTRE						</span>
 					</a>									</div>
 							</li>
 						</ul>
@@ -493,952 +728,97 @@ gtag("config", "GT-WVG7T9T");
 				</header>
 				<div data-elementor-type="wp-page" data-elementor-id="649" class="elementor elementor-649" data-elementor-post-type="page">
 				<div class="elementor-element elementor-element-2c379dd e-con-full real-full-width e-flex e-con e-parent" data-id="2c379dd" data-element_type="container">
-				<div class="elementor-element elementor-element-1a54c74 elementor-widget elementor-widget-Logic_Widget_Distributor" data-id="1a54c74" data-element_type="widget" data-widget_type="Logic_Widget_Distributor.default">
-				<div class="elementor-widget-container">
-					        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCchh803zFa3S06dWfaBPCzMZ5Km4SH3Z8" async defer></script>
-
-        <div class="distributors" id="distributors-1a54c74">
-
-            <div class="google-map" id="google-map-1a54c74"></div>
-
-            <div class="distributors-lists glass" id="distributors-lists-1a54c74" style="opacity: 0;">
-
-                <div class="distributors-search-box">
-
-                    <div class="distributors-title">
-
-                        <div class="title">
-
-                            <h1>Find a Distributor</h1>
-
-                        </div>
-
-                        <div class="icon iconfont icon-location-mine get-location" @click="getLocation()"></div>
-
-                    </div>
-
-                    <div class="distributors-search">
-
-                        <input type="text" v-model="keyword" :class="{active:associateWord.length>0}" part="search" placeholder="Input to Search" @blur="onBlur" @focus="onFocus"  @input="debouncedSearchCountry" @keyup.enter="onEnter" @keydown.down="onArrowDown" @keydown.up="onArrowUp">
-
-                        <div class="icon iconfont icon-Search-Distributor" @click="onEnter"></div>
-
-                        <div class="associate-word" :class="{active:associateWord.length>0}">
-
-                            <div class="prediction" :class="{active:currentAssociateWord == i+1}" v-for="(location,i) in associateWord" @click="keywordClick(location)" :alt="location.description" :title="location.description">
-
-                                {{location.description}}
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="distributors-list">
-
-                    <div class="distributor" v-for="(item,index) in distributors" @click="goToLoaction(item)">
-
-                        <div class="distance" v-if="item.distanceKm">{{item.distanceKm}} km</div>
-
-                        <div class="title">{{item.country}}</div>
-
-                        <div class="name">{{item.post_title}}</div>
-
-                        <div class="infos">
-
-                            <div class="info">
-
-                                <i class="icon iconfont icon-location"></i>{{item.address}}
-
-                            </div>
-
-                            <div class="info" v-if="item.phones.length <= 0 && null != item.phone">
-
-                                <i class="icon iconfont icon-phone"></i>{{item.phone}}
-
-                            </div>
-
-                            <div class="info" v-if="item.phones.length > 0 " v-for="(phone,i) in item.phones">
-
-                                <div v-if="phone.type == 'tel'">
-
-                                    <i class="icon iconfont icon-phone"></i>{{phone.phone}}
-
-                                </div>
-
-                                <div v-if="phone.type == 'fax'">
-
-                                    <i class="icon iconfont icon-fax"></i>{{phone.phone}}
-
-                                </div>
-
-                            </div>
-
-                            <div class="info" v-if="item.emails.length <= 0 && null != item.email">
-
-                                <i class="icon iconfont icon-emaile"></i><a :href="'mailto:'+item.email">{{item.email}}</a> 
-
-                            </div>
-
-                            <div class="info" v-if="item.emails.length > 0 " v-for="(email,i) in item.emails">
-
-                                <i class="icon iconfont icon-emaile"></i><a :href="'mailto:'+email.email">{{email.email}}</a> 
-
-                            </div>
-
-                            <div class="info" v-if="null !== item.website && item.website.length > 0">
-
-                                <i class="icon iconfont icon-web"></i><a :href="item.website" target="_blank">{{item.website}}</a> 
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="colors-loading" v-if="loading">
-
-                <div class="icon iconfont icon-laoding_1"></div>
-
-            </div>
-
-        </div>
-
-        <script>
-
-            // 定义 initMap 函数，供 Google Maps 回调使用
-
-            var $ = jQuery;
-
-            $(document).ready(function() {
-
-                $('.distributors-lists').css('opacity','100');
-
-                const app = new Vue({
-
-                    el: '#distributors-1a54c74',
-
-                    data: {
-
-                        distributors: [],
-
-                        loading: true,
-
-                        address: '',
-
-                        map: null,
-
-                        zoom:3,
-
-                        userPosition:null,
-
-                        country:'ALL',
-
-                        markersArray:[],
-
-                        associateWord:[],
-
-                        keyword:'',
-
-                        debounceTimer: null,
-                        currentAssociateWord:null,
-                        onBlurTimer: null,
-                        userMarker:null,
-                        skipAllCountrySort:false
-                    },
-                    mounted() {
-
-                        var that = this;
-
-                        
-
-                        //写一个循环函数，直至this.isGoogleMapsReady()为true
-
-                        const intervalId = setInterval(() => {
-
-                            if (this.isGoogleMapsReady()) {
-
-                                clearInterval(intervalId);
-
-                                this.createMap();
-
-                                that.initImages();
-
-                            }else{
-
-                                console.log('waiting for google maps ready')
-
-                            }
-
-                        }, 100);
-
-                    },
-
-                    methods: {
-
-                        onFocus(){
-
-                            if(this.onBlurTimer){
-
-                                clearTimeout(this.onBlurTimer);
-
-                            }
-
-                        },
-
-                        onBlur(){
-
-                            this.onBlurTimer = setTimeout(() => {
-
-                                this.associateWord = []
-
-                            }, 2000);
-
-                        },
-
-                        isGoogleMapsReady() {
-
-                            return (
-
-                                typeof window.google !== "undefined" &&
-
-                                typeof window.google.maps !== "undefined" &&
-
-                                typeof window.google.maps.Map === "function"
-
-                            );
-
-                        },
-
-                        onArrowDown(){
-
-                            this.currentAssociateWord = this.currentAssociateWord ===null? 0 : this.currentAssociateWord;
-
-                            if(this.associateWord.length <= 0 || this.currentAssociateWord >= this.associateWord.length){
-
-                                return;
-
-                            }
-
-                            this.currentAssociateWord++;
-
-
-
-                        },
-
-                        onArrowUp(){
-
-                            this.currentAssociateWord = this.currentAssociateWord ===null? 0 : this.currentAssociateWord;
-
-                            if(this.associateWord.length <= 0 || this.currentAssociateWord <= 1){
-
-                                return;
-
-                            }
-
-                            this.currentAssociateWord--;
-
-                        },
-
-                        onEnter(){
-
-                            if(('' == this.keyword || this.keyword.length < 2) && null == this.currentAssociateWord){
-
-                                return;
-
-                            }
-
-                            if(this.currentAssociateWord > 0){
-
-                                this.keyword = this.associateWord[this.currentAssociateWord-1].description;
-
-                                this.currentAssociateWord = 0;
-
-                            }
-
-                            this.associateWord = []
-
-                            console.log('onEnter',this.keyword);
-
-                            this.country = this.keyword
-
-                            this.initImages();
-
-                        },
-
-                        keywordClick(location){
-
-                            this.associateWord = []
-
-                            this.country = location.description;
-
-                            this.initImages();
-
-                            console.log('keywordClick', location);
-
-                        },
-
-                        getPositionByAddress(address){
-
-                            "https://maps.googleapis.com/maps/api/geocode/json?address=地址文本&key=你的API_KEY"
-
-                        },
-
-                        searchCountry(){
-
-                            var that = this;
-
-                            const  url = "/wp-json/locations/v1/get_countries?keyword=" + this.keyword
-
-                            $.get(url, {}, (res) => {
-
-                                if(res.code == 0){
-
-                                    that.associateWord = res.data.predictions;
-
-                                }
-
-                            }, 'json');
-
-                        },
-
-                        debouncedSearchCountry() {
-
-                            clearTimeout(this.debounceTimer);
-
-                            this.debounceTimer = setTimeout(() => {
-
-                                if('' !== this.keyword){
-
-                                    this.searchCountry();
-
-                                }else{
-
-                                    this.associateWord = []
-
-                                    this.country = 'ALL'
-
-                                    this.initImages();
-
-                                }
-
-                                
-
-                            }, 500);
-
-                        },
-
-                        goToLoaction(item){
-
-                            const lat = item.lat;
-
-                            const lng = item.lng;
-
-                            const myLatlng = new google.maps.LatLng(lat, lng);
-
-                            this.map.setCenter(myLatlng);
-
-                            this.map.setZoom(9);
-
-                        },
-
-                        getLocation(){
-
-                            var that = this
-
-                            if (navigator.geolocation) {
-
-                                navigator.geolocation.getCurrentPosition(
-
-                                    function(position) {
-
-                                        console.log('position', position);
-
-                                        const lat = position.coords.latitude;
-
-                                        const lng = position.coords.longitude;
-
-                                        that.userPosition = {lat:lat,lng:lng}
-
-                                        var Position = new google.maps.LatLng(lat, lng);
-
-                                        that.map.setCenter(Position);
-
-                                        //zoom也要设置
-
-                                        that.map.setZoom(9);
-                                        that.skipAllCountrySort = true;
-                                        that.initImages();
-                                    },
-
-                                    function(error) {
-
-                                        switch(error.code) {
-
-                                            case error.PERMISSION_DENIED:
-
-                                                alert("Permission denied to access location.");
-
-                                                break;
-
-                                            case error.POSITION_UNAVAILABLE:
-
-                                                alert("Location information is unavailable.");
-
-                                                break;
-
-                                            case error.TIMEOUT:
-
-                                                alert("Location request timed out.");
-
-                                                break;
-
-                                            case error.UNKNOWN_ERROR:
-
-                                                alert("An unknown error occurred.");
-
-                                                break;
-
-                                        }
-
-                                    }
-
-                                );
-
-                            } else {
-
-                                alert("Geolocation is not supported by this browser.");
-
-                            }
-
-                        },
-
-                        clearUserMarker(){
-
-                            if(this.userMarker){
-
-                                this.userMarker.setMap(null);
-
-                            }
-
-                        },
-
-                        setUserIcon(lat,lng){
-
-                            if(this.userMarker){
-
-                                this.clearUserMarker();
-
-                                this.userMarker = null;
-
-                            }
-
-                            console.log('setUserIcon',lat,lng);
-
-                            const myLatlng = new google.maps.LatLng(lat, lng);
-
-                            var icon = {
-
-                                url: "/wp-content/uploads/2025/08/location-user.png", // url
-
-                                scaledSize: new google.maps.Size(32, 36), // scaled size
-
-                                origin: new google.maps.Point(0, 0), // origin
-
-                                anchor: new google.maps.Point(16, 36) // anchor
-
-                            };
-
-                            this.userMarker = new google.maps.Marker({
-
-                                position: myLatlng,
-
-                                map: this.map,
-
-                                icon: icon
-
-                            });
-
-                            this.userMarker.setMap(this.map);
-
-                        },
-
-                        async createMap() {
-
-                            const myCenter = new google.maps.LatLng(22.6391, 114.0191);
-
-                            const mapProp = {
-
-                                center: myCenter,
-
-                                zoom: this.zoom,
-
-                                mapTypeId: google.maps.MapTypeId.TERRAIN,
-
-                                disableDefaultUI: true,
-
-                                rotateControl: true,
-
-                            };
-
-                            this.map = new google.maps.Map(
-
-                                document.getElementById("google-map-1a54c74"),
-
-                                mapProp
-
-                            );
-
-                            
-
-                            console.log('map created')
-
-                        },
-
-                        initImages() {
-                            var that = this
-                            const skipAllCountrySort = this.skipAllCountrySort;
-                            this.skipAllCountrySort = false;
-                            that.clearMarket();
-                            this.loading = true;
-                            const  url = "/wp-json/locations/v1/get?country=" + this.country
-
-                            const params = {};
-
-                            this.distributors = [];
-
-                            $.get(url, params, (res) => {
-
-                                console.log('res', res);
-
-                                that.loading = false;
-
-                                that.distributors = res.data;
-
-                                if(this.country != 'ALL'){
-
-                                    var countryLat,countryLag
-
-                                    if(null !== res.country_positon){
-
-                                        countryLat = res.country_positon.lat;
-
-                                        countryLag = res.country_positon.lng;
-
-                                        that.setUserIcon(countryLat,countryLag);
-
-                                        const target = { lat: res.country_positon.lat, lng: res.country_positon.lng };
-
-                                        that.distributors = that.sortByDistance(that.distributors, target);
-
-                                    }
-
-                                }else{
-
-                                    if(null != that.userPosition){
-                                        const target = that.userPosition;
-                                        that.setUserIcon(that.userPosition.lat,that.userPosition.lng);
-                                        that.distributors = that.sortByDistance(that.distributors, target);
-                                    }
-                                    if(!skipAllCountrySort){
-                                        that.distributors = that.sortAllDistributors(that.distributors);
-                                    }
-                                    
-                                }
-                                that.distributors.forEach((item, index) => {
-
-                                    if(item.marker_lat && item.marker_lng){
-
-                                        item.lat = item.marker_lat;
-
-                                        item.lng = item.marker_lng;
-
-                                    }
-
-                                    that.distributors[index] = item;
-
-                                    ///wp-content/uploads/2025/07/lacation-distributor.png
-
-                                    //添加market
-
-                                    that.addMarker(item);
-
-                                })
-
-                                if(this.country != 'ALL'){
-
-                                    const lat = that.distributors[0].lat;
-
-                                    const lng = that.distributors[0].lng;
-
-                                    const myLatlng = new google.maps.LatLng(lat, lng);
-
-                                    this.map.setCenter(myLatlng);
-
-                                    this.map.setZoom(7);
-
-                                }else{
-
-                                    this.map.setZoom(this.zoom);
-
-                                }
-
-                                that.associateWord = []
-
-                            }, 'json');
-
-                        },
-
-                        clearMarket(){
-
-                            this.markersArray.forEach(marker => {
-
-                                marker.setMap(null);
-
-                            });
-
-                        },
-
-                        addMarker(item) {
-
-                            var that = this;
-
-                            const myLatlng = new google.maps.LatLng(item.lat, item.lng);
-
-                            var icon = {
-
-                                url: "/wp-content/uploads/2025/07/lacation-distributor.png", // url
-
-                                scaledSize: new google.maps.Size(32, 36), // scaled size
-
-                                origin: new google.maps.Point(0, 0), // origin
-
-                                anchor: new google.maps.Point(16, 36) // anchor
-
-                            };
-
-                            const marker = new google.maps.Marker({
-
-                                position: myLatlng,
-
-                                map: this.map,
-
-                                icon: icon
-
-                            });
-
-                            marker.setMap(this.map);
-
-                            this.markersArray.push(marker);
-
-                            that.currentInfoWindow = that.currentInfoWindow || null;
-
-                            const contentString = this.buildWindowContent(item);
-
-                            const infowindow = new google.maps.InfoWindow({
-
-                                content: contentString
-
-                            });
-
-                            marker.addListener("click", () => {
-
-                                if (that.currentInfoWindow) {
-
-                                    that.currentInfoWindow.close();
-
-                                }
-
-                                infowindow.open(that.map, marker);
-
-                                that.currentInfoWindow = infowindow;
-
-                                google.maps.event.addListenerOnce(infowindow, 'domready', () => {
-
-                                    const closeBtn = document.querySelector('.distributors-close');
-
-                                    if (closeBtn) {
-
-                                        closeBtn.addEventListener('click', () => {
-
-                                            infowindow.close();
-
-                                        });
-
-                                    }
-
-                                });
-
-                            });
-
-                        },
-
-                        buildWindowContent(item) {
-
-                            let contentString = `
-
-                                <div class="distributor distributor-window">
-
-                                    <div class="title">${item.country || ''}</div>
-
-                                    <div class="name">${item.post_title || ''}</div>
-
-                                    <div class="infos">
-
-                                        <div class="info">
-
-                                            <i class="icon iconfont icon-location"></i>${item.address || ''}
-
-                                        </div>
-
-                            `;
-
-
-
-                            // 电话（旧字段）
-
-                            if ((!item.phones || item.phones.length === 0) && item.phone) {
-
-                                contentString += `
-
-                                    <div class="info">
-
-                                        <i class="icon iconfont icon-phone"></i>${item.phone}
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            // 电话（数组字段）
-
-                            if (item.phones && item.phones.length > 0) {
-
-                                item.phones.forEach(phone => {
-
-                                    if (phone.type === 'tel') {
-
-                                        contentString += `
-
-                                            <div class="info">
-
-                                                <i class="icon iconfont icon-phone"></i>${phone.phone}
-
-                                            </div>
-
-                                        `;
-
-                                    } else if (phone.type === 'fax') {
-
-                                        contentString += `
-
-                                            <div class="info">
-
-                                                <i class="icon iconfont icon-fax"></i>${phone.phone}
-
-                                            </div>
-
-                                        `;
-
-                                    }
-
-                                });
-
-                            }
-
-
-
-                            // 邮箱（旧字段）
-
-                            if ((!item.emails || item.emails.length === 0) && item.email) {
-
-                                contentString += `
-
-                                    <div class="info">
-
-                                        <i class="icon iconfont icon-emaile"></i>
-
-                                        <a href="mailto:${item.email}" target="_blank">${item.email}</a>
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            // 邮箱（数组字段）
-
-                            if (item.emails && item.emails.length > 0) {
-
-                                item.emails.forEach(email => {
-
-                                    contentString += `
-
-                                        <div class="info">
-
-                                            <i class="icon iconfont icon-emaile"></i>
-
-                                            <a href="mailto:${email.email}" target="_blank">${email.email}</a>
-
-                                        </div>
-
-                                    `;
-
-                                });
-
-                            }
-
-
-
-                            // 网站
-
-                            if (item.website) {
-
-                                contentString += `
-
-                                    <div class="info">
-
-                                        <i class="icon iconfont icon-web"></i>
-
-                                        <a href="${item.website}" target="_blank">${item.website}</a>
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            contentString += `
-
-                                    </div> <!-- .infos -->
-
-                                    <div class="icon iconfont icon-close distributors-close"></div>
-
-                                </div> <!-- .distributor -->
-
-                            `;
-
-
-
-                            return contentString;
-
-                        },
-
-                        haversineDistance(lat1, lng1, lat2, lng2) {
-
-                            const toRad = deg => deg * Math.PI / 180;
-
-                            const R = 6371000; // 地球半径（米）
-
-
-
-                            const dLat = toRad(lat2 - lat1);
-
-                            const dLng = toRad(lng2 - lng1);
-
-                            const a = Math.sin(dLat/2) ** 2
-
-                                    + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2))
-
-                                    * Math.sin(dLng/2) ** 2;
-
-                            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                            return R * c;
-
-                        },
-
-                        sortByDistance(data, target) {
-
-                            const tLat = parseFloat(target.lat);
-
-                            const tLng = parseFloat(target.lng);
-
-
-
-                            // 1) 先把 distance 写入每一项
-
-                            data.forEach(item => {
-
-                                const lat = parseFloat(item.lat);
-
-                                const lng = parseFloat(item.lng);
-
-                                // 原始距离（米）
-
-                                const meters = this.haversineDistance(tLat, tLng, lat, lng);
-
-                                item.distanceMeters = meters;
-
-
-
-                                // 转千米、保留两位小数，并转成数值
-
-                                item.distanceKm = parseFloat((meters / 1000).toFixed(2));
-
-                                item.distance = this.haversineDistance(tLat, tLng, lat, lng);
-
-                            });
-
-
-
-                            // 2) 再按距离排序
-
-                            data.sort((a, b) => a.distance - b.distance);
-
-
-
-                            return data;
-
-                        },
-
-                        sortAllDistributors(data) {
-
-                            if (!Array.isArray(data) || data.length <= 1) {
-
-                                return data;
-
-                            }
-
-
-
-                            const [firstItem, ...restItems] = data;
-                            restItems.sort((a, b) => {
-                                const titleA = (a.country || '').trim();
-                                const titleB = (b.country || '').trim();
-
-                                return titleA.localeCompare(titleB, undefined, { sensitivity: 'base' });
-                            });
-
-
-                            return [firstItem, ...restItems];
-
-                        }
-
-                    }
-
-                });
-
-            });
-
-        </script>
-
-        				</div>
-				</div>
+					<!-- ======================================================
+	     EXPERIENCE CENTRE SECTION
+	     ====================================================== -->
+	<section class="ll-experience-centre" id="experience-centre" aria-label="Experience Centres across India">
+	  <div class="ll-ec-inner">
+	    <div class="ll-ec-header">
+	      <div class="ll-ec-eyebrow">&#x2706; Visit Us In Person</div>
+	      <h2 class="ll-ec-title">Our <span>Experience Centres</span></h2>
+	      <p class="ll-ec-subtitle">Touch, feel, and explore NewTechWood's premium composite products at our experience centres across India.</p>
+	    </div>
+	    <div class="ll-ec-grid">
+
+	      <!-- Nagpur -->
+	      <div class="ll-ec-card">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Nagpur
+	        </div>
+	        <h3 class="ll-ec-card-city">Nagpur</h3>
+	        <div class="ll-ec-card-partner">Lumber Life</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">[Lumber Life Address &amp; Contact — to be filled]</p>
+	      </div>
+
+	      <!-- Bengaluru -->
+	      <div class="ll-ec-card">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Bengaluru
+	        </div>
+	        <h3 class="ll-ec-card-city">Bengaluru</h3>
+	        <div class="ll-ec-card-partner">Aaren Intpro</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">[Aaren Intpro Address &amp; Contact — to be filled]</p>
+	      </div>
+
+	      <!-- Delhi -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Delhi
+	        </div>
+	        <h3 class="ll-ec-card-city">Delhi</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Details coming soon. Stay tuned for our upcoming Experience Centre in the capital.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	      <!-- Mumbai -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Mumbai
+	        </div>
+	        <h3 class="ll-ec-card-city">Mumbai</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Our Mumbai Experience Centre is coming. We look forward to welcoming you soon.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	      <!-- Pune -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Pune
+	        </div>
+	        <h3 class="ll-ec-card-city">Pune</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Opening soon — Pune's first NewTechWood Experience Centre.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	      <!-- Chennai -->
+	      <div class="ll-ec-card coming-soon">
+	        <div class="ll-ec-city-badge">
+	          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+	          Chennai
+	        </div>
+	        <h3 class="ll-ec-card-city">Chennai</h3>
+	        <div class="ll-ec-card-partner">&nbsp;</div>
+	        <div class="ll-ec-divider"></div>
+	        <p class="ll-ec-card-address">Watch this space — Chennai Experience Centre coming soon.</p>
+	        <span class="ll-ec-coming-tag">Coming Soon</span>
+	      </div>
+
+	    </div><!-- /ll-ec-grid -->
+	  </div><!-- /ll-ec-inner -->
+	</section>
 				</div>
 				</div>
 				<footer data-elementor-type="footer" data-elementor-id="272" class="elementor elementor-272 elementor-location-footer" data-elementor-post-type="elementor_library">
