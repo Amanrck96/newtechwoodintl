@@ -1370,7 +1370,7 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/
 		(function() {
 			var video1 = '/wp-content/uploads/video/NTW-Brand-Video-6.mp4';
 			var video2 = '/wp-content/uploads/video/whatsapp-video.mp4';
-			var currentVideoIndex = 1; // 1: brand video, 2: whatsapp-video
+			var currentVideoIndex = 2; // Start with the 2nd video (WhatsApp Video)
 			
 			function setupVideoWatcher(video) {
 				if (video.dataset.playlistSetup) return;
@@ -1381,6 +1381,20 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/
 				// Force loop property to false
 				video.loop = false;
 				video.removeAttribute('loop');
+				
+				// Immediately switch to video2 when page loads
+				video.src = video2;
+				var sources = video.getElementsByTagName('source');
+				for (var i = 0; i < sources.length; i++) {
+					sources[i].src = video.src;
+				}
+				video.load();
+				var playPromise = video.play();
+				if (playPromise !== undefined) {
+					playPromise.catch(function(error) {
+						console.log('Autoplay play request failed or was interrupted:', error);
+					});
+				}
 				
 				// Keep loop disabled via attributes mutation observer
 				var observer = new MutationObserver(function() {
@@ -1394,12 +1408,12 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/
 				// Listen for video ending
 				video.addEventListener('ended', function() {
 					console.log('Video ended, current index was:', currentVideoIndex);
-					if (currentVideoIndex === 1) {
-						currentVideoIndex = 2;
-						video.src = video2;
-					} else {
+					if (currentVideoIndex === 2) {
 						currentVideoIndex = 1;
 						video.src = video1;
+					} else {
+						currentVideoIndex = 2;
+						video.src = video2;
 					}
 					
 					// Update any child <source> elements if present
