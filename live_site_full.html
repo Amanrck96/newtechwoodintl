@@ -1307,5 +1307,68 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/
 	<div id="custom-intercom-launcher" style="position:fixed;bottom:24px;right:24px;z-index:9999;cursor:pointer;background:#fff;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,0.15);width:60px;height:60px;display:flex;align-items:center;justify-content:center;transition:transform 0.2s ease,box-shadow 0.2s ease;" onclick="if(window.Intercom){Intercom('show');}" onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
 	  <img src="/wp-content/uploads/lumber-life-logo.png" alt="Lumber Life" style="width:38px;height:38px;object-fit:contain;" />
 	</div>
+
+	<!-- Background Video Playlist Loop Script -->
+	<script>
+		(function() {
+			var video1 = '/wp-content/uploads/video/NTW-Brand-Video-6.mp4';
+			var video2 = '/wp-content/uploads/video/whatsapp-video.mp4';
+			var currentVideoIndex = 1; // 1: brand video, 2: whatsapp-video
+			
+			function setupVideoWatcher(video) {
+				if (video.dataset.playlistSetup) return;
+				video.dataset.playlistSetup = 'true';
+				
+				console.log('Setting up video playlist loop for element:', video);
+				
+				// Force loop property to false
+				video.loop = false;
+				video.removeAttribute('loop');
+				
+				// Keep loop disabled via attributes mutation observer
+				var observer = new MutationObserver(function() {
+					if (video.loop) {
+						video.loop = false;
+						video.removeAttribute('loop');
+					}
+				});
+				observer.observe(video, { attributes: true, attributeFilter: ['loop'] });
+				
+				// Listen for video ending
+				video.addEventListener('ended', function() {
+					console.log('Video ended, current index was:', currentVideoIndex);
+					if (currentVideoIndex === 1) {
+						currentVideoIndex = 2;
+						video.src = video2;
+					} else {
+						currentVideoIndex = 1;
+						video.src = video1;
+					}
+					
+					// Update any child <source> elements if present
+					var sources = video.getElementsByTagName('source');
+					for (var i = 0; i < sources.length; i++) {
+						sources[i].src = video.src;
+					}
+					
+					video.load();
+					var playPromise = video.play();
+					if (playPromise !== undefined) {
+						playPromise.catch(function(error) {
+							console.log('Autoplay play request failed or was interrupted:', error);
+						});
+					}
+				});
+			}
+			
+			// Periodically check for the video element (since Elementor can initialize it late)
+			var checkInterval = setInterval(function() {
+				var video = document.querySelector('.elementor-background-video-hosted');
+				if (video) {
+					setupVideoWatcher(video);
+				}
+			}, 1000);
+		})();
+	</script>
 </body>
 </html>
