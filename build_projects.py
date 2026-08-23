@@ -45,13 +45,16 @@ HEADER_TEMPLATE = '''<!-- Site Header -->
 												</button>
 											</div>
 											<div class="e-n-menu-content">
-												<div id="e-n-menu-content-1851" data-tab-index="1" aria-labelledby="e-n-menu-dropdown-icon-1851" class="elementor-element elementor-element-32863e9 e-con-full e-flex e-con e-child" data-id="32863e9" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-													<div class="elementor-element elementor-element-b50da91 e-con-full e-flex e-con e-child" data-id="b50da91" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-														<div class="elementor-element elementor-element-f618070 elementor-widget elementor-widget-heading" data-id="f618070" data-element_type="widget" data-widget_type="heading.default">
+												<div id="e-n-menu-content-1851" data-tab-index="1" aria-labelledby="e-n-menu-dropdown-icon-1851" class="elementor-element elementor-element-32863e9 e-con-full e-flex e-con e-child">
+													<div class="elementor-element elementor-element-b50da91 e-con-full e-flex e-con e-child" style="min-width:240px;">
+														<div class="elementor-element elementor-element-f618070 elementor-widget elementor-widget-heading">
 															<h6 class="elementor-heading-title elementor-size-default">Why NewTechWood?</h6>
 														</div>
-														<div class="elementor-element elementor-element-862a3f6 elementor-widget elementor-widget-text-editor" data-id="862a3f6" data-element_type="widget" data-widget_type="text-editor.default">
-															<p><a href="/history/">History</a></p><p><a href="/ultrashield-technology/">UltraShield Technology</a></p><p><a href="/sustainability/">Sustainability</a></p><p><a href="/laboratory/">Laboratory</a></p>
+														<div class="elementor-element elementor-element-862a3f6 elementor-widget elementor-widget-text-editor">
+															<p><a href="/history/">History</a></p>
+															<p><a href="/ultrashield-technology/">UltraShield Technology</a></p>
+															<p><a href="/sustainability/">Sustainability</a></p>
+															<p><a href="/laboratory/">Laboratory</a></p>
 														</div>
 													</div>
 												</div>
@@ -76,64 +79,102 @@ HEADER_TEMPLATE = '''<!-- Site Header -->
 												</button>
 											</div>
 											<div class="e-n-menu-content">
-												<div id="e-n-menu-content-1852" data-tab-index="2" aria-labelledby="e-n-menu-dropdown-icon-1852" class="elementor-element elementor-element-c28d728 e-con-full e-flex e-con e-child" data-id="c28d728" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-													<div class="elementor-element elementor-element-eed08c6 e-con-full e-flex e-con e-child" data-id="eed08c6" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-														<div class="elementor-element elementor-element-6b2a2f3 e-con-full e-flex e-con e-child" data-id="6b2a2f3" data-element_type="container">
-															<div class="elementor-element elementor-element-4dc6ffa elementor-widget elementor-widget-heading" data-id="4dc6ffa" data-element_type="widget" data-widget_type="heading.default">
+												<div id="e-n-menu-content-1852" data-tab-index="2" aria-labelledby="e-n-menu-dropdown-icon-1852" class="elementor-element elementor-element-c28d728 e-con-full e-flex e-con e-child">
+													<div class="elementor-element elementor-element-eed08c6 e-con-full e-flex e-con e-child ntw-products-grid-inner">
+														
+														<!-- Decking -->
+														<div class="elementor-element elementor-element-6b2a2f3 e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-4dc6ffa elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default"><a href="/product/decking/">Decking</a></h6>
 															</div>
-															<div class="elementor-element elementor-element-9298e9c elementor-widget elementor-widget-text-editor" data-id="9298e9c" data-element_type="widget" data-widget_type="text-editor.default">
-																<p><a href="/product/decking-naturale/">Naturale</a></p><p><a href="/product/decking-marina/">Marina</a></p><p><a href="/product/decking-old-world/">Old World</a></p><p><a href="/product/decking-essentials/">Essentials</a></p><p><a href="/product/decking-accessories/">Decking Accessories</a></p>
+															<div class="elementor-element elementor-element-9298e9c elementor-widget elementor-widget-text-editor">
+																<p><a href="/product/decking-naturale/">Naturale</a></p>
+																<p><a href="/product/decking-marina/">Marina</a></p>
+																<p><a href="/product/decking-old-world/">Old World</a></p>
+																<p><a href="/product/decking-essentials/">Essentials</a></p>
+																<p><a href="/product/decking-accessories/">Decking Accessories</a></p>
 															</div>
 														</div>
-														<div class="elementor-element elementor-element-57df409 e-con-full e-flex e-con e-child" data-id="57df409" data-element_type="container">
-															<div class="elementor-element elementor-element-58b136d elementor-widget elementor-widget-heading" data-id="58b136d" data-element_type="widget" data-widget_type="heading.default">
+
+														<!-- Cladding -->
+														<div class="elementor-element elementor-element-57df409 e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-58b136d elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default"><a href="/product/cladding/">Cladding</a></h6>
 															</div>
-															<div class="elementor-element elementor-element-8912910 elementor-widget elementor-widget-text-editor" data-id="8912910" data-element_type="widget" data-widget_type="text-editor.default">
-																<p><a href="/product/siding-all-weather/">All-Weather</a></p><p><a href="/product/noir-shadowline/">Noir Shadowline</a></p><p><a href="/product/cladding-shadowline/">Shadowline</a></p><p><a href="/product/cladding-castellation/">Castellation</a></p><p><a href="/product/castellation-pro/">Castellation Pro</a></p><p><a href="/product/noir-castellated/">Noir Castellated</a></p><p><a href="/product/cladding-rounded/">Rounded Castellation</a></p><p><a href="/product/cladding-board-batten-cladding/">Board &amp; Batten</a></p><p><a href="/product/cladding-loglap/">Loglap</a></p><p><a href="/product/cladding-with-grad/">Cladding with Grad</a></p><p><a href="/product/cladding-accessories/">Cladding Accessories</a></p>
+															<div class="elementor-element elementor-element-8912910 elementor-widget elementor-widget-text-editor">
+																<p><a href="/product/siding-all-weather/">All-Weather</a></p>
+																<p><a href="/product/noir-shadowline/">Noir Shadowline</a></p>
+																<p><a href="/product/cladding-shadowline/">Shadowline</a></p>
+																<p><a href="/product/cladding-castellation/">Castellation</a></p>
+																<p><a href="/product/castellation-pro/">Castellation Pro</a></p>
+																<p><a href="/product/noir-castellated/">Noir Castellated</a></p>
+																<p><a href="/product/cladding-rounded/">Rounded Castellation</a></p>
+																<p><a href="/product/cladding-board-batten-cladding/">Board &amp; Batten</a></p>
+																<p><a href="/product/cladding-loglap/">Loglap</a></p>
+																<p><a href="/product/cladding-with-grad/">Cladding with Grad</a></p>
+																<p><a href="/product/cladding-accessories/">Cladding Accessories</a></p>
 															</div>
 														</div>
-														<div class="elementor-element elementor-element-76e9386 e-con-full e-flex e-con e-child" data-id="76e9386" data-element_type="container">
-															<div class="elementor-element elementor-element-ae4f2a8 elementor-widget elementor-widget-heading" data-id="ae4f2a8" data-element_type="widget" data-widget_type="heading.default">
+
+														<!-- Beams -->
+														<div class="elementor-element elementor-element-76e9386 e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-ae4f2a8 elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default"><a href="/product/beams/">Beams</a></h6>
 															</div>
-															<div class="elementor-element elementor-element-f5df005 elementor-widget elementor-widget-text-editor" data-id="f5df005" data-element_type="widget" data-widget_type="text-editor.default">
-																<p><a href="/product/beams-info/">Flat Beams</a></p><p><a href="/product/louver/">Louver</a></p><p><a href="/product/beams-accessories/">Beams Accessories</a></p>
+															<div class="elementor-element elementor-element-f5df005 elementor-widget elementor-widget-text-editor">
+																<p><a href="/product/beams-info/">Flat Beams</a></p>
+																<p><a href="/product/louver/">Louver</a></p>
+																<p><a href="/product/beams-accessories/">Beams Accessories</a></p>
 															</div>
 														</div>
-														<div class="elementor-element elementor-element-cc5c86f e-con-full e-flex e-con e-child" data-id="cc5c86f" data-element_type="container">
-															<div class="elementor-element elementor-element-b4873f3 elementor-widget elementor-widget-heading" data-id="b4873f3" data-element_type="widget" data-widget_type="heading.default">
+
+														<!-- Deck Tiles -->
+														<div class="elementor-element elementor-element-cc5c86f e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-b4873f3 elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default"><a href="/product/deck-tiles/">Deck Tiles</a></h6>
 															</div>
-															<div class="elementor-element elementor-element-4890846 elementor-widget elementor-widget-text-editor" data-id="4890846" data-element_type="widget" data-widget_type="text-editor.default">
-																<p><a href="/product/deck-tiles-composite/">Deck Tile</a></p><p><a href="/product/single-slat/">Single Slat</a></p><p><a href="/product/deck-tiles-grass/">Grass Tile</a></p><p><a href="/product/deck-tiles-ceramic/">Ceramic Tile</a></p>
+															<div class="elementor-element elementor-element-4890846 elementor-widget elementor-widget-text-editor">
+																<p><a href="/product/deck-tiles-composite/">Deck Tile</a></p>
+																<p><a href="/product/single-slat/">Single Slat</a></p>
+																<p><a href="/product/deck-tiles-grass/">Grass Tile</a></p>
+																<p><a href="/product/deck-tiles-ceramic/">Ceramic Tile</a></p>
 															</div>
 														</div>
-														<div class="elementor-element elementor-element-1f004ad e-con-full e-flex e-con e-child" data-id="1f004ad" data-element_type="container">
-															<div class="elementor-element elementor-element-55a0d3f elementor-widget elementor-widget-heading" data-id="55a0d3f" data-element_type="widget" data-widget_type="heading.default">
+
+														<!-- Fencing -->
+														<div class="elementor-element elementor-element-1f004ad e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-55a0d3f elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default"><a href="/product/fencing/">Fencing</a></h6>
 															</div>
-															<div class="elementor-element elementor-element-adf3ddc elementor-widget elementor-widget-text-editor" data-id="adf3ddc" data-element_type="widget" data-widget_type="text-editor.default">
-																<p><a href="/product/fencing-ultraeasy/">Flat Fencing</a></p><p><a href="/product/castellation-fencing/">Castellation Fencing</a></p><p><a href="/product/composite-picket/">Composite Picket</a></p><p><a href="/product/composite-fence-gate/">Composite Fence Gate</a></p>
+															<div class="elementor-element elementor-element-adf3ddc elementor-widget-text-editor">
+																<p><a href="/product/fencing-ultraeasy/">Flat Fencing</a></p>
+																<p><a href="/product/castellation-fencing/">Castellation Fencing</a></p>
+																<p><a href="/product/composite-picket/">Composite Picket</a></p>
+																<p><a href="/product/composite-fence-gate/">Composite Fence Gate</a></p>
 															</div>
 														</div>
-														<div class="elementor-element elementor-element-0e19724 e-con-full e-flex e-con e-child" data-id="0e19724" data-element_type="container">
-															<div class="elementor-element elementor-element-3462cc3 elementor-widget elementor-widget-heading" data-id="3462cc3" data-element_type="widget" data-widget_type="heading.default">
+
+														<!-- Railing -->
+														<div class="elementor-element elementor-element-0e19724 e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-3462cc3 elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default"><a href="/product/railing/">Railing</a></h6>
 															</div>
-															<div class="elementor-element elementor-element-dd3acfc elementor-widget elementor-widget-text-editor" data-id="dd3acfc" data-element_type="widget" data-widget_type="text-editor.default">
-																<p><a href="/product/composite-railing/">Composite Railing</a></p><p><a href="/product/aluminum-railing/">Aluminum Railing</a></p>
+															<div class="elementor-element elementor-element-dd3acfc elementor-widget elementor-widget-text-editor">
+																<p><a href="/product/composite-railing/">Composite Railing</a></p>
+																<p><a href="/product/aluminum-railing/">Aluminum Railing</a></p>
 															</div>
 														</div>
-														<div class="elementor-element elementor-element-3a8c7ac e-con-full e-flex e-con e-child" data-id="3a8c7ac" data-element_type="container">
-															<div class="elementor-element elementor-element-d7f0314 elementor-widget elementor-widget-heading" data-id="d7f0314" data-element_type="widget" data-widget_type="heading.default">
+
+														<!-- Planter Box -->
+														<div class="elementor-element elementor-element-3a8c7ac e-con-full e-flex e-con e-child ntw-mega-col">
+															<div class="elementor-element elementor-element-d7f0314 elementor-widget elementor-widget-heading">
 																<h6 class="elementor-heading-title elementor-size-default">Planter Box</h6>
 															</div>
-															<div class="elementor-element elementor-element-3b0fce8 elementor-widget elementor-widget-text-editor" data-id="3b0fce8" data-element_type="widget" data-widget_type="text-editor.default">
+															<div class="elementor-element elementor-element-3b0fce8 elementor-widget elementor-widget-text-editor">
 																<p><a href="/product/planter-box/">Planter Box</a></p>
 															</div>
 														</div>
+
 													</div>
 												</div>
 											</div>
@@ -157,30 +198,39 @@ HEADER_TEMPLATE = '''<!-- Site Header -->
 												</button>
 											</div>
 											<div class="e-n-menu-content">
-												<div id="e-n-menu-content-projects" data-tab-index="3" aria-labelledby="e-n-menu-dropdown-icon-projects" class="elementor-element elementor-element-d4b5f04 e-con-full e-flex e-con e-child" data-id="d4b5f04" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}" style="min-width:320px;padding:24px 28px;background:#ffffff;border-radius:10px;box-shadow:0 14px 40px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);">
-													<div style="border-bottom:1px solid #f0f0f0;padding-bottom:12px;margin-bottom:12px;">
-														<a href="/projects/" style="font-size:15px;font-weight:700;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:space-between;">
-															<span>All Projects</span>
-															<span style="font-size:11px;color:#c9a84c;font-weight:600;text-transform:uppercase;letter-spacing:1px;">View All &rarr;</span>
-														</a>
-													</div>
-													<div style="margin:10px 0;">
-														<a href="/projects/international/" style="font-size:14px;font-weight:600;color:#2c302e;text-decoration:none;display:flex;align-items:center;gap:10px;padding:6px 0;transition:all 0.2s;" onmouseover="this.style.color='#2d6a2d';this.style.transform='translateX(4px)'" onmouseout="this.style.color='#2c302e';this.style.transform='translateX(0)'">
-															<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#c9a84c;flex-shrink:0;"></span>
-															<div>
-																<div style="font-weight:600;">International</div>
-																<div style="font-size:12px;color:#888;font-weight:400;">Global architectural installations</div>
+												<div id="e-n-menu-content-projects" data-tab-index="3" aria-labelledby="e-n-menu-dropdown-icon-projects" class="elementor-element elementor-element-d4b5f04 e-con-full e-flex e-con e-child">
+													<div class="ntw-projects-dropdown-grid">
+														
+														<a href="/projects/" class="ntw-projects-dropdown-card">
+															<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;">
+																<span>All Projects</span>
+																<span style="font-size:12px;color:#c9a84c;font-weight:600;">View All &rarr;</span>
 															</div>
+															<div style="font-size:13px;color:#666;line-height:1.45;">Comprehensive portfolio of architectural &amp; composite installations worldwide.</div>
 														</a>
-													</div>
-													<div style="margin:10px 0;">
-														<a href="/projects/national/" style="font-size:14px;font-weight:600;color:#2c302e;text-decoration:none;display:flex;align-items:center;gap:10px;padding:6px 0;transition:all 0.2s;" onmouseover="this.style.color='#2d6a2d';this.style.transform='translateX(4px)'" onmouseout="this.style.color='#2c302e';this.style.transform='translateX(0)'">
-															<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2d6a2d;flex-shrink:0;"></span>
-															<div>
-																<div style="font-weight:600;">National</div>
-																<div style="font-size:12px;color:#888;font-weight:400;">Landmark projects across India</div>
+
+														<a href="/projects/international/" class="ntw-projects-dropdown-card">
+															<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;">
+																<span style="display:flex;align-items:center;gap:8px;">
+																	<span style="width:8px;height:8px;border-radius:50%;background:#c9a84c;display:inline-block;"></span>
+																	International
+																</span>
+																<span style="font-size:12px;color:#c9a84c;font-weight:600;">Explore &rarr;</span>
 															</div>
+															<div style="font-size:13px;color:#666;line-height:1.45;">Landmark global architecture across USA, Europe, UAE, Asia &amp; Australia.</div>
 														</a>
+
+														<a href="/projects/national/" class="ntw-projects-dropdown-card">
+															<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;">
+																<span style="display:flex;align-items:center;gap:8px;">
+																	<span style="width:8px;height:8px;border-radius:50%;background:#2d6a2d;display:inline-block;"></span>
+																	National (India)
+																</span>
+																<span style="font-size:12px;color:#2d6a2d;font-weight:600;">Explore &rarr;</span>
+															</div>
+															<div style="font-size:13px;color:#666;line-height:1.45;">Luxury estates, resorts &amp; commercial hubs across India by Lumber Life.</div>
+														</a>
+
 													</div>
 												</div>
 											</div>
@@ -360,62 +410,238 @@ COMMON_HEAD = '''<!doctype html>
 			padding: 0;
 		}
 
-		/* Header Mega Menu Hover & Dropdown Enhancement */
-		.e-n-menu-item {
-			position: relative;
+		/* Global Mega Menu Positioning & Hover */
+		.elementor-widget-n-menu .e-n-menu {
+			position: relative !important;
 		}
+
 		@media (min-width: 1179px) {
-			.e-n-menu-item:hover > .e-n-menu-content {
+			.elementor-widget-n-menu .e-n-menu-heading > .e-n-menu-item:hover > .e-n-menu-content,
+			.elementor-widget-n-menu .e-n-menu-heading > .e-n-menu-item:focus-within > .e-n-menu-content {
 				display: block !important;
 				visibility: visible !important;
 				opacity: 1 !important;
+				pointer-events: auto !important;
 			}
-			.e-n-menu-item:hover > .e-n-menu-content > .e-con {
-				display: flex !important;
-				visibility: visible !important;
-				opacity: 1 !important;
-			}
-			.e-n-menu-content {
-				display: none;
-				position: absolute;
-				top: 100%;
-				left: 0;
-				min-width: 280px;
-				background: #fff;
-				box-shadow: 0 12px 36px rgba(0,0,0,0.12);
-				border-radius: 8px;
-				padding: 16px 20px;
-				z-index: 1000;
-				transition: var(--ll-transition);
-			}
-		}
 
-		/* Mobile Menu Drawer Active Style */
-		@media (max-width: 1178px) {
-			.e-n-menu-wrapper.e-active {
-				display: flex !important;
-				flex-direction: column !important;
-				background: #ffffff !important;
+			.elementor-widget-n-menu .e-n-menu-content {
+				display: none !important;
 				position: absolute !important;
 				top: 100% !important;
 				left: 0 !important;
 				right: 0 !important;
+				width: 100% !important;
+				background: #ffffff !important;
+				box-shadow: 0 16px 40px rgba(0,0,0,0.12) !important;
+				border-top: 1px solid rgba(0,0,0,0.06) !important;
+				border-radius: 0 0 12px 12px !important;
+				z-index: 99999 !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				box-sizing: border-box !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-32863e9,
+			.elementor-36 .elementor-element.elementor-element-c28d728,
+			.elementor-36 .elementor-element.elementor-element-d4b5f04 {
+				display: block !important;
+				width: 100% !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				min-height: auto !important;
+				background: transparent !important;
+				box-sizing: border-box !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-b50da91 {
+				margin: 0 !important;
+				padding: 28px 36px !important;
+				width: auto !important;
+				max-width: 360px !important;
+				box-sizing: border-box !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-f618070 .elementor-heading-title {
+				font-size: 15px !important;
+				font-weight: 700 !important;
+				color: #121614 !important;
+				margin-bottom: 14px !important;
+				text-transform: uppercase !important;
+				letter-spacing: 1px !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-862a3f6 p {
+				margin: 0 0 10px 0 !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-862a3f6 a {
+				font-size: 14px !important;
+				font-weight: 500 !important;
+				color: #4b5563 !important;
+				text-decoration: none !important;
+				transition: all 0.2s ease !important;
+				display: inline-block !important;
+				padding: 2px 0 !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-862a3f6 a:hover {
+				color: #2d6a2d !important;
+				transform: translateX(4px) !important;
+			}
+
+			/* Products 7 Column Layout */
+			.ntw-products-grid-inner {
+				display: grid !important;
+				grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+				gap: 16px !important;
+				max-width: 1360px !important;
+				margin: 0 auto !important;
+				padding: 28px 24px 34px !important;
+				box-sizing: border-box !important;
+				width: 100% !important;
+			}
+
+			.ntw-mega-col {
+				display: flex !important;
+				flex-direction: column !important;
+				width: 100% !important;
+				min-width: 0 !important;
+				margin: 0 !important;
+				padding: 0 !important;
+			}
+
+			.ntw-mega-col .elementor-heading-title {
+				font-size: 13px !important;
+				font-weight: 700 !important;
+				color: #121614 !important;
+				margin-bottom: 12px !important;
+				padding-bottom: 6px !important;
+				border-bottom: 2px solid #2d6a2d !important;
+				text-transform: uppercase !important;
+				letter-spacing: 0.5px !important;
+				white-space: nowrap !important;
+				overflow: hidden !important;
+				text-overflow: ellipsis !important;
+			}
+
+			.ntw-mega-col .elementor-heading-title a {
+				color: inherit !important;
+				text-decoration: none !important;
+			}
+
+			.ntw-mega-col .elementor-widget-text-editor p {
+				margin: 0 0 7px 0 !important;
+				line-height: 1.35 !important;
+			}
+
+			.ntw-mega-col .elementor-widget-text-editor a {
+				font-size: 12.5px !important;
+				color: #555555 !important;
+				text-decoration: none !important;
+				display: inline-block !important;
+				transition: all 0.2s ease !important;
+				white-space: nowrap !important;
+				overflow: hidden !important;
+				text-overflow: ellipsis !important;
+				max-width: 100% !important;
+			}
+
+			.ntw-mega-col .elementor-widget-text-editor a:hover {
+				color: #2d6a2d !important;
+				transform: translateX(3px) !important;
+			}
+
+			/* Projects 3 Card Layout */
+			.ntw-projects-dropdown-grid {
+				display: grid !important;
+				grid-template-columns: repeat(3, 1fr) !important;
+				gap: 20px !important;
+				max-width: 1100px !important;
+				margin: 0 auto !important;
+				padding: 28px 24px 32px !important;
+				box-sizing: border-box !important;
+				width: 100% !important;
+			}
+
+			.ntw-projects-dropdown-card {
+				background: #f9f9f7 !important;
+				border-radius: 10px !important;
+				padding: 22px 24px !important;
+				border: 1px solid rgba(0,0,0,0.06) !important;
+				text-decoration: none !important;
+				transition: all 0.25s ease !important;
+				display: flex !important;
+				flex-direction: column !important;
+				justify-content: space-between !important;
+				box-sizing: border-box !important;
+			}
+
+			.ntw-projects-dropdown-card:hover {
+				background: #ffffff !important;
+				border-color: #c9a84c !important;
+				transform: translateY(-3px) !important;
+				box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+			}
+		}
+
+		/* Mobile & Tablet Drawer Styles */
+		@media (max-width: 1178px) {
+			.elementor-widget-n-menu .e-n-menu-wrapper.e-active {
+				display: flex !important;
+				flex-direction: column !important;
+				position: absolute !important;
+				top: 100% !important;
+				left: 0 !important;
+				right: 0 !important;
+				background: #ffffff !important;
 				box-shadow: 0 16px 36px rgba(0,0,0,0.15) !important;
 				padding: 20px 24px !important;
 				z-index: 99999 !important;
+				max-height: 80vh !important;
+				overflow-y: auto !important;
 			}
-			.e-n-menu-wrapper.e-active .e-n-menu-heading {
+
+			.elementor-widget-n-menu .e-n-menu-heading {
 				display: flex !important;
 				flex-direction: column !important;
 				gap: 16px !important;
+				width: 100% !important;
 			}
-			.e-n-menu-wrapper.e-active .e-n-menu-content {
+
+			.elementor-widget-n-menu .e-n-menu-content {
 				display: block !important;
 				position: static !important;
 				box-shadow: none !important;
-				padding: 8px 12px !important;
-				background: #f9f9f9 !important;
-				border-radius: 6px !important;
+				padding: 12px 16px !important;
+				background: #f8f9fa !important;
+				border-radius: 8px !important;
+				width: 100% !important;
+			}
+
+			.ntw-products-grid-inner {
+				display: flex !important;
+				flex-direction: column !important;
+				gap: 16px !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				width: 100% !important;
+			}
+
+			.ntw-projects-dropdown-grid {
+				display: flex !important;
+				flex-direction: column !important;
+				gap: 12px !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				width: 100% !important;
+			}
+
+			.elementor-36 .elementor-element.elementor-element-32863e9,
+			.elementor-36 .elementor-element.elementor-element-b50da91,
+			.elementor-36 .elementor-element.elementor-element-d4b5f04 {
+				margin: 0 !important;
+				padding: 0 !important;
+				width: 100% !important;
 			}
 		}
 
