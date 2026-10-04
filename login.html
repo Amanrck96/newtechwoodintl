@@ -551,60 +551,6 @@
 			box-shadow: 0 8px 24px rgba(45, 106, 45, 0.35);
 			background: linear-gradient(135deg, #327532 0%, #173d17 100%);
 		}
-
-		/* Quick Demo Autofill Bar */
-		.demo-fill-card {
-			margin-top: 24px;
-			padding: 14px;
-			background: #fafbfa;
-			border: 1px dashed #cfd9cf;
-			border-radius: 9px;
-			font-size: 12px;
-		}
-
-		.demo-fill-title {
-			font-weight: 700;
-			color: var(--ntw-gray-800);
-			margin-bottom: 8px;
-			display: flex;
-			align-items: center;
-			gap: 6px;
-		}
-
-		.demo-btn-group {
-			display: flex;
-			gap: 8px;
-			flex-wrap: wrap;
-		}
-
-		.demo-chip {
-			background: #ffffff;
-			border: 1px solid var(--ntw-gray-200);
-			padding: 6px 10px;
-			border-radius: 6px;
-			cursor: pointer;
-			font-size: 11.5px;
-			font-weight: 600;
-			color: var(--ntw-gray-800);
-			transition: 0.15s;
-		}
-
-		.demo-chip:hover {
-			background: var(--ntw-green);
-			color: #ffffff;
-			border-color: var(--ntw-green);
-		}
-
-		.demo-chip.chip-admin {
-			border-color: var(--ntw-gold);
-			color: #8c6e23;
-		}
-
-		.demo-chip.chip-admin:hover {
-			background: var(--ntw-gold);
-			color: #111;
-		}
-
 		/* Trust & Security Details */
 		.security-badge {
 			display: flex;
@@ -830,8 +776,7 @@
 								id="loginEmail" 
 								name="email" 
 								class="form-control" 
-								value="admin" 
-								placeholder="admin" 
+								placeholder="admin or vendor@firm.com" 
 								required 
 								autocomplete="username"
 							/>
@@ -853,8 +798,7 @@
 								id="loginPassword" 
 								name="password" 
 								class="form-control" 
-								value="admin" 
-								placeholder="••••••••" 
+								placeholder="••••••••••••" 
 								required 
 								autocomplete="current-password"
 							/>
@@ -888,25 +832,6 @@
 						</svg>
 					</button>
 				</form>
-
-				<!-- Quick Demo Credentials Box -->
-				<div class="demo-fill-card">
-					<div class="demo-fill-title">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-						Quick Autofill Testing:
-					</div>
-					<div class="demo-btn-group">
-						<button type="button" class="demo-chip chip-admin" onclick="autofillCreds('admin', 'admin', 'superadmin')">
-							🛡️ Super Admin (admin / admin)
-						</button>
-						<button type="button" class="demo-chip" onclick="autofillCreds('dealer@lumberlife.in', 'Dealer@2026', 'dealer')">
-							🏢 Vendor: Dealer
-						</button>
-						<button type="button" class="demo-chip" onclick="autofillCreds('architect@studio.design', 'UltraShield2026', 'architect')">
-							📐 Vendor: Architect
-						</button>
-					</div>
-				</div>
 
 				<!-- Trust & Security Details -->
 				<div class="security-badge">
