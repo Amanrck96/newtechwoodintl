@@ -915,16 +915,32 @@
 		];
 
 		function getUsers() {
+			let users = INITIAL_USERS;
 			const saved = localStorage.getItem('ntw_users');
-			if (!saved) {
+			if (saved) {
+				try {
+					const parsed = JSON.parse(saved);
+					if (Array.isArray(parsed)) {
+						const merged = [...parsed];
+						INITIAL_USERS.forEach(initU => {
+							const idx = merged.findIndex(m => m.id === initU.id || (m.email && m.email.toLowerCase() === initU.email.toLowerCase()));
+							if (idx === -1) {
+								merged.unshift(initU);
+							} else if (initU.role === 'superadmin') {
+								merged[idx] = { ...merged[idx], ...initU };
+							}
+						});
+						users = merged;
+						localStorage.setItem('ntw_users', JSON.stringify(users));
+					}
+				} catch (e) {
+					users = INITIAL_USERS;
+					localStorage.setItem('ntw_users', JSON.stringify(INITIAL_USERS));
+				}
+			} else {
 				localStorage.setItem('ntw_users', JSON.stringify(INITIAL_USERS));
-				return INITIAL_USERS;
 			}
-			try {
-				return JSON.parse(saved);
-			} catch (e) {
-				return INITIAL_USERS;
-			}
+			return users;
 		}
 
 		// Role Definitions
@@ -1031,10 +1047,42 @@
 			btn.disabled = true;
 			btnText.innerText = 'Verifying with Super Admin Database...';
 
+			// 1. Direct Super Admin Master Authentication (Immune to stale cache)
+			if ((email === 'admin' || email === 'admin@newtechwood.in' || email === 'admin-001') && 
+			    (password.toLowerCase() === 'admin' || password === 'admin123')) {
+				const superAdmin = {
+					id: 'admin',
+					vendorId: 'ADMIN-001',
+					name: 'Super Administrator',
+					email: 'admin@newtechwood.in',
+					password: 'admin',
+					role: 'superadmin',
+					status: 'active'
+				};
+				localStorage.setItem('ntw_session', JSON.stringify(superAdmin));
+				
+				// Self-heal ntw_users in localStorage
+				const curUsers = getUsers();
+				if (!curUsers.some(u => u.role === 'superadmin')) {
+					curUsers.unshift(superAdmin);
+					localStorage.setItem('ntw_users', JSON.stringify(curUsers));
+				}
+
+				setTimeout(() => {
+					btn.disabled = false;
+					btnText.innerText = 'Sign In as Super Admin';
+					showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
+					setTimeout(() => {
+						window.location.href = '/admin/';
+					}, 500);
+				}, 400);
+				return;
+			}
+
+			// 2. Vendor Database Authentication
 			const users = getUsers();
-			// Look for matching user by email OR vendorId OR username
 			const matched = users.find(u => 
-				(u.email.toLowerCase() === email || (u.vendorId && u.vendorId.toLowerCase() === email)) && 
+				(u.email.toLowerCase() === email || (u.vendorId && u.vendorId.toLowerCase() === email) || (u.id && u.id.toLowerCase() === email)) && 
 				u.password === password
 			);
 
@@ -1043,30 +1091,28 @@
 				btnText.innerText = roleConfigs[currentRole]?.btnText || 'Sign In';
 
 				if (matched) {
-					// Check active status
 					if (matched.status === 'inactive') {
 						showToast('Access Denied: This vendor ID has been deactivated by Super Admin.', true);
 						return;
 					}
 
-					// Store session
 					localStorage.setItem('ntw_session', JSON.stringify(matched));
 
 					if (matched.role === 'superadmin') {
 						showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
 						setTimeout(() => {
 							window.location.href = '/admin/';
-						}, 700);
+						}, 500);
 					} else {
 						showToast(`Welcome back, ${matched.name}! Loading partner resources...`);
 						setTimeout(() => {
 							window.location.href = '/admin/vendor.html';
-						}, 700);
+						}, 500);
 					}
 				} else {
 					showToast('Access Denied: Unrecognized credentials. Accounts are provisioned exclusively by Super Admin.', true);
 				}
-			}, 700);
+			}, 500);
 		}
 
 		function openForgotModal(e) {
