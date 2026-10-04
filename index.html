@@ -291,6 +291,41 @@ gtag("config", "GT-WVG7T9T");
     --ll-transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* --- Hero Background Video Styles --- */
+  .elementor-element.elementor-element-b91bda7 {
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    min-height: clamp(380px, 56.25vw, 850px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #0b1d0b !important;
+  }
+  .elementor-element.elementor-element-b91bda7 > .elementor-background-video-container {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+  .elementor-element.elementor-element-b91bda7 video.elementor-background-video-hosted {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: translate(-50%, -50%) !important;
+    object-fit: cover !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
   /* --- Experience Centre Section --- */
   .ll-experience-centre {
     background: linear-gradient(135deg, #0d2b0d 0%, #1a4a1a 50%, #0d2b0d 100%);
@@ -1016,8 +1051,11 @@ gtag("config", "GT-WVG7T9T");
 				<div data-elementor-type="wp-page" data-elementor-id="10" class="elementor elementor-10" data-elementor-post-type="page">
 				<div class="elementor-element elementor-element-b91bda7 e-con-full main-width e-flex e-con e-parent" data-id="b91bda7" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;video&quot;,&quot;background_video_link&quot;:&quot;\/wp-content\/uploads\/video\/NTW-Brand-Video-6.mp4&quot;,&quot;background_play_on_mobile&quot;:&quot;yes&quot;}">
 		<div class="elementor-background-video-container" aria-hidden="true">
-							<video class="elementor-background-video-hosted" autoplay muted playsinline loop></video>
-					</div>		</div>
+			<video class="elementor-background-video-hosted" autoplay muted playsinline loop preload="auto" poster="/wp-content/uploads/2025/07/Wood-Composite.jpg">
+				<source src="/wp-content/uploads/video/NTW-Brand-Video-6.mp4" type="video/mp4">
+				<source src="https://www.newtechwoodintl.com/wp-content/uploads/video/NTW-Brand-Video-6.mp4" type="video/mp4">
+			</video>
+		</div>		</div>
 				<div class="elementor-element elementor-element-ce6be86 e-con-full e-flex e-con e-parent" data-id="ce6be86" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 				<div class="elementor-element elementor-element-d2fb4d6 elementor-widget elementor-widget-heading" data-id="d2fb4d6" data-element_type="widget" data-widget_type="heading.default">
 					<h2 class="elementor-heading-title elementor-size-default">Our Products</h2>				</div>
@@ -1584,77 +1622,109 @@ var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/www.newtechwoodintl.com\/
 	<!-- Background Video Playlist Loop Script -->
 	<script>
 		(function() {
-			var video1 = '/wp-content/uploads/video/NTW-Brand-Video-6.mp4';
-			var video2 = '/wp-content/uploads/video/whatsapp-video.mp4';
-			var currentVideoIndex = 2; // Start with the 2nd video (WhatsApp Video)
-			
+			var playlist = [
+				{
+					name: 'Brand Video',
+					local: '/wp-content/uploads/video/NTW-Brand-Video-6.mp4',
+					fallback: 'https://www.newtechwoodintl.com/wp-content/uploads/video/NTW-Brand-Video-6.mp4'
+				},
+				{
+					name: 'Distributor Conference',
+					local: '/wp-content/uploads/video/whatsapp-video.mp4',
+					fallback: 'https://www.newtechwoodintl.com/wp-content/uploads/video/NTW-Brand-Video-6.mp4'
+				}
+			];
+			var currentIndex = 0;
+
+			function playVideoItem(video, index, useFallback) {
+				if (!video) return;
+				currentIndex = index % playlist.length;
+				var item = playlist[currentIndex];
+				var targetSrc = useFallback ? item.fallback : item.local;
+
+				console.log('[VideoPlayer] Playing:', item.name, 'URL:', targetSrc);
+
+				video.muted = true;
+				video.setAttribute('muted', '');
+				video.playsInline = true;
+				video.setAttribute('playsinline', '');
+				video.autoplay = true;
+				video.setAttribute('autoplay', '');
+				video.loop = false;
+				video.removeAttribute('loop');
+
+				video.src = targetSrc;
+				var sources = video.getElementsByTagName('source');
+				for (var i = 0; i < sources.length; i++) {
+					sources[i].src = targetSrc;
+				}
+
+				video.load();
+				var p = video.play();
+				if (p !== undefined) {
+					p.catch(function(err) {
+						console.warn('[VideoPlayer] Play interrupted or failed:', err);
+						if (!useFallback && item.fallback && item.fallback !== item.local) {
+							console.log('[VideoPlayer] Attempting fallback source...');
+							playVideoItem(video, currentIndex, true);
+						}
+					});
+				}
+			}
+
 			function setupVideoWatcher(video) {
 				if (video.dataset.playlistSetup) return;
 				video.dataset.playlistSetup = 'true';
-				
-				console.log('Setting up video playlist loop for element:', video);
-				
-				// Force loop property to false
-				video.loop = false;
-				video.removeAttribute('loop');
-				
-				// Immediately switch to video2 when page loads
-				video.src = video2;
-				var sources = video.getElementsByTagName('source');
-				for (var i = 0; i < sources.length; i++) {
-					sources[i].src = video.src;
-				}
-				video.load();
-				var playPromise = video.play();
-				if (playPromise !== undefined) {
-					playPromise.catch(function(error) {
-						console.log('Autoplay play request failed or was interrupted:', error);
-					});
-				}
-				
-				// Keep loop disabled via attributes mutation observer
-				var observer = new MutationObserver(function() {
-					if (video.loop) {
-						video.loop = false;
-						video.removeAttribute('loop');
-					}
-				});
-				observer.observe(video, { attributes: true, attributeFilter: ['loop'] });
-				
-				// Listen for video ending
-				video.addEventListener('ended', function() {
-					console.log('Video ended, current index was:', currentVideoIndex);
-					if (currentVideoIndex === 2) {
-						currentVideoIndex = 1;
-						video.src = video1;
+
+				console.log('[VideoPlayer] Resilient video playlist initialized.');
+
+				// If local video throws demuxer error or 404 (e.g. Vercel LFS pointer)
+				video.addEventListener('error', function() {
+					console.warn('[VideoPlayer] Video error on', video.src);
+					var item = playlist[currentIndex];
+					if (video.src.indexOf('newtechwoodintl.com') === -1 && item.fallback) {
+						console.log('[VideoPlayer] Switching to high-speed CDN fallback...');
+						playVideoItem(video, currentIndex, true);
 					} else {
-						currentVideoIndex = 2;
-						video.src = video2;
-					}
-					
-					// Update any child <source> elements if present
-					var sources = video.getElementsByTagName('source');
-					for (var i = 0; i < sources.length; i++) {
-						sources[i].src = video.src;
-					}
-					
-					video.load();
-					var playPromise = video.play();
-					if (playPromise !== undefined) {
-						playPromise.catch(function(error) {
-							console.log('Autoplay play request failed or was interrupted:', error);
-						});
+						// Advance to next video
+						playVideoItem(video, (currentIndex + 1) % playlist.length, false);
 					}
 				});
+
+				// When video ends, smoothly cycle to next video
+				video.addEventListener('ended', function() {
+					console.log('[VideoPlayer] Video finished, cycling to next...');
+					playVideoItem(video, (currentIndex + 1) % playlist.length, false);
+				});
+
+				// Mobile browser user-gesture unlock fallback
+				var unlock = function() {
+					if (video.paused) {
+						video.play().catch(function() {});
+					}
+					window.removeEventListener('click', unlock);
+					window.removeEventListener('touchstart', unlock);
+				};
+				window.addEventListener('click', unlock, { once: true });
+				window.addEventListener('touchstart', unlock, { once: true });
+
+				// Start with the first video
+				playVideoItem(video, 0, false);
 			}
-			
-			// Periodically check for the video element (since Elementor can initialize it late)
+
+			// Watch for video element
 			var checkInterval = setInterval(function() {
 				var video = document.querySelector('.elementor-background-video-hosted');
 				if (video) {
 					setupVideoWatcher(video);
+					clearInterval(checkInterval);
 				}
-			}, 1000);
+			}, 300);
+
+			var immediate = document.querySelector('.elementor-background-video-hosted');
+			if (immediate) {
+				setupVideoWatcher(immediate);
+			}
 		})();
 	</script>
 </body>
