@@ -662,6 +662,66 @@ gtag("config", "GT-WVG7T9T");
     .ll-ec-grid { grid-template-columns: 1fr; }
     .ll-footer-brand { padding: 28px 24px; }
   }
+
+  /* --- Header Login Icon Tab (The only icon tab in the header) --- */
+  .ntw-header-login-tab {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+  .ntw-login-icon-tab {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f3f5f3;
+    border: 1.5px solid rgba(45, 106, 45, 0.25);
+    color: var(--ll-green, #2d6a2d) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    text-decoration: none !important;
+    padding: 0 !important;
+  }
+  .ntw-login-icon-tab:hover {
+    background: var(--ll-green, #2d6a2d);
+    color: #ffffff !important;
+    border-color: var(--ll-green, #2d6a2d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(45, 106, 45, 0.3);
+  }
+  .ntw-login-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ntw-login-icon-wrap svg {
+    display: block;
+    width: 17px;
+    height: 17px;
+  }
+  @media (max-width: 1024px) {
+    .ntw-header-login-tab {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+    .ntw-login-icon-tab {
+      width: auto;
+      height: 42px;
+      border-radius: 8px;
+      padding: 0 16px !important;
+      gap: 8px;
+      background: var(--ll-green, #2d6a2d);
+      color: #ffffff !important;
+    }
+    .ntw-login-icon-tab::after {
+      content: 'PORTAL LOGIN';
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+  }
 </style>
 </head>
 <body class="home wp-singular page-template page-template-elementor_header_footer page page-id-10 wp-custom-logo wp-embed-responsive wp-theme-hello-elementor hello-elementor-default elementor-default elementor-template-full-width elementor-kit-7 elementor-page elementor-page-10">
@@ -926,6 +986,20 @@ gtag("config", "GT-WVG7T9T");
 											<div id="e-n-menu-title-contact" class="e-n-menu-title">
 												<a class="e-n-menu-title-container e-focus e-link" href="/contact-us/">
 													<span class="e-n-menu-title-text">CONTACT US</span>
+												</a>
+											</div>
+										</li>
+
+										<!-- 6. LOGIN (THE ONLY ICON TAB IN THE HEADER) -->
+										<li class="e-n-menu-item ntw-header-login-tab">
+											<div id="e-n-menu-title-login" class="e-n-menu-title">
+												<a class="e-n-menu-title-container e-focus e-link ntw-login-icon-tab" href="/login/" title="Partner &amp; Customer Portal Login" aria-label="Partner and Customer Portal Login">
+													<span class="ntw-login-icon-wrap" aria-hidden="true">
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+															<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+															<circle cx="12" cy="7" r="4"></circle>
+														</svg>
+													</span>
 												</a>
 											</div>
 										</li>

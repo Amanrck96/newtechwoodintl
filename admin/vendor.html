@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vendor Partner Portal &amp; Orders - NewTechWood International</title>
+	<link rel="icon" href="/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" sizes="32x32" />
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+	<style>
+		:root {
+			--vp-green: #2d6a2d;
+			--vp-green-dark: #1b471b;
+			--vp-gold: #c9a84c;
+			--vp-gold-light: #dfc168;
+			--vp-dark: #131a14;
+			--vp-bg: #f5f7f4;
+			--vp-card: #ffffff;
+			--vp-border: #e0e6df;
+			--vp-radius: 12px;
+			--vp-shadow: 0 4px 18px rgba(0,0,0,0.06);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: 'Inter', -apple-system, sans-serif;
+			background: var(--vp-bg);
+			color: #1a202c;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+
+		/* TOPBAR */
+		.vp-header {
+			background: #ffffff;
+			border-bottom: 1px solid var(--vp-border);
+			padding: 0 32px;
+			height: 70px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			position: sticky;
+			top: 0;
+			z-index: 50;
+		}
+
+		.vp-brand {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			text-decoration: none;
+		}
+
+		.vp-brand img {
+			height: 32px;
+			width: auto;
+		}
+
+		.vp-user-badge {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.vp-avatar {
+			width: 38px;
+			height: 38px;
+			border-radius: 50%;
+			background: var(--vp-green);
+			color: #ffffff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 700;
+			font-size: 14px;
+		}
+
+		.btn-logout {
+			background: #f1f4f1;
+			border: 1px solid var(--vp-border);
+			padding: 7px 14px;
+			border-radius: 6px;
+			font-size: 12.5px;
+			font-weight: 600;
+			color: #c53030;
+			cursor: pointer;
+			text-decoration: none;
+			transition: 0.2s;
+		}
+
+		.btn-logout:hover {
+			background: #fff5f5;
+			border-color: #feb2b2;
+		}
+
+		/* MAIN CONTAINER */
+		.vp-container {
+			max-width: 1240px;
+			margin: 0 auto;
+			padding: 32px 24px;
+			width: 100%;
+			flex: 1;
+		}
+
+		/* HERO BANNER */
+		.vp-welcome-card {
+			background: linear-gradient(135deg, #0e2912 0%, #1a4a1f 100%);
+			color: #ffffff;
+			border-radius: var(--vp-radius);
+			padding: 32px 36px;
+			margin-bottom: 28px;
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 10px 30px rgba(15, 41, 19, 0.15);
+		}
+
+		.vp-welcome-card::after {
+			content: '';
+			position: absolute;
+			right: -30px;
+			bottom: -30px;
+			width: 240px;
+			height: 240px;
+			background: radial-gradient(circle, rgba(201, 168, 76, 0.22) 0%, transparent 70%);
+			pointer-events: none;
+		}
+
+		.vp-tag {
+			display: inline-block;
+			background: rgba(201, 168, 76, 0.2);
+			color: var(--vp-gold-light);
+			border: 1px solid rgba(201, 168, 76, 0.35);
+			padding: 4px 12px;
+			border-radius: 100px;
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			margin-bottom: 10px;
+		}
+
+		.vp-title {
+			font-family: 'Playfair Display', serif;
+			font-size: 30px;
+			font-weight: 700;
+			margin-bottom: 6px;
+		}
+
+		.vp-desc {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.82);
+			max-width: 650px;
+			line-height: 1.55;
+		}
+
+		/* NAVIGATION TABS */
+		.portal-tabs {
+			display: flex;
+			gap: 8px;
+			margin-bottom: 24px;
+			border-bottom: 2px solid var(--vp-border);
+			padding-bottom: 2px;
+		}
+
+		.portal-tab-btn {
+			padding: 12px 20px;
+			font-size: 14px;
+			font-weight: 600;
+			color: #556957;
+			background: transparent;
+			border: none;
+			border-bottom: 3px solid transparent;
+			margin-bottom: -4px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			transition: all 0.2s;
+		}
+
+		.portal-tab-btn:hover {
+			color: var(--vp-green);
+		}
+
+		.portal-tab-btn.active {
+			color: var(--vp-green);
+			border-bottom-color: var(--vp-green);
+		}
+
+		.badge-tab-count {
+			background: #eef4ee;
+			color: var(--vp-green);
+			font-size: 11px;
+			padding: 2px 7px;
+			border-radius: 10px;
+			font-weight: 700;
+		}
+
+		/* TAB SECTIONS */
+		.portal-section {
+			display: none;
+		}
+
+		.portal-section.active {
+			display: block;
+			animation: fadeIn 0.2s ease;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(4px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		/* CARDS & FORMS */
+		.card-box {
+			background: var(--vp-card);
+			border: 1px solid var(--vp-border);
+			border-radius: var(--vp-radius);
+			box-shadow: var(--vp-shadow);
+			padding: 30px;
+			margin-bottom: 28px;
+		}
+
+		.card-box-header {
+			margin-bottom: 24px;
+			padding-bottom: 16px;
+			border-bottom: 1px solid var(--vp-border);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.card-box-header h2 {
+			font-size: 18px;
+			font-weight: 700;
+			color: #1a202c;
+		}
+
+		.form-grid-order {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 20px;
+		}
+
+		.form-full {
+			grid-column: span 2;
+		}
+
+		.form-group-vp label {
+			display: block;
+			font-size: 13px;
+			font-weight: 600;
+			color: #2d3748;
+			margin-bottom: 7px;
+		}
+
+		.form-control-vp {
+			width: 100%;
+			height: 46px;
+			padding: 0 14px;
+			border: 1.5px solid var(--vp-border);
+			border-radius: 8px;
+			font-family: inherit;
+			font-size: 13.5px;
+			color: #1a202c;
+			outline: none;
+			transition: border-color 0.2s;
+			background: #ffffff;
+		}
+
+		.form-control-vp:focus {
+			border-color: var(--vp-green);
+			box-shadow: 0 0 0 3px rgba(45, 106, 45, 0.1);
+		}
+
+		textarea.form-control-vp {
+			height: auto;
+			padding: 12px 14px;
+			resize: vertical;
+		}
+
+		/* ORDER SUMMARY CARD */
+		.order-pricing-summary {
+			background: #f7f9f7;
+			border: 1px solid #d8e2d7;
+			border-radius: 10px;
+			padding: 20px;
+			margin-top: 24px;
+		}
+
+		.summary-row {
+			display: flex;
+			justify-content: space-between;
+			font-size: 13.5px;
+			margin-bottom: 8px;
+			color: #4a5568;
+		}
+
+		.summary-total {
+			display: flex;
+			justify-content: space-between;
+			font-size: 17px;
+			font-weight: 700;
+			color: var(--vp-green);
+			padding-top: 10px;
+			border-top: 1px dashed #cbd5cc;
+			margin-top: 8px;
+		}
+
+		.btn-submit-order {
+			background: var(--vp-green);
+			color: #ffffff;
+			border: none;
+			padding: 12px 28px;
+			border-radius: 8px;
+			font-size: 14px;
+			font-weight: 600;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			margin-top: 20px;
+			transition: 0.2s;
+		}
+
+		.btn-submit-order:hover {
+			background: var(--vp-green-dark);
+		}
+
+		/* ORDERS TABLE */
+		.data-table-vp {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 13px;
+			text-align: left;
+		}
+
+		.data-table-vp th {
+			background: #f8faf8;
+			color: #4a5568;
+			font-weight: 600;
+			padding: 14px 18px;
+			border-bottom: 1.5px solid var(--vp-border);
+		}
+
+		.data-table-vp td {
+			padding: 16px 18px;
+			border-bottom: 1px solid var(--vp-border);
+			vertical-align: middle;
+		}
+
+		.badge-status-order {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 4px 10px;
+			border-radius: 100px;
+			font-size: 11.5px;
+			font-weight: 700;
+		}
+
+		.badge-pending {
+			background: #fff8e6;
+			color: #975a16;
+			border: 1px solid #fbd38d;
+		}
+
+		.badge-invoiced {
+			background: #def7ec;
+			color: #03543f;
+			border: 1px solid #84e1bc;
+		}
+
+		.btn-view-invoice {
+			background: #ffffff;
+			border: 1.5px solid var(--vp-green);
+			color: var(--vp-green);
+			padding: 6px 12px;
+			border-radius: 6px;
+			font-size: 12px;
+			font-weight: 700;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: 0.15s;
+		}
+
+		.btn-view-invoice:hover {
+			background: var(--vp-green);
+			color: #ffffff;
+		}
+
+		/* INVOICE MODAL (PRINT READY) */
+		.invoice-modal-backdrop {
+			position: fixed;
+			inset: 0;
+			background: rgba(0,0,0,0.6);
+			backdrop-filter: blur(4px);
+			display: none;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000;
+			padding: 20px;
+			overflow-y: auto;
+		}
+
+		.invoice-modal-backdrop.active {
+			display: flex;
+		}
+
+		.invoice-sheet {
+			background: #ffffff;
+			width: 100%;
+			max-width: 760px;
+			border-radius: 12px;
+			padding: 40px;
+			box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+			position: relative;
+			font-size: 13px;
+			color: #2d3748;
+		}
+
+		.invoice-sheet-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			border-bottom: 2px solid #2d6a2d;
+			padding-bottom: 20px;
+			margin-bottom: 24px;
+		}
+
+		.invoice-title {
+			font-size: 26px;
+			font-weight: 800;
+			color: #2d6a2d;
+			letter-spacing: -0.5px;
+			text-transform: uppercase;
+		}
+
+		.invoice-meta-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
+			margin-bottom: 24px;
+		}
+
+		.invoice-items-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 24px;
+		}
+
+		.invoice-items-table th {
+			background: #f3f7f3;
+			padding: 10px 12px;
+			border-bottom: 2px solid #cbd5cc;
+			font-size: 12px;
+			text-transform: uppercase;
+		}
+
+		.invoice-items-table td {
+			padding: 12px;
+			border-bottom: 1px solid #e2e8f0;
+		}
+
+		.invoice-totals-box {
+			margin-left: auto;
+			width: 280px;
+			margin-bottom: 24px;
+		}
+
+		.invoice-footer {
+			border-top: 1px solid #e2e8f0;
+			padding-top: 16px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 12px;
+			color: #718096;
+		}
+
+		.invoice-stamp {
+			border: 2px dashed #2d6a2d;
+			color: #2d6a2d;
+			padding: 6px 14px;
+			border-radius: 6px;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-size: 11px;
+		}
+
+		.btn-print-inv {
+			background: #2d6a2d;
+			color: #ffffff;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 6px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+
+		.btn-close-inv {
+			background: #edf2f7;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 6px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+
+		/* TOAST */
+		.toast-container {
+			position: fixed;
+			bottom: 24px;
+			right: 24px;
+			z-index: 1100;
+		}
+
+		.toast-vp {
+			background: #ffffff;
+			border-left: 4px solid var(--vp-green);
+			padding: 14px 18px;
+			border-radius: 8px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+			font-size: 13px;
+			font-weight: 600;
+			color: #1a202c;
+			margin-top: 8px;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- TOPBAR -->
+	<header class="vp-header">
+		<a href="/index.html" class="vp-brand">
+			<img src="/wp-content/uploads/2025/07/newtechwood-site-logo.svg" alt="NewTechWood" />
+		</a>
+
+		<div class="vp-user-badge">
+			<div class="vp-avatar" id="avatarInitial">V</div>
+			<div>
+				<div style="font-size: 13.5px; font-weight: 700;" id="vendorName">Authorized Vendor</div>
+				<div style="font-size: 11.5px; color: #718096;" id="vendorIdDisplay">Partner ID: VND-2026</div>
+			</div>
+			<a href="/login/" class="btn-logout" onclick="localStorage.removeItem('ntw_session')">Sign Out</a>
+		</div>
+	</header>
+
+	<main class="vp-container">
+		
+		<!-- WELCOME HERO BANNER -->
+		<div class="vp-welcome-card">
+			<span class="vp-tag" id="vendorRoleTag">VERIFIED PARTNER PORTAL</span>
+			<h1 class="vp-title">Commercial Ordering &amp; Invoicing</h1>
+			<p class="vp-desc">
+				Place wholesale material orders directly with NewTechWood &amp; Lumber Life. Orders are verified and accepted by the Super Administrator, after which official commercial tax invoices are generated automatically.
+			</p>
+		</div>
+
+		<!-- TABS -->
+		<div class="portal-tabs">
+			<button class="portal-tab-btn active" onclick="switchPortalTab('order', this)">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+				<span>Place Material Order</span>
+			</button>
+			<button class="portal-tab-btn" onclick="switchPortalTab('history', this)">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+				<span>My Orders &amp; Invoices</span>
+				<span class="badge-tab-count" id="orderTabBadge">0</span>
+			</button>
+			<button class="portal-tab-btn" onclick="switchPortalTab('assets', this)">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+				<span>CAD &amp; Technical Assets</span>
+			</button>
+		</div>
+
+		<!-- TAB 1: ORDER FORM -->
+		<section id="tab-order" class="portal-section active">
+			<div class="card-box">
+				<div class="card-box-header">
+					<h2>Wholesale Material Requisition Form</h2>
+					<span style="font-size: 12px; color: #718096;">* Requires Super Admin Acceptance for Invoice Generation</span>
+				</div>
+
+				<form onsubmit="handlePlaceOrder(event)">
+					<div class="form-grid-order">
+						<div class="form-group-vp">
+							<label>Project / Site Name</label>
+							<input type="text" id="orderProjectName" class="form-control-vp" placeholder="e.g. Alibaug Luxury Villa Decking" required />
+						</div>
+
+						<div class="form-group-vp">
+							<label>Delivery Site City &amp; State</label>
+							<input type="text" id="orderSiteLocation" class="form-control-vp" placeholder="e.g. Alibaug, Maharashtra" required />
+						</div>
+
+						<div class="form-group-vp">
+							<label>Select Composite Product Line</label>
+							<select id="orderProductSelect" class="form-control-vp" onchange="calculateOrderSummary()">
+								<option value="UltraShield Decking" data-rate="420">UltraShield® Composite Decking — ₹420 / sq.ft</option>
+								<option value="All-Weather Cladding" data-rate="510">All-Weather Siding Cladding — ₹510 / sq.ft</option>
+								<option value="Architectural Beams" data-rate="850">Architectural Pergola Beams — ₹850 / meter</option>
+								<option value="Quick-Lock Deck Tiles" data-rate="290">Quick-Lock Composite Deck Tiles — ₹290 / piece</option>
+								<option value="Castellation Fencing" data-rate="620">Castellation Architectural Fencing — ₹620 / sq.ft</option>
+							</select>
+						</div>
+
+						<div class="form-group-vp">
+							<label>Color / Wood Grain Finish</label>
+							<select id="orderColorSelect" class="form-control-vp">
+								<option value="Peruvian Teak (TK)">Peruvian Teak (TK)</option>
+								<option value="Antique Wood (AT)">Antique Wood (AT)</option>
+								<option value="Charcoal Black (CH)">Charcoal Black (CH)</option>
+								<option value="Walnut Wood (WN)">Walnut Wood (WN)</option>
+								<option value="Spanish Oak (SK)">Spanish Oak (SK)</option>
+							</select>
+						</div>
+
+						<div class="form-group-vp">
+							<label>Order Quantity (sq.ft / units)</label>
+							<input type="number" id="orderQuantity" class="form-control-vp" value="1200" min="50" oninput="calculateOrderSummary()" required />
+						</div>
+
+						<div class="form-group-vp">
+							<label>Required Target Delivery Date</label>
+							<input type="date" id="orderTargetDate" class="form-control-vp" required />
+						</div>
+
+						<div class="form-group-vp form-full">
+							<label>Contractor / Structural Notes</label>
+							<textarea id="orderNotes" class="form-control-vp" rows="2" placeholder="Include clips, joist spacing preferences, or special access instructions..."></textarea>
+						</div>
+					</div>
+
+					<!-- Pricing Calculation Box -->
+					<div class="order-pricing-summary">
+						<div class="summary-row">
+							<span>Selected Product:</span>
+							<strong id="summaryProductName">UltraShield® Composite Decking</strong>
+						</div>
+						<div class="summary-row">
+							<span>Wholesale Base Rate:</span>
+							<span id="summaryRate">₹420 / sq.ft</span>
+						</div>
+						<div class="summary-row">
+							<span>Subtotal:</span>
+							<span id="summarySubtotal">₹504,000</span>
+						</div>
+						<div class="summary-row">
+							<span>GST (18% Harmonized Tax):</span>
+							<span id="summaryGst">₹90,720</span>
+						</div>
+						<div class="summary-total">
+							<span>Total Requisition Value:</span>
+							<span id="summaryTotal">₹594,720</span>
+						</div>
+					</div>
+
+					<button type="submit" class="btn-submit-order" id="orderSubmitBtn">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+						<span>Submit Order to Super Admin</span>
+					</button>
+				</form>
+			</div>
+		</section>
+
+		<!-- TAB 2: MY ORDERS & INVOICES -->
+		<section id="tab-history" class="portal-section">
+			<div class="card-box">
+				<div class="card-box-header">
+					<h2>Commercial Orders &amp; Tax Invoices</h2>
+					<button class="btn-submit-order" style="margin: 0; padding: 7px 14px; font-size: 13px;" onclick="switchPortalTab('order', document.querySelectorAll('.portal-tab-btn')[0])">
+						+ Place Another Order
+					</button>
+				</div>
+
+				<table class="data-table-vp">
+					<thead>
+						<tr>
+							<th>Order ID</th>
+							<th>Project Site</th>
+							<th>Product &amp; Finish</th>
+							<th>Quantity</th>
+							<th>Total Amount</th>
+							<th>Status</th>
+							<th>Invoice</th>
+						</tr>
+					</thead>
+					<tbody id="vendorOrdersTableBody">
+						<!-- Dynamic Rows -->
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- TAB 3: ASSETS -->
+		<section id="tab-assets" class="portal-section">
+			<div class="card-box">
+				<div class="card-box-header">
+					<h2>Technical Resources &amp; Downloads</h2>
+				</div>
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+					<div style="background:#f8faf8;padding:20px;border-radius:10px;border:1px solid #e2e8e2;">
+						<h3 style="font-size:15px;margin-bottom:8px;">AutoCAD DWG Profiles</h3>
+						<p style="font-size:12.5px;color:#718096;margin-bottom:14px;">Complete 2D cross-sections for decking clips &amp; joists.</p>
+						<button class="btn-submit-order" style="padding:7px 14px;font-size:12.5px;" onclick="alert('Downloading NewTechWood_CAD_Profiles.zip')">Download DWG ZIP</button>
+					</div>
+					<div style="background:#f8faf8;padding:20px;border-radius:10px;border:1px solid #e2e8e2;">
+						<h3 style="font-size:15px;margin-bottom:8px;">UltraShield® Test Reports</h3>
+						<p style="font-size:12.5px;color:#718096;margin-bottom:14px;">ASTM D7032 &amp; EN 15534 Fire/Slip resistance certifications.</p>
+						<button class="btn-submit-order" style="padding:7px 14px;font-size:12.5px;" onclick="alert('Downloading UltraShield_ASTM_Report.pdf')">Download PDF</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<!-- INVOICE MODAL -->
+	<div class="invoice-modal-backdrop" id="invoiceModal">
+		<div class="invoice-sheet" id="invoicePrintSheet">
+			<div class="invoice-sheet-header">
+				<div>
+					<div class="invoice-title">Tax Invoice</div>
+					<div style="font-size: 13px; font-weight: 700; color: #1a202c; margin-top: 4px;">NewTechWood International &amp; Lumber Life India</div>
+					<div style="font-size: 12px; color: #718096;">GSTIN: 27AABCL8491M1Z8 • Trade Centre, BKC, Mumbai</div>
+				</div>
+				<div style="text-align: right;">
+					<div style="font-size: 15px; font-weight: 800; color: #2d6a2d;" id="modalInvoiceNum">INV-NTW-2026-001</div>
+					<div style="font-size: 12px; color: #718096;" id="modalInvoiceDate">Date: 2026-10-04</div>
+				</div>
+			</div>
+
+			<div class="invoice-meta-grid">
+				<div>
+					<div style="font-size: 11px; text-transform: uppercase; color: #718096; font-weight: 700; margin-bottom: 4px;">BILLED TO (PARTNER):</div>
+					<strong id="modalVendorName">Aman Architectural Designs</strong>
+					<div id="modalVendorEmail" style="color: #4a5568;">aman@archdesigns.in</div>
+					<div id="modalVendorId" style="font-size: 12px; color: #718096;">ID: VND-2026-777</div>
+				</div>
+				<div>
+					<div style="font-size: 11px; text-transform: uppercase; color: #718096; font-weight: 700; margin-bottom: 4px;">DELIVERY DESTINATION:</div>
+					<strong id="modalProjectName">Alibaug Luxury Beachside Villa</strong>
+					<div id="modalSiteLocation" style="color: #4a5568;">Alibaug, Maharashtra, India</div>
+					<div style="font-size: 12px; color: #2d6a2d; font-weight: 600;">Status: Approved &amp; Dispatched</div>
+				</div>
+			</div>
+
+			<table class="invoice-items-table">
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>Finish</th>
+						<th>Qty</th>
+						<th>Rate</th>
+						<th style="text-align: right;">Amount</th>
+					</tr>
+				</thead>
+				<tbody id="modalInvoiceItemsBody">
+					<!-- Injected row -->
+				</tbody>
+			</table>
+
+			<div class="invoice-totals-box">
+				<div class="summary-row">
+					<span>Subtotal:</span>
+					<strong id="modalSubtotal">₹504,000</strong>
+				</div>
+				<div class="summary-row">
+					<span>GST (18%):</span>
+					<span id="modalGst">₹90,720</span>
+				</div>
+				<div class="summary-total">
+					<span>Total Payable:</span>
+					<span id="modalTotal">₹594,720</span>
+				</div>
+			</div>
+
+			<div class="invoice-footer">
+				<div class="invoice-stamp">
+					✓ ACCEPTED &amp; AUTHORIZED BY SUPER ADMIN
+				</div>
+				<div style="display: flex; gap: 10px;">
+					<button class="btn-print-inv" onclick="window.print()">🖨️ Print / Save PDF</button>
+					<button class="btn-close-inv" onclick="closeInvoiceModal()">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="toast-container" id="toastContainer"></div>
+
+	<!-- SCRIPT -->
+	<script>
+		// Check Vendor Session
+		let currentVendor = null;
+		const session = localStorage.getItem('ntw_session');
+		if (session) {
+			try {
+				currentVendor = JSON.parse(session);
+				document.getElementById('vendorName').innerText = currentVendor.name || 'Authorized Vendor';
+				document.getElementById('avatarInitial').innerText = (currentVendor.name || 'V').charAt(0).toUpperCase();
+				document.getElementById('vendorIdDisplay').innerText = 'Partner ID: ' + (currentVendor.vendorId || 'VND-2026');
+				document.getElementById('vendorRoleTag').innerText = ((currentVendor.role || 'partner') + ' PORTAL ACCESS').toUpperCase();
+			} catch (e) {}
+		}
+
+		// Initial Target Date to 14 days from now
+		const targetDate = new Date();
+		targetDate.setDate(targetDate.getDate() + 14);
+		document.getElementById('orderTargetDate').value = targetDate.toISOString().split('T')[0];
+
+		// Seed initial sample orders if not exists
+		function getOrders() {
+			const saved = localStorage.getItem('ntw_orders');
+			if (!saved) {
+				const initialOrders = [
+					{
+						orderId: 'ORD-2026-101',
+						vendorId: currentVendor ? currentVendor.vendorId : 'VND-2026-001',
+						vendorName: currentVendor ? currentVendor.name : 'Skyline Architecture Studio',
+						vendorEmail: currentVendor ? currentVendor.email : 'architect@studio.design',
+						projectName: 'Goa Coastal Villa Terrace',
+						siteLocation: 'Candolim, Goa',
+						product: 'UltraShield® Composite Decking',
+						color: 'Peruvian Teak (TK)',
+						quantity: 850,
+						rate: 420,
+						subtotal: 357000,
+						gst: 64260,
+						total: 421260,
+						orderDate: '2026-10-02 11:30 AM',
+						status: 'ACCEPTED_INVOICED',
+						invoiceNum: 'INV-NTW-2026-001',
+						invoiceDate: '2026-10-02'
+					}
+				];
+				localStorage.setItem('ntw_orders', JSON.stringify(initialOrders));
+				return initialOrders;
+			}
+			try {
+				return JSON.parse(saved);
+			} catch (e) {
+				return [];
+			}
+		}
+
+		function saveOrders(orders) {
+			localStorage.setItem('ntw_orders', JSON.stringify(orders));
+		}
+
+		function calculateOrderSummary() {
+			const sel = document.getElementById('orderProductSelect');
+			const opt = sel.options[sel.selectedIndex];
+			const rate = parseFloat(opt.getAttribute('data-rate')) || 420;
+			const qty = parseFloat(document.getElementById('orderQuantity').value) || 0;
+
+			const subtotal = rate * qty;
+			const gst = subtotal * 0.18;
+			const total = subtotal + gst;
+
+			document.getElementById('summaryProductName').innerText = opt.value;
+			document.getElementById('summaryRate').innerText = '₹' + rate.toLocaleString() + ' / unit';
+			document.getElementById('summarySubtotal').innerText = '₹' + Math.round(subtotal).toLocaleString();
+			document.getElementById('summaryGst').innerText = '₹' + Math.round(gst).toLocaleString();
+			document.getElementById('summaryTotal').innerText = '₹' + Math.round(total).toLocaleString();
+		}
+
+		function switchPortalTab(tabId, btn) {
+			document.querySelectorAll('.portal-tab-btn').forEach(b => b.classList.remove('active'));
+			if (btn) btn.classList.add('active');
+
+			document.querySelectorAll('.portal-section').forEach(s => s.classList.remove('active'));
+			const target = document.getElementById('tab-' + tabId);
+			if (target) target.classList.add('active');
+
+			if (tabId === 'history') {
+				renderVendorOrders();
+			}
+		}
+
+		function handlePlaceOrder(e) {
+			e.preventDefault();
+			const projectName = document.getElementById('orderProjectName').value.trim();
+			const siteLocation = document.getElementById('orderSiteLocation').value.trim();
+			const sel = document.getElementById('orderProductSelect');
+			const opt = sel.options[sel.selectedIndex];
+			const product = opt.value;
+			const rate = parseFloat(opt.getAttribute('data-rate'));
+			const color = document.getElementById('orderColorSelect').value;
+			const quantity = parseFloat(document.getElementById('orderQuantity').value);
+			const notes = document.getElementById('orderNotes').value.trim();
+
+			const subtotal = rate * quantity;
+			const gst = subtotal * 0.18;
+			const total = subtotal + gst;
+
+			const newOrder = {
+				orderId: 'ORD-2026-' + Math.floor(1000 + Math.random() * 9000),
+				vendorId: currentVendor ? currentVendor.vendorId : 'VND-2026',
+				vendorName: currentVendor ? currentVendor.name : 'Authorized Vendor',
+				vendorEmail: currentVendor ? currentVendor.email : 'vendor@partner.com',
+				projectName,
+				siteLocation,
+				product,
+				color,
+				quantity,
+				rate,
+				subtotal,
+				gst,
+				total,
+				notes,
+				orderDate: new Date().toLocaleString(),
+				status: 'PENDING_ADMIN_REVIEW',
+				invoiceNum: null,
+				invoiceDate: null
+			};
+
+			const orders = getOrders();
+			orders.unshift(newOrder);
+			saveOrders(orders);
+
+			showToast(`Order ${newOrder.orderId} submitted! Sent to Super Admin for approval.`);
+			
+			// Switch to history tab
+			setTimeout(() => {
+				const historyBtn = document.querySelectorAll('.portal-tab-btn')[1];
+				switchPortalTab('history', historyBtn);
+			}, 800);
+		}
+
+		function renderVendorOrders() {
+			const orders = getOrders();
+			const tbody = document.getElementById('vendorOrdersTableBody');
+			tbody.innerHTML = '';
+
+			// Filter to current vendor or show all if demo
+			const myOrders = currentVendor ? 
+				orders.filter(o => o.vendorEmail === currentVendor.email || o.vendorId === currentVendor.vendorId) :
+				orders;
+
+			document.getElementById('orderTabBadge').innerText = myOrders.length;
+
+			if (myOrders.length === 0) {
+				tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#718096;padding:28px;">No orders placed yet.</td></tr>`;
+				return;
+			}
+
+			myOrders.forEach(o => {
+				const isAccepted = o.status === 'ACCEPTED_INVOICED';
+				const tr = document.createElement('tr');
+				tr.innerHTML = `
+					<td><strong>${o.orderId}</strong><br><span style="font-size:11px;color:#718096;">${o.orderDate}</span></td>
+					<td><strong>${o.projectName}</strong><br><span style="font-size:11px;color:#718096;">${o.siteLocation}</span></td>
+					<td>${o.product}<br><span style="font-size:11px;color:#2d6a2d;font-weight:600;">${o.color}</span></td>
+					<td>${o.quantity} sq.ft</td>
+					<td><strong>₹${Math.round(o.total).toLocaleString()}</strong></td>
+					<td>
+						<span class="badge-status-order ${isAccepted ? 'badge-invoiced' : 'badge-pending'}">
+							${isAccepted ? '✓ Accepted &amp; Invoiced' : '⏳ Pending Super Admin'}
+						</span>
+					</td>
+					<td>
+						${isAccepted ? 
+							`<button class="btn-view-invoice" onclick="openInvoiceModal('${o.orderId}')">📄 View Invoice</button>` :
+							`<span style="font-size:11.5px;color:#718096;">Generated on Approval</span>`
+						}
+					</td>
+				`;
+				tbody.appendChild(tr);
+			});
+		}
+
+		function openInvoiceModal(orderId) {
+			const orders = getOrders();
+			const o = orders.find(x => x.orderId === orderId);
+			if (!o) return;
+
+			document.getElementById('modalInvoiceNum').innerText = o.invoiceNum || ('INV-NTW-' + o.orderId);
+			document.getElementById('modalInvoiceDate').innerText = 'Date: ' + (o.invoiceDate || new Date().toISOString().split('T')[0]);
+			document.getElementById('modalVendorName').innerText = o.vendorName;
+			document.getElementById('modalVendorEmail').innerText = o.vendorEmail;
+			document.getElementById('modalVendorId').innerText = 'ID: ' + o.vendorId;
+			document.getElementById('modalProjectName').innerText = o.projectName;
+			document.getElementById('modalSiteLocation').innerText = o.siteLocation;
+
+			const itemsBody = document.getElementById('modalInvoiceItemsBody');
+			itemsBody.innerHTML = `
+				<tr>
+					<td><strong>${o.product}</strong></td>
+					<td>${o.color}</td>
+					<td>${o.quantity}</td>
+					<td>₹${o.rate}</td>
+					<td style="text-align:right;">₹${Math.round(o.subtotal).toLocaleString()}</td>
+				</tr>
+			`;
+
+			document.getElementById('modalSubtotal').innerText = '₹' + Math.round(o.subtotal).toLocaleString();
+			document.getElementById('modalGst').innerText = '₹' + Math.round(o.gst).toLocaleString();
+			document.getElementById('modalTotal').innerText = '₹' + Math.round(o.total).toLocaleString();
+
+			document.getElementById('invoiceModal').classList.add('active');
+		}
+
+		function closeInvoiceModal() {
+			document.getElementById('invoiceModal').classList.remove('active');
+		}
+
+		function showToast(msg) {
+			const container = document.getElementById('toastContainer');
+			const toast = document.createElement('div');
+			toast.className = 'toast-vp';
+			toast.innerText = msg;
+			container.appendChild(toast);
+			setTimeout(() => toast.remove(), 4000);
+		}
+
+		// Initial calculation and load
+		calculateOrderSummary();
+		renderVendorOrders();
+	</script>
+</body>
+</html>

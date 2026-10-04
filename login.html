@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign In - NewTechWood International | Partner &amp; Admin Portal</title>
+	<meta name="description" content="Sign in to the NewTechWood International Portal. Access technical specifications, warranty management, and Super Admin CMS controls." />
+	<link rel="icon" href="/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" sizes="32x32" />
+	<link rel="icon" href="/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" sizes="192x192" />
+	<link rel="apple-touch-icon" href="/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg" />
+	
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+	<style>
+		:root {
+			--ntw-green: #2d6a2d;
+			--ntw-green-dark: #1b471b;
+			--ntw-green-light: #448b44;
+			--ntw-gold: #c9a84c;
+			--ntw-gold-light: #dfc168;
+			--ntw-dark: #131a14;
+			--ntw-slate: #243026;
+			--ntw-gray-100: #f6f7f5;
+			--ntw-gray-200: #e8ebe6;
+			--ntw-gray-300: #d0d7cd;
+			--ntw-gray-500: #687569;
+			--ntw-gray-800: #2a332c;
+			--ntw-white: #ffffff;
+			--ntw-radius: 12px;
+			--ntw-shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+			--ntw-shadow-md: 0 12px 36px rgba(0,0,0,0.08);
+			--ntw-shadow-lg: 0 24px 64px rgba(0,0,0,0.14);
+			--ntw-transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+			background-color: var(--ntw-gray-100);
+			color: var(--ntw-gray-800);
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		/* ========================================================
+		   HEADER: Dedicated minimal header with only the icon/logo tab
+		   ======================================================== */
+		.login-header {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 50;
+			padding: 24px 36px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			pointer-events: none;
+		}
+
+		.login-header * {
+			pointer-events: auto;
+		}
+
+		.header-brand-tab {
+			display: inline-flex;
+			align-items: center;
+			gap: 12px;
+			background: rgba(255, 255, 255, 0.94);
+			padding: 10px 20px;
+			border-radius: 100px;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+			backdrop-filter: blur(12px);
+			border: 1px solid rgba(255, 255, 255, 0.8);
+			text-decoration: none;
+			transition: var(--ntw-transition);
+		}
+
+		.header-brand-tab:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 28px rgba(45, 106, 45, 0.16);
+			border-color: rgba(201, 168, 76, 0.5);
+		}
+
+		.header-brand-tab img.main-logo {
+			height: 30px;
+			width: auto;
+			display: block;
+		}
+
+		.header-brand-tab .divider {
+			width: 1px;
+			height: 22px;
+			background: rgba(0,0,0,0.14);
+		}
+
+		.header-brand-tab img.partner-logo {
+			height: 24px;
+			width: auto;
+			display: block;
+		}
+
+		.header-action-tab {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(255, 255, 255, 0.94);
+			padding: 10px 18px;
+			border-radius: 100px;
+			color: var(--ntw-gray-800);
+			font-size: 13px;
+			font-weight: 600;
+			text-decoration: none;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+			backdrop-filter: blur(12px);
+			border: 1px solid rgba(255, 255, 255, 0.8);
+			transition: var(--ntw-transition);
+		}
+
+		.header-action-tab svg {
+			transition: transform 0.2s ease;
+		}
+
+		.header-action-tab:hover {
+			color: var(--ntw-green);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+		}
+
+		.header-action-tab:hover svg {
+			transform: translateX(-3px);
+		}
+
+		/* ========================================================
+		   PAGE WRAPPER & SPLIT LAYOUT
+		   ======================================================== */
+		.login-page-container {
+			flex: 1;
+			display: flex;
+			min-height: 100vh;
+			position: relative;
+		}
+
+		/* LEFT PANEL: Architectural Brand Showcase */
+		.brand-showcase-panel {
+			flex: 1.15;
+			position: relative;
+			background: #111e13;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 120px 64px 60px;
+			overflow: hidden;
+			color: var(--ntw-white);
+		}
+
+		.brand-bg-image {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			opacity: 0.35;
+			transform: scale(1.05);
+			animation: subtleZoom 30s infinite alternate ease-in-out;
+		}
+
+		@keyframes subtleZoom {
+			0% { transform: scale(1.02); }
+			100% { transform: scale(1.10); }
+		}
+
+		.brand-overlay {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(
+				165deg,
+				rgba(13, 33, 15, 0.92) 0%,
+				rgba(20, 48, 22, 0.85) 45%,
+				rgba(10, 20, 12, 0.95) 100%
+			);
+		}
+
+		.brand-pattern {
+			position: absolute;
+			inset: 0;
+			background-image: radial-gradient(rgba(201, 168, 76, 0.12) 1px, transparent 1px);
+			background-size: 32px 32px;
+			opacity: 0.7;
+			pointer-events: none;
+		}
+
+		.showcase-content {
+			position: relative;
+			z-index: 2;
+			max-width: 580px;
+		}
+
+		.showcase-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 6px 14px;
+			border-radius: 100px;
+			background: rgba(201, 168, 76, 0.15);
+			border: 1px solid rgba(201, 168, 76, 0.4);
+			color: var(--ntw-gold-light);
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			margin-bottom: 24px;
+		}
+
+		.showcase-badge .dot {
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: var(--ntw-gold);
+			box-shadow: 0 0 8px var(--ntw-gold);
+		}
+
+		.showcase-title {
+			font-family: 'Playfair Display', serif;
+			font-size: clamp(34px, 3.8vw, 48px);
+			font-weight: 700;
+			line-height: 1.15;
+			color: #ffffff;
+			margin-bottom: 20px;
+			letter-spacing: -0.01em;
+		}
+
+		.showcase-title span {
+			color: var(--ntw-gold-light);
+			font-style: italic;
+		}
+
+		.showcase-lead {
+			font-size: 16px;
+			line-height: 1.65;
+			color: rgba(255, 255, 255, 0.82);
+			margin-bottom: 36px;
+			font-weight: 300;
+		}
+
+		/* Super Admin Highlight Box */
+		.superadmin-info-box {
+			background: rgba(201, 168, 76, 0.12);
+			border: 1px solid rgba(201, 168, 76, 0.35);
+			border-radius: var(--ntw-radius);
+			padding: 20px;
+			margin-bottom: 36px;
+			backdrop-filter: blur(8px);
+		}
+
+		.superadmin-info-box h4 {
+			font-size: 14px;
+			font-weight: 700;
+			color: var(--ntw-gold-light);
+			margin-bottom: 6px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.superadmin-info-box p {
+			font-size: 12.5px;
+			color: rgba(255, 255, 255, 0.8);
+			line-height: 1.5;
+		}
+
+		.feature-pills-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 14px;
+		}
+
+		.feature-pill {
+			background: rgba(255, 255, 255, 0.07);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			padding: 14px;
+			border-radius: var(--ntw-radius);
+			backdrop-filter: blur(8px);
+		}
+
+		.feature-pill h4 {
+			font-size: 13.5px;
+			font-weight: 600;
+			color: #fff;
+			margin-bottom: 4px;
+		}
+
+		.feature-pill p {
+			font-size: 11.5px;
+			color: rgba(255, 255, 255, 0.65);
+			line-height: 1.4;
+		}
+
+		.showcase-footer {
+			position: relative;
+			z-index: 2;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding-top: 24px;
+			border-top: 1px solid rgba(255, 255, 255, 0.12);
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		/* RIGHT PANEL: Authentication Form */
+		.auth-form-panel {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 90px 48px 48px;
+			background: #ffffff;
+			position: relative;
+		}
+
+		.auth-card {
+			width: 100%;
+			max-width: 450px;
+		}
+
+		.auth-card-header {
+			margin-bottom: 24px;
+		}
+
+		.auth-tag {
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			color: var(--ntw-green);
+			display: inline-block;
+			margin-bottom: 8px;
+		}
+
+		.auth-title {
+			font-family: 'Playfair Display', serif;
+			font-size: 32px;
+			font-weight: 700;
+			color: var(--ntw-dark);
+			margin-bottom: 8px;
+			letter-spacing: -0.02em;
+		}
+
+		.auth-subtitle {
+			font-size: 13.5px;
+			color: var(--ntw-gray-500);
+			line-height: 1.5;
+		}
+
+		/* Policy Notice Box */
+		.admin-policy-alert {
+			background: #f4f8f4;
+			border: 1px solid #d4e3d4;
+			border-radius: 8px;
+			padding: 12px 14px;
+			margin-bottom: 22px;
+			font-size: 12px;
+			color: #274b29;
+			line-height: 1.5;
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+		}
+
+		.admin-policy-alert svg {
+			flex-shrink: 0;
+			margin-top: 1px;
+			color: var(--ntw-green);
+		}
+
+		/* Role Switcher Tabs (Including Super Admin) */
+		.role-tabs {
+			display: flex;
+			background: var(--ntw-gray-100);
+			padding: 4px;
+			border-radius: 10px;
+			margin-bottom: 22px;
+			border: 1px solid var(--ntw-gray-200);
+		}
+
+		.role-tab-btn {
+			flex: 1;
+			padding: 8px 6px;
+			font-size: 11.5px;
+			font-weight: 600;
+			text-align: center;
+			background: transparent;
+			border: none;
+			border-radius: 7px;
+			color: var(--ntw-gray-500);
+			cursor: pointer;
+			transition: var(--ntw-transition);
+			user-select: none;
+		}
+
+		.role-tab-btn.active {
+			background: #ffffff;
+			color: var(--ntw-dark);
+			box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+		}
+
+		.role-tab-btn.btn-tab-superadmin.active {
+			background: #111a13;
+			color: var(--ntw-gold-light);
+		}
+
+		/* Form Inputs */
+		.form-group {
+			margin-bottom: 18px;
+			position: relative;
+		}
+
+		.form-label {
+			display: block;
+			font-size: 13px;
+			font-weight: 600;
+			color: var(--ntw-gray-800);
+			margin-bottom: 7px;
+		}
+
+		.input-wrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+		}
+
+		.input-icon {
+			position: absolute;
+			left: 16px;
+			color: var(--ntw-gray-500);
+			pointer-events: none;
+			transition: color 0.2s ease;
+		}
+
+		.form-control {
+			width: 100%;
+			height: 48px;
+			padding: 0 16px 0 46px;
+			background: #ffffff;
+			border: 1.5px solid var(--ntw-gray-200);
+			border-radius: 9px;
+			font-family: inherit;
+			font-size: 14px;
+			color: var(--ntw-dark);
+			transition: var(--ntw-transition);
+			outline: none;
+		}
+
+		.form-control:focus {
+			border-color: var(--ntw-green);
+			box-shadow: 0 0 0 4px rgba(45, 106, 45, 0.12);
+		}
+
+		.form-control:focus + .input-icon,
+		.input-wrapper:focus-within .input-icon {
+			color: var(--ntw-green);
+		}
+
+		.password-toggle-btn {
+			position: absolute;
+			right: 14px;
+			background: transparent;
+			border: none;
+			cursor: pointer;
+			color: var(--ntw-gray-500);
+			padding: 6px;
+			border-radius: 6px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.password-toggle-btn:hover {
+			color: var(--ntw-dark);
+		}
+
+		/* Form Options Row */
+		.form-options {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 22px;
+			font-size: 13px;
+		}
+
+		.remember-checkbox {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			cursor: pointer;
+			user-select: none;
+			color: var(--ntw-gray-800);
+		}
+
+		.remember-checkbox input {
+			accent-color: var(--ntw-green);
+			width: 16px;
+			height: 16px;
+			cursor: pointer;
+		}
+
+		.forgot-link {
+			color: var(--ntw-green);
+			font-weight: 600;
+			text-decoration: none;
+		}
+
+		.forgot-link:hover {
+			text-decoration: underline;
+		}
+
+		/* Primary Submit Button */
+		.btn-submit {
+			width: 100%;
+			height: 50px;
+			background: linear-gradient(135deg, var(--ntw-green) 0%, var(--ntw-green-dark) 100%);
+			color: #ffffff;
+			border: none;
+			border-radius: 9px;
+			font-family: inherit;
+			font-size: 14.5px;
+			font-weight: 600;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			box-shadow: 0 4px 16px rgba(45, 106, 45, 0.25);
+			transition: var(--ntw-transition);
+		}
+
+		.btn-submit:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(45, 106, 45, 0.35);
+			background: linear-gradient(135deg, #327532 0%, #173d17 100%);
+		}
+
+		/* Quick Demo Autofill Bar */
+		.demo-fill-card {
+			margin-top: 24px;
+			padding: 14px;
+			background: #fafbfa;
+			border: 1px dashed #cfd9cf;
+			border-radius: 9px;
+			font-size: 12px;
+		}
+
+		.demo-fill-title {
+			font-weight: 700;
+			color: var(--ntw-gray-800);
+			margin-bottom: 8px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.demo-btn-group {
+			display: flex;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.demo-chip {
+			background: #ffffff;
+			border: 1px solid var(--ntw-gray-200);
+			padding: 6px 10px;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 11.5px;
+			font-weight: 600;
+			color: var(--ntw-gray-800);
+			transition: 0.15s;
+		}
+
+		.demo-chip:hover {
+			background: var(--ntw-green);
+			color: #ffffff;
+			border-color: var(--ntw-green);
+		}
+
+		.demo-chip.chip-admin {
+			border-color: var(--ntw-gold);
+			color: #8c6e23;
+		}
+
+		.demo-chip.chip-admin:hover {
+			background: var(--ntw-gold);
+			color: #111;
+		}
+
+		/* Trust & Security Details */
+		.security-badge {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			margin-top: 28px;
+			padding-top: 18px;
+			border-top: 1px solid var(--ntw-gray-200);
+			font-size: 11px;
+			color: var(--ntw-gray-500);
+		}
+
+		/* Toast & Modal */
+		.toast-container {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			z-index: 1000;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		.toast {
+			background: #ffffff;
+			border-radius: 10px;
+			padding: 14px 18px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+			border-left: 4px solid var(--ntw-green);
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			min-width: 320px;
+			max-width: 440px;
+			transform: translateY(20px);
+			opacity: 0;
+			transition: all 0.25s ease;
+		}
+
+		.toast.show {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+		.toast.toast-error {
+			border-left-color: #d32f2f;
+		}
+
+		.modal-backdrop {
+			position: fixed;
+			inset: 0;
+			background: rgba(0,0,0,0.55);
+			backdrop-filter: blur(4px);
+			display: none;
+			align-items: center;
+			justify-content: center;
+			z-index: 999;
+			padding: 20px;
+		}
+
+		.modal-backdrop.active {
+			display: flex;
+		}
+
+		.modal-card {
+			background: #ffffff;
+			border-radius: 14px;
+			padding: 32px;
+			max-width: 440px;
+			width: 100%;
+			box-shadow: var(--ntw-shadow-lg);
+			position: relative;
+		}
+
+		.modal-close-btn {
+			position: absolute;
+			top: 18px;
+			right: 18px;
+			background: var(--ntw-gray-100);
+			border: none;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		@media (max-width: 1024px) {
+			.brand-showcase-panel { display: none; }
+			.auth-form-panel { padding: 120px 24px 60px; }
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Minimal Header with Brand Logo Tab -->
+	<header class="login-header">
+		<a href="/index.html" class="header-brand-tab" title="Return to NewTechWood Home">
+			<img src="/wp-content/uploads/2025/07/newtechwood-site-logo.svg" alt="NewTechWood Logo" class="main-logo" />
+			<div class="divider"></div>
+			<img src="/wp-content/uploads/lumber-life-logo.png" alt="Lumber Life Partner" class="partner-logo" onerror="this.style.display='none'" />
+		</a>
+
+		<a href="/index.html" class="header-action-tab" aria-label="Return to Main Website">
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M19 12H5M12 19l-7-7 7-7"/>
+			</svg>
+			<span>Back to Site</span>
+		</a>
+	</header>
+
+	<div class="login-page-container">
+
+		<!-- LEFT PANEL: Architectural Brand & Super Admin Authority -->
+		<aside class="brand-showcase-panel" aria-label="NewTechWood Authority Showcase">
+			<img src="/wp-content/uploads/2025/08/NewTechWood-History.jpg" alt="NewTechWood Architectural Installation" class="brand-bg-image" />
+			<div class="brand-overlay"></div>
+			<div class="brand-pattern"></div>
+
+			<div class="showcase-content">
+				<div class="showcase-badge">
+					<span class="dot"></span>
+					ADMINISTRATIVE &amp; VENDOR GATEWAY
+				</div>
+
+				<h1 class="showcase-title">
+					Pioneering the Next Generation of <span>Outdoor Living.</span>
+				</h1>
+
+				<p class="showcase-lead">
+					Central authentication system for NewTechWood Global &amp; Lumber Life. Only authorized vendor IDs created by the Super Administrator can access specifications and partner orders.
+				</p>
+
+				<!-- Super Admin Role Explanation -->
+				<div class="superadmin-info-box">
+					<h4>
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+						Super Admin Authority (Full CMS &amp; User Control)
+					</h4>
+					<p>
+						The Super Administrator generates and manages IDs &amp; passwords for vendors and holds full access to edit website content, products, and architectural projects — similar to a WordPress CMS.
+					</p>
+				</div>
+
+				<div class="feature-pills-grid">
+					<div class="feature-pill">
+						<h4>UltraShield® 360°</h4>
+						<p>Complete polymer shield protection against UV fade.</p>
+					</div>
+					<div class="feature-pill">
+						<h4>Admin Provisioned</h4>
+						<p>Strict access control with zero public registration.</p>
+					</div>
+					<div class="feature-pill">
+						<h4>Vendor CAD Library</h4>
+						<p>Architectural 2D/3D BIM drawings for verified builders.</p>
+					</div>
+					<div class="feature-pill">
+						<h4>25-Year Warranty</h4>
+						<p>Official digital warranty issuance &amp; verification.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="showcase-footer">
+				<div>🔒 Strictly Admin Governed Gateway</div>
+				<div>support@newtechwood.in</div>
+			</div>
+		</aside>
+
+		<!-- RIGHT PANEL: Authentication Form -->
+		<main class="auth-form-panel">
+			<div class="auth-card">
+				
+				<div class="auth-card-header">
+					<span class="auth-tag" id="portalRoleLabel">SUPER ADMIN &amp; VENDOR ACCESS</span>
+					<h2 class="auth-title">Welcome to the Portal</h2>
+					<p class="auth-subtitle" id="portalDescText">Enter your credentials to access the Super Admin CMS or Vendor Partner Hub.</p>
+				</div>
+
+				<!-- Strict Policy Notice -->
+				<div class="admin-policy-alert">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+					</svg>
+					<div>
+						<strong>Strict Access Control:</strong> Vendor accounts are issued and managed exclusively by the Super Admin. Public registration is restricted.
+					</div>
+				</div>
+
+				<!-- Role Selector Tabs -->
+				<div class="role-tabs" role="tablist" aria-label="Portal User Type">
+					<button type="button" class="role-tab-btn btn-tab-superadmin active" role="tab" aria-selected="true" data-role="superadmin" onclick="switchRole('superadmin', this)">
+						Super Admin
+					</button>
+					<button type="button" class="role-tab-btn" role="tab" aria-selected="false" data-role="architect" onclick="switchRole('architect', this)">
+						Architect
+					</button>
+					<button type="button" class="role-tab-btn" role="tab" aria-selected="false" data-role="dealer" onclick="switchRole('dealer', this)">
+						Dealer
+					</button>
+				</div>
+
+				<!-- Login Form -->
+				<form id="portalLoginForm" onsubmit="handleLoginSubmit(event)" novalidate>
+					
+					<!-- Email / Account ID -->
+					<div class="form-group">
+						<label class="form-label" for="loginEmail" id="emailFieldLabel">Admin Username or Vendor Email</label>
+						<div class="input-wrapper">
+							<span class="input-icon">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+									<circle cx="12" cy="7" r="4"></circle>
+								</svg>
+							</span>
+							<input 
+								type="text" 
+								id="loginEmail" 
+								name="email" 
+								class="form-control" 
+								value="admin" 
+								placeholder="admin" 
+								required 
+								autocomplete="username"
+							/>
+						</div>
+					</div>
+
+					<!-- Password -->
+					<div class="form-group">
+						<label class="form-label" for="loginPassword">Password</label>
+						<div class="input-wrapper">
+							<span class="input-icon">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+									<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+								</svg>
+							</span>
+							<input 
+								type="password" 
+								id="loginPassword" 
+								name="password" 
+								class="form-control" 
+								value="admin" 
+								placeholder="••••••••" 
+								required 
+								autocomplete="current-password"
+							/>
+							<button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()" aria-label="Toggle Password Visibility">
+								<svg id="eyeIconOpen" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+									<circle cx="12" cy="12" r="3"/>
+								</svg>
+								<svg id="eyeIconClosed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+									<path d="m9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+									<line x1="2" y1="2" x2="22" y2="22"/>
+								</svg>
+							</button>
+						</div>
+					</div>
+
+					<!-- Options: Remember Me & Forgot Password -->
+					<div class="form-options">
+						<label class="remember-checkbox">
+							<input type="checkbox" id="rememberMe" checked />
+							<span>Keep me signed in</span>
+						</label>
+						<a href="#forgot" class="forgot-link" onclick="openForgotModal(event)">Forgot Password?</a>
+					</div>
+
+					<!-- Submit CTA -->
+					<button type="submit" class="btn-submit" id="submitBtn">
+						<span id="btnText">Sign In as Super Admin</span>
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M5 12h14M12 5l7 7-7 7"/>
+						</svg>
+					</button>
+				</form>
+
+				<!-- Quick Demo Credentials Box -->
+				<div class="demo-fill-card">
+					<div class="demo-fill-title">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+						Quick Autofill Testing:
+					</div>
+					<div class="demo-btn-group">
+						<button type="button" class="demo-chip chip-admin" onclick="autofillCreds('admin', 'admin', 'superadmin')">
+							🛡️ Super Admin (admin / admin)
+						</button>
+						<button type="button" class="demo-chip" onclick="autofillCreds('dealer@lumberlife.in', 'Dealer@2026', 'dealer')">
+							🏢 Vendor: Dealer
+						</button>
+						<button type="button" class="demo-chip" onclick="autofillCreds('architect@studio.design', 'UltraShield2026', 'architect')">
+							📐 Vendor: Architect
+						</button>
+					</div>
+				</div>
+
+				<!-- Trust & Security Details -->
+				<div class="security-badge">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+					</svg>
+					<span>256-Bit TLS Secured • ISO 9001 Certified • Admin Authorized Only</span>
+				</div>
+
+			</div>
+		</main>
+
+	</div>
+
+	<!-- FORGOT PASSWORD MODAL -->
+	<div class="modal-backdrop" id="forgotModal">
+		<div class="modal-card">
+			<button type="button" class="modal-close-btn" onclick="closeForgotModal()">&times;</button>
+			<h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px;color:var(--ntw-dark);">
+				Password Recovery
+			</h3>
+			<p style="font-size:13px;color:var(--ntw-gray-500);margin-bottom:20px;line-height:1.5;">
+				Vendor credentials are reset directly by the Super Administrator. Enter your registered email to request a reset.
+			</p>
+
+			<form onsubmit="handleForgotSubmit(event)">
+				<div class="form-group">
+					<label class="form-label" for="resetEmail">Email Address</label>
+					<input type="email" id="resetEmail" class="form-control" placeholder="vendor@firm.com" required />
+				</div>
+				<button type="submit" class="btn-submit" style="height:44px;">Submit Reset Request</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="toast-container" id="toastContainer"></div>
+
+	<!-- ========================================================
+	     AUTHENTICATION & STORAGE SCRIPTS
+	     ======================================================== -->
+	<script>
+		// Initialize Default Users
+		const INITIAL_USERS = [
+			{
+				id: 'admin',
+				vendorId: 'ADMIN-001',
+				name: 'Super Administrator',
+				email: 'admin',
+				password: 'admin',
+				role: 'superadmin',
+				status: 'active'
+			},
+			{
+				id: 'admin_email',
+				vendorId: 'ADMIN-001',
+				name: 'Super Administrator',
+				email: 'admin@newtechwood.in',
+				password: 'admin',
+				role: 'superadmin',
+				status: 'active'
+			},
+			{
+				id: 'v1',
+				vendorId: 'VND-2026-001',
+				name: 'Skyline Architecture Studio',
+				email: 'architect@studio.design',
+				password: 'UltraShield2026',
+				role: 'architect',
+				status: 'active'
+			},
+			{
+				id: 'v2',
+				vendorId: 'DLR-902-IND',
+				name: 'Lumber Life Premier Partner',
+				email: 'dealer@lumberlife.in',
+				password: 'Dealer@2026',
+				role: 'dealer',
+				status: 'active'
+			}
+		];
+
+		function getUsers() {
+			const saved = localStorage.getItem('ntw_users');
+			if (!saved) {
+				localStorage.setItem('ntw_users', JSON.stringify(INITIAL_USERS));
+				return INITIAL_USERS;
+			}
+			try {
+				return JSON.parse(saved);
+			} catch (e) {
+				return INITIAL_USERS;
+			}
+		}
+
+		// Role Definitions
+		const roleConfigs = {
+			superadmin: {
+				label: 'SUPER ADMIN ACCESS',
+				desc: 'Sign in to access the WordPress-style Super Admin CMS, manage site content, and generate vendor IDs.',
+				placeholder: 'admin or admin@newtechwood.in',
+				btnText: 'Sign In as Super Admin'
+			},
+			architect: {
+				label: 'ARCHITECT &amp; BUILDER ACCESS',
+				desc: 'Sign in with your admin-provisioned ID to access CAD models, specifications, and project assets.',
+				placeholder: 'architect@firm.com',
+				btnText: 'Sign In to Partner Portal'
+			},
+			dealer: {
+				label: 'DEALER &amp; DISTRIBUTOR ACCESS',
+				desc: 'Sign in with your admin-provisioned ID to access wholesale pricing sheets and order dispatches.',
+				placeholder: 'dealer@distributor.com',
+				btnText: 'Sign In to Dealer Portal'
+			}
+		};
+
+		let currentRole = 'superadmin';
+
+		function switchRole(role, btn) {
+			currentRole = role;
+			document.querySelectorAll('.role-tab-btn').forEach(b => {
+				b.classList.remove('active');
+				b.setAttribute('aria-selected', 'false');
+			});
+			btn.classList.add('active');
+			btn.setAttribute('aria-selected', 'true');
+
+			const config = roleConfigs[role];
+			if (config) {
+				document.getElementById('portalRoleLabel').innerHTML = config.label;
+				document.getElementById('portalDescText').innerText = config.desc;
+				document.getElementById('loginEmail').placeholder = config.placeholder;
+				document.getElementById('btnText').innerText = config.btnText;
+			}
+		}
+
+		function autofillCreds(email, password, role) {
+			document.getElementById('loginEmail').value = email;
+			document.getElementById('loginPassword').value = password;
+			const targetTab = document.querySelector(`[data-role="${role}"]`);
+			if (targetTab) switchRole(role, targetTab);
+			showToast(`Credentials filled for ${role.toUpperCase()}`);
+		}
+
+		function togglePasswordVisibility() {
+			const pwdInput = document.getElementById('loginPassword');
+			const eyeOpen = document.getElementById('eyeIconOpen');
+			const eyeClosed = document.getElementById('eyeIconClosed');
+
+			if (pwdInput.type === 'password') {
+				pwdInput.type = 'text';
+				eyeOpen.style.display = 'none';
+				eyeClosed.style.display = 'block';
+			} else {
+				pwdInput.type = 'password';
+				eyeOpen.style.display = 'block';
+				eyeClosed.style.display = 'none';
+			}
+		}
+
+		function showToast(message, isError = false) {
+			const container = document.getElementById('toastContainer');
+			const toast = document.createElement('div');
+			toast.className = `toast ${isError ? 'toast-error' : ''}`;
+			
+			const iconSvg = isError ? 
+				`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>` :
+				`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ntw-green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+
+			toast.innerHTML = `
+				${iconSvg}
+				<div style="font-size:13px;font-weight:600;color:var(--ntw-dark);">${message}</div>
+			`;
+
+			container.appendChild(toast);
+			requestAnimationFrame(() => toast.classList.add('show'));
+
+			setTimeout(() => {
+				toast.classList.remove('show');
+				setTimeout(() => toast.remove(), 300);
+			}, 3500);
+		}
+
+		function handleLoginSubmit(e) {
+			e.preventDefault();
+			const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+			const password = document.getElementById('loginPassword').value.trim();
+			const btn = document.getElementById('submitBtn');
+			const btnText = document.getElementById('btnText');
+
+			if (!email || !password) {
+				showToast('Please enter both ID/Email and password.', true);
+				return;
+			}
+
+			btn.disabled = true;
+			btnText.innerText = 'Verifying with Super Admin Database...';
+
+			const users = getUsers();
+			// Look for matching user by email OR vendorId OR username
+			const matched = users.find(u => 
+				(u.email.toLowerCase() === email || (u.vendorId && u.vendorId.toLowerCase() === email)) && 
+				u.password === password
+			);
+
+			setTimeout(() => {
+				btn.disabled = false;
+				btnText.innerText = roleConfigs[currentRole]?.btnText || 'Sign In';
+
+				if (matched) {
+					// Check active status
+					if (matched.status === 'inactive') {
+						showToast('Access Denied: This vendor ID has been deactivated by Super Admin.', true);
+						return;
+					}
+
+					// Store session
+					localStorage.setItem('ntw_session', JSON.stringify(matched));
+
+					if (matched.role === 'superadmin') {
+						showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
+						setTimeout(() => {
+							window.location.href = '/admin/';
+						}, 700);
+					} else {
+						showToast(`Welcome back, ${matched.name}! Loading partner resources...`);
+						setTimeout(() => {
+							window.location.href = '/admin/vendor.html';
+						}, 700);
+					}
+				} else {
+					showToast('Access Denied: Unrecognized credentials. Accounts are provisioned exclusively by Super Admin.', true);
+				}
+			}, 700);
+		}
+
+		function openForgotModal(e) {
+			if (e) e.preventDefault();
+			document.getElementById('forgotModal').classList.add('active');
+			document.getElementById('resetEmail').focus();
+		}
+
+		function closeForgotModal() {
+			document.getElementById('forgotModal').classList.remove('active');
+		}
+
+		function handleForgotSubmit(e) {
+			e.preventDefault();
+			const email = document.getElementById('resetEmail').value.trim();
+			if (email) {
+				closeForgotModal();
+				showToast(`Password recovery request sent to Super Administrator for ${email}`);
+			}
+		}
+
+		window.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') closeForgotModal();
+		});
+
+		// Initialize default users in storage
+		getUsers();
+	</script>
+</body>
+</html>
