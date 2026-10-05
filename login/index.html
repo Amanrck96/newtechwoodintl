@@ -364,63 +364,6 @@
 			line-height: 1.5;
 		}
 
-		/* Policy Notice Box */
-		.admin-policy-alert {
-			background: #f4f8f4;
-			border: 1px solid #d4e3d4;
-			border-radius: 8px;
-			padding: 12px 14px;
-			margin-bottom: 22px;
-			font-size: 12px;
-			color: #274b29;
-			line-height: 1.5;
-			display: flex;
-			align-items: flex-start;
-			gap: 10px;
-		}
-
-		.admin-policy-alert svg {
-			flex-shrink: 0;
-			margin-top: 1px;
-			color: var(--ntw-green);
-		}
-
-		/* Role Switcher Tabs (Including Super Admin) */
-		.role-tabs {
-			display: flex;
-			background: var(--ntw-gray-100);
-			padding: 4px;
-			border-radius: 10px;
-			margin-bottom: 22px;
-			border: 1px solid var(--ntw-gray-200);
-		}
-
-		.role-tab-btn {
-			flex: 1;
-			padding: 8px 6px;
-			font-size: 11.5px;
-			font-weight: 600;
-			text-align: center;
-			background: transparent;
-			border: none;
-			border-radius: 7px;
-			color: var(--ntw-gray-500);
-			cursor: pointer;
-			transition: var(--ntw-transition);
-			user-select: none;
-		}
-
-		.role-tab-btn.active {
-			background: #ffffff;
-			color: var(--ntw-dark);
-			box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-		}
-
-		.role-tab-btn.btn-tab-superadmin.active {
-			background: #111a13;
-			color: var(--ntw-gold-light);
-		}
-
 		/* Form Inputs */
 		.form-group {
 			margin-bottom: 18px;
@@ -729,33 +672,9 @@
 			<div class="auth-card">
 				
 				<div class="auth-card-header">
-					<span class="auth-tag" id="portalRoleLabel">SUPER ADMIN &amp; VENDOR ACCESS</span>
+					<span class="auth-tag" id="portalRoleLabel">PORTAL LOGIN</span>
 					<h2 class="auth-title">Welcome to the Portal</h2>
-					<p class="auth-subtitle" id="portalDescText">Enter your credentials to access the Super Admin CMS or Vendor Partner Hub.</p>
-				</div>
-
-				<!-- Strict Policy Notice -->
-				<div class="admin-policy-alert">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-						<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-					</svg>
-					<div>
-						<strong>Strict Access Control:</strong> Vendor accounts are issued and managed exclusively by the Super Admin. Public registration is restricted.
-					</div>
-				</div>
-
-				<!-- Role Selector Tabs -->
-				<div class="role-tabs" role="tablist" aria-label="Portal User Type">
-					<button type="button" class="role-tab-btn btn-tab-superadmin active" role="tab" aria-selected="true" data-role="superadmin" onclick="switchRole('superadmin', this)">
-						Super Admin
-					</button>
-					<button type="button" class="role-tab-btn" role="tab" aria-selected="false" data-role="architect" onclick="switchRole('architect', this)">
-						Architect
-					</button>
-					<button type="button" class="role-tab-btn" role="tab" aria-selected="false" data-role="dealer" onclick="switchRole('dealer', this)">
-						Dealer
-					</button>
+					<p class="auth-subtitle" id="portalDescText">Enter your credentials to access your account.</p>
 				</div>
 
 				<!-- Login Form -->
@@ -763,7 +682,7 @@
 					
 					<!-- Email / Account ID -->
 					<div class="form-group">
-						<label class="form-label" for="loginEmail" id="emailFieldLabel">Admin Username or Vendor Email</label>
+						<label class="form-label" for="loginEmail" id="emailFieldLabel">Username or Email</label>
 						<div class="input-wrapper">
 							<span class="input-icon">
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -776,7 +695,7 @@
 								id="loginEmail" 
 								name="email" 
 								class="form-control" 
-								placeholder="admin or vendor@firm.com" 
+								placeholder="Enter your username or email" 
 								required 
 								autocomplete="username"
 							/>
@@ -826,7 +745,7 @@
 
 					<!-- Submit CTA -->
 					<button type="submit" class="btn-submit" id="submitBtn">
-						<span id="btnText">Sign In as Super Admin</span>
+						<span id="btnText">Sign In</span>
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M5 12h14M12 5l7 7-7 7"/>
 						</svg>
@@ -973,15 +892,21 @@
 				b.classList.remove('active');
 				b.setAttribute('aria-selected', 'false');
 			});
-			btn.classList.add('active');
-			btn.setAttribute('aria-selected', 'true');
+			if (btn) {
+				btn.classList.add('active');
+				btn.setAttribute('aria-selected', 'true');
+			}
 
 			const config = roleConfigs[role];
 			if (config) {
-				document.getElementById('portalRoleLabel').innerHTML = config.label;
-				document.getElementById('portalDescText').innerText = config.desc;
-				document.getElementById('loginEmail').placeholder = config.placeholder;
-				document.getElementById('btnText').innerText = config.btnText;
+				const roleLabel = document.getElementById('portalRoleLabel');
+				if (roleLabel) roleLabel.innerHTML = config.label;
+				const descText = document.getElementById('portalDescText');
+				if (descText) descText.innerText = config.desc;
+				const emailField = document.getElementById('loginEmail');
+				if (emailField) emailField.placeholder = config.placeholder;
+				const btnTxt = document.getElementById('btnText');
+				if (btnTxt) btnTxt.innerText = config.btnText;
 			}
 		}
 
@@ -1040,12 +965,12 @@
 			const btnText = document.getElementById('btnText');
 
 			if (!email || !password) {
-				showToast('Please enter both ID/Email and password.', true);
+				showToast('Please enter both username/email and password.', true);
 				return;
 			}
 
 			btn.disabled = true;
-			btnText.innerText = 'Verifying with Super Admin Database...';
+			btnText.innerText = 'Verifying credentials...';
 
 			// 1. Direct Super Admin Master Authentication (Immune to stale cache)
 			if ((email === 'admin' || email === 'admin@newtechwood.in' || email === 'admin-001') && 
@@ -1070,7 +995,7 @@
 
 				setTimeout(() => {
 					btn.disabled = false;
-					btnText.innerText = 'Sign In as Super Admin';
+					btnText.innerText = 'Sign In';
 					showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
 					setTimeout(() => {
 						window.location.href = '/admin/';
@@ -1088,11 +1013,11 @@
 
 			setTimeout(() => {
 				btn.disabled = false;
-				btnText.innerText = roleConfigs[currentRole]?.btnText || 'Sign In';
+				btnText.innerText = 'Sign In';
 
 				if (matched) {
 					if (matched.status === 'inactive') {
-						showToast('Access Denied: This vendor ID has been deactivated by Super Admin.', true);
+						showToast('Access Denied: This account has been deactivated.', true);
 						return;
 					}
 
@@ -1110,7 +1035,7 @@
 						}, 500);
 					}
 				} else {
-					showToast('Access Denied: Unrecognized credentials. Accounts are provisioned exclusively by Super Admin.', true);
+					showToast('Access Denied: Unrecognized credentials. Please verify your details.', true);
 				}
 			}, 500);
 		}
