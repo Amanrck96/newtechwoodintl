@@ -4,12 +4,49 @@ import os
 import sys
 import re
 
+# Import DB API Router
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "db"))
+try:
+    import api_router
+except ImportError:
+    api_router = None
+
 PORT = 8000
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 class RangeRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
+
+    def do_OPTIONS(self):
+        if self.path.startswith('/api/'):
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+            self.end_headers()
+            return
+        self.send_error(405, "Method Not Allowed")
+
+    def do_GET(self):
+        if self.path.startswith('/api/') and api_router:
+            return api_router.handle_get(self)
+        return super().do_GET()
+
+    def do_POST(self):
+        if self.path.startswith('/api/') and api_router:
+            return api_router.handle_post(self)
+        self.send_error(405, "Method Not Allowed")
+
+    def do_PUT(self):
+        if self.path.startswith('/api/') and api_router:
+            return api_router.handle_put(self)
+        self.send_error(405, "Method Not Allowed")
+
+    def do_DELETE(self):
+        if self.path.startswith('/api/') and api_router:
+            return api_router.handle_delete(self)
+        self.send_error(405, "Method Not Allowed")
 
     def send_head(self):
         path = self.translate_path(self.path)

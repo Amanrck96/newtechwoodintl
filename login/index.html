@@ -957,10 +957,11 @@
 			}, 3500);
 		}
 
-		function handleLoginSubmit(e) {
+		async function handleLoginSubmit(e) {
 			e.preventDefault();
 			const email = document.getElementById('loginEmail').value.trim().toLowerCase();
 			const password = document.getElementById('loginPassword').value.trim();
+			const remember = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : true;
 			const btn = document.getElementById('submitBtn');
 			const btnText = document.getElementById('btnText');
 
@@ -972,7 +973,53 @@
 			btn.disabled = true;
 			btnText.innerText = 'Verifying credentials...';
 
-			// 1. Direct Super Admin Master Authentication (Immune to stale cache)
+			// 1. Try Backend SQLite REST API first
+			try {
+				const resp = await fetch('/api/auth/login', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email, password, remember })
+				});
+				if (resp.ok) {
+					const data = await resp.json();
+					if (data.success && data.user) {
+						const sessionUser = {
+							id: data.user.id,
+							vendorId: data.user.id,
+							name: data.user.full_name,
+							email: data.user.email,
+							role: data.user.role,
+							status: data.user.status,
+							token: data.token
+						};
+
+						if (remember) {
+							localStorage.setItem('ntw_session', JSON.stringify(sessionUser));
+							sessionStorage.removeItem('ntw_session');
+						} else {
+							sessionStorage.setItem('ntw_session', JSON.stringify(sessionUser));
+							localStorage.removeItem('ntw_session');
+						}
+
+						btn.disabled = false;
+						btnText.innerText = 'Sign In';
+						showToast(`Welcome back, ${sessionUser.name}! Opening dashboard...`);
+
+						setTimeout(() => {
+							if (sessionUser.role === 'admin' || sessionUser.role === 'superadmin') {
+								window.location.href = '/admin/';
+							} else {
+								window.location.href = '/admin/vendor.html';
+							}
+						}, 400);
+						return;
+					}
+				}
+			} catch (apiErr) {
+				// Server API not running; seamlessly continue to client-side fallback
+			}
+
+			// 2. Direct Super Admin Master Authentication (Immune to stale cache)
 			if ((email === 'admin' || email === 'admin@newtechwood.in' || email === 'admin-001') && 
 			    (password.toLowerCase() === 'admin' || password === 'admin123')) {
 				const superAdmin = {
@@ -984,7 +1031,14 @@
 					role: 'superadmin',
 					status: 'active'
 				};
-				localStorage.setItem('ntw_session', JSON.stringify(superAdmin));
+
+				if (remember) {
+					localStorage.setItem('ntw_session', JSON.stringify(superAdmin));
+					sessionStorage.removeItem('ntw_session');
+				} else {
+					sessionStorage.setItem('ntw_session', JSON.stringify(superAdmin));
+					localStorage.removeItem('ntw_session');
+				}
 				
 				// Self-heal ntw_users in localStorage
 				const curUsers = getUsers();
@@ -1004,7 +1058,7 @@
 				return;
 			}
 
-			// 2. Vendor Database Authentication
+			// 3. Vendor Database Authentication
 			const users = getUsers();
 			const matched = users.find(u => 
 				(u.email.toLowerCase() === email || (u.vendorId && u.vendorId.toLowerCase() === email) || (u.id && u.id.toLowerCase() === email)) && 
@@ -1021,9 +1075,15 @@
 						return;
 					}
 
-					localStorage.setItem('ntw_session', JSON.stringify(matched));
+					if (remember) {
+						localStorage.setItem('ntw_session', JSON.stringify(matched));
+						sessionStorage.removeItem('ntw_session');
+					} else {
+						sessionStorage.setItem('ntw_session', JSON.stringify(matched));
+						localStorage.removeItem('ntw_session');
+					}
 
-					if (matched.role === 'superadmin') {
+					if (matched.role === 'superadmin' || matched.role === 'admin') {
 						showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
 						setTimeout(() => {
 							window.location.href = '/admin/';
@@ -1065,6 +1125,23 @@
 
 		// Initialize default users in storage
 		getUsers();
+
+		// Auto-redirect if already logged in
+		(function checkExistingSession() {
+			try {
+				const sessionStr = localStorage.getItem('ntw_session') || sessionStorage.getItem('ntw_session');
+				if (sessionStr) {
+					const sess = JSON.parse(sessionStr);
+					if (sess && sess.role) {
+						if (sess.role === 'admin' || sess.role === 'superadmin') {
+							window.location.replace('/admin/');
+						} else {
+							window.location.replace('/admin/vendor.html');
+						}
+					}
+				}
+			} catch (e) {}
+		})();
 	</script>
 </body>
 </html>
