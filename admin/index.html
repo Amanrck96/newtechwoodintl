@@ -155,6 +155,12 @@
 			border-radius: 100px;
 		}
 
+		.db-status-pill.offline {
+			background: #fbf7ee;
+			border-color: rgba(201, 168, 76, 0.4);
+			color: #8c6d1d;
+		}
+
 		.db-dot {
 			width: 7px;
 			height: 7px;
@@ -162,6 +168,11 @@
 			background: #28a745;
 			box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
 			animation: pulseDot 2s infinite;
+		}
+
+		.db-status-pill.offline .db-dot {
+			background: #c9a84c;
+			box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.25);
 		}
 
 		@keyframes pulseDot {
@@ -1774,9 +1785,9 @@
 				<img src="/wp-content/uploads/2025/07/newtechwood-site-logo.svg" alt="NewTechWood" />
 			</a>
 			<span class="crm-badge">CRM &amp; Sales Operations</span>
-			<span class="db-status-pill" id="dbStatusPill">
+			<span class="db-status-pill offline" id="dbStatusPill">
 				<span class="db-dot"></span>
-				<span id="dbStatusText">SQLite DB Connected</span>
+				<span id="dbStatusText">Local DB Active</span>
 			</span>
 		</div>
 
@@ -3891,24 +3902,29 @@
 
 		// 2. Fetch SQLite DB Health
 		async function checkDbHealth() {
+			const pill = document.getElementById('dbStatusPill');
+			const statusText = document.getElementById('dbStatusText');
 			try {
 				const resp = await fetch('/api/health');
 				if (resp.ok) {
 					const data = await resp.json();
 					if (data.counts) {
-						if (data.counts.projects !== undefined) {
+						if (data.counts.projects !== undefined && document.getElementById('statProjectsCount')) {
 							document.getElementById('statProjectsCount').innerText = data.counts.projects;
 						}
-						if (data.counts.orders !== undefined) {
+						if (data.counts.orders !== undefined && document.getElementById('statOrdersCount')) {
 							document.getElementById('statOrdersCount').innerText = data.counts.orders;
 						}
 					}
-					document.getElementById('dbStatusText').innerText = 'SQLite DB Connected';
+					if (pill) pill.classList.remove('offline');
+					if (statusText) statusText.innerText = 'SQLite DB Connected';
+					return;
 				}
 			} catch (e) {
-				// Local fallback display
-				document.getElementById('dbStatusText').innerText = 'Local DB Active';
+				// Offline or static fallback
 			}
+			if (pill) pill.classList.add('offline');
+			if (statusText) statusText.innerText = 'Local DB Active';
 		}
 
 		// 3. Collapsed Sidebar Toggle
@@ -5311,6 +5327,205 @@ Login: https://newtechwood.in/login/`;
   }
 ];
 
+		const NTW_FALLBACK_MEETINGS = [
+			{ id: "MTG-01", meeting_date: "2026-10-02", firm_name: "Morphogenesis Architecture Studio", guest_name: "Karan Malhotra", mobile: "+91 98110 24519", user_type: "Existing", guest_type: "Architect", country: "India", state: "Delhi", city: "New Delhi", status: "Completed", discussion_notes: "Discussed UltraShield Peruvian Teak specs for resort project.", owner_name: "Rohan Verma", image_urls: '["/wp-content/uploads/sample1.jpg"]' },
+			{ id: "MTG-02", meeting_date: "2026-10-04", firm_name: "Sanjay Puri Architects", guest_name: "Torquat Fernandes", mobile: "+91 98200 45690", user_type: "Existing", guest_type: "Architect", country: "India", state: "Maharashtra", city: "Mumbai", status: "Completed", discussion_notes: "Cladding sample box presented. Client requested fire rating reports.", owner_name: "Super Administrator", image_urls: '["/wp-content/uploads/sample2.jpg"]' },
+			{ id: "MTG-03", meeting_date: "2026-10-05", firm_name: "Design Cell Landscape Studio", guest_name: "Neha Khurana", mobile: "+91 98711 34567", user_type: "New", guest_type: "Landscape Architect", country: "India", state: "Delhi", city: "Gurugram", status: "Completed", discussion_notes: "Initial introductory meeting. Introduced quick-lock deck tiles.", owner_name: "Rohan Verma", image_urls: '[]' },
+			{ id: "MTG-04", meeting_date: "2026-10-06", firm_name: "Cadence Architects", guest_name: "Vikram Rajashekar", mobile: "+91 98450 12346", user_type: "Existing", guest_type: "Architect", country: "India", state: "Karnataka", city: "Bengaluru", status: "Completed", discussion_notes: "Villa project decking calculation verified (850 sq.ft).", owner_name: "Lumber Life Premier Partner", image_urls: '[]' },
+			{ id: "MTG-05", meeting_date: "2026-10-08", firm_name: "Studio Lotus", guest_name: "Asha Seshadri", mobile: "+91 98100 87655", user_type: "Existing", guest_type: "Interior Designer", country: "India", state: "Delhi", city: "New Delhi", status: "Completed", discussion_notes: "Pergola structural joist spacing confirmed at 16 inches on center.", owner_name: "Skyline Architecture Studio", image_urls: '[]' }
+		];
+
+		const NTW_FALLBACK_FIRMS = [
+			{
+				id: "FRM-01", firm_name: "Morphogenesis Architecture Studio", category: "PROPLUS", city: "New Delhi", state: "Delhi", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-01", first_name: "Sonali", last_name: "Rastogi", user_type: "Principal Architect", mobile: "+91 98110 24510", email: "sonali@morphogenesis.org", is_primary: 1 },
+					{ id: "CNT-02", first_name: "Manit", last_name: "Rastogi", user_type: "Principal Architect", mobile: "+91 98110 24511", email: "manit@morphogenesis.org", is_primary: 0 },
+					{ id: "CNT-03", first_name: "Karan", last_name: "Malhotra", user_type: "Procurement Head", mobile: "+91 98110 24519", email: "procurement@morphogenesis.org", is_primary: 0 }
+				]
+			},
+			{
+				id: "FRM-02", firm_name: "Sanjay Puri Architects", category: "PROPLUS", city: "Mumbai", state: "Maharashtra", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-04", first_name: "Sanjay", last_name: "Puri", user_type: "Principal Architect", mobile: "+91 98200 45678", email: "sanjay@sanjaypuriarchitects.com", is_primary: 1 },
+					{ id: "CNT-05", first_name: "Torquat", last_name: "Fernandes", user_type: "Senior Associate", mobile: "+91 98200 45690", email: "torquat@sanjaypuriarchitects.com", is_primary: 0 }
+				]
+			},
+			{
+				id: "FRM-03", firm_name: "Cadence Architects", category: "Architect", city: "Bengaluru", state: "Karnataka", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-06", first_name: "Smaran", last_name: "Mallesh", user_type: "Principal Architect", mobile: "+91 98450 12345", email: "smaran@cadencearchitects.com", is_primary: 1 },
+					{ id: "CNT-07", first_name: "Vikram", last_name: "Rajashekar", user_type: "Design Partner", mobile: "+91 98450 12346", email: "vikram@cadencearchitects.com", is_primary: 0 }
+				]
+			},
+			{
+				id: "FRM-04", firm_name: "Studio Lotus", category: "PRO", city: "New Delhi", state: "Delhi", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-08", first_name: "Ambrish", last_name: "Arora", user_type: "Design Principal", mobile: "+91 98100 87654", email: "ambrish@studiolotus.in", is_primary: 1 },
+					{ id: "CNT-09", first_name: "Asha", last_name: "Seshadri", user_type: "Project Lead", mobile: "+91 98100 87655", email: "asha@studiolotus.in", is_primary: 0 }
+				]
+			},
+			{
+				id: "FRM-05", firm_name: "Abin Design Studio", category: "Architect", city: "Kolkata", state: "West Bengal", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-10", first_name: "Abin", last_name: "Chaudhuri", user_type: "Founder & Principal", mobile: "+91 98310 99887", email: "abin@abindesignstudio.com", is_primary: 1 }
+				]
+			},
+			{
+				id: "FRM-06", firm_name: "Edifice Consultants Pvt Ltd", category: "PROPLUS", city: "Mumbai", state: "Maharashtra", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-11", first_name: "Ravi", last_name: "Sarin", user_type: "Director", mobile: "+91 98201 11223", email: "ravi.sarin@edifice.co.in", is_primary: 1 }
+				]
+			},
+			{
+				id: "FRM-07", firm_name: "Mindspace Architects", category: "PRO", city: "Bengaluru", state: "Karnataka", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-12", first_name: "Sanjay", last_name: "Mohe", user_type: "Principal Architect", mobile: "+91 98452 33445", email: "mohe@mindspace.in", is_primary: 1 }
+				]
+			},
+			{
+				id: "FRM-08", firm_name: "Spaces Architects@ka", category: "Architect", city: "New Delhi", state: "Delhi", country: "India", status: "active",
+				contacts: [
+					{ id: "CNT-13", first_name: "Kapil", last_name: "Aggarwal", user_type: "Principal Architect", mobile: "+91 98112 55667", email: "kapil@spacesarchitects.com", is_primary: 1 }
+				]
+			}
+		];
+
+		const NTW_FALLBACK_INVITATIONS = [
+			{ id: "INV-001", invitation_code: "NTW-INV-7891", recipient_name: "Ar. Rahul Deshmukh", firm_name: "Deshmukh & Associates", recipient_email: "rahul@deshmukh-arch.com", mobile: "+91 98220 11223", invitation_link: "https://newtechwood.in/invite/NTW-INV-7891", status: "Active", expires_at: "2026-11-09" },
+			{ id: "INV-002", invitation_code: "NTW-INV-7892", recipient_name: "Pooja Singhania", firm_name: "Vibrant Spaces Interior", recipient_email: "pooja@vibrantspaces.in", mobile: "+91 98300 22334", invitation_link: "https://newtechwood.in/invite/NTW-INV-7892", status: "Active", expires_at: "2026-11-09" },
+			{ id: "INV-003", invitation_code: "NTW-INV-7893", recipient_name: "Ar. Tarun Bakshi", firm_name: "Bakshi Design Atelier", recipient_email: "tarun@bakshiatelier.com", mobile: "+91 98100 33445", invitation_link: "https://newtechwood.in/invite/NTW-INV-7893", status: "Accepted", expires_at: "2026-10-15" },
+			{ id: "INV-004", invitation_code: "NTW-INV-7894", recipient_name: "Ananya Rao", firm_name: "South Coast Builders", recipient_email: "ananya@southcoast.co.in", mobile: "+91 98480 44556", invitation_link: "https://newtechwood.in/invite/NTW-INV-7894", status: "Active", expires_at: "2026-11-09" }
+		];
+
+		const NTW_FALLBACK_VISITORS = [
+			{ id: "VIS-01", visitor_type: "Architect", name: "Sameer Chawla", mobile: "+91 98114 55667", email: "sameer@chawla.design", firm: "Chawla Design Studio", link_created_date: "2026-09-15", form_submitted_date: "2026-09-16", country: "India", state: "Delhi", city: "New Delhi", event_year: "2026" },
+			{ id: "VIS-02", visitor_type: "VIP Guest", name: "Vikramaditya Oberoi", mobile: "+91 98204 66778", email: "vo@oberoiholdings.in", firm: "Oberoi Luxury Living", link_created_date: "2026-09-18", form_submitted_date: "2026-09-18", country: "India", state: "Maharashtra", city: "Mumbai", event_year: "2026" },
+			{ id: "VIS-03", visitor_type: "Contractor", name: "Gurpreet Singh", mobile: "+91 98184 77889", email: "gurpreet@gsconstructions.com", firm: "GS Infrastructure", link_created_date: "2026-09-22", form_submitted_date: "2026-09-23", country: "India", state: "Punjab", city: "Chandigarh", event_year: "2026" },
+			{ id: "VIS-04", visitor_type: "Architect", name: "Shruti Iyer", mobile: "+91 98454 88990", email: "shruti@iyerassociates.in", firm: "Iyer & Partners", link_created_date: "2026-09-25", form_submitted_date: "2026-09-25", country: "India", state: "Karnataka", city: "Bengaluru", event_year: "2026" },
+			{ id: "VIS-05", visitor_type: "Partner", name: "Manish Toshniwal", mobile: "+91 98294 99001", email: "manish@toshniwal.in", firm: "Toshniwal Timber Traders", link_created_date: "2026-09-28", form_submitted_date: "2026-09-29", country: "India", state: "Rajasthan", city: "Jaipur", event_year: "2026" },
+			{ id: "VIS-06", visitor_type: "Architect", name: "Farhan Contractor", mobile: "+91 98205 10112", email: "farhan@contractordesign.com", firm: "Studio FC", link_created_date: "2026-10-01", form_submitted_date: "2026-10-02", country: "India", state: "Maharashtra", city: "Pune", event_year: "2026" },
+			{ id: "VIS-07", visitor_type: "VIP Guest", name: "Nirmal Somani", mobile: "+91 98315 21223", email: "nirmal@somani.in", firm: "Somani Real Estate", link_created_date: "2026-10-03", form_submitted_date: "2026-10-03", country: "India", state: "West Bengal", city: "Kolkata", event_year: "2026" }
+		];
+
+		const NTW_FALLBACK_ASSETS = [
+			{ id: "ASST-01", subject: "UltraShield Decking Full Installation Masterclass", creator: "Tech Team NewTechWood", file_type: "MP4 Video", duration: "18:24", video_url: "/videos/installation_masterclass.mp4", thumbnail_url: "/wp-content/uploads/gopro_thumb1.jpg", category: "Installation Guide", views_count: 1420 },
+			{ id: "ASST-02", subject: "Sub-Frame Aluminum Joist Spacing & Elevation Best Practices", creator: "Engineering Dept", file_type: "MP4 Video", duration: "12:15", video_url: "/videos/subframe_spacing.mp4", thumbnail_url: "/wp-content/uploads/gopro_thumb2.jpg", category: "Technical Standards", views_count: 980 },
+			{ id: "ASST-03", subject: "All-Weather Cladding Hidden Fastener System Walkthrough", creator: "Product Specialist", file_type: "MP4 Video", duration: "09:40", video_url: "/videos/cladding_fasteners.mp4", thumbnail_url: "/wp-content/uploads/gopro_thumb3.jpg", category: "Façade Engineering", views_count: 1150 },
+			{ id: "ASST-04", subject: "Care, Cleaning & Scratch Repair on 360 Capped Composite", creator: "QA & Materials Lab", file_type: "MP4 Video", duration: "06:50", video_url: "/videos/cleaning_maintenance.mp4", thumbnail_url: "/wp-content/uploads/gopro_thumb4.jpg", category: "Maintenance", views_count: 840 },
+			{ id: "ASST-05", subject: "Quick-Lock Interlocking Deck Tiles Balcony Transformation", creator: "Design Studio", file_type: "MP4 Video", duration: "08:12", video_url: "/videos/balcony_tiles.mp4", thumbnail_url: "/wp-content/uploads/gopro_thumb5.jpg", category: "Patio & DIY", views_count: 1630 }
+		];
+
+		function computeClientAnalyticsData(fromDate, toDate, userFilter, statusFilter) {
+			const orders = (typeof NTW_FALLBACK_ORDERS !== 'undefined' ? NTW_FALLBACK_ORDERS : []).map(o => ({
+				id: o.id,
+				ref_no: o.order_number,
+				title: o.project_name,
+				client: o.client_name,
+				city: o.city,
+				state: o.state,
+				activity_date: o.order_date,
+				status: o.status,
+				amount: Number(o.final_amount) || 0,
+				source: o.source,
+				owner_name: o.owner_name || 'Rohan Verma',
+				activity_type: 'Material Order'
+			}));
+
+			const bracketDays = { '1-5': '03', '6-10': '08', '11-15': '13', '16-20': '18', '21-25': '23', '26-31': '28' };
+			const projects = (typeof NTW_FALLBACK_PROJECTS !== 'undefined' ? NTW_FALLBACK_PROJECTS : []).map(p => {
+				const m = p.month || 10;
+				const yr = m >= 4 ? 2025 : 2026;
+				const day = bracketDays[p.day_bracket] || '15';
+				const mStr = String(m).padStart(2, '0');
+				return {
+					id: p.id,
+					ref_no: p.id,
+					title: p.project_name,
+					client: p.client_name,
+					city: p.city,
+					state: p.state,
+					activity_date: `${yr}-${mStr}-${day}`,
+					status: p.stage,
+					amount: Number(p.total_value) || 0,
+					source: p.category,
+					owner_name: p.owner_name || 'Rohan Verma',
+					activity_type: 'Pipeline Project'
+				};
+			});
+
+			const meetings = (typeof NTW_FALLBACK_MEETINGS !== 'undefined' ? NTW_FALLBACK_MEETINGS : []).map(m => ({
+				id: m.id,
+				ref_no: m.id,
+				title: m.firm_name,
+				client: m.guest_name,
+				city: m.city,
+				state: m.state,
+				activity_date: m.meeting_date,
+				status: 'Completed',
+				amount: 0,
+				source: m.guest_type,
+				owner_name: m.owner_name || 'Rohan Verma',
+				activity_type: 'Architect Meeting'
+			}));
+
+			const allActivities = [...orders, ...projects, ...meetings];
+			const distinctUsers = Array.from(new Set(allActivities.map(a => a.owner_name).filter(Boolean))).sort();
+
+			let filtered = allActivities.filter(a => {
+				const actDate = a.activity_date || '';
+				if (fromDate && actDate < fromDate) return false;
+				if (toDate && actDate > toDate) return false;
+				if (userFilter && userFilter.toLowerCase() !== 'all' && (a.owner_name || '').toLowerCase() !== userFilter.toLowerCase()) return false;
+				if (statusFilter && statusFilter.toLowerCase() !== 'all') {
+					const sf = statusFilter.toLowerCase();
+					if (sf === 'win' && a.status !== 'Win' && a.status !== 'Completed') return false;
+					if (sf === 'pipeline' && a.status !== 'Pipeline') return false;
+					if (sf === 'lost' && a.status !== 'Lost') return false;
+				}
+				return true;
+			});
+
+			filtered.sort((a, b) => (b.activity_date || '').localeCompare(a.activity_date || ''));
+
+			const total_activities = filtered.length;
+			const total_revenue = filtered.filter(x => x.status === 'Win' || x.status === 'Completed').reduce((sum, x) => sum + x.amount, 0);
+			const total_pipeline = filtered.filter(x => x.status === 'Pipeline').reduce((sum, x) => sum + x.amount, 0);
+			const total_lost = filtered.filter(x => x.status === 'Lost').reduce((sum, x) => sum + x.amount, 0);
+			const won_count = filtered.filter(x => (x.status === 'Win' || x.status === 'Completed') && x.amount > 0).length;
+			const pipeline_count = filtered.filter(x => x.status === 'Pipeline').length;
+			const lost_count = filtered.filter(x => x.status === 'Lost').length;
+			const meetings_count = filtered.filter(x => x.activity_type === 'Architect Meeting').length;
+
+			const closed_total = won_count + lost_count;
+			const win_rate_pct = closed_total > 0 ? parseFloat(((won_count / closed_total) * 100).toFixed(1)) : 0.0;
+			const avg_deal_size = won_count > 0 ? Math.round(total_revenue / won_count) : 0;
+
+			return {
+				success: true,
+				filters: {
+					from_date: fromDate,
+					to_date: toDate,
+					user: userFilter,
+					status: statusFilter
+				},
+				metrics: {
+					total_activities,
+					total_revenue,
+					total_pipeline,
+					total_lost,
+					won_count,
+					pipeline_count,
+					lost_count,
+					meetings_count,
+					win_rate_pct,
+					avg_deal_size
+				},
+				distinct_users: distinctUsers,
+				activities: filtered
+			};
+		}
+
 		function computeClientDashboardData(fy, selectedMonths, chartType) {
 			const monthsArr = (selectedMonths && selectedMonths.length > 0) ? selectedMonths : [4,5,6,7,8,9,10,11,12,1,2,3];
 			let filtered = NTW_FALLBACK_PROJECTS.filter(p => {
@@ -6041,20 +6256,27 @@ async function loadDashboardData() {
 				status: status
 			});
 
+			let data = null;
 			try {
 				const resp = await fetch('/api/analytics?' + query.toString());
 				if (resp.ok) {
-					const data = await resp.json();
-					if (data.success) {
-						analyticsState.activities = data.activities || [];
-						analyticsState.metrics = data.metrics || {};
-						analyticsState.distinctUsers = data.distinct_users || [];
-						updateAnalyticsUI(data);
+					const apiJson = await resp.json();
+					if (apiJson && apiJson.success) {
+						data = apiJson;
 					}
 				}
 			} catch (err) {
-				console.error('Failed to load analytics API:', err);
+				console.warn('Failed to load analytics API, falling back to client analytics engine:', err);
 			}
+
+			if (!data) {
+				data = computeClientAnalyticsData(fromDate, toDate, user, status);
+			}
+
+			analyticsState.activities = data.activities || [];
+			analyticsState.metrics = data.metrics || {};
+			analyticsState.distinctUsers = data.distinct_users || [];
+			updateAnalyticsUI(data);
 		}
 
 		function updateAnalyticsUI(data) {
@@ -6474,18 +6696,36 @@ async function loadDashboardData() {
 			const cat = document.getElementById('dirCategorySelect')?.value || 'all';
 			const params = new URLSearchParams({ search: search, category: cat });
 
+			let data = null;
 			try {
 				const resp = await fetch('/api/directory/firms?' + params.toString());
 				if (resp.ok) {
 					const res = await resp.json();
-					if (res.success) {
-						directoryMasterData = res.firms || [];
-						renderDirectoryMaster(directoryMasterData);
+					if (res.success && Array.isArray(res.firms)) {
+						data = res.firms;
 					}
 				}
 			} catch (e) {
-				console.error('Error loading directory firms:', e);
+				console.warn('Directory API offline, using client fallback:', e);
 			}
+
+			if (!data) {
+				data = (typeof NTW_FALLBACK_FIRMS !== 'undefined' ? NTW_FALLBACK_FIRMS : []).filter(f => {
+					if (cat && cat.toLowerCase() !== 'all' && f.category.toLowerCase() !== cat.toLowerCase()) return false;
+					if (search) {
+						const q = search.toLowerCase();
+						const match = (f.firm_name.toLowerCase().includes(q) ||
+							(f.city || '').toLowerCase().includes(q) ||
+							(f.state || '').toLowerCase().includes(q) ||
+							(f.contacts || []).some(c => (c.first_name || '').toLowerCase().includes(q) || (c.last_name || '').toLowerCase().includes(q) || (c.email || '').toLowerCase().includes(q) || (c.mobile || '').includes(q)));
+						if (!match) return false;
+					}
+					return true;
+				});
+			}
+
+			directoryMasterData = data;
+			renderDirectoryMaster(directoryMasterData);
 		}
 
 		function renderDirectoryMaster(firms) {
@@ -6643,18 +6883,37 @@ async function loadDashboardData() {
 				city: document.getElementById('mtgCity')?.value || 'all'
 			});
 
+			let data = null;
 			try {
 				const resp = await fetch('/api/directory/meetings?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
-					if (res.success) {
-						meetingsData = res.meetings || [];
-						renderMeetings(meetingsData);
+					if (res.success && Array.isArray(res.meetings)) {
+						data = res.meetings;
 					}
 				}
 			} catch (e) {
-				console.error('Error loading meetings:', e);
+				console.warn('Meetings API offline, using client fallback:', e);
 			}
+
+			if (!data) {
+				data = (typeof NTW_FALLBACK_MEETINGS !== 'undefined' ? NTW_FALLBACK_MEETINGS : []).filter(m => {
+					if (query.get('from_date') && m.meeting_date < query.get('from_date')) return false;
+					if (query.get('to_date') && m.meeting_date > query.get('to_date')) return false;
+					if (firmName && !m.firm_name.toLowerCase().includes(firmName.toLowerCase())) return false;
+					if (guestName && !m.guest_name.toLowerCase().includes(guestName.toLowerCase())) return false;
+					if (mobile && !m.mobile.includes(mobile)) return false;
+					if (userType !== 'all' && m.user_type !== userType) return false;
+					if (guestType !== 'all' && m.guest_type !== guestType) return false;
+					if (country !== 'all' && (m.country || 'India') !== country) return false;
+					if (state !== 'all' && (m.state || '') !== state) return false;
+					if (city !== 'all' && (m.city || '') !== city) return false;
+					return true;
+				});
+			}
+
+			meetingsData = data;
+			renderMeetings(meetingsData);
 		}
 
 		function renderMeetings(meetings) {
@@ -6822,18 +7081,25 @@ async function loadDashboardData() {
 		let invitationsData = [];
 
 		async function loadInvitations() {
+			let data = null;
 			try {
 				const resp = await fetch('/api/directory/invitations');
 				if (resp.ok) {
 					const res = await resp.json();
-					if (res.success) {
-						invitationsData = res.invitations || [];
-						renderInvitations(invitationsData);
+					if (res.success && Array.isArray(res.invitations)) {
+						data = res.invitations;
 					}
 				}
 			} catch (e) {
-				console.error('Error loading invitations:', e);
+				console.warn('Invitations API offline, using fallback:', e);
 			}
+
+			if (!data) {
+				data = (typeof NTW_FALLBACK_INVITATIONS !== 'undefined' ? NTW_FALLBACK_INVITATIONS : []);
+			}
+
+			invitationsData = data;
+			renderInvitations(invitationsData);
 		}
 
 		function renderInvitations(list) {
@@ -6944,21 +7210,63 @@ async function loadDashboardData() {
 				event_year: document.getElementById('visYearFilter')?.value || 'all'
 			});
 
+			let res = null;
 			try {
 				const resp = await fetch('/api/directory/visitors?' + query.toString());
 				if (resp.ok) {
-					const res = await resp.json();
-					if (res.success) {
-						visitorsState.visitors = res.visitors || [];
-						visitorsState.total = res.total || 0;
-						visitorsState.totalPages = res.total_pages || 1;
-						renderVisitors(visitorsState.visitors);
-						renderVisitorPagination();
+					const apiJson = await resp.json();
+					if (apiJson.success) {
+						res = apiJson;
 					}
 				}
 			} catch (e) {
-				console.error('Error loading visitors:', e);
+				console.warn('Visitors API offline, using client fallback:', e);
 			}
+
+			if (res) {
+				visitorsState.visitors = res.visitors || [];
+				visitorsState.total = res.total || 0;
+				visitorsState.totalPages = res.total_pages || 1;
+			} else {
+				const visType = document.getElementById('visTypeFilter')?.value || 'all';
+				const name = (document.getElementById('visNameFilter')?.value || '').toLowerCase();
+				const mobile = document.getElementById('visMobileFilter')?.value || '';
+				const email = (document.getElementById('visEmailFilter')?.value || '').toLowerCase();
+				const firm = (document.getElementById('visFirmFilter')?.value || '').toLowerCase();
+				const fromCreated = document.getElementById('visFromCreated')?.value || '';
+				const toCreated = document.getElementById('visToCreated')?.value || '';
+				const fromSubmitted = document.getElementById('visFromSubmitted')?.value || '';
+				const toSubmitted = document.getElementById('visToSubmitted')?.value || '';
+				const country = document.getElementById('visCountryFilter')?.value || 'all';
+				const state = document.getElementById('visStateFilter')?.value || 'all';
+				const city = document.getElementById('visCityFilter')?.value || 'all';
+				const year = document.getElementById('visYearFilter')?.value || 'all';
+
+				let filtered = (typeof NTW_FALLBACK_VISITORS !== 'undefined' ? NTW_FALLBACK_VISITORS : []).filter(v => {
+					if (visType !== 'all' && v.visitor_type !== visType) return false;
+					if (name && !v.name.toLowerCase().includes(name)) return false;
+					if (mobile && !v.mobile.includes(mobile)) return false;
+					if (email && !v.email.toLowerCase().includes(email)) return false;
+					if (firm && !v.firm.toLowerCase().includes(firm)) return false;
+					if (fromCreated && v.link_created_date < fromCreated) return false;
+					if (toCreated && v.link_created_date > toCreated) return false;
+					if (fromSubmitted && (v.form_submitted_date || '') < fromSubmitted) return false;
+					if (toSubmitted && (v.form_submitted_date || '') > toSubmitted) return false;
+					if (country !== 'all' && (v.country || 'India') !== country) return false;
+					if (state !== 'all' && (v.state || '') !== state) return false;
+					if (city !== 'all' && (v.city || '') !== city) return false;
+					if (year !== 'all' && String(v.event_year) !== String(year)) return false;
+					return true;
+				});
+
+				visitorsState.total = filtered.length;
+				visitorsState.totalPages = Math.ceil(filtered.length / visitorsState.limit) || 1;
+				const start = (page - 1) * visitorsState.limit;
+				visitorsState.visitors = filtered.slice(start, start + visitorsState.limit);
+			}
+
+			renderVisitors(visitorsState.visitors);
+			renderVisitorPagination();
 		}
 
 		function renderVisitors(visitors) {
@@ -7069,18 +7377,34 @@ async function loadDashboardData() {
 				file_type: document.getElementById('goproFileTypeFilter')?.value || 'all'
 			});
 
+			let data = null;
 			try {
 				const resp = await fetch('/api/gopro/assets?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
-					if (res.success) {
-						goProAssetsData = res.assets || [];
-						renderGoProAssets(goProAssetsData);
+					if (res.success && Array.isArray(res.assets)) {
+						data = res.assets;
 					}
 				}
 			} catch (e) {
-				console.error('Error loading Go Pro assets:', e);
+				console.warn('GoPro API offline, using client fallback:', e);
 			}
+
+			if (!data) {
+				const subject = (document.getElementById('goproSubjectFilter')?.value || '').toLowerCase();
+				const creator = (document.getElementById('goproCreatorFilter')?.value || '').toLowerCase();
+				const fileType = document.getElementById('goproFileTypeFilter')?.value || 'all';
+
+				data = (typeof NTW_FALLBACK_ASSETS !== 'undefined' ? NTW_FALLBACK_ASSETS : []).filter(a => {
+					if (subject && !a.subject.toLowerCase().includes(subject)) return false;
+					if (creator && !a.creator.toLowerCase().includes(creator)) return false;
+					if (fileType !== 'all' && a.file_type !== fileType) return false;
+					return true;
+				});
+			}
+
+			goProAssetsData = data;
+			renderGoProAssets(goProAssetsData);
 		}
 
 		function renderGoProAssets(assets) {
@@ -7168,22 +7492,48 @@ async function loadDashboardData() {
 				source: document.getElementById('ordSourceFilter')?.value || 'all'
 			});
 
+			let data = null;
 			try {
 				const resp = await fetch('/api/orders?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
-					if (res.success) {
-						waltzOrdersData = (res.orders && res.orders.length > 0) ? res.orders : (typeof NTW_FALLBACK_ORDERS !== 'undefined' ? NTW_FALLBACK_ORDERS : []);
-						renderWaltzOrders(waltzOrdersData);
+					if (res.success && Array.isArray(res.orders)) {
+						data = res.orders;
 					}
 				}
 			} catch (e) {
 				console.warn('Orders API offline, using client cache', e);
-				if (!waltzOrdersData || waltzOrdersData.length === 0) {
-					waltzOrdersData = (typeof NTW_FALLBACK_ORDERS !== 'undefined') ? NTW_FALLBACK_ORDERS : [];
-					renderWaltzOrders(waltzOrdersData);
-				}
 			}
+
+			if (!data) {
+				data = (typeof NTW_FALLBACK_ORDERS !== 'undefined' ? NTW_FALLBACK_ORDERS : []).filter(o => {
+					const ordNum = (document.getElementById('ordNumFilter')?.value || '').toLowerCase();
+					const proj = (document.getElementById('ordProjFilter')?.value || '').toLowerCase();
+					const client = (document.getElementById('ordClientFilter')?.value || '').toLowerCase();
+					const country = document.getElementById('ordCountryFilter')?.value || 'all';
+					const state = document.getElementById('ordStateFilter')?.value || 'all';
+					const city = document.getElementById('ordCityFilter')?.value || 'all';
+					const fromDate = document.getElementById('ordFromDate')?.value || '';
+					const toDate = document.getElementById('ordToDate')?.value || '';
+					const status = document.getElementById('ordStatusFilter')?.value || 'all';
+					const source = document.getElementById('ordSourceFilter')?.value || 'all';
+
+					if (ordNum && !o.order_number.toLowerCase().includes(ordNum)) return false;
+					if (proj && !o.project_name.toLowerCase().includes(proj)) return false;
+					if (client && !o.client_name.toLowerCase().includes(client)) return false;
+					if (country !== 'all' && (o.country || 'India') !== country) return false;
+					if (state !== 'all' && (o.state || '') !== state) return false;
+					if (city !== 'all' && (o.city || '') !== city) return false;
+					if (fromDate && o.order_date < fromDate) return false;
+					if (toDate && o.order_date > toDate) return false;
+					if (status !== 'all' && o.status !== status) return false;
+					if (source !== 'all' && o.source !== source) return false;
+					return true;
+				});
+			}
+
+			waltzOrdersData = data;
+			renderWaltzOrders(waltzOrdersData);
 		}
 
 		function renderWaltzOrders(orders) {
