@@ -51,7 +51,7 @@ def get_auth_user(handler):
         return None
 
     user = database.execute_one(
-        "SELECT id, email, full_name, role, status, avatar_initials, created_at FROM users WHERE id = ?;",
+        "SELECT id, vendor_id, email, full_name, phone, role, status, permissions, avatar_initials, created_at FROM users WHERE id = ?;",
         (session['user_id'],)
     )
     return user
@@ -92,10 +92,22 @@ def _handle_get_internal(handler):
             return send_json(handler, {"success": False, "error": "Unauthorized or session expired"}, 401)
         return send_json(handler, {"success": True, "user": user})
 
-    # List Users (Admin Only)
-    if path == '/api/users':
-        users = database.execute_query("SELECT id, email, full_name, role, status, avatar_initials, created_at FROM users;")
-        return send_json(handler, {"success": True, "users": users})
+    # List Users / Vendors (Admin Only & Vendor Directory)
+    if path == '/api/users' or path == '/api/vendors':
+        role_filter = qs.get('role', [''])[0].strip().lower()
+        where_sql = ""
+        params = []
+        if role_filter and role_filter != 'all':
+            where_sql = "WHERE lower(role) = ?"
+            params = [role_filter]
+        users = database.execute_query(f"""
+            SELECT id, vendor_id, email, password, full_name, phone, role, status, permissions, avatar_initials, created_at
+            FROM users
+            {where_sql}
+            ORDER BY created_at ASC;
+        """, tuple(params))
+        user_list = [dict(u) for u in users]
+        return send_json(handler, {"success": True, "count": len(user_list), "vendors": user_list, "users": user_list})
 
     # CRM Dashboard Aggregates, Charts, & KPIs
     if path == '/api/dashboard':
@@ -274,11 +286,11 @@ def _handle_get_internal(handler):
         user_filter = qs.get('user', ['all'])[0].strip()
         status_filter = qs.get('status', ['all'])[0].strip()
 
-        # 1. Fetch Waltz Orders
+        # 1. Fetch Material Orders
         orders = database.execute_query("""
             SELECT id, order_number as ref_no, project_name as title, client_name as client,
                    city, state, order_date as activity_date, status, final_amount as amount,
-                   source, coalesce(owner_name, 'Rohan Verma') as owner_name, 'Waltz Order' as activity_type
+                   source, coalesce(owner_name, 'Rohan Verma') as owner_name, 'Material Order' as activity_type
             FROM waltz_orders;
         """)
 
@@ -601,7 +613,7 @@ def _handle_get_internal(handler):
         """, tuple(params))
         return send_json(handler, {"success": True, "count": len(assets), "assets": [dict(a) for a in assets]})
 
-    # Waltz Orders
+    # NewTechWood Material Orders
     if path == '/api/orders':
         order_number = qs.get('order_number', [''])[0].strip().lower()
         project_name = qs.get('project_name', [''])[0].strip().lower()
@@ -679,10 +691,10 @@ def handle_post(handler):
         if not email or not password:
             return send_json(handler, {"success": False, "error": "Email and password are required"}, 400)
 
-        # Look up user by email or username
+        # Look up user by email or username or vendor_id
         user = database.execute_one(
-            "SELECT * FROM users WHERE (lower(email) = ? OR lower(id) = ?) AND status = 'active';",
-            (email, email)
+            "SELECT * FROM users WHERE (lower(email) = ? OR lower(id) = ? OR lower(COALESCE(vendor_id, '')) = ?) AND status = 'active';",
+            (email, email, email)
         )
 
         if not user or user['password'] != password:
@@ -700,10 +712,13 @@ def handle_post(handler):
 
         safe_user = {
             "id": user['id'],
+            "vendor_id": user.get('vendor_id') or user['id'],
             "email": user['email'],
             "full_name": user['full_name'],
             "role": user['role'],
             "status": user['status'],
+            "phone": user.get('phone', ''),
+            "permissions": user.get('permissions', ''),
             "avatar_initials": user['avatar_initials'] or user['full_name'][:2].upper()
         }
 
@@ -722,17 +737,17 @@ def handle_post(handler):
             database.execute_commit("DELETE FROM sessions WHERE token = ?;", (token,))
         return send_json(handler, {"success": True, "message": "Logged out successfully"})
 
-    # Create Waltz Order
+    # Create Commercial Material Order
     if path == '/api/orders':
         proj_name = body.get('project_name', '').strip()
         client_name = body.get('client_name', '').strip()
         order_num = body.get('order_number', '').strip()
         if not order_num:
-            order_num = f"WO-2026-{uuid.uuid4().hex[:6].upper()}"
+            order_num = f"NTW-2026-{uuid.uuid4().hex[:6].upper()}"
         if not proj_name or not client_name:
             return send_json(handler, {"success": False, "error": "Project and client name are required"}, 400)
 
-        order_id = f"ORD-W-{uuid.uuid4().hex[:8]}"
+        order_id = f"ORD-NTW-{uuid.uuid4().hex[:8]}"
         country = body.get('country', 'India')
         state = body.get('state', 'Maharashtra')
         city = body.get('city', 'Mumbai')
@@ -754,11 +769,11 @@ def handle_post(handler):
         created = database.execute_one("SELECT * FROM waltz_orders WHERE id = ?;", (order_id,))
         return send_json(handler, {"success": True, "message": "Order created successfully", "order": dict(created)}, 201)
 
-    # Update Waltz Order (via POST /api/orders/update fallback)
+    # Update Commercial Material Order (via POST /api/orders/update fallback)
     if path == '/api/orders/update':
         return _update_order_internal(handler, body)
 
-    # Delete Waltz Order (via POST /api/orders/delete fallback)
+    # Delete Commercial Material Order (via POST /api/orders/delete fallback)
     if path == '/api/orders/delete':
         order_id = body.get('id')
         if not order_id:
@@ -814,6 +829,131 @@ def handle_post(handler):
 
         created = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
         return send_json(handler, {"success": True, "message": "Meeting scheduled", "meeting": dict(created)}, 201)
+
+    # ----------------------------------------------------
+    # VENDOR ACCOUNT MANAGEMENT ENDPOINTS
+    # ----------------------------------------------------
+    # Create Vendor Account
+    if path == '/api/vendors' or path == '/api/users':
+        firm_name = (body.get('firm_name') or body.get('name') or body.get('full_name') or '').strip()
+        email = (body.get('email') or '').strip().lower()
+        password = (body.get('password') or '').strip()
+        role = (body.get('role') or 'architect').strip().lower()
+        vendor_id = (body.get('vendor_id') or body.get('vendorId') or '').strip()
+        phone = (body.get('phone') or '').strip()
+        status = (body.get('status') or 'active').strip().lower()
+        permissions = body.get('permissions')
+        if isinstance(permissions, list):
+            permissions = ','.join(permissions)
+        elif not permissions:
+            if role in ('admin', 'superadmin'):
+                permissions = 'all'
+            elif role == 'architect':
+                permissions = 'gopro_cad,pipeline_specs,meetings,invitations'
+            elif role == 'dealer':
+                permissions = 'waltz_orders,wholesale_catalog,invitations'
+            else:
+                permissions = 'pipeline,orders,meetings,visitors'
+
+        if not firm_name or not email or not password:
+            return send_json(handler, {"success": False, "error": "Firm name, email, and password are required"}, 400)
+
+        # Check for existing email
+        existing_email = database.execute_one("SELECT id FROM users WHERE lower(email) = ?;", (email,))
+        if existing_email:
+            return send_json(handler, {"success": False, "error": f"An account with email '{email}' already exists"}, 409)
+
+        # Auto-generate vendor_id if not provided
+        if not vendor_id:
+            prefix = 'VND' if role == 'architect' else ('DLR' if role == 'dealer' else ('SAL' if role == 'sales' else 'ADM'))
+            vendor_id = f"{prefix}-2026-{uuid.uuid4().hex[:4].upper()}"
+
+        # Ensure vendor_id is unique
+        existing_vid = database.execute_one("SELECT id FROM users WHERE lower(vendor_id) = ?;", (vendor_id.lower(),))
+        if existing_vid:
+            vendor_id = f"{vendor_id}-{uuid.uuid4().hex[:3].upper()}"
+
+        user_id = f"vnd_{uuid.uuid4().hex[:8]}"
+        initials = ''.join([w[0] for w in firm_name.split() if w])[:2].upper() or 'VN'
+
+        database.execute_commit("""
+            INSERT INTO users (id, vendor_id, email, password, full_name, phone, role, status, permissions, avatar_initials)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """, (user_id, vendor_id, email, password, firm_name, phone, role, status, permissions, initials))
+
+        created = database.execute_one("""
+            SELECT id, vendor_id, email, password, full_name, phone, role, status, permissions, avatar_initials, created_at
+            FROM users WHERE id = ?;
+        """, (user_id,))
+        return send_json(handler, {"success": True, "message": "Vendor account created successfully", "vendor": dict(created)}, 201)
+
+    # Toggle / Update Vendor Status
+    if path == '/api/vendors/status' or path == '/api/vendors/toggle-status':
+        user_id = body.get('id') or body.get('vendor_id')
+        new_status = body.get('status')
+        if not user_id:
+            return send_json(handler, {"success": False, "error": "Vendor ID required"}, 400)
+
+        curr = database.execute_one("SELECT id, role, status FROM users WHERE id = ? OR vendor_id = ?;", (user_id, user_id))
+        if not curr:
+            return send_json(handler, {"success": False, "error": "Vendor not found"}, 404)
+
+        if not new_status:
+            new_status = 'inactive' if curr['status'] == 'active' else 'active'
+
+        database.execute_commit("UPDATE users SET status = ? WHERE id = ?;", (new_status, curr['id']))
+        return send_json(handler, {"success": True, "message": f"Status updated to {new_status}", "id": curr['id'], "status": new_status})
+
+    # Update Vendor Details & Permissions
+    if path == '/api/vendors/update':
+        user_id = body.get('id') or body.get('vendor_id')
+        if not user_id:
+            return send_json(handler, {"success": False, "error": "Vendor ID required"}, 400)
+
+        curr = database.execute_one("SELECT * FROM users WHERE id = ? OR vendor_id = ?;", (user_id, user_id))
+        if not curr:
+            return send_json(handler, {"success": False, "error": "Vendor not found"}, 404)
+
+        full_name = body.get('firm_name') or body.get('name') or body.get('full_name') or curr['full_name']
+        email = body.get('email') or curr['email']
+        password = body.get('password') or curr['password']
+        role = body.get('role') or curr['role']
+        status = body.get('status') or curr['status']
+        phone = body.get('phone') or curr['phone']
+        permissions = body.get('permissions')
+        if isinstance(permissions, list):
+            permissions = ','.join(permissions)
+        elif permissions is None:
+            permissions = curr['permissions']
+
+        database.execute_commit("""
+            UPDATE users
+            SET full_name = ?, email = ?, password = ?, role = ?, status = ?, phone = ?, permissions = ?, updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?;
+        """, (full_name, email, password, role, status, phone, permissions, curr['id']))
+
+        updated = database.execute_one("""
+            SELECT id, vendor_id, email, password, full_name, phone, role, status, permissions, avatar_initials, created_at
+            FROM users WHERE id = ?;
+        """, (curr['id'],))
+        return send_json(handler, {"success": True, "message": "Vendor updated successfully", "vendor": dict(updated)})
+
+    # Delete Vendor Account (via POST fallback)
+    if path == '/api/vendors/delete':
+        user_id = body.get('id') or body.get('vendor_id')
+        if not user_id:
+            return send_json(handler, {"success": False, "error": "Vendor ID required"}, 400)
+
+        curr = database.execute_one("SELECT id, role FROM users WHERE id = ? OR vendor_id = ?;", (user_id, user_id))
+        if not curr:
+            return send_json(handler, {"success": False, "error": "Vendor not found"}, 404)
+
+        if curr['id'] == 'admin' or curr['role'] == 'superadmin':
+            return send_json(handler, {"success": False, "error": "Cannot delete root Super Administrator account"}, 403)
+
+        database.execute_commit("DELETE FROM sessions WHERE user_id = ?;", (curr['id'],))
+        database.execute_commit("DELETE FROM users WHERE id = ?;", (curr['id'],))
+        return send_json(handler, {"success": True, "message": "Vendor deleted successfully", "id": curr['id']})
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
@@ -878,17 +1018,29 @@ def handle_delete(handler):
     except Exception:
         body = {}
 
-    if path.startswith('/api/orders/'):
-        order_id = path.split('/')[-1]
-        database.execute_commit("DELETE FROM waltz_orders WHERE id = ?;", (order_id,))
-        return send_json(handler, {"success": True, "message": "Order deleted successfully"})
+    if path.startswith('/api/vendors/'):
+        user_id = path.split('/')[-1]
+        curr = database.execute_one("SELECT id, role FROM users WHERE id = ? OR vendor_id = ?;", (user_id, user_id))
+        if not curr:
+            return send_json(handler, {"success": False, "error": "Vendor not found"}, 404)
+        if curr['id'] == 'admin' or curr['role'] == 'superadmin':
+            return send_json(handler, {"success": False, "error": "Cannot delete root Super Administrator"}, 403)
+        database.execute_commit("DELETE FROM sessions WHERE user_id = ?;", (curr['id'],))
+        database.execute_commit("DELETE FROM users WHERE id = ?;", (curr['id'],))
+        return send_json(handler, {"success": True, "message": "Vendor deleted successfully", "id": curr['id']})
 
-    if path == '/api/orders':
-        order_id = body.get('id')
-        if not order_id:
-            return send_json(handler, {"success": False, "error": "Order ID is required"}, 400)
-        database.execute_commit("DELETE FROM waltz_orders WHERE id = ?;", (order_id,))
-        return send_json(handler, {"success": True, "message": "Order deleted successfully"})
+    if path == '/api/vendors':
+        user_id = body.get('id') or body.get('vendor_id')
+        if not user_id:
+            return send_json(handler, {"success": False, "error": "Vendor ID required"}, 400)
+        curr = database.execute_one("SELECT id, role FROM users WHERE id = ? OR vendor_id = ?;", (user_id, user_id))
+        if not curr:
+            return send_json(handler, {"success": False, "error": "Vendor not found"}, 404)
+        if curr['id'] == 'admin' or curr['role'] == 'superadmin':
+            return send_json(handler, {"success": False, "error": "Cannot delete root Super Administrator"}, 403)
+        database.execute_commit("DELETE FROM sessions WHERE user_id = ?;", (curr['id'],))
+        database.execute_commit("DELETE FROM users WHERE id = ?;", (curr['id'],))
+        return send_json(handler, {"success": True, "message": "Vendor deleted successfully", "id": curr['id']})
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 

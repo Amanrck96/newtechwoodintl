@@ -4,11 +4,14 @@ PRAGMA foreign_keys = ON;
 -- 1. Users & RBAC
 CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
+    vendor_id TEXT,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     full_name TEXT NOT NULL,
+    phone TEXT,
     role TEXT NOT NULL CHECK(role IN ('admin', 'superadmin', 'architect', 'dealer', 'sales')),
     status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'inactive', 'suspended')),
+    permissions TEXT,
     avatar_initials TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

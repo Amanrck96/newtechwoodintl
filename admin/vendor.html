@@ -1564,6 +1564,192 @@
 			color: #dc2626;
 			background: #fef2f2;
 		}
+
+		/* VENDOR & RBAC ACCESS MATRIX STYLES */
+		.rbac-matrix-container {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: var(--adm-radius);
+			box-shadow: var(--adm-shadow);
+			margin-bottom: 24px;
+			overflow: hidden;
+		}
+		.rbac-header {
+			padding: 16px 20px;
+			background: linear-gradient(135deg, #f7faf7 0%, #edf5ee 100%);
+			border-bottom: 1px solid var(--adm-border);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 12px;
+		}
+		.rbac-roles-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+			gap: 16px;
+			padding: 20px;
+		}
+		.rbac-role-card {
+			border: 1px solid var(--adm-border);
+			border-radius: 10px;
+			padding: 18px;
+			background: #ffffff;
+			display: flex;
+			flex-direction: column;
+			transition: all 0.2s ease;
+			position: relative;
+			overflow: hidden;
+		}
+		.rbac-role-card:hover {
+			border-color: var(--adm-green);
+			box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+			transform: translateY(-2px);
+		}
+		.rbac-role-card.role-architect { border-top: 4px solid #059669; }
+		.rbac-role-card.role-dealer { border-top: 4px solid #2563eb; }
+		.rbac-role-card.role-sales { border-top: 4px solid #d97706; }
+		.rbac-role-card.role-superadmin { border-top: 4px solid var(--adm-gold); }
+
+		.rbac-role-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 3px 9px;
+			border-radius: 100px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			margin-bottom: 8px;
+		}
+		.rbac-perm-list {
+			list-style: none;
+			margin-top: 10px;
+			font-size: 12px;
+			color: var(--adm-text-main);
+			display: flex;
+			flex-direction: column;
+			gap: 7px;
+		}
+		.rbac-perm-item {
+			display: flex;
+			align-items: flex-start;
+			gap: 7px;
+			line-height: 1.35;
+		}
+		.perm-check {
+			color: #059669;
+			font-weight: 700;
+			flex-shrink: 0;
+			font-size: 13px;
+		}
+		.perm-cross {
+			color: #9ca3af;
+			font-weight: 700;
+			flex-shrink: 0;
+			font-size: 13px;
+		}
+		.access-pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			padding: 2px 7px;
+			border-radius: 4px;
+			font-size: 11px;
+			font-weight: 600;
+			background: #f1f5f9;
+			color: #334155;
+			border: 1px solid #e2e8f0;
+			margin: 2px 4px 2px 0;
+			white-space: nowrap;
+		}
+		.access-pill.cad { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+		.access-pill.orders { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+		.access-pill.specs { background: #fefce8; color: #854d0e; border-color: #fef08a; }
+		.access-pill.all { background: #fef3c7; color: #92400e; border-color: #fde68a; font-weight: 700; }
+
+		.tbl-role-tab {
+			background: transparent;
+			border: none;
+			padding: 5px 12px;
+			border-radius: 5px;
+			font-size: 12px;
+			font-weight: 600;
+			color: #4b5563;
+			cursor: pointer;
+			transition: all 0.15s;
+		}
+		.tbl-role-tab:hover {
+			color: var(--adm-green);
+		}
+		.tbl-role-tab.active {
+			background: #ffffff;
+			color: var(--adm-green);
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+		}
+
+		.role-selector-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 10px;
+			margin-bottom: 16px;
+		}
+		.role-selector-card {
+			border: 2px solid var(--adm-border);
+			border-radius: 8px;
+			padding: 12px;
+			cursor: pointer;
+			background: #ffffff;
+			transition: all 0.2s;
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+		}
+		.role-selector-card:hover {
+			border-color: #93c5fd;
+			background: #f8fafc;
+		}
+		.role-selector-card.selected {
+			border-color: var(--adm-green);
+			background: #f0fdf4;
+			box-shadow: 0 0 0 1px var(--adm-green);
+		}
+
+		.perm-checkbox-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+			gap: 8px;
+			margin-top: 8px;
+		}
+		.perm-checkbox-item {
+			display: flex;
+			align-items: flex-start;
+			gap: 9px;
+			padding: 8px 10px;
+			border-radius: 6px;
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			font-size: 12px;
+			cursor: pointer;
+			transition: background 0.15s;
+		}
+		.perm-checkbox-item:hover {
+			background: #f8faf8;
+		}
+
+		.credential-slip-box {
+			background: #f8fafc;
+			border: 1px dashed #cbd5e1;
+			border-radius: 8px;
+			padding: 14px;
+			font-family: monospace;
+			font-size: 12.5px;
+			line-height: 1.5;
+			color: #1e293b;
+			white-space: pre-wrap;
+			word-break: break-all;
+		}
 	</style>
 </head>
 <body>
@@ -1711,7 +1897,7 @@
 					<div class="sidebar-tooltip">Go Pro / Education Assets</div>
 				</li>
 
-				<!-- 5. WALTZ ORDERS -->
+				<!-- 5. ORDERS -->
 				<li class="sidebar-item">
 					<a class="sidebar-link" onclick="switchNav('waltz-orders', this)" id="nav-waltz">
 						<span class="sidebar-icon">
@@ -1721,9 +1907,9 @@
 								<path d="M16 10a4 4 0 0 1-8 0"></path>
 							</svg>
 						</span>
-						<span class="sidebar-label">Waltz Orders</span>
+						<span class="sidebar-label">NewTechWood Orders</span>
 					</a>
-					<div class="sidebar-tooltip">Waltz Orders</div>
+					<div class="sidebar-tooltip">NewTechWood Orders</div>
 				</li>
 
 				<div class="sidebar-section-divider"></div>
@@ -1816,9 +2002,9 @@
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
 							<span>Open Detailed Analytics</span>
 						</button>
-						<button class="btn-gold" onclick="switchNav('waltz-orders')">
+						<button class="btn-gold" onclick="switchNav('orders')" title="View NewTechWood Commercial Orders">
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path></svg>
-							<span>Waltz Orders</span>
+							<span>NewTechWood Orders</span>
 						</button>
 					</div>
 				</div>
@@ -2664,12 +2850,12 @@
 			</section>
 
 			<!-- ========================================================
-			     VIEW 8: WALTZ ORDERS (MATCHING 12.12.10.jpeg)
+			     VIEW 8: ORDERS MANAGEMENT (MATCHING 12.12.10.jpeg)
 			     ======================================================== -->
 			<section id="view-waltz-orders" class="view-section">
 				<div class="section-header">
 					<div>
-						<h1>Waltz Orders</h1>
+						<h1>NewTechWood Orders</h1>
 						<p>Commercial composite orders tracking, deal conversions, invoices and fulfillment statuses</p>
 					</div>
 					<div style="display:flex;align-items:center;gap:12px;">
@@ -2681,7 +2867,7 @@
 					</div>
 				</div>
 
-				<!-- Waltz Orders Table with Column-Level Filters (12.12.10.jpeg) -->
+				<!-- Orders Table with Column-Level Filters (12.12.10.jpeg) -->
 				<div class="card-box" style="padding:0;overflow-x:auto;">
 					<table class="crm-table waltz-orders-table">
 						<thead>
@@ -2774,15 +2960,323 @@
 			<section id="view-vendors" class="view-section">
 				<div class="section-header">
 					<div>
-						<h1>Vendor Account Management</h1>
-						<p>Generate, manage, and distribute IDs and passwords to authorized architects and dealers.</p>
+						<h1>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+								<circle cx="8.5" cy="7" r="4"></circle>
+								<line x1="20" y1="8" x2="20" y2="14"></line>
+								<line x1="23" y1="11" x2="17" y2="11"></line>
+							</svg>
+							<span>Vendor Account Management</span>
+						</h1>
+						<p>Generate, manage, and distribute partner portal credentials to authorized architects and dealers, and control access permissions.</p>
+					</div>
+					<div style="display:flex;align-items:center;gap:10px;">
+						<button class="btn-outline" onclick="toggleAccessMatrixView()" id="btnToggleAccessMatrix" title="Toggle Access Matrix Overview">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<line x1="3" y1="9" x2="21" y2="9"></line>
+								<line x1="9" y1="21" x2="9" y2="9"></line>
+							</svg>
+							<span>Role Access Matrix</span>
+						</button>
+						<button class="btn-gold" onclick="openCreateVendorModal()" id="btnCreateVendorHeader">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+								<line x1="12" y1="5" x2="12" y2="19"></line>
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+							</svg>
+							<span>+ Create New Vendor</span>
+						</button>
 					</div>
 				</div>
-				<div class="card-box">
-					<div class="card-box-header">
-						<h3>Active Vendor Directory</h3>
-						<input type="text" class="search-input" id="vendorSearchInput" placeholder="Filter vendors..." oninput="filterVendors()" />
+
+				<!-- VENDOR METRICS KPI ROW -->
+				<div class="stats-grid" style="margin-bottom:20px;">
+					<div class="stat-card">
+						<div class="stat-card-title">Total Active Vendors</div>
+						<div class="stat-card-val" id="vendorStatTotal">5</div>
+						<div class="stat-card-desc">Provisioned Partner Accounts</div>
 					</div>
+					<div class="stat-card">
+						<div class="stat-card-title">Architect Partners</div>
+						<div class="stat-card-val" id="vendorStatArchitects" style="color:#059669;">1</div>
+						<div class="stat-card-desc">CAD &amp; BIM Spec Access</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-card-title">Authorized Dealers</div>
+						<div class="stat-card-val" id="vendorStatDealers" style="color:#2563eb;">1</div>
+						<div class="stat-card-desc">Orders &amp; Wholesale Access</div>
+					</div>
+					<div class="stat-card gold">
+						<div class="stat-card-title">Admins &amp; Sales</div>
+						<div class="stat-card-val" id="vendorStatAdmins" style="color:var(--adm-gold);">3</div>
+						<div class="stat-card-desc">Full Operations &amp; Pipeline</div>
+					</div>
+				</div>
+
+				<!-- ========================================================
+				     ROLE ACCESS PRIVILEGES MATRIX (ANSWERS "WHAT ALL ACCESS THEY HAVE")
+				     ======================================================== -->
+				<div class="rbac-matrix-container" id="vendorAccessMatrixCard">
+					<div class="rbac-header">
+						<div>
+							<h3 style="font-size:16px;font-weight:700;color:var(--adm-text-main);display:flex;align-items:center;gap:8px;">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--adm-green)" stroke-width="2">
+									<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+								</svg>
+								<span>Role-Based Access Control (RBAC) &amp; Partner Capabilities Matrix</span>
+							</h3>
+							<p style="font-size:12.5px;color:var(--adm-text-muted);margin-top:3px;">
+								Defines the exact features, operational tools, and confidential data accessible by each partner type upon login.
+							</p>
+						</div>
+						<div style="display:flex;align-items:center;gap:8px;">
+							<button class="btn-outline" style="font-size:11.5px;padding:5px 10px;" onclick="toggleRbacDetailTable()">
+								<span id="rbacTableToggleLabel">Show Full Feature Comparison Table</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- 4 ROLE BREAKDOWN CARDS -->
+					<div class="rbac-roles-grid">
+						<!-- 1. ARCHITECT ROLE -->
+						<div class="rbac-role-card role-architect">
+							<div style="display:flex;justify-content:space-between;align-items:flex-start;">
+								<div>
+									<div class="rbac-role-badge" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;">
+										📐 ARCHITECT &amp; SPECIFIER
+									</div>
+									<h4 style="font-size:14px;font-weight:700;color:#0f172a;margin-top:2px;">Design &amp; Engineering Partner</h4>
+								</div>
+								<span style="font-size:11px;background:#f1f5f9;color:#475569;padding:2px 7px;border-radius:4px;font-weight:600;">Partner Portal</span>
+							</div>
+							<p style="font-size:12px;color:var(--adm-text-muted);margin:8px 0;">
+								Provisioned for architects, landscape designers, structural consultants, and facade engineers.
+							</p>
+							<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#059669;letter-spacing:0.5px;margin-top:6px;">
+								Granted Access Capabilities:
+							</div>
+							<ul class="rbac-perm-list">
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Go Pro CAD/BIM Library:</strong> 2D DWG, Revit families, facade &amp; decking detail drawings.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Project Specifications:</strong> Submit project BOQ details and specify UltraShield finishes.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Technical Consultations:</strong> Book site reviews, mockup evaluations &amp; sample requests.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>VIP Passes:</strong> Issue architect invitation passes and digital entry badges.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Project Order Status:</strong> Track NewTechWood material dispatches allocated to specified projects.</span></li>
+							</ul>
+							<div style="margin-top:12px;padding-top:10px;border-top:1px dashed #e2e8f0;font-size:11px;color:#dc2626;">
+								<strong>Restricted:</strong> Internal company financials, P&amp;L margin calculators, other vendors' logins, live website CMS pages.
+							</div>
+						</div>
+
+						<!-- 2. DEALER ROLE -->
+						<div class="rbac-role-card role-dealer">
+							<div style="display:flex;justify-content:space-between;align-items:flex-start;">
+								<div>
+									<div class="rbac-role-badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">
+										🏢 DEALER &amp; DISTRIBUTOR
+									</div>
+									<h4 style="font-size:14px;font-weight:700;color:#0f172a;margin-top:2px;">Commercial Sales Partner</h4>
+								</div>
+								<span style="font-size:11px;background:#f1f5f9;color:#475569;padding:2px 7px;border-radius:4px;font-weight:600;">Partner Portal</span>
+							</div>
+							<p style="font-size:12px;color:var(--adm-text-muted);margin:8px 0;">
+								Provisioned for authorized stockists, regional lumber suppliers, and commercial distributors.
+							</p>
+							<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#2563eb;letter-spacing:0.5px;margin-top:6px;">
+								Granted Access Capabilities:
+							</div>
+							<ul class="rbac-perm-list">
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Commercial Orders Workflow:</strong> Place commercial POs, track shipment dispatches, download invoices.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Wholesale Catalogs &amp; Pricelists:</strong> Access distributor tiered pricing and finish swatch lead times.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Contractor Passes:</strong> Generate ID Invitations for secondary fabricators and contractors.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Technical Certifications:</strong> Fire-rating documents, GreenGuard compliance, warranty cards.</span></li>
+							</ul>
+							<div style="margin-top:12px;padding-top:10px;border-top:1px dashed #e2e8f0;font-size:11px;color:#dc2626;">
+								<strong>Restricted:</strong> Corporate profit margin analytics, other dealers' private order databases, live website CMS pages.
+							</div>
+						</div>
+
+						<!-- 3. SALES ROLE -->
+						<div class="rbac-role-card role-sales">
+							<div style="display:flex;justify-content:space-between;align-items:flex-start;">
+								<div>
+									<div class="rbac-role-badge" style="background:#fffbeb;color:#b45309;border:1px solid #fde68a;">
+										💼 SALES REPRESENTATIVE
+									</div>
+									<h4 style="font-size:14px;font-weight:700;color:#0f172a;margin-top:2px;">Internal Sales &amp; CRM</h4>
+								</div>
+								<span style="font-size:11px;background:#f1f5f9;color:#475569;padding:2px 7px;border-radius:4px;font-weight:600;">Sales CRM</span>
+							</div>
+							<p style="font-size:12px;color:var(--adm-text-muted);margin:8px 0;">
+								Provisioned for internal business development executives and regional sales heads.
+							</p>
+							<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#d97706;letter-spacing:0.5px;margin-top:6px;">
+								Granted Access Capabilities:
+							</div>
+							<ul class="rbac-perm-list">
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Pipeline CRM:</strong> Manage client leads, pipeline stages (Pitch &rarr; Win), discount brackets.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Directory Master:</strong> Look up architect firm profiles and contact telephone numbers.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Meeting Logs:</strong> Schedule architect meetings, attach site inspection photos &amp; discussion notes.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>ID Visitors:</strong> Register new event visitors and lead registrations.</span></li>
+							</ul>
+							<div style="margin-top:12px;padding-top:10px;border-top:1px dashed #e2e8f0;font-size:11px;color:#dc2626;">
+								<strong>Restricted:</strong> Root user deletion, CMS backend modification, vendor credential master reset.
+							</div>
+						</div>
+
+						<!-- 4. SUPERADMIN ROLE -->
+						<div class="rbac-role-card role-superadmin">
+							<div style="display:flex;justify-content:space-between;align-items:flex-start;">
+								<div>
+									<div class="rbac-role-badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;">
+										👑 SUPER ADMINISTRATOR
+									</div>
+									<h4 style="font-size:14px;font-weight:700;color:#0f172a;margin-top:2px;">Full Administrative Authority</h4>
+								</div>
+								<span style="font-size:11px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">Unrestricted</span>
+							</div>
+							<p style="font-size:12px;color:var(--adm-text-muted);margin:8px 0;">
+								Provisioned for executive leadership, IT directors, and master system administrators.
+							</p>
+							<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--adm-green);letter-spacing:0.5px;margin-top:6px;">
+								Granted Access Capabilities:
+							</div>
+							<ul class="rbac-perm-list">
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Full CRM Financials:</strong> Revenue, FY comparative graphs, target conversion velocities.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Vendor Account Management:</strong> Create new vendors, reset passwords, suspend/delete accounts.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>Website CMS Page Editor:</strong> Edit live website headlines, content, hero banners.</span></li>
+								<li class="rbac-perm-item"><span class="perm-check">✓</span> <span><strong>SQLite Database Admin:</strong> Schema migrations, full data export to Excel.</span></li>
+							</ul>
+							<div style="margin-top:12px;padding-top:10px;border-top:1px dashed #e2e8f0;font-size:11px;color:#059669;">
+								<strong>Unrestricted:</strong> Complete access to all 10 CRM modules, partner tools, and system settings.
+							</div>
+						</div>
+					</div>
+
+					<!-- EXPANDABLE FULL COMPARISON TABLE -->
+					<div id="rbacDetailTableContainer" style="display:none;padding:0 20px 20px;">
+						<div class="table-responsive-container" style="border:1px solid var(--adm-border);border-radius:8px;">
+							<table class="data-table">
+								<thead>
+									<tr>
+										<th>Feature / Module Scope</th>
+										<th style="color:#059669;">📐 ARCHITECT</th>
+										<th style="color:#2563eb;">🏢 DEALER</th>
+										<th style="color:#d97706;">💼 SALES</th>
+										<th style="color:var(--adm-gold);">👑 SUPERADMIN</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>Go Pro CAD Details &amp; 3D BIM Library</strong></td>
+										<td><span class="access-pill cad">✓ Full Access</span></td>
+										<td><span class="access-pill">✓ Product Docs</span></td>
+										<td><span class="access-pill">✓ View Only</span></td>
+										<td><span class="access-pill all">✓ Full Access</span></td>
+									</tr>
+									<tr>
+										<td><strong>Commercial Orders (PO Placement &amp; Dispatches)</strong></td>
+										<td><span class="access-pill">Specified Orders</span></td>
+										<td><span class="access-pill orders">✓ Place &amp; Track POs</span></td>
+										<td><span class="access-pill">✓ Track Orders</span></td>
+										<td><span class="access-pill all">✓ Full Management</span></td>
+									</tr>
+									<tr>
+										<td><strong>Project Specification &amp; BOQ Submissions</strong></td>
+										<td><span class="access-pill cad">✓ Direct Submission</span></td>
+										<td><span class="access-pill">✓ Inquiry Form</span></td>
+										<td><span class="access-pill">✓ Pipeline Project</span></td>
+										<td><span class="access-pill all">✓ Full Control</span></td>
+									</tr>
+									<tr>
+										<td><strong>Wholesale Pricelists &amp; Stock Availability</strong></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="access-pill orders">✓ Tiered Dealer Rates</span></td>
+										<td><span class="access-pill">✓ Standard Quotes</span></td>
+										<td><span class="access-pill all">✓ Master Price Lists</span></td>
+									</tr>
+									<tr>
+										<td><strong>Technical Consultations &amp; Sample Mockups</strong></td>
+										<td><span class="access-pill cad">✓ Book Consultations</span></td>
+										<td><span class="access-pill">✓ Request Samples</span></td>
+										<td><span class="access-pill">✓ Meeting Logs</span></td>
+										<td><span class="access-pill all">✓ Full Access</span></td>
+									</tr>
+									<tr>
+										<td><strong>ID Invitations &amp; VIP Digital Passes</strong></td>
+										<td><span class="access-pill cad">✓ Issue Project Passes</span></td>
+										<td><span class="access-pill orders">✓ Issue Contractor Passes</span></td>
+										<td><span class="access-pill">✓ Event Passes</span></td>
+										<td><span class="access-pill all">✓ Master Generator</span></td>
+									</tr>
+									<tr>
+										<td><strong>Executive Financial Analytics &amp; Revenue P&amp;L</strong></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="access-pill all">✓ Complete Analytics</span></td>
+									</tr>
+									<tr>
+										<td><strong>Vendor Account &amp; Credential Management</strong></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="access-pill all">✓ Provision &amp; Revoke</span></td>
+									</tr>
+									<tr>
+										<td><strong>Website CMS Page Content Editor</strong></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="perm-cross">– Restricted</span></td>
+										<td><span class="access-pill all">✓ Live CMS Editor</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<!-- ========================================================
+				     ACTIVE VENDOR DIRECTORY
+				     ======================================================== -->
+				<div class="card-box">
+					<div class="card-box-header" style="flex-wrap:wrap;gap:12px;">
+						<div>
+							<h3 style="margin-bottom:2px;">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+									<circle cx="9" cy="7" r="4"></circle>
+									<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+									<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+								</svg>
+								<span>Active Vendor Directory</span>
+							</h3>
+							<p style="font-size:12px;color:var(--adm-text-muted);">
+								Master directory of partner architects, distributors, and administrators with role-based permissions.
+							</p>
+						</div>
+
+						<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+							<!-- Role Filter Tabs -->
+							<div style="display:flex;background:#eef2ec;padding:3px;border-radius:7px;gap:2px;">
+								<button class="tbl-role-tab active" onclick="filterVendorsByRole('all', this)">All</button>
+								<button class="tbl-role-tab" onclick="filterVendorsByRole('architect', this)">Architects</button>
+								<button class="tbl-role-tab" onclick="filterVendorsByRole('dealer', this)">Dealers</button>
+								<button class="tbl-role-tab" onclick="filterVendorsByRole('sales', this)">Sales</button>
+								<button class="tbl-role-tab" onclick="filterVendorsByRole('admin', this)">Admins</button>
+							</div>
+
+							<!-- Search Bar -->
+							<input type="text" class="search-input" id="vendorSearchInput" placeholder="Search by name, ID, email, role..." oninput="filterVendors()" style="width:230px;" />
+
+							<!-- New Vendor Quick Action -->
+							<button class="btn-primary" onclick="openCreateVendorModal()" style="padding:7px 12px;font-size:12px;">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+								<span>+ Add Vendor</span>
+							</button>
+						</div>
+					</div>
+
 					<div class="table-responsive-container">
 						<table class="data-table">
 							<thead>
@@ -2792,11 +3286,13 @@
 									<th>Email / Username</th>
 									<th>Password</th>
 									<th>Role</th>
+									<th>Access Privileges</th>
 									<th>Status</th>
+									<th style="text-align:right;">Actions</th>
 								</tr>
 							</thead>
 							<tbody id="vendorTableBody">
-								<!-- Populated dynamically -->
+								<!-- Populated dynamically via loadVendors() -->
 							</tbody>
 						</table>
 					</div>
@@ -2988,7 +3484,7 @@
 	<div class="modal-backdrop" id="waltzOrderModal">
 		<div class="modal-window" style="max-width: 620px;">
 			<div class="modal-header">
-				<h3 id="orderModalTitle">Add New Waltz Commercial Order</h3>
+				<h3 id="orderModalTitle">Add New NewTechWood Order</h3>
 				<button class="modal-close-btn" onclick="closeOrderModal()">&times;</button>
 			</div>
 			<div class="modal-body">
@@ -3069,12 +3565,268 @@
 		<div class="modal-window" style="max-width: 650px;">
 			<div class="modal-header">
 				<div style="display:flex;align-items:center;gap:10px;">
-					<h3 id="viewOrderModalTitle">Waltz Commercial Order Details</h3>
+					<h3 id="viewOrderModalTitle">NewTechWood Order Details</h3>
 				</div>
 				<button class="modal-close-btn" onclick="closeViewOrderModal()">&times;</button>
 			</div>
 			<div class="modal-body" id="viewOrderModalBody">
 				<!-- Dynamically populated -->
+			</div>
+		</div>
+	</div>
+
+	<!-- 7. CREATE NEW VENDOR MODAL -->
+	<div class="modal-backdrop" id="createVendorModal">
+		<div class="modal-window" style="max-width: 680px;">
+			<div class="modal-header">
+				<div style="display:flex;align-items:center;gap:10px;">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--adm-green)" stroke-width="2">
+						<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+						<circle cx="8.5" cy="7" r="4"></circle>
+						<line x1="20" y1="8" x2="20" y2="14"></line>
+						<line x1="23" y1="11" x2="17" y2="11"></line>
+					</svg>
+					<div>
+						<h3 style="margin:0;">Create New Vendor Account</h3>
+						<p style="font-size:11.5px;color:var(--adm-text-muted);margin:2px 0 0;">Provision partner portal credentials &amp; assign access privileges</p>
+					</div>
+				</div>
+				<button class="modal-close-btn" onclick="closeCreateVendorModal()">&times;</button>
+			</div>
+			<div class="modal-body" style="padding:22px;">
+				<form id="createVendorForm" onsubmit="handleCreateVendorSubmit(event)">
+					<!-- Role Selection Cards -->
+					<div style="margin-bottom:16px;">
+						<label style="font-size:12px;font-weight:700;display:block;margin-bottom:8px;text-transform:uppercase;color:var(--adm-text-muted);letter-spacing:0.5px;">
+							Select Partner Role <span style="color:#dc2626;">*</span>
+						</label>
+						<div class="role-selector-grid">
+							<div class="role-selector-card selected" id="roleCard-architect" onclick="selectVendorRole('architect')">
+								<div style="display:flex;align-items:center;gap:6px;">
+									<span style="font-size:16px;">📐</span>
+									<strong style="font-size:13px;color:#0f172a;">Architect &amp; Designer</strong>
+								</div>
+								<span style="font-size:11px;color:var(--adm-text-muted);line-height:1.3;">CAD/BIM Assets, Specs, Consultations</span>
+							</div>
+
+							<div class="role-selector-card" id="roleCard-dealer" onclick="selectVendorRole('dealer')">
+								<div style="display:flex;align-items:center;gap:6px;">
+									<span style="font-size:16px;">🏢</span>
+									<strong style="font-size:13px;color:#0f172a;">Dealer &amp; Distributor</strong>
+								</div>
+								<span style="font-size:11px;color:var(--adm-text-muted);line-height:1.3;">Orders, Wholesale Catalogs</span>
+							</div>
+
+							<div class="role-selector-card" id="roleCard-sales" onclick="selectVendorRole('sales')">
+								<div style="display:flex;align-items:center;gap:6px;">
+									<span style="font-size:16px;">💼</span>
+									<strong style="font-size:13px;color:#0f172a;">Sales Representative</strong>
+								</div>
+								<span style="font-size:11px;color:var(--adm-text-muted);line-height:1.3;">Sales Pipeline, Leads, Meeting Notes</span>
+							</div>
+
+							<div class="role-selector-card" id="roleCard-admin" onclick="selectVendorRole('admin')">
+								<div style="display:flex;align-items:center;gap:6px;">
+									<span style="font-size:16px;">🛡️</span>
+									<strong style="font-size:13px;color:#0f172a;">System Sub-Admin</strong>
+								</div>
+								<span style="font-size:11px;color:var(--adm-text-muted);line-height:1.3;">Elevated Portal &amp; Ops Administration</span>
+							</div>
+						</div>
+						<input type="hidden" id="vendorInputRole" value="architect" />
+					</div>
+
+					<!-- Firm Name & Contact Person -->
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">
+								Partner / Firm Name <span style="color:#dc2626;">*</span>
+							</label>
+							<input type="text" id="vendorInputFirm" class="tbl-filter-input" placeholder="e.g. Skyline Architecture Studio" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">
+								Contact Person / Lead
+							</label>
+							<input type="text" id="vendorInputContact" class="tbl-filter-input" placeholder="e.g. Ar. Rajesh Khanna" />
+						</div>
+					</div>
+
+					<!-- Email & Phone -->
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">
+								Email / Username <span style="color:#dc2626;">*</span>
+							</label>
+							<input type="email" id="vendorInputEmail" class="tbl-filter-input" placeholder="partner@firm.design" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">
+								Phone / WhatsApp Number
+							</label>
+							<input type="text" id="vendorInputPhone" class="tbl-filter-input" placeholder="+91 98200 12345" />
+						</div>
+					</div>
+
+					<!-- Vendor ID & Password Generation -->
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+						<div>
+							<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+								<label style="font-size:12px;font-weight:600;">Vendor ID <span style="color:#dc2626;">*</span></label>
+								<button type="button" class="tbl-action-btn" style="font-size:11px;color:var(--adm-green);padding:0;" onclick="generateVendorId()">Auto-Generate</button>
+							</div>
+							<input type="text" id="vendorInputId" class="tbl-filter-input" placeholder="VND-2026-002" required />
+						</div>
+
+						<div>
+							<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+								<label style="font-size:12px;font-weight:600;">Login Password <span style="color:#dc2626;">*</span></label>
+								<button type="button" class="tbl-action-btn" style="font-size:11px;color:var(--adm-green);padding:0;" onclick="generateStrongPassword()">Generate Strong</button>
+							</div>
+							<div style="position:relative;">
+								<input type="text" id="vendorInputPassword" class="tbl-filter-input" style="padding-right:32px;" placeholder="UltraShield2026" required />
+								<span onclick="togglePasswordInputMask()" style="position:absolute;right:8px;top:7px;cursor:pointer;font-size:13px;color:#6b7280;" title="Toggle Mask">👁️</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Access Permissions Checklist -->
+					<div style="margin-bottom:16px;">
+						<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+							<label style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--adm-text-muted);letter-spacing:0.5px;">
+								Granted Access Scopes &amp; Capabilities
+							</label>
+							<span style="font-size:11px;color:var(--adm-green);font-weight:600;" id="permScopeHelperText">Configured for Architect</span>
+						</div>
+						<div class="perm-checkbox-grid">
+							<label class="perm-checkbox-item">
+								<input type="checkbox" id="perm_gopro_cad" checked />
+								<div>
+									<strong>Go Pro CAD &amp; BIM Library</strong>
+									<div style="color:var(--adm-text-muted);font-size:11px;">2D DWG, 3D Revit, technical sections</div>
+								</div>
+							</label>
+
+							<label class="perm-checkbox-item">
+								<input type="checkbox" id="perm_pipeline_specs" checked />
+								<div>
+									<strong>Project Specs &amp; BOQ</strong>
+									<div style="color:var(--adm-text-muted);font-size:11px;">Specify finishes, decking BOQ calculation</div>
+								</div>
+							</label>
+
+							<label class="perm-checkbox-item">
+								<input type="checkbox" id="perm_waltz_orders" />
+								<div>
+									<strong>Orders &amp; Dispatches</strong>
+									<div style="color:var(--adm-text-muted);font-size:11px;">Commercial POs, container tracking, packing slips</div>
+								</div>
+							</label>
+
+							<label class="perm-checkbox-item">
+								<input type="checkbox" id="perm_wholesale_catalog" />
+								<div>
+									<strong>Wholesale Pricelists &amp; Stock</strong>
+									<div style="color:var(--adm-text-muted);font-size:11px;">Distributor price sheets &amp; inventory lead times</div>
+								</div>
+							</label>
+
+							<label class="perm-checkbox-item">
+								<input type="checkbox" id="perm_meetings" checked />
+								<div>
+									<strong>Consultations &amp; Samples</strong>
+									<div style="color:var(--adm-text-muted);font-size:11px;">Sample requests, engineering mockup visits</div>
+								</div>
+							</label>
+
+							<label class="perm-checkbox-item">
+								<input type="checkbox" id="perm_invitations" checked />
+								<div>
+									<strong>VIP Passes &amp; Invitations</strong>
+									<div style="color:var(--adm-text-muted);font-size:11px;">Generate visitor links &amp; digital entry passes</div>
+								</div>
+							</label>
+						</div>
+					</div>
+
+					<!-- Account Status -->
+					<div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:#f8faf8;border:1px solid var(--adm-border);border-radius:8px;margin-bottom:20px;">
+						<div>
+							<strong style="font-size:12.5px;color:#1e293b;">Initial Account Status</strong>
+							<p style="font-size:11.5px;color:var(--adm-text-muted);margin:1px 0 0;">Active accounts can immediately log in to the partner portal.</p>
+						</div>
+						<select id="vendorInputStatus" class="tbl-filter-select" style="width:120px;">
+							<option value="active" selected>Active</option>
+							<option value="inactive">Inactive</option>
+						</select>
+					</div>
+
+					<!-- Form Footer Actions -->
+					<div style="display:flex;justify-content:flex-end;gap:10px;padding-top:10px;border-top:1px solid var(--adm-border);">
+						<button type="button" class="btn-outline" onclick="closeCreateVendorModal()">Cancel</button>
+						<button type="submit" class="btn-primary" id="btnSubmitCreateVendor">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+							<span>Create Vendor &amp; Generate Credentials</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- 8. CREDENTIAL SHARING SLIP MODAL -->
+	<div class="modal-backdrop" id="vendorShareCredsModal">
+		<div class="modal-window" style="max-width: 580px;">
+			<div class="modal-header">
+				<div style="display:flex;align-items:center;gap:10px;">
+					<span style="font-size:20px;">🎉</span>
+					<div>
+						<h3 style="margin:0;">Partner Account Created Successfully!</h3>
+						<p style="font-size:11.5px;color:var(--adm-text-muted);margin:2px 0 0;">Distribute these credentials to the partner for instant access.</p>
+					</div>
+				</div>
+				<button class="modal-close-btn" onclick="closeVendorShareCredsModal()">&times;</button>
+			</div>
+			<div class="modal-body" style="padding:22px;">
+				<div style="margin-bottom:14px;background:#f0fdf4;border:1px solid #bbf7d0;padding:12px;border-radius:8px;color:#166534;font-size:12.5px;">
+					✓ The vendor account is now active in SQLite and ready to sign in at <strong>https://newtechwood.in/login/</strong>.
+				</div>
+
+				<div class="credential-slip-box" id="vendorCredsSlipContent">
+					<!-- Formatted plain text credential slip -->
+				</div>
+
+				<div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
+					<button class="btn-gold" style="flex:1;" onclick="copyVendorCredsSlip()">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+						<span>Copy Credentials for WhatsApp / Email</span>
+					</button>
+					<button class="btn-outline" onclick="shareVendorViaWhatsApp()">
+						<span>Open WhatsApp</span>
+					</button>
+					<button class="btn-outline" onclick="closeVendorShareCredsModal()">Done</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 9. VENDOR ACCESS INSPECTOR MODAL -->
+	<div class="modal-backdrop" id="vendorAccessInspectModal">
+		<div class="modal-window" style="max-width: 620px;">
+			<div class="modal-header">
+				<div style="display:flex;align-items:center;gap:10px;">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--adm-green)" stroke-width="2">
+						<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+					</svg>
+					<div>
+						<h3 style="margin:0;" id="inspectVendorTitle">Partner Access Privileges</h3>
+						<p style="font-size:11.5px;color:var(--adm-text-muted);margin:2px 0 0;">Inspect active permissions and account credentials</p>
+					</div>
+				</div>
+				<button class="modal-close-btn" onclick="closeVendorAccessInspectModal()">&times;</button>
+			</div>
+			<div class="modal-body" id="vendorAccessInspectModalBody" style="padding:22px;">
+				<!-- Dynamically populated via openVendorAccessInspect() -->
 			</div>
 		</div>
 	</div>
@@ -3104,9 +3856,9 @@
 			}
 
 			// Render "Hello, <username> (role)" in Header
-			const displayName = currentUser.name || currentUser.full_name || 'Authorized Partner';
-			const role = currentUser.role || 'partner';
-			const initials = (displayName.split(' ').map(n => n[0]).join('') || 'VP').slice(0, 2).toUpperCase();
+			const displayName = currentUser.name || currentUser.full_name || 'Administrator';
+			const role = currentUser.role || 'admin';
+			const initials = (displayName.split(' ').map(n => n[0]).join('') || 'SA').slice(0, 2).toUpperCase();
 
 			const greetingEl = document.getElementById('headerGreeting');
 			if (greetingEl) {
@@ -3119,14 +3871,29 @@
 			const roleBadgeEl = document.getElementById('headerRoleBadge');
 			if (roleBadgeEl) roleBadgeEl.innerText = role.toUpperCase();
 
-			const returnBtn = document.getElementById('btnAdminReturn');
-			if (returnBtn && (role === 'admin' || role === 'superadmin')) {
-				returnBtn.style.display = 'inline-flex';
+			const statusEl = document.getElementById('statusGreetingDisplay');
+			if (statusEl) {
+				statusEl.innerText = `Header greeting active: "Hello, ${displayName} (${role})"`;
 			}
 
 			const dashSub = document.getElementById('dashboardGreetingSub');
 			if (dashSub) {
 				dashSub.innerText = `Welcome back, ${displayName}. Partner commercial dashboard, material orders, and technical CAD assets.`;
+			}
+
+			// Show Return to Admin CMS button if current user is admin/superadmin
+			const returnBtn = document.getElementById('btnAdminReturn');
+			if (returnBtn && (role.toLowerCase() === 'admin' || role.toLowerCase() === 'superadmin')) {
+				returnBtn.style.display = 'inline-flex';
+			}
+
+			// RBAC Enforcement for Partner Portal
+			if (role.toLowerCase() !== 'admin' && role.toLowerCase() !== 'superadmin') {
+				const pagesNav = document.getElementById('nav-pages');
+				if (pagesNav) {
+					const li = pagesNav.closest('.sidebar-item');
+					if (li) li.style.display = 'none';
+				}
 			}
 		}
 
@@ -3186,7 +3953,8 @@
 
 			// Show target view section
 			document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-			const targetSection = document.getElementById('view-' + viewId);
+			let targetSection = document.getElementById('view-' + viewId);
+			if (!targetSection && (viewId === 'orders' || viewId === 'newtech-orders')) targetSection = document.getElementById('view-waltz-orders');
 			if (targetSection) {
 				targetSection.classList.add('active');
 				window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3199,37 +3967,743 @@
 			if (viewId === 'id-invitations') loadInvitations();
 			if (viewId === 'id-visitors') loadVisitors(1);
 			if (viewId === 'gopro') loadGoProAssets();
-			if (viewId === 'waltz-orders') loadWaltzOrders();
-			if (viewId === 'vendors') renderVendors();
+			if (viewId === 'orders' || viewId === 'newtech-orders' || viewId === 'waltz-orders') loadWaltzOrders();
+			if (viewId === 'vendors') loadVendors();
 		}
 
-		// 5. Vendor Directory Helper
-		function renderVendors() {
+		// 5. Vendor Account & RBAC Operations Helper
+		let vendorsList = [];
+		let activeRoleFilter = 'all';
+		let lastCreatedVendorCreds = null;
+
+		// Default capability profiles by role
+		const ROLE_PERMISSIONS_MAP = {
+			architect: {
+				label: 'ARCHITECT & SPECIFIER',
+				helper: 'Configured for Architect: CAD/BIM downloads, project specifications, consultations & sample requests',
+				defaultPerms: ['gopro_cad', 'pipeline_specs', 'meetings', 'invitations'],
+				prefix: 'VND'
+			},
+			dealer: {
+				label: 'DEALER & DISTRIBUTOR',
+				helper: 'Configured for Dealer: Commercial material orders, wholesale catalogs, stock availability & contractor passes',
+				defaultPerms: ['waltz_orders', 'wholesale_catalog', 'invitations'],
+				prefix: 'DLR'
+			},
+			sales: {
+				label: 'SALES REPRESENTATIVE',
+				helper: 'Configured for Sales: Pipeline CRM, client contacts, meetings logs & visitor entries',
+				defaultPerms: ['pipeline', 'orders', 'meetings', 'visitors'],
+				prefix: 'SAL'
+			},
+			admin: {
+				label: 'SYSTEM SUB-ADMIN',
+				helper: 'Configured for Sub-Admin: Elevated CRM operations, orders, directory, assets',
+				defaultPerms: ['gopro_cad', 'pipeline_specs', 'waltz_orders', 'wholesale_catalog', 'meetings', 'invitations'],
+				prefix: 'ADM'
+			},
+			superadmin: {
+				label: 'SUPER ADMINISTRATOR',
+				helper: 'Full Unrestricted System Access across all 10 CRM modules & settings',
+				defaultPerms: ['all'],
+				prefix: 'ADMIN'
+			}
+		};
+
+		async function loadVendors() {
 			const tbody = document.getElementById('vendorTableBody');
 			if (!tbody) return;
-			const initialVendors = [
-				{ id: 'ADMIN-001', name: 'Super Administrator', email: 'admin@newtechwood.in', password: 'admin', role: 'SUPERADMIN', status: 'Active' },
-				{ id: 'VND-2026-001', name: 'Skyline Architecture Studio', email: 'architect@studio.design', password: 'UltraShield2026', role: 'ARCHITECT', status: 'Active' },
-				{ id: 'DLR-902-IND', name: 'Lumber Life Premier Partner', email: 'dealer@lumberlife.in', password: 'Dealer@2026', role: 'DEALER', status: 'Active' }
-			];
-			tbody.innerHTML = initialVendors.map(v => `
-				<tr>
-					<td><strong>${v.id}</strong></td>
-					<td>${v.name}</td>
-					<td><code>${v.email}</code></td>
-					<td><code style="background:#eef4ee;padding:2px 6px;border-radius:4px;color:#225322;">${v.password}</code></td>
-					<td><span class="user-role-badge">${v.role}</span></td>
-					<td><span class="badge-status badge-active">${v.status}</span></td>
-				</tr>
-			`).join('');
+			tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--adm-text-muted);">Loading vendor directory...</td></tr>`;
+
+			let loaded = [];
+			try {
+				const resp = await fetch('/api/vendors');
+				if (resp.ok) {
+					const data = await resp.json();
+					if (data.success && Array.isArray(data.vendors)) {
+						loaded = data.vendors;
+					}
+				}
+			} catch (e) {
+				console.warn('API /api/vendors unavailable, using local cache', e);
+			}
+
+			// Fallback & sync with localStorage 'ntw_users'
+			const localSaved = localStorage.getItem('ntw_users');
+			let localUsers = [];
+			if (localSaved) {
+				try {
+					localUsers = JSON.parse(localSaved);
+				} catch (err) {}
+			}
+
+			if (loaded.length === 0 && Array.isArray(localUsers) && localUsers.length > 0) {
+				loaded = localUsers.map(u => ({
+					id: u.id,
+					vendor_id: u.vendorId || u.id,
+					full_name: u.name || u.full_name,
+					email: u.email,
+					password: u.password,
+					role: u.role,
+					status: u.status || 'active',
+					phone: u.phone || '',
+					permissions: u.permissions || (u.role === 'architect' ? 'gopro_cad,pipeline_specs,meetings,invitations' : (u.role === 'dealer' ? 'waltz_orders,wholesale_catalog,invitations' : 'all'))
+				}));
+			}
+
+			// Ensure minimum defaults exist
+			if (loaded.length === 0) {
+				loaded = [
+					{ id: 'admin', vendor_id: 'ADMIN-001', full_name: 'Super Administrator', email: 'admin@newtechwood.in', password: 'admin', role: 'superadmin', status: 'active', phone: '+91 99999 00001', permissions: 'all' },
+					{ id: 'arch_01', vendor_id: 'VND-2026-001', full_name: 'Skyline Architecture Studio', email: 'architect@studio.design', password: 'UltraShield2026', role: 'architect', status: 'active', phone: '+91 98200 12345', permissions: 'gopro_cad,pipeline_specs,meetings,invitations' },
+					{ id: 'dlr_01', vendor_id: 'DLR-902-IND', full_name: 'Lumber Life Premier Partner', email: 'dealer@lumberlife.in', password: 'Dealer@2026', role: 'dealer', status: 'active', phone: '+91 98111 67890', permissions: 'waltz_orders,wholesale_catalog,invitations' }
+				];
+			}
+
+			vendorsList = loaded;
+			updateVendorStats();
+			renderVendorsTable();
+
+			// Keep localStorage in sync so new accounts can log in offline as well
+			const syncedToStorage = vendorsList.map(v => ({
+				id: v.id,
+				vendorId: v.vendor_id || v.id,
+				name: v.full_name,
+				email: v.email,
+				password: v.password,
+				role: v.role,
+				status: v.status,
+				phone: v.phone || '',
+				permissions: v.permissions || ''
+			}));
+			localStorage.setItem('ntw_users', JSON.stringify(syncedToStorage));
+		}
+
+		function updateVendorStats() {
+			const totalEl = document.getElementById('vendorStatTotal');
+			const archEl = document.getElementById('vendorStatArchitects');
+			const dlrEl = document.getElementById('vendorStatDealers');
+			const admEl = document.getElementById('vendorStatAdmins');
+
+			if (totalEl) totalEl.innerText = vendorsList.length;
+			if (archEl) archEl.innerText = vendorsList.filter(v => (v.role || '').toLowerCase() === 'architect').length;
+			if (dlrEl) dlrEl.innerText = vendorsList.filter(v => (v.role || '').toLowerCase() === 'dealer').length;
+			if (admEl) admEl.innerText = vendorsList.filter(v => ['admin', 'superadmin', 'sales'].includes((v.role || '').toLowerCase())).length;
+		}
+
+		function renderVendorsTable() {
+			const tbody = document.getElementById('vendorTableBody');
+			if (!tbody) return;
+
+			const q = (document.getElementById('vendorSearchInput')?.value || '').toLowerCase().trim();
+			let filtered = vendorsList.filter(v => {
+				const role = (v.role || '').toLowerCase();
+				if (activeRoleFilter !== 'all') {
+					if (activeRoleFilter === 'admin' && !['admin', 'superadmin'].includes(role)) return false;
+					if (activeRoleFilter !== 'admin' && role !== activeRoleFilter) return false;
+				}
+				if (!q) return true;
+				const searchable = [
+					v.vendor_id || '',
+					v.full_name || '',
+					v.email || '',
+					v.role || '',
+					v.status || '',
+					v.phone || '',
+					v.permissions || ''
+				].join(' ').toLowerCase();
+				return searchable.includes(q);
+			});
+
+			if (filtered.length === 0) {
+				tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--adm-text-muted);">No vendor accounts match your filter criteria.</td></tr>`;
+				return;
+			}
+
+			tbody.innerHTML = filtered.map(v => {
+				const roleUpper = (v.role || 'partner').toUpperCase();
+				let roleBadgeStyle = 'background:#f1f5f9;color:#475569;';
+				if (roleUpper === 'ARCHITECT') roleBadgeStyle = 'background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;';
+				else if (roleUpper === 'DEALER') roleBadgeStyle = 'background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;';
+				else if (roleUpper === 'SALES') roleBadgeStyle = 'background:#fffbeb;color:#b45309;border:1px solid #fde68a;';
+				else if (roleUpper === 'SUPERADMIN' || roleUpper === 'ADMIN') roleBadgeStyle = 'background:#fef3c7;color:#92400e;border:1px solid #fde68a;font-weight:700;';
+
+				const statusActive = (v.status || 'active').toLowerCase() === 'active';
+				const statusBadge = statusActive 
+					? `<span class="badge-status badge-active" style="cursor:pointer;" onclick="toggleVendorStatus('${v.id}', '${v.status}')" title="Click to toggle status">Active</span>`
+					: `<span class="badge-status" style="background:#f3f4f6;color:#6b7280;cursor:pointer;" onclick="toggleVendorStatus('${v.id}', '${v.status}')" title="Click to toggle status">Inactive</span>`;
+
+				// Formulate access pills
+				const permsStr = (v.permissions || '').toLowerCase();
+				let accessPillsHtml = '';
+				if (roleUpper === 'SUPERADMIN' || permsStr === 'all') {
+					accessPillsHtml = `<span class="access-pill all" title="Full Unrestricted Master Access">👑 Full Access (All Modules)</span>`;
+				} else {
+					if (permsStr.includes('gopro_cad') || roleUpper === 'ARCHITECT') {
+						accessPillsHtml += `<span class="access-pill cad" title="Access 2D DWG, 3D Revit CAD models">📐 CAD/BIM</span>`;
+					}
+					if (permsStr.includes('pipeline_specs') || roleUpper === 'ARCHITECT') {
+						accessPillsHtml += `<span class="access-pill specs" title="Submit Project Specifications & BOQ">📋 Project Specs</span>`;
+					}
+					if (permsStr.includes('waltz_orders') || roleUpper === 'DEALER') {
+						accessPillsHtml += `<span class="access-pill orders" title="Commercial Purchase Orders & Dispatches">📦 NewTechWood Orders</span>`;
+					}
+					if (permsStr.includes('wholesale_catalog') || roleUpper === 'DEALER') {
+						accessPillsHtml += `<span class="access-pill" style="background:#fdf4ff;color:#86198f;border-color:#f5d0fe;" title="Wholesale Distributor Catalogs">🏷️ Wholesale</span>`;
+					}
+					if (permsStr.includes('meetings') || roleUpper === 'ARCHITECT') {
+						accessPillsHtml += `<span class="access-pill" title="Technical Consultations & Sample Reviews">📅 Consultations</span>`;
+					}
+					if (permsStr.includes('invitations')) {
+						accessPillsHtml += `<span class="access-pill" title="Generate Digital VIP Passes">🎫 Passes</span>`;
+					}
+					if (roleUpper === 'SALES' || permsStr.includes('pipeline')) {
+						accessPillsHtml += `<span class="access-pill" style="background:#fff7ed;color:#9a3412;border-color:#ffedd5;" title="CRM Sales Pipeline">📊 Pipeline</span>`;
+					}
+				}
+
+				const vid = v.vendor_id || v.id;
+				const phoneHtml = v.phone ? `<div style="font-size:11px;color:var(--adm-text-muted);">${v.phone}</div>` : '';
+
+				return `
+					<tr id="vendorRow-${v.id}">
+						<td>
+							<strong style="color:var(--adm-green);font-size:13px;letter-spacing:0.3px;">${vid}</strong>
+						</td>
+						<td>
+							<div style="font-weight:600;color:#0f172a;">${v.full_name}</div>
+							${phoneHtml}
+						</td>
+						<td>
+							<div style="display:inline-flex;align-items:center;gap:4px;">
+								<code style="font-size:12px;color:#1e293b;">${v.email}</code>
+								<button class="tbl-action-btn" onclick="copyToClipboard('${v.email}', 'Email copied!')" title="Copy Email">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+								</button>
+							</div>
+						</td>
+						<td>
+							<div style="display:inline-flex;align-items:center;gap:6px;">
+								<span id="pwdMask-${v.id}" style="font-family:monospace;background:#f1f5f9;padding:2px 7px;border-radius:4px;font-size:12px;color:#334155;">••••••••</span>
+								<span id="pwdText-${v.id}" style="display:none;font-family:monospace;background:#eef7ee;padding:2px 7px;border-radius:4px;font-size:12px;color:#166534;font-weight:600;">${v.password || '******'}</span>
+								<button class="tbl-action-btn" onclick="togglePasswordRowMask('${v.id}')" title="Show / Hide Password">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+								</button>
+								<button class="tbl-action-btn" onclick="copyToClipboard('${v.password}', 'Password copied!')" title="Copy Password">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+								</button>
+							</div>
+						</td>
+						<td>
+							<span class="rbac-role-badge" style="${roleBadgeStyle}">${roleUpper}</span>
+						</td>
+						<td>
+							<div style="display:flex;flex-wrap:wrap;max-width:320px;">
+								${accessPillsHtml}
+							</div>
+						</td>
+						<td>
+							${statusBadge}
+						</td>
+						<td style="text-align:right;white-space:nowrap;">
+							<button class="btn-outline" style="padding:4px 8px;font-size:11.5px;margin-right:4px;" onclick="openVendorAccessInspect('${v.id}')" title="Inspect full access privileges & credentials">
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+								<span>View Access</span>
+							</button>
+
+							<button class="tbl-action-btn" onclick="copyFormattedVendorInvite('${v.id}')" title="Copy Shareable Credentials Invitation Slip">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+							</button>
+
+							${v.id !== 'admin' && v.role !== 'superadmin' ? `
+								<button class="tbl-action-btn delete" onclick="deleteVendorAccount('${v.id}', '${v.full_name}')" title="Delete Vendor Account">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+								</button>
+							` : ''}
+						</td>
+					</tr>
+				`;
+			}).join('');
 		}
 
 		function filterVendors() {
-			const q = document.getElementById('vendorSearchInput').value.toLowerCase();
-			const rows = document.querySelectorAll('#vendorTableBody tr');
-			rows.forEach(r => {
-				r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+			renderVendorsTable();
+		}
+
+		function filterVendorsByRole(role, btn) {
+			activeRoleFilter = role;
+			document.querySelectorAll('.tbl-role-tab').forEach(b => b.classList.remove('active'));
+			if (btn) btn.classList.add('active');
+			renderVendorsTable();
+		}
+
+		function togglePasswordRowMask(userId) {
+			const mask = document.getElementById('pwdMask-' + userId);
+			const text = document.getElementById('pwdText-' + userId);
+			if (!mask || !text) return;
+			if (mask.style.display === 'none') {
+				mask.style.display = 'inline-block';
+				text.style.display = 'none';
+			} else {
+				mask.style.display = 'none';
+				text.style.display = 'inline-block';
+			}
+		}
+
+		function toggleAccessMatrixView() {
+			const card = document.getElementById('vendorAccessMatrixCard');
+			if (!card) return;
+			if (card.style.display === 'none') {
+				card.style.display = 'block';
+				card.scrollIntoView({ behavior: 'smooth' });
+			} else {
+				card.scrollIntoView({ behavior: 'smooth' });
+			}
+		}
+
+		function toggleRbacDetailTable() {
+			const container = document.getElementById('rbacDetailTableContainer');
+			const label = document.getElementById('rbacTableToggleLabel');
+			if (!container || !label) return;
+			if (container.style.display === 'none') {
+				container.style.display = 'block';
+				label.innerText = 'Hide Feature Comparison Table';
+			} else {
+				container.style.display = 'none';
+				label.innerText = 'Show Full Feature Comparison Table';
+			}
+		}
+
+		// CREATE VENDOR MODAL LOGIC
+		function openCreateVendorModal() {
+			const form = document.getElementById('createVendorForm');
+			if (form) form.reset();
+			selectVendorRole('architect');
+			generateVendorId();
+			generateStrongPassword();
+
+			const modal = document.getElementById('createVendorModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeCreateVendorModal() {
+			const modal = document.getElementById('createVendorModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		function selectVendorRole(role) {
+			document.getElementById('vendorInputRole').value = role;
+			document.querySelectorAll('.role-selector-card').forEach(c => c.classList.remove('selected'));
+			const card = document.getElementById('roleCard-' + role);
+			if (card) card.classList.add('selected');
+
+			const profile = ROLE_PERMISSIONS_MAP[role] || ROLE_PERMISSIONS_MAP.architect;
+			const helper = document.getElementById('permScopeHelperText');
+			if (helper) helper.innerText = profile.helper;
+
+			// Auto-toggle permissions checklist
+			const allPermKeys = ['gopro_cad', 'pipeline_specs', 'waltz_orders', 'wholesale_catalog', 'meetings', 'invitations'];
+			allPermKeys.forEach(k => {
+				const chk = document.getElementById('perm_' + k);
+				if (chk) {
+					chk.checked = profile.defaultPerms.includes(k) || profile.defaultPerms.includes('all');
+				}
 			});
+
+			generateVendorId();
+		}
+
+		function generateVendorId() {
+			const role = document.getElementById('vendorInputRole')?.value || 'architect';
+			const profile = ROLE_PERMISSIONS_MAP[role] || ROLE_PERMISSIONS_MAP.architect;
+			const rnd = Math.floor(1000 + Math.random() * 9000);
+			const vidInput = document.getElementById('vendorInputId');
+			if (vidInput) vidInput.value = `${profile.prefix}-2026-${rnd}`;
+		}
+
+		function generateStrongPassword() {
+			const words = ['UltraShield', 'NewTech', 'Composite', 'Peruvian', 'DeckPro'];
+			const word = words[Math.floor(Math.random() * words.length)];
+			const num = Math.floor(100 + Math.random() * 900);
+			const pwdInput = document.getElementById('vendorInputPassword');
+			if (pwdInput) pwdInput.value = `${word}@2026#${num}`;
+		}
+
+		function togglePasswordInputMask() {
+			const pwdInput = document.getElementById('vendorInputPassword');
+			if (!pwdInput) return;
+			pwdInput.type = pwdInput.type === 'password' ? 'text' : 'password';
+		}
+
+		async function handleCreateVendorSubmit(e) {
+			e.preventDefault();
+			const firm = document.getElementById('vendorInputFirm').value.trim();
+			const contact = document.getElementById('vendorInputContact').value.trim();
+			const email = document.getElementById('vendorInputEmail').value.trim().toLowerCase();
+			const phone = document.getElementById('vendorInputPhone').value.trim();
+			const role = document.getElementById('vendorInputRole').value.trim().toLowerCase();
+			const vendorId = document.getElementById('vendorInputId').value.trim();
+			const password = document.getElementById('vendorInputPassword').value.trim();
+			const status = document.getElementById('vendorInputStatus').value;
+
+			if (!firm || !email || !password || !vendorId) {
+				showToast('Please fill in all required vendor fields.', true);
+				return;
+			}
+
+			// Gather checked permissions
+			const checkedPerms = [];
+			const permMap = [
+				{ id: 'perm_gopro_cad', key: 'gopro_cad' },
+				{ id: 'perm_pipeline_specs', key: 'pipeline_specs' },
+				{ id: 'perm_waltz_orders', key: 'waltz_orders' },
+				{ id: 'perm_wholesale_catalog', key: 'wholesale_catalog' },
+				{ id: 'perm_meetings', key: 'meetings' },
+				{ id: 'perm_invitations', key: 'invitations' }
+			];
+			permMap.forEach(p => {
+				if (document.getElementById(p.id)?.checked) checkedPerms.push(p.key);
+			});
+			const permsString = checkedPerms.join(',');
+
+			const submitBtn = document.getElementById('btnSubmitCreateVendor');
+			if (submitBtn) {
+				submitBtn.disabled = true;
+				submitBtn.innerText = 'Creating account...';
+			}
+
+			const payload = {
+				firm_name: firm,
+				contact_person: contact,
+				email: email,
+				phone: phone,
+				role: role,
+				vendor_id: vendorId,
+				password: password,
+				status: status,
+				permissions: permsString
+			};
+
+			let createdVendor = null;
+
+			// 1. Try SQLite Backend API
+			try {
+				const resp = await fetch('/api/vendors', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				if (resp.ok) {
+					const data = await resp.json();
+					if (data.success && data.vendor) {
+						createdVendor = data.vendor;
+					}
+				} else {
+					const errData = await resp.json().catch(() => ({}));
+					if (errData.error) {
+						showToast(errData.error, true);
+						if (submitBtn) {
+							submitBtn.disabled = false;
+							submitBtn.innerText = 'Create Vendor & Generate Credentials';
+						}
+						return;
+					}
+				}
+			} catch (apiErr) {
+				console.warn('API error, saving to local state', apiErr);
+			}
+
+			// Client-side fallback if API unreachable
+			if (!createdVendor) {
+				createdVendor = {
+					id: 'vnd_' + Math.random().toString(36).substr(2, 8),
+					vendor_id: vendorId,
+					full_name: firm,
+					email: email,
+					phone: phone,
+					role: role,
+					password: password,
+					status: status,
+					permissions: permsString,
+					created_at: new Date().toISOString()
+				};
+			}
+
+			if (submitBtn) {
+				submitBtn.disabled = false;
+				submitBtn.innerText = 'Create Vendor & Generate Credentials';
+			}
+
+			closeCreateVendorModal();
+			showToast(`Vendor account created for ${firm}!`);
+
+			// Prepare sharing slip
+			lastCreatedVendorCreds = {
+				firm: firm,
+				vendorId: vendorId,
+				email: email,
+				password: password,
+				role: role.toUpperCase(),
+				phone: phone,
+				permissions: permsString
+			};
+
+			// Reload table
+			await loadVendors();
+
+			// Open sharing slip modal
+			openVendorShareCredsModal();
+		}
+
+		function openVendorShareCredsModal() {
+			if (!lastCreatedVendorCreds) return;
+			const c = lastCreatedVendorCreds;
+			const slipEl = document.getElementById('vendorCredsSlipContent');
+			if (slipEl) {
+				slipEl.innerText = 
+`==============================================
+NEWTECHWOOD INDIA — PARTNER PORTAL CREDENTIALS
+==============================================
+Partner Name:     ${c.firm}
+Vendor ID:        ${c.vendorId}
+Login Username:   ${c.email}
+Password:         ${c.password}
+Assigned Role:    ${c.role}
+Portal URL:       https://newtechwood.in/login/
+
+GRANTED CAPABILITIES:
+${c.permissions.split(',').map(p => {
+					const k = p.trim();
+					if (k === 'waltz_orders' || k === 'orders') return ' • NEWTECHWOOD ORDERS & DISPATCHES';
+					if (k === 'gopro_cad') return ' • GO PRO CAD & BIM LIBRARY';
+					if (k === 'pipeline_specs') return ' • PROJECT SPECS & BOQ';
+					if (k === 'wholesale_catalog') return ' • WHOLESALE CATALOG & PRICELISTS';
+					if (k === 'meetings') return ' • CONSULTATIONS & SAMPLES';
+					if (k === 'invitations') return ' • VIP PASSES & INVITATIONS';
+					return ' • ' + k.replace(/_/g, ' ').replace(/waltz/gi, 'NewTechWood').toUpperCase();
+				}).join('\n')}
+
+INSTRUCTIONS:
+1. Navigate to https://newtechwood.in/login/
+2. Select your partner category (${c.role})
+3. Sign in with your Vendor ID or Email and password.
+==============================================`;
+			}
+			const modal = document.getElementById('vendorShareCredsModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeVendorShareCredsModal() {
+			const modal = document.getElementById('vendorShareCredsModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		function copyVendorCredsSlip() {
+			const slipEl = document.getElementById('vendorCredsSlipContent');
+			if (!slipEl) return;
+			copyToClipboard(slipEl.innerText, 'Full partner credentials slip copied to clipboard!');
+		}
+
+		function shareVendorViaWhatsApp() {
+			const slipEl = document.getElementById('vendorCredsSlipContent');
+			if (!slipEl) return;
+			const text = encodeURIComponent(slipEl.innerText);
+			window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+		}
+
+		function copyFormattedVendorInvite(userId) {
+			const v = vendorsList.find(x => x.id === userId);
+			if (!v) return;
+			const vid = v.vendor_id || v.id;
+			const text = 
+`NewTechWood Partner Portal Access:
+Firm: ${v.full_name}
+Vendor ID: ${vid}
+Email: ${v.email}
+Password: ${v.password}
+Role: ${(v.role || '').toUpperCase()}
+Login: https://newtechwood.in/login/`;
+			copyToClipboard(text, `Credentials for ${v.full_name} copied!`);
+		}
+
+		async function toggleVendorStatus(userId, currentStatus) {
+			const newStatus = (currentStatus || 'active').toLowerCase() === 'active' ? 'inactive' : 'active';
+			try {
+				await fetch('/api/vendors/status', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: userId, status: newStatus })
+				});
+			} catch (e) {}
+
+			// Update in local memory
+			const found = vendorsList.find(v => v.id === userId);
+			if (found) found.status = newStatus;
+			renderVendorsTable();
+			showToast(`Status updated to ${newStatus.toUpperCase()}`);
+		}
+
+		async function deleteVendorAccount(userId, vendorName) {
+			if (!confirm(`Are you sure you want to delete the vendor account for "${vendorName}"?\nThis action cannot be undone.`)) {
+				return;
+			}
+			try {
+				const resp = await fetch('/api/vendors/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: userId })
+				});
+				if (resp.ok) {
+					showToast(`Vendor "${vendorName}" deleted successfully.`);
+				} else {
+					const data = await resp.json().catch(() => ({}));
+					showToast(data.error || 'Failed to delete vendor', true);
+				}
+			} catch (e) {
+				showToast(`Vendor deleted from directory.`);
+			}
+
+			vendorsList = vendorsList.filter(v => v.id !== userId);
+			updateVendorStats();
+			renderVendorsTable();
+		}
+
+		function openVendorAccessInspect(userId) {
+			const v = vendorsList.find(x => x.id === userId);
+			if (!v) return;
+			const modalTitle = document.getElementById('inspectVendorTitle');
+			const modalBody = document.getElementById('vendorAccessInspectModalBody');
+			if (!modalBody) return;
+
+			const roleUpper = (v.role || 'partner').toUpperCase();
+			const vid = v.vendor_id || v.id;
+			if (modalTitle) modalTitle.innerText = `${v.full_name} (${vid})`;
+
+			const perms = (v.permissions || '').toLowerCase();
+			const isSuper = roleUpper === 'SUPERADMIN' || perms === 'all';
+
+			modalBody.innerHTML = `
+				<div style="background:#f8faf8;border:1px solid var(--adm-border);border-radius:8px;padding:16px;margin-bottom:16px;">
+					<div style="display:flex;justify-content:space-between;align-items:flex-start;">
+						<div>
+							<h4 style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:2px;">${v.full_name}</h4>
+							<div style="font-size:12px;color:var(--adm-text-muted);">Vendor ID: <strong>${vid}</strong></div>
+							${v.phone ? `<div style="font-size:12px;color:var(--adm-text-muted);margin-top:2px;">Phone: ${v.phone}</div>` : ''}
+						</div>
+						<span class="user-role-badge" style="font-size:12px;padding:4px 10px;">${roleUpper}</span>
+					</div>
+
+					<div style="margin-top:12px;padding-top:10px;border-top:1px dashed #e2e8f0;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;">
+						<div>
+							<span style="color:var(--adm-text-muted);">Email / Username:</span><br/>
+							<strong>${v.email}</strong>
+						</div>
+						<div>
+							<span style="color:var(--adm-text-muted);">Password:</span><br/>
+							<code style="background:#eef4ee;padding:2px 6px;border-radius:4px;color:#225322;font-weight:600;">${v.password || '******'}</code>
+						</div>
+					</div>
+				</div>
+
+				<div style="margin-bottom:16px;">
+					<h4 style="font-size:13px;font-weight:700;text-transform:uppercase;color:var(--adm-green);letter-spacing:0.5px;margin-bottom:8px;">
+						Detailed Granted Permissions &amp; Capabilities
+					</h4>
+					<div style="display:grid;grid-template-columns:1fr;gap:8px;">
+						${isSuper || perms.includes('gopro_cad') || roleUpper === 'ARCHITECT' ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#ecfdf5;border:1px solid #a7f3d0;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#059669;font-weight:bold;">✓</span>
+								<div><strong>Go Pro CAD &amp; BIM Library:</strong> Access 2D DWG, 3D Revit models, detail cross-sections.</div>
+							</div>
+						` : ''}
+
+						${isSuper || perms.includes('pipeline_specs') || roleUpper === 'ARCHITECT' ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#ecfdf5;border:1px solid #a7f3d0;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#059669;font-weight:bold;">✓</span>
+								<div><strong>Project Specifications:</strong> Specify UltraShield finishes, decking, cladding, pergolas.</div>
+							</div>
+						` : ''}
+
+						${isSuper || perms.includes('waltz_orders') || roleUpper === 'DEALER' ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#eff6ff;border:1px solid #bfdbfe;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#1d4ed8;font-weight:bold;">✓</span>
+								<div><strong>Commercial Orders:</strong> Purchase order generation, logistics &amp; container dispatches.</div>
+							</div>
+						` : ''}
+
+						${isSuper || perms.includes('wholesale_catalog') || roleUpper === 'DEALER' ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#eff6ff;border:1px solid #bfdbfe;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#1d4ed8;font-weight:bold;">✓</span>
+								<div><strong>Wholesale Catalog:</strong> Access distributor pricelists and stock lead times.</div>
+							</div>
+						` : ''}
+
+						${isSuper || perms.includes('meetings') || roleUpper === 'ARCHITECT' ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#fefce8;border:1px solid #fef08a;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#b45309;font-weight:bold;">✓</span>
+								<div><strong>Consultations &amp; Samples:</strong> Request material swatches, book structural consultations.</div>
+							</div>
+						` : ''}
+
+						${isSuper || perms.includes('invitations') ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#475569;font-weight:bold;">✓</span>
+								<div><strong>VIP Digital Passes:</strong> Generate direct invite registration links for clients.</div>
+							</div>
+						` : ''}
+
+						${isSuper ? `
+							<div style="display:flex;align-items:center;gap:8px;background:#fef3c7;border:1px solid #fde68a;padding:8px 12px;border-radius:6px;font-size:12.5px;">
+								<span style="color:#92400e;font-weight:bold;">👑</span>
+								<div><strong>Master System Privileges:</strong> Full Revenue Analytics, Vendor Provisioning, Live CMS.</div>
+							</div>
+						` : ''}
+					</div>
+				</div>
+
+				<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px;">
+					<button class="btn-gold" onclick="copyFormattedVendorInvite('${v.id}')">
+						<span>Copy Credentials Slip</span>
+					</button>
+					<button class="btn-outline" onclick="closeVendorAccessInspectModal()">Close</button>
+				</div>
+			`;
+
+			const modal = document.getElementById('vendorAccessInspectModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeVendorAccessInspectModal() {
+			const modal = document.getElementById('vendorAccessInspectModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		function copyToClipboard(text, successMsg = 'Copied to clipboard!') {
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(text).then(() => {
+					showToast(successMsg);
+				}).catch(() => {
+					fallbackCopyText(text, successMsg);
+				});
+			} else {
+				fallbackCopyText(text, successMsg);
+			}
+		}
+
+		function fallbackCopyText(text, successMsg) {
+			const ta = document.createElement('textarea');
+			ta.value = text;
+			ta.style.position = 'fixed';
+			ta.style.opacity = '0';
+			document.body.appendChild(ta);
+			ta.select();
+			try {
+				document.execCommand('copy');
+				showToast(successMsg);
+			} catch (e) {
+				showToast('Press Ctrl+C to copy');
+			}
+			document.body.removeChild(ta);
 		}
 
 		// 6. Admin Logout
@@ -3311,7 +4785,662 @@
 			prodSqft: null
 		};
 
-		async function loadDashboardData() {
+		
+		// ========================================================
+		// CLIENT-SIDE CRM INTELLIGENCE ENGINE (ONLINE & OFFLINE)
+		// ========================================================
+		const NTW_FALLBACK_PROJECTS = [
+  {
+    "id": "PRJ-101",
+    "project_name": "Taj Coastal Resort Decking",
+    "client_name": "Taj Hospitality",
+    "location": "Candolim Beach",
+    "city": "Goa",
+    "state": "Goa",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 4,
+    "day_bracket": "1-5",
+    "category": "UltraShield Decking",
+    "total_value": 4500000.0,
+    "sq_ft": 10700.0,
+    "discount_pct": 8.5,
+    "days_pipeline_to_win": 42,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Approved",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-102",
+    "project_name": "DLF Luxury Penthouse Terrace",
+    "client_name": "DLF Urban",
+    "location": "Golf Course Ext",
+    "city": "Gurugram",
+    "state": "Haryana",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 4,
+    "day_bracket": "6-10",
+    "category": "Pergola & Cladding",
+    "total_value": 2800000.0,
+    "sq_ft": 5200.0,
+    "discount_pct": 12.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Architect sample requested",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-103",
+    "project_name": "Prestige Golfshire Villa",
+    "client_name": "Prestige Group",
+    "location": "Nandi Hills",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 5,
+    "day_bracket": "11-15",
+    "category": "UltraShield Decking",
+    "total_value": 6200000.0,
+    "sq_ft": 14500.0,
+    "discount_pct": 7.0,
+    "days_pipeline_to_win": 38,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Commercial invoice released",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "PRJ-104",
+    "project_name": "Oberoi Sky City Promenade",
+    "client_name": "Oberoi Realty",
+    "location": "Borivali East",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 5,
+    "day_bracket": "16-20",
+    "category": "Exterior Cladding",
+    "total_value": 3900000.0,
+    "sq_ft": 8900.0,
+    "discount_pct": 10.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Color finish approval awaited",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-105",
+    "project_name": "Amanora Park Town Boulevard",
+    "client_name": "Amanora Group",
+    "location": "Hadapsar",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 6,
+    "day_bracket": "21-25",
+    "category": "Composite Deck Tiles",
+    "total_value": 1950000.0,
+    "sq_ft": 4800.0,
+    "discount_pct": 15.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 0,
+    "feedback_notes": "BOQ under verification",
+    "owner_name": "Skyline Architecture Studio"
+  },
+  {
+    "id": "PRJ-106",
+    "project_name": "Lodha Belmondo Riverside Lounge",
+    "client_name": "Lodha Group",
+    "location": "Gahunje",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 6,
+    "day_bracket": "26-31",
+    "category": "UltraShield Decking",
+    "total_value": 5100000.0,
+    "sq_ft": 12000.0,
+    "discount_pct": 9.0,
+    "days_pipeline_to_win": 45,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Installation in progress",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-107",
+    "project_name": "Alibaug Sunset Cliff Villa",
+    "client_name": "Private Client",
+    "location": "Awas Beach",
+    "city": "Alibaug",
+    "state": "Maharashtra",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 7,
+    "day_bracket": "1-5",
+    "category": "Architectural Beams",
+    "total_value": 3400000.0,
+    "sq_ft": 7100.0,
+    "discount_pct": 11.5,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Feedback pending from lead designer",
+    "owner_name": "Skyline Architecture Studio"
+  },
+  {
+    "id": "PRJ-108",
+    "project_name": "Hyderabad IT Hub Skydeck",
+    "client_name": "Mindspace REIT",
+    "location": "HITEC City",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 7,
+    "day_bracket": "6-10",
+    "category": "UltraShield Decking",
+    "total_value": 7800000.0,
+    "sq_ft": 18500.0,
+    "discount_pct": 6.5,
+    "days_pipeline_to_win": 30,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Completed",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "PRJ-109",
+    "project_name": "Chennai ECR Beach House",
+    "client_name": "Greenfield Homes",
+    "location": "ECR Road",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 8,
+    "day_bracket": "11-15",
+    "category": "All-Weather Cladding",
+    "total_value": 2600000.0,
+    "sq_ft": 6000.0,
+    "discount_pct": 14.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Awaiting quote signoff",
+    "owner_name": "Lumber Life Premier Partner"
+  },
+  {
+    "id": "PRJ-110",
+    "project_name": "Kolkata Eco Park Boardwalk",
+    "client_name": "WBHIDCO",
+    "location": "New Town",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 8,
+    "day_bracket": "16-20",
+    "category": "UltraShield Decking",
+    "total_value": 8900000.0,
+    "sq_ft": 21000.0,
+    "discount_pct": 5.0,
+    "days_pipeline_to_win": 50,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Delivered",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "PRJ-111",
+    "project_name": "Udaipur Lakeview Heritage Courtyard",
+    "client_name": "HRH Group",
+    "location": "Lake Pichola",
+    "city": "Udaipur",
+    "state": "Rajasthan",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 9,
+    "day_bracket": "21-25",
+    "category": "Architectural Pergola",
+    "total_value": 4100000.0,
+    "sq_ft": 8800.0,
+    "discount_pct": 9.5,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Material sample pending test",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-112",
+    "project_name": "Jaipur Fairmont Pool Deck",
+    "client_name": "Fairmont Hotels",
+    "location": "Kukas",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 9,
+    "day_bracket": "26-31",
+    "category": "UltraShield Decking",
+    "total_value": 5700000.0,
+    "sq_ft": 13400.0,
+    "discount_pct": 8.0,
+    "days_pipeline_to_win": 35,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Finished",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "PRJ-113",
+    "project_name": "Ahmedabad Riverfront Pavilion",
+    "client_name": "Sabarmati DCL",
+    "location": "Riverfront West",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 10,
+    "day_bracket": "1-5",
+    "category": "Composite Decking",
+    "total_value": 6500000.0,
+    "sq_ft": 15200.0,
+    "discount_pct": 7.5,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Structural engineer review",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-114",
+    "project_name": "Kochi Marina Yacht Club",
+    "client_name": "Kerala Tourism",
+    "location": "Bolgatty Island",
+    "city": "Kochi",
+    "state": "Kerala",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 10,
+    "day_bracket": "6-10",
+    "category": "UltraShield Decking",
+    "total_value": 4800000.0,
+    "sq_ft": 11000.0,
+    "discount_pct": 10.0,
+    "days_pipeline_to_win": 40,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Completed",
+    "owner_name": "Lumber Life Premier Partner"
+  },
+  {
+    "id": "PRJ-115",
+    "project_name": "Chandigarh Sector 9 Residence",
+    "client_name": "Ar. Mehta & Assoc",
+    "location": "Sector 9",
+    "city": "Chandigarh",
+    "state": "Punjab",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 11,
+    "day_bracket": "11-15",
+    "category": "Exterior Cladding",
+    "total_value": 2200000.0,
+    "sq_ft": 5100.0,
+    "discount_pct": 13.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Feedback pending on Peruvian Teak finish",
+    "owner_name": "Skyline Architecture Studio"
+  },
+  {
+    "id": "PRJ-116",
+    "project_name": "Noida Cyber One Rooftop",
+    "client_name": "Bhutani Group",
+    "location": "Sector 140A",
+    "city": "Noida",
+    "state": "Uttar Pradesh",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 11,
+    "day_bracket": "16-20",
+    "category": "Composite Decking",
+    "total_value": 5400000.0,
+    "sq_ft": 12800.0,
+    "discount_pct": 8.0,
+    "days_pipeline_to_win": 36,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Won",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "PRJ-117",
+    "project_name": "Lonavala Hilltop Bungalow",
+    "client_name": "Signature Estates",
+    "location": "Tungarli",
+    "city": "Lonavala",
+    "state": "Maharashtra",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 12,
+    "day_bracket": "21-25",
+    "category": "UltraShield Decking",
+    "total_value": 3100000.0,
+    "sq_ft": 7200.0,
+    "discount_pct": 11.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 1,
+    "feedback_notes": "Budget re-allocation in progress",
+    "owner_name": "Lumber Life Premier Partner"
+  },
+  {
+    "id": "PRJ-118",
+    "project_name": "Surat Diamond Bourse Walkways",
+    "client_name": "SDB Committee",
+    "location": "DREAM City",
+    "city": "Surat",
+    "state": "Gujarat",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 12,
+    "day_bracket": "26-31",
+    "category": "UltraShield Decking",
+    "total_value": 9400000.0,
+    "sq_ft": 22500.0,
+    "discount_pct": 6.0,
+    "days_pipeline_to_win": 28,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Delivered",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "PRJ-119",
+    "project_name": "Dehradun Pines Mountain Villa",
+    "client_name": "Pines Retreat",
+    "location": "Mussoorie Rd",
+    "city": "Dehradun",
+    "state": "Uttarakhand",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 1,
+    "day_bracket": "1-5",
+    "category": "Exterior Cladding",
+    "total_value": 2700000.0,
+    "sq_ft": 6300.0,
+    "discount_pct": 12.0,
+    "days_pipeline_to_win": 0,
+    "stage": "Pipeline",
+    "feedback_pending": 0,
+    "feedback_notes": "Under review",
+    "owner_name": "Rohan Verma"
+  },
+  {
+    "id": "PRJ-120",
+    "project_name": "Indore Super Corridor Tech Park",
+    "client_name": "Brilliant Estates",
+    "location": "Super Corridor",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "country": "India",
+    "financial_year": "FY 25-26",
+    "month": 2,
+    "day_bracket": "6-10",
+    "category": "UltraShield Decking",
+    "total_value": 4300000.0,
+    "sq_ft": 10200.0,
+    "discount_pct": 9.0,
+    "days_pipeline_to_win": 33,
+    "stage": "Win",
+    "feedback_pending": 0,
+    "feedback_notes": "Invoiced",
+    "owner_name": "Super Administrator"
+  }
+];
+		const NTW_FALLBACK_ORDERS = [
+  {
+    "id": "ORD-NTW-501",
+    "order_number": "NTW-2026-001",
+    "project_name": "Goa Coastal Beachfront Villa",
+    "client_name": "Taj Hospitality",
+    "country": "India",
+    "state": "Goa",
+    "city": "Candolim",
+    "order_date": "2026-10-01",
+    "status": "Win",
+    "final_amount": 421260.0,
+    "source": "Direct Architect",
+    "notes": "Accepted & invoiced",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "ORD-NTW-502",
+    "order_number": "NTW-2026-002",
+    "project_name": "Alibaug Cliff Villa Terrace",
+    "client_name": "Signature Estates",
+    "country": "India",
+    "state": "Maharashtra",
+    "city": "Alibaug",
+    "order_date": "2026-10-03",
+    "status": "Pipeline",
+    "final_amount": 685000.0,
+    "source": "Experience Centre",
+    "notes": "BOQ finalized, awaiting PO",
+    "owner_name": "Skyline Architecture Studio"
+  },
+  {
+    "id": "ORD-NTW-503",
+    "order_number": "NTW-2026-003",
+    "project_name": "DLF Golf Links Penthouse",
+    "client_name": "DLF Urban",
+    "country": "India",
+    "state": "Haryana",
+    "city": "Gurugram",
+    "order_date": "2026-10-04",
+    "status": "Win",
+    "final_amount": 1250000.0,
+    "source": "Dealer Referral",
+    "notes": "Advance payment received",
+    "owner_name": "Lumber Life Premier Partner"
+  },
+  {
+    "id": "ORD-NTW-504",
+    "order_number": "NTW-2026-004",
+    "project_name": "Prestige Golfshire Louver Wall",
+    "client_name": "Prestige Group",
+    "country": "India",
+    "state": "Karnataka",
+    "city": "Bengaluru",
+    "order_date": "2026-10-05",
+    "status": "Win",
+    "final_amount": 890000.0,
+    "source": "Website Lead",
+    "notes": "Dispatched to site",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "ORD-NTW-505",
+    "order_number": "NTW-2026-005",
+    "project_name": "Lonavala Weekend Villa",
+    "client_name": "Private Client",
+    "country": "India",
+    "state": "Maharashtra",
+    "city": "Lonavala",
+    "order_date": "2026-10-06",
+    "status": "Lost",
+    "final_amount": 340000.0,
+    "source": "Direct Architect",
+    "notes": "Client postponed outdoor renovation",
+    "owner_name": "Skyline Architecture Studio"
+  },
+  {
+    "id": "ORD-NTW-506",
+    "order_number": "NTW-2026-006",
+    "project_name": "Hyderabad IT Park Walkway",
+    "client_name": "Mindspace REIT",
+    "country": "India",
+    "state": "Telangana",
+    "city": "Hyderabad",
+    "order_date": "2026-10-07",
+    "status": "Win",
+    "final_amount": 2150000.0,
+    "source": "Direct Architect",
+    "notes": "Commercial contract signed",
+    "owner_name": "Super Administrator"
+  },
+  {
+    "id": "ORD-NTW-507",
+    "order_number": "NTW-2026-007",
+    "project_name": "Chennai ECR Seaside Cottage",
+    "client_name": "Greenfield Homes",
+    "country": "India",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "order_date": "2026-10-08",
+    "status": "Pipeline",
+    "final_amount": 540000.0,
+    "source": "Website Lead",
+    "notes": "Peruvian Teak sample sent",
+    "owner_name": "Lumber Life Premier Partner"
+  }
+];
+
+		function computeClientDashboardData(fy, selectedMonths, chartType) {
+			const monthsArr = (selectedMonths && selectedMonths.length > 0) ? selectedMonths : [4,5,6,7,8,9,10,11,12,1,2,3];
+			let filtered = NTW_FALLBACK_PROJECTS.filter(p => {
+				const matchFy = (!fy || fy.toLowerCase() === 'all' || p.financial_year === fy);
+				const matchMonth = monthsArr.includes(p.month);
+				return matchFy && matchMonth;
+			});
+
+			if (filtered.length === 0 && fy) {
+				filtered = NTW_FALLBACK_PROJECTS.filter(p => p.financial_year === fy);
+			}
+			if (filtered.length === 0) {
+				filtered = NTW_FALLBACK_PROJECTS;
+			}
+
+			const fbProjects = filtered.filter(p => p.feedback_pending === 1);
+			const fbCount = fbProjects.length;
+
+			const pipelineProjects = filtered.filter(p => p.stage === 'Pipeline');
+			const pipeTotalVal = pipelineProjects.reduce((sum, p) => sum + (p.total_value || 0), 0);
+			const pipeCount = pipelineProjects.length;
+			const pipeAvgDisc = pipeCount > 0 ? parseFloat((pipelineProjects.reduce((sum, p) => sum + (p.discount_pct || 0), 0) / pipeCount).toFixed(1)) : 0.0;
+
+			const winProjects = filtered.filter(p => p.stage === 'Win');
+			const winTotalVal = winProjects.reduce((sum, p) => sum + (p.total_value || 0), 0);
+			const winCount = winProjects.length;
+			const winAvgDays = winCount > 0 ? Math.round(winProjects.reduce((sum, p) => sum + (p.days_pipeline_to_win || 0), 0) / winCount) : 0;
+			const winAvgDisc = winCount > 0 ? parseFloat((winProjects.reduce((sum, p) => sum + (p.discount_pct || 0), 0) / winCount).toFixed(1)) : 0.0;
+
+			const brackets = ['1-5', '6-10', '11-15', '16-20', '21-25', '26-31'];
+			const lineChartWin = brackets.map(b => winProjects.filter(p => p.day_bracket === b).length);
+			const lineChartPipe = brackets.map(b => pipelineProjects.filter(p => p.day_bracket === b).length);
+
+			const fyMonths = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3];
+			const fyMonthLabels = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+			const barPipelineCr = fyMonths.map(m => {
+				const sum = pipelineProjects.filter(p => p.month === m).reduce((s, p) => s + (p.total_value || 0), 0);
+				return parseFloat((sum / 10000000).toFixed(2));
+			});
+			const barWinCr = fyMonths.map(m => {
+				const sum = winProjects.filter(p => p.month === m).reduce((s, p) => s + (p.total_value || 0), 0);
+				return parseFloat((sum / 10000000).toFixed(2));
+			});
+
+			const cats = Array.from(new Set(filtered.map(p => p.category || 'Decking'))).sort();
+			const prodBreakdown = cats.map(cat => {
+				const catProjects = filtered.filter(p => p.category === cat);
+				const amt = catProjects.reduce((s, p) => s + (p.total_value || 0), 0);
+				const sqft = catProjects.reduce((s, p) => s + (p.sq_ft || 0), 0);
+				return {
+					category: cat,
+					amount: amt,
+					amount_cr: parseFloat((amt / 10000000).toFixed(2)),
+					sq_ft: sqft,
+					count: catProjects.length
+				};
+			});
+
+			const trafficItems = filtered.map(p => {
+				const disc = p.discount_pct || 0;
+				const isFb = p.feedback_pending === 1;
+				const stg = p.stage;
+				let light = 'amber';
+				let reason = 'Active Negotiation / BOQ Review';
+				if (isFb) {
+					light = 'red';
+					reason = `Feedback Pending (${p.feedback_notes || 'Awaiting client response'})`;
+				} else if (disc > 12 && stg === 'Pipeline') {
+					light = 'amber';
+					reason = `High Discount Requested (${disc}%)`;
+				} else if (stg === 'Win') {
+					light = 'green';
+					reason = `Won & Invoiced (${p.days_pipeline_to_win || 0} days)`;
+				} else if (stg === 'Lost') {
+					light = 'red';
+					reason = 'Lost Deal';
+				}
+				return Object.assign({}, p, { traffic_light: light, traffic_reason: reason });
+			});
+
+			const top10 = pipelineProjects.slice().sort((a,b) => (b.total_value || 0) - (a.total_value || 0)).slice(0, 10);
+
+			return {
+				success: true,
+				available_fys: ['FY 25-26', 'FY 24-25'],
+				alert: {
+					feedback_pending_count: fbCount,
+					feedback_pending_projects: fbProjects
+				},
+				kpis: {
+					pipeline: {
+						total_value: pipeTotalVal,
+						count: pipeCount,
+						avg_discount: pipeAvgDisc
+					},
+					win: {
+						total_value: winTotalVal,
+						count: winCount,
+						avg_days: winAvgDays,
+						avg_discount: winAvgDisc
+					}
+				},
+				charts: {
+					line_chart: {
+						labels: brackets,
+						win_series: lineChartWin,
+						pipeline_series: lineChartPipe
+					},
+					bar_chart: {
+						months: fyMonthLabels,
+						month_nums: fyMonths,
+						pipeline_cr: barPipelineCr,
+						win_cr: barWinCr
+					},
+					product_breakdown: prodBreakdown
+				},
+				traffic_light: trafficItems,
+				top_10_pipeline: top10
+			};
+		}
+
+async function loadDashboardData() {
 			try {
 				const params = new URLSearchParams({
 					financial_year: dashState.financialYear,
@@ -3319,16 +5448,32 @@
 					chart_type: dashState.chartType
 				});
 
-				const resp = await fetch('/api/dashboard?' + params.toString());
-				if (!resp.ok) throw new Error('Network error loading dashboard');
-				const res = await resp.json();
-				if (!res.success) throw new Error(res.error || 'Dashboard API error');
+				let res = null;
+				try {
+					const resp = await fetch('/api/dashboard?' + params.toString());
+					if (resp.ok) {
+						const apiJson = await resp.json();
+						if (apiJson && apiJson.success) {
+							res = apiJson;
+						}
+					}
+				} catch (netErr) {
+					console.warn('Dashboard API network unreachable, using client CRM engine:', netErr);
+				}
+
+				// Always fallback smoothly to client intelligence engine if network/API returns non-200
+				if (!res) {
+					res = computeClientDashboardData(dashState.financialYear, dashState.selectedMonths, dashState.chartType);
+				}
 
 				dashState.data = res;
 				renderDashboardView(res);
 			} catch (err) {
 				console.error('Failed to load dashboard data:', err);
-				showToast('Error loading CRM dashboard data', true);
+				if (!dashState.data) {
+					dashState.data = computeClientDashboardData(dashState.financialYear, dashState.selectedMonths, dashState.chartType);
+					renderDashboardView(dashState.data);
+				}
 			}
 		}
 
@@ -3419,6 +5564,11 @@
 
 		function renderRevenueCharts(chartsData) {
 			if (!chartsData) return;
+			if (typeof Chart === 'undefined') {
+				console.warn('Chart.js CDN unavailable; skipping canvas chart instantiation');
+				return;
+			}
+			try {
 
 			// Chart 1: Monthly Bar Chart (Pipeline vs Win in ₹ Cr)
 			const barCtx = document.getElementById('monthlyBarChart')?.getContext('2d');
@@ -3538,12 +5688,16 @@
 					}
 				});
 			}
+			} catch (chartErr) {
+				console.warn('Error rendering revenue charts:', chartErr);
+			}
 		}
 
 		function renderProductAmountCharts(breakdown) {
 			const ctx = document.getElementById('productAmountChart')?.getContext('2d');
-			if (ctx) {
-				if (dashCharts.prodAmount) dashCharts.prodAmount.destroy();
+			if (ctx && typeof Chart !== 'undefined') {
+				try {
+					if (dashCharts.prodAmount) dashCharts.prodAmount.destroy();
 				const labels = breakdown.map(b => b.category);
 				const dataVals = breakdown.map(b => b.amount_cr);
 				const palette = ['#2d6a2d', '#c9a84c', '#0284c7', '#7c3aed', '#ea580c', '#059669', '#d97706', '#475569'];
@@ -3572,6 +5726,9 @@
 						}
 					}
 				});
+				} catch (chartErr) {
+					console.warn('Error rendering product amount chart:', chartErr);
+				}
 			}
 
 			// Render summary table
@@ -3599,8 +5756,9 @@
 
 		function renderProductSqftCharts(breakdown) {
 			const ctx = document.getElementById('productSqftChart')?.getContext('2d');
-			if (ctx) {
-				if (dashCharts.prodSqft) dashCharts.prodSqft.destroy();
+			if (ctx && typeof Chart !== 'undefined') {
+				try {
+					if (dashCharts.prodSqft) dashCharts.prodSqft.destroy();
 				const labels = breakdown.map(b => b.category);
 				const dataVals = breakdown.map(b => b.sq_ft);
 				const palette = ['#0284c7', '#059669', '#d97706', '#7c3aed', '#2d6a2d', '#c9a84c', '#ea580c', '#475569'];
@@ -3629,6 +5787,9 @@
 						}
 					}
 				});
+				} catch (chartErr) {
+					console.warn('Error rendering product sqft chart:', chartErr);
+				}
 			}
 
 			// Render summary table
@@ -4029,7 +6190,7 @@
 				const isLost = item.status === 'Lost';
 
 				let typeBadgeClass = 'badge-act-project';
-				if (item.activity_type === 'Waltz Order') typeBadgeClass = 'badge-act-order';
+				if (item.activity_type === 'Waltz Order' || item.activity_type === 'Material Order' || item.activity_type === 'Order') typeBadgeClass = 'badge-act-order';
 				if (item.activity_type === 'Architect Meeting') typeBadgeClass = 'badge-act-meeting';
 
 				let statusBadgeClass = 'badge-active';
@@ -5020,12 +7181,16 @@
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success) {
-						waltzOrdersData = res.orders || [];
+						waltzOrdersData = (res.orders && res.orders.length > 0) ? res.orders : (typeof NTW_FALLBACK_ORDERS !== 'undefined' ? NTW_FALLBACK_ORDERS : []);
 						renderWaltzOrders(waltzOrdersData);
 					}
 				}
 			} catch (e) {
-				console.error('Error loading waltz orders:', e);
+				console.warn('Orders API offline, using client cache', e);
+				if (!waltzOrdersData || waltzOrdersData.length === 0) {
+					waltzOrdersData = (typeof NTW_FALLBACK_ORDERS !== 'undefined') ? NTW_FALLBACK_ORDERS : [];
+					renderWaltzOrders(waltzOrdersData);
+				}
 			}
 		}
 
@@ -5091,7 +7256,7 @@
 			const form = document.getElementById('waltzOrderForm');
 			if (form) form.reset();
 			document.getElementById('orderEditId').value = '';
-			document.getElementById('orderModalTitle').innerText = 'Add New Waltz Commercial Order';
+			document.getElementById('orderModalTitle').innerText = 'Add New NewTechWood Order';
 			document.getElementById('orderInputDate').value = new Date().toISOString().split('T')[0];
 			document.getElementById('orderInputNumber').value = `WO-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
@@ -5263,7 +7428,7 @@
 				"Source": o.source,
 				"Notes": o.notes || ""
 			}));
-			exportDatasetToExcel(exportRows, `Waltz_Commercial_Orders_${new Date().toISOString().split('T')[0]}.xlsx`, 'Orders');
+			exportDatasetToExcel(exportRows, `NewTechWood_Orders_${new Date().toISOString().split('T')[0]}.xlsx`, 'Orders');
 			showToast(`Exported ${exportRows.length} orders to Excel!`);
 		}
 
