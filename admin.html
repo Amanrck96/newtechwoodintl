@@ -3909,11 +3909,13 @@
 				if (resp.ok) {
 					const data = await resp.json();
 					if (data.counts) {
-						if (data.counts.projects !== undefined && document.getElementById('statProjectsCount')) {
-							document.getElementById('statProjectsCount').innerText = data.counts.projects;
+						const statProjEl = document.getElementById('statProjectsCount');
+						if (statProjEl && data.counts.projects !== undefined) {
+							statProjEl.innerText = data.counts.projects;
 						}
-						if (data.counts.orders !== undefined && document.getElementById('statOrdersCount')) {
-							document.getElementById('statOrdersCount').innerText = data.counts.orders;
+						const statOrdEl = document.getElementById('statOrdersCount');
+						if (statOrdEl && data.counts.orders !== undefined) {
+							statOrdEl.innerText = data.counts.orders;
 						}
 					}
 					if (pill) pill.classList.remove('offline');
@@ -3930,6 +3932,7 @@
 		// 3. Collapsed Sidebar Toggle
 		function toggleSidebar() {
 			const sidebar = document.getElementById('appSidebar');
+			if (!sidebar) return;
 			sidebar.classList.toggle('expanded');
 			const isExpanded = sidebar.classList.contains('expanded');
 			const collapseArrow = document.getElementById('collapseArrow');
@@ -3940,7 +3943,7 @@
 
 		function toggleSubmenuOrNav(targetView, element) {
 			const sidebar = document.getElementById('appSidebar');
-			if (sidebar.classList.contains('expanded')) {
+			if (sidebar && sidebar.classList.contains('expanded')) {
 				switchNav(targetView, element);
 			} else {
 				// In collapsed mode, navigate directly to Directory Master
