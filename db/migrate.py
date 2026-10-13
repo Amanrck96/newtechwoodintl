@@ -44,8 +44,14 @@ def _is_already_hashed(pw: str) -> bool:
     """Return True if password looks like a hash (bcrypt or sha256 format)."""
     return pw.startswith('$2b$') or pw.startswith('$2a$') or pw.startswith('sha256$')
 
+def _table_exists(cursor, table_name: str) -> bool:
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (table_name,))
+    return cursor.fetchone() is not None
+
 def _ensure_stage_column(cursor):
     """Add stage column to pipeline_projects if missing (schema.sql omitted it)."""
+    if not _table_exists(cursor, 'pipeline_projects'):
+        return
     cursor.execute("PRAGMA table_info(pipeline_projects);")
     cols = [row[1] for row in cursor.fetchall()]
     if 'stage' not in cols:
@@ -60,6 +66,8 @@ def _ensure_stage_column(cursor):
 
 def _hash_plain_passwords(cursor):
     """One-time migration: hash any plain-text passwords found in users table."""
+    if not _table_exists(cursor, 'users'):
+        return
     cursor.execute("SELECT id, password FROM users;")
     rows = cursor.fetchall()
     updated = 0
@@ -74,9 +82,10 @@ def _hash_plain_passwords(cursor):
     else:
         print(f"[OK] All passwords already hashed.")
 
-def run_migrations():
-    print(f"Connecting to database: {DB_FILE}")
-    conn = sqlite3.connect(DB_FILE)
+def run_migrations(db_path=None):
+    target_db = db_path or os.environ.get("CRM_DB_FILE") or DB_FILE
+    print(f"Connecting to database: {target_db}")
+    conn = sqlite3.connect(target_db)
     cursor = conn.cursor()
 
     # Create migrations table if not exists
@@ -86,11 +95,6 @@ def run_migrations():
             applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     """)
-    conn.commit()
-
-    # ── Phase 1 structural fixes (run every time, idempotent) ──────────────────
-    _ensure_stage_column(cursor)
-    _hash_plain_passwords(cursor)
     conn.commit()
 
     cursor.execute("SELECT version FROM schema_migrations;")
@@ -137,6 +141,11 @@ def run_migrations():
             conn.rollback()
             print(f"[ERROR] Migration {version} failed: {e}", file=sys.stderr)
             raise e
+
+    # ── Phase 1 structural fixes (run every time, idempotent) ──────────────────
+    _ensure_stage_column(cursor)
+    _hash_plain_passwords(cursor)
+    conn.commit()
 
     conn.close()
     print("All migrations completed successfully!")

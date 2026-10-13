@@ -28,6 +28,7 @@ if BASE_DIR not in sys.path:
 
 import database
 import products_api
+import vendor_crm_api
 
 # ─── Password Hashing ─────────────────────────────────────────────────────────
 try:
@@ -810,10 +811,19 @@ def _handle_get_internal(handler):
         return send_json(handler, {"success": True, "count": len(result), "firms": result})
 
     # ── Protected (any role): Meetings ───────────────────────────────────────
-    if path == '/api/directory/meetings':
+    if path == '/api/directory/meetings' or (path.startswith('/api/directory/meetings/') and not path.endswith('/zip')):
         user = require_auth(handler)
         if not user:
             return
+
+        if path.startswith('/api/directory/meetings/') and path != '/api/directory/meetings':
+            mtg_id = path.split('/')[-1]
+            mtg = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
+            if not mtg:
+                return send_json(handler, {"success": False, "error": "Meeting not found"}, 404)
+            if user.get('role') in ('architect', 'dealer') and mtg.get('vendor_user_id') != user.get('id'):
+                return send_json(handler, {"success": False, "error": "Access forbidden: You may only view your own meetings"}, 403)
+            return send_json(handler, {"success": True, "meeting": dict(mtg)})
 
         from_date = qs.get('from_date', [''])[0].strip()
         to_date = qs.get('to_date', [''])[0].strip()
@@ -828,6 +838,12 @@ def _handle_get_internal(handler):
 
         where_clauses = []
         params = []
+
+        # Strict vendor server-side scoping
+        if user.get('role') in ('architect', 'dealer'):
+            where_clauses.append("vendor_user_id = ?")
+            params.append(user['id'])
+
         if from_date:
             where_clauses.append("meeting_date >= ?"); params.append(from_date)
         if to_date:
@@ -853,7 +869,7 @@ def _handle_get_internal(handler):
         meetings = database.execute_query(f"""
             SELECT id, meeting_date, firm_name, guest_name, mobile, user_type,
                    guest_type, country, state, city, status, discussion_notes, image_urls,
-                   coalesce(owner_name, 'Rohan Verma') as owner_name
+                   coalesce(owner_name, 'Rohan Verma') as owner_name, vendor_user_id
             FROM meetings
             {where_sql}
             ORDER BY meeting_date DESC;
@@ -866,12 +882,21 @@ def _handle_get_internal(handler):
         if not user:
             return
 
-        invitations = database.execute_query("""
-            SELECT id, invitation_code, recipient_name, firm_name, recipient_email,
-                   mobile, invitation_link, status, created_at, expires_at
-            FROM id_invitations
-            ORDER BY created_at DESC;
-        """)
+        if user.get('role') in ('architect', 'dealer'):
+            invitations = database.execute_query("""
+                SELECT id, invitation_code, recipient_name, firm_name, recipient_email,
+                       mobile, invitation_link, status, created_at, expires_at, vendor_user_id
+                FROM id_invitations
+                WHERE vendor_user_id = ?
+                ORDER BY created_at DESC;
+            """, (user['id'],))
+        else:
+            invitations = database.execute_query("""
+                SELECT id, invitation_code, recipient_name, firm_name, recipient_email,
+                       mobile, invitation_link, status, created_at, expires_at, vendor_user_id
+                FROM id_invitations
+                ORDER BY created_at DESC;
+            """)
         return send_json(handler, {"success": True, "count": len(invitations), "invitations": [dict(i) for i in invitations]})
 
     # ── Protected (any role): Visitors — pagination crash fixed ──────────────
@@ -978,11 +1003,22 @@ def _handle_get_internal(handler):
         """, tuple(params))
         return send_json(handler, {"success": True, "count": len(assets), "assets": [dict(a) for a in assets]})
 
-    # ── Protected (any role): Orders List ────────────────────────────────────
-    if path == '/api/orders':
+    # ── Protected (any role): Orders List / Single Order ─────────────────────
+    if path == '/api/orders' or (path.startswith('/api/orders/') and not path.endswith('/quotation')):
         user = require_auth(handler)
         if not user:
             return
+
+        if path.startswith('/api/orders/') and path != '/api/orders':
+            order_id = path.split('/')[-1]
+            order = database.execute_one("SELECT * FROM waltz_orders WHERE id = ? OR order_number = ?;", (order_id, order_id))
+            if not order:
+                return send_json(handler, {"success": False, "error": "Order not found"}, 404)
+            if user.get('role') in ('architect', 'dealer') and order.get('vendor_user_id') != user.get('id'):
+                return send_json(handler, {"success": False, "error": "Access forbidden: You may only view your own orders"}, 403)
+            ord_dict = dict(order)
+            ord_dict['order_lines'] = [dict(l) for l in database.execute_query("SELECT * FROM order_lines WHERE order_id = ?;", (ord_dict['id'],))]
+            return send_json(handler, {"success": True, "order": ord_dict})
 
         order_number = qs.get('order_number', [''])[0].strip().lower()
         project_name = qs.get('project_name', [''])[0].strip().lower()
@@ -997,6 +1033,12 @@ def _handle_get_internal(handler):
 
         where_clauses = []
         params = []
+
+        # Strict vendor server-side scoping
+        if user.get('role') in ('architect', 'dealer'):
+            where_clauses.append("vendor_user_id = ?")
+            params.append(user['id'])
+
         if order_number:
             where_clauses.append("lower(order_number) LIKE ?"); params.append(f"%{order_number}%")
         if project_name:
@@ -1022,7 +1064,7 @@ def _handle_get_internal(handler):
         orders = database.execute_query(f"""
             SELECT id, order_number, project_name, client_name, country, state, city,
                    order_date, status, final_amount, source, notes,
-                   coalesce(owner_name, 'Rohan Verma') as owner_name, created_at
+                   coalesce(owner_name, 'Rohan Verma') as owner_name, vendor_user_id, created_at
             FROM waltz_orders
             {where_sql}
             ORDER BY order_date DESC;
@@ -1040,6 +1082,8 @@ def _handle_get_internal(handler):
             proj = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
             if not proj:
                 return send_json(handler, {"success": False, "error": "Project not found"}, 404)
+            if user.get('role') in ('architect', 'dealer') and proj.get('vendor_user_id') != user.get('id'):
+                return send_json(handler, {"success": False, "error": "Access forbidden: You may only view your own projects"}, 403)
             return send_json(handler, {"success": True, "project": dict(proj)})
 
         stage_filter = qs.get('stage', [''])[0].strip()
@@ -1050,6 +1094,12 @@ def _handle_get_internal(handler):
 
         where_clauses = []
         params = []
+
+        # Strict vendor server-side scoping
+        if user.get('role') in ('architect', 'dealer'):
+            where_clauses.append("vendor_user_id = ?")
+            params.append(user['id'])
+
         if stage_filter and stage_filter.lower() != 'all':
             where_clauses.append("stage = ?"); params.append(stage_filter)
         if fy_filter and fy_filter.lower() != 'all':
@@ -1149,6 +1199,8 @@ def _handle_get_internal(handler):
         """, (order_id, order_id))
         if not order:
             return send_json(handler, {"error": "Order not found"}, 404)
+        if user.get('role') in ('architect', 'dealer') and order.get('vendor_user_id') != user.get('id'):
+            return send_json(handler, {"error": "Access forbidden: You may only download quotations for your own orders"}, 403)
 
         ord_dict = dict(order)
         doc_html = _generate_order_quotation_html(ord_dict)
@@ -1161,6 +1213,10 @@ def _handle_get_internal(handler):
         handler.send_header('Access-Control-Allow-Origin', '*')
         handler.end_headers()
         handler.wfile.write(doc_bytes)
+        return
+
+    # Vendor <-> Admin CRM & Notifications
+    if vendor_crm_api.route(handler, 'GET', path, qs=qs):
         return
 
     # Product price list (TECHWOOD WPC)
@@ -1189,6 +1245,10 @@ def _handle_post_internal(handler):
         body = json.loads(body_bytes.decode('utf-8'))
     except Exception:
         body = {}
+
+    # Vendor <-> Admin CRM & Notifications
+    if vendor_crm_api.route(handler, 'POST', path, body=body):
+        return
 
     # Product price list (TECHWOOD WPC)
     if products_api.route(handler, 'POST', path, body=body):
@@ -1436,12 +1496,16 @@ def _handle_post_internal(handler):
         source = body.get('source', 'Direct Architect')
         notes = body.get('notes', '')
         owner_name = body.get('owner_name') or auth_user.get('full_name') or 'Admin'
+        if auth_user.get('role') in ('architect', 'dealer'):
+            vendor_user_id = auth_user.get('id')
+        else:
+            vendor_user_id = body.get('vendor_user_id') or auth_user.get('id')
 
         database.execute_commit("""
             INSERT INTO waltz_orders (id, order_number, project_name, client_name, country, state, city,
-                                      order_date, status, final_amount, source, notes, owner_name)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-        """, (order_id, order_num, proj_name, client_name, country, state, city, order_date, status, final_amount, source, notes, owner_name))
+                                      order_date, status, final_amount, source, notes, owner_name, vendor_user_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """, (order_id, order_num, proj_name, client_name, country, state, city, order_date, status, final_amount, source, notes, owner_name, vendor_user_id))
 
         # P2: Link products to orders — store order lines if provided
         lines_data = body.get('order_lines')
@@ -1470,6 +1534,11 @@ def _handle_post_internal(handler):
         order_id = body.get('id')
         if not order_id:
             return send_json(handler, {"success": False, "error": "Order ID is required"}, 400)
+        curr_order = database.execute_one("SELECT * FROM waltz_orders WHERE id = ?;", (order_id,))
+        if not curr_order:
+            return send_json(handler, {"success": False, "error": "Order not found"}, 404)
+        if auth_user.get('role') in ('architect', 'dealer') and curr_order.get('vendor_user_id') != auth_user.get('id'):
+            return send_json(handler, {"success": False, "error": "Access forbidden: You may only delete your own orders"}, 403)
         database.execute_commit("DELETE FROM waltz_orders WHERE id = ?;", (order_id,))
         return send_json(handler, {"success": True, "message": "Order deleted successfully"})
 
@@ -1491,11 +1560,16 @@ def _handle_post_internal(handler):
         inv_id = body.get('id') or f"INV-{uuid.uuid4().hex[:8]}"
         expires_at = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
 
+        if auth_user.get('role') in ('architect', 'dealer'):
+            vendor_user_id = auth_user.get('id')
+        else:
+            vendor_user_id = body.get('vendor_user_id') or auth_user.get('id')
+
         database.execute_commit("""
             INSERT INTO id_invitations (id, invitation_code, recipient_name, firm_name, recipient_email,
-                                        mobile, invitation_link, status, expires_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 'Active', ?);
-        """, (inv_id, inv_code, recip_name, firm_name, email, mobile, inv_link, expires_at))
+                                        mobile, invitation_link, status, expires_at, vendor_user_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'Active', ?, ?);
+        """, (inv_id, inv_code, recip_name, firm_name, email, mobile, inv_link, expires_at, vendor_user_id))
 
         created = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
         return send_json(handler, {"success": True, "message": "Invitation generated", "invitation": dict(created)}, 201)
@@ -1521,6 +1595,11 @@ def _handle_post_internal(handler):
         city = body.get('city', '') or ''
         notes = body.get('discussion_notes', '')
         owner_name = body.get('owner_name') or auth_user.get('full_name') or 'Admin'
+        if auth_user.get('role') in ('architect', 'dealer'):
+            vendor_user_id = auth_user.get('id')
+        else:
+            vendor_user_id = body.get('vendor_user_id') or auth_user.get('id')
+
         raw_imgs = body.get('image_urls')
         if isinstance(raw_imgs, list):
             image_urls_json = json.dumps(raw_imgs)
@@ -1531,9 +1610,9 @@ def _handle_post_internal(handler):
 
         database.execute_commit("""
             INSERT INTO meetings (id, meeting_date, firm_name, guest_name, mobile, user_type, guest_type,
-                                  country, state, city, status, discussion_notes, image_urls, owner_name)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Completed', ?, ?, ?);
-        """, (mtg_id, mtg_date, firm, guest, mobile, user_type, guest_type, country, state, city, notes, image_urls_json, owner_name))
+                                  country, state, city, status, discussion_notes, image_urls, owner_name, vendor_user_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Completed', ?, ?, ?, ?);
+        """, (mtg_id, mtg_date, firm, guest, mobile, user_type, guest_type, country, state, city, notes, image_urls_json, owner_name, vendor_user_id))
 
         created = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
         return send_json(handler, {"success": True, "message": "Meeting scheduled", "meeting": dict(created)}, 201)
@@ -1587,16 +1666,20 @@ def _handle_post_internal(handler):
         feedback_pending = 1 if body.get('feedback_pending') in (1, '1', True, 'true', 'True') else 0
         feedback_notes = body.get('feedback_notes', '')
         owner_name = body.get('owner_name') or auth_user.get('full_name', 'Rohan Verma')
+        if auth_user.get('role') in ('architect', 'dealer'):
+            vendor_user_id = auth_user.get('id')
+        else:
+            vendor_user_id = body.get('vendor_user_id') or auth_user.get('id')
 
         database.execute_commit("""
             INSERT INTO pipeline_projects (id, project_name, client_name, location, city, state, country,
                                           financial_year, month, day_bracket, category, total_value, sq_ft,
                                           discount_pct, days_pipeline_to_win, stage, feedback_pending,
-                                          feedback_notes, owner_name)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                                          feedback_notes, owner_name, vendor_user_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """, (proj_id, proj_name, client_name, location, city, state, country,
               financial_year, month, day_bracket, category, total_value, sq_ft,
-              discount_pct, days_to_win, stage, feedback_pending, feedback_notes, owner_name))
+              discount_pct, days_to_win, stage, feedback_pending, feedback_notes, owner_name, vendor_user_id))
 
         created = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
         return send_json(handler, {"success": True, "message": "Project created successfully", "project": dict(created)}, 201)
@@ -1915,6 +1998,8 @@ def _handle_post_internal(handler):
         existing = database.execute_one("SELECT * FROM waltz_orders WHERE id = ? OR order_number = ?;", (order_id, order_id))
         if not existing:
             return send_json(handler, {"success": False, "error": "Order not found"}, 404)
+        if auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+            return send_json(handler, {"success": False, "error": "Access forbidden: You may only modify your own orders"}, 403)
 
         real_id = existing['id']
         database.execute_commit("UPDATE waltz_orders SET status = ? WHERE id = ?;", (new_status, real_id))
@@ -1943,6 +2028,10 @@ def _handle_put_internal(handler):
         body = json.loads(body_bytes.decode('utf-8'))
     except Exception:
         body = {}
+
+    # Vendor <-> Admin CRM & Notifications
+    if vendor_crm_api.route(handler, 'PUT', path, body=body):
+        return
 
     # Product price list (TECHWOOD WPC)
     if products_api.route(handler, 'PUT', path, body=body):
@@ -2027,6 +2116,10 @@ def _handle_delete_internal(handler):
     except Exception:
         body = {}
 
+    # Vendor <-> Admin CRM & Notifications
+    if vendor_crm_api.route(handler, 'DELETE', path, body=body):
+        return
+
     # Product price list (TECHWOOD WPC)
     if products_api.route(handler, 'DELETE', path, body=body):
         return
@@ -2068,6 +2161,11 @@ def _handle_delete_internal(handler):
         order_id = path.split('/')[-1] if (path.startswith('/api/orders/') and path != '/api/orders') else body.get('id')
         if not order_id:
             return send_json(handler, {"success": False, "error": "Order ID required"}, 400)
+        curr_order = database.execute_one("SELECT * FROM waltz_orders WHERE id = ?;", (order_id,))
+        if not curr_order:
+            return send_json(handler, {"success": False, "error": "Order not found"}, 404)
+        if auth_user.get('role') in ('architect', 'dealer') and curr_order.get('vendor_user_id') != auth_user.get('id'):
+            return send_json(handler, {"success": False, "error": "Access forbidden: You may only delete your own orders"}, 403)
         database.execute_commit("DELETE FROM waltz_orders WHERE id = ?;", (order_id,))
         return send_json(handler, {"success": True, "message": "Order deleted successfully", "id": order_id})
 
@@ -2136,6 +2234,10 @@ def _update_order_internal(handler, body):
     if not existing:
         return send_json(handler, {"success": False, "error": "Order not found"}, 404)
 
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only modify your own orders"}, 403)
+
     proj_name = body.get('project_name', existing['project_name'])
     client_name = body.get('client_name', existing['client_name'])
     status = body.get('status', existing['status'])
@@ -2169,6 +2271,10 @@ def _update_project_internal(handler, body):
     existing = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
     if not existing:
         return send_json(handler, {"success": False, "error": "Project not found"}, 404)
+
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only modify your own projects"}, 403)
 
     proj_name = body.get('project_name', existing['project_name'])
     client_name = body.get('client_name', existing['client_name'])
@@ -2249,6 +2355,12 @@ def _update_project_internal(handler, body):
 def _delete_project_internal(handler, proj_id):
     if not proj_id:
         return send_json(handler, {"success": False, "error": "Project ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Project not found"}, 404)
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only delete your own projects"}, 403)
     database.execute_commit("DELETE FROM pipeline_projects WHERE id = ?;", (proj_id,))
     return send_json(handler, {"success": True, "message": "Project deleted successfully", "id": proj_id})
 
@@ -2300,6 +2412,10 @@ def _update_meeting_internal(handler, body):
     if not existing:
         return send_json(handler, {"success": False, "error": "Meeting not found"}, 404)
 
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only modify your own meetings"}, 403)
+
     meeting_date = body.get('meeting_date', existing['meeting_date'])
     firm_name = body.get('firm_name', existing['firm_name'])
     guest_name = body.get('guest_name', existing['guest_name'])
@@ -2338,6 +2454,12 @@ def _update_meeting_internal(handler, body):
 def _delete_meeting_internal(handler, mtg_id):
     if not mtg_id:
         return send_json(handler, {"success": False, "error": "Meeting ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Meeting not found"}, 404)
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only delete your own meetings"}, 403)
     database.execute_commit("DELETE FROM meetings WHERE id = ?;", (mtg_id,))
     return send_json(handler, {"success": True, "message": "Meeting deleted successfully", "id": mtg_id})
 
@@ -2350,6 +2472,10 @@ def _update_invitation_internal(handler, body):
     existing = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
     if not existing:
         return send_json(handler, {"success": False, "error": "Invitation not found"}, 404)
+
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only modify your own invitations"}, 403)
 
     status = body.get('status', existing.get('status', 'Active'))
     recipient_name = body.get('recipient_name', existing['recipient_name'])
@@ -2386,6 +2512,12 @@ def _resend_invitation_internal(handler, inv_id):
 def _delete_invitation_internal(handler, inv_id):
     if not inv_id:
         return send_json(handler, {"success": False, "error": "Invitation ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Invitation not found"}, 404)
+    auth_user = get_auth_user(handler)
+    if auth_user and auth_user.get('role') in ('architect', 'dealer') and existing.get('vendor_user_id') != auth_user.get('id'):
+        return send_json(handler, {"success": False, "error": "Access forbidden: You may only delete your own invitations"}, 403)
     database.execute_commit("DELETE FROM id_invitations WHERE id = ?;", (inv_id,))
     return send_json(handler, {"success": True, "message": "Invitation deleted successfully", "id": inv_id})
 

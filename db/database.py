@@ -6,7 +6,8 @@ from typing import Any, Dict, List, Optional
 DB_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ntw_crm.db")
 
 def get_connection() -> sqlite3.Connection:
-    conn = sqlite3.connect(DB_FILE, timeout=10.0)
+    path = os.environ.get("CRM_DB_FILE") or DB_FILE
+    conn = sqlite3.connect(path, timeout=10.0)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
