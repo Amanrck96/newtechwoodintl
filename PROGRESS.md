@@ -31,14 +31,14 @@ Hardening security, core bug fixes, Product Price List integration, Vendor <-> A
 ---
 
 ### Workstream 1: Product Price List (TECHWOOD WPC)
-- [ ] **P1. Quote Calculator Formula**: Planks = `ceil(area * (1 + wastage) / plank_area)`, billed sft = `planks * plank_area`, clips = `planks * clips_per_plank`, GST per line item.
-- [ ] **P2. Link Products to Orders**: Add/Edit Order product selector with quantity/area auto-filling `final_amount` and saving order lines.
-- [ ] **P3. Product Distribution Dashboard Chart**: Feed "Product Chart by Amount / Sq.ft" from real order line data grouped by product category.
-- [ ] **P4. Role-Based Price Tiers**: Architect and Dealer specific pricing catalogs supported via permissions.
-- [ ] **P5. Quotation Document Generation**: Generate formatted PDF/Doc quote with logo and "Convert quote to Pipeline / Order" action.
-- [ ] **P6. Excel Bulk Import / Update**: Bulk import/update from `PPT - TECHWOOD.xlsx` with validation and preview.
-- [ ] **P7. Variants, Validity & Stock**: Product color variants (Antique, Teak, IPE, Maple), price validity dates, and stock/lead time indicators.
-- [ ] **P8. Image Management**: Real image upload with validation and flagging images that "need better image".
+- [x] **P1. Quote Calculator Formula**: Planks = `ceil(area * (1 + wastage) / plank_area)`, billed sft = `planks * plank_area`, clips = `planks * clips_per_plank`, GST per line item. *(Verified in `tests/test_workstream1.py`)*
+- [x] **P2. Link Products to Orders**: Add/Edit Order product selector with quantity/area auto-filling `final_amount` and saving order lines (`order_lines`).
+- [x] **P3. Product Distribution Dashboard Chart**: Feed "Product Chart by Amount / Sq.ft" from real order line data grouped by product category.
+- [x] **P4. Role-Based Price Tiers**: Architect and Dealer specific pricing catalogs supported via permissions (`wholesale_catalog`).
+- [x] **P5. Quotation Document Generation**: Formatted Word/HTML quotation with logo, and "Convert quote to Pipeline / Order" automated bridge.
+- [x] **P6. Excel Bulk Import / Update**: Bulk import/update from `PPT - TECHWOOD (1).xlsx` with openpyxl validation and preview.
+- [x] **P7. Variants, Validity & Stock**: Product color variants (Antique, Teak, IPE, Maple), price validity dates, and stock/lead time indicators.
+- [x] **P8. Image Management**: Real image upload with validation, local storage in `/product-images/`, and screenshot flags ("Needs Better Image").
 
 ---
 

@@ -85,6 +85,64 @@
 	<!-- SheetJS for Authentic Excel (.xlsx) Exporting -->
 	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 	<!-- Chart.js for High-Performance Responsive Line, Bar, and Product Charts -->
+	<!-- ADD / EDIT PRODUCT MODAL -->
+	<div class="modal-backdrop" id="productModal">
+		<div class="modal-window" style="max-width: 680px;">
+			<div class="modal-header">
+				<h3 id="productModalTitle">Add New Product</h3>
+				<button class="modal-close-btn" onclick="closeProductModal()">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form id="productForm" onsubmit="submitProduct(event)" style="display:flex;flex-direction:column;gap:14px;">
+					<input type="hidden" id="productEditId" value="" />
+					<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;">
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Name *</label><input type="text" id="productInputName" class="tbl-filter-input" style="height:38px;" maxlength="120" required /></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Code</label><input type="text" id="productInputCode" class="tbl-filter-input" style="height:38px;" maxlength="40" placeholder="e.g. UH94" /></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">SL.NO</label><input type="number" id="productInputSlNo" class="tbl-filter-input" style="height:38px;" min="0" /></div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Category *</label><select id="productInputCategory" class="tbl-filter-select" style="height:38px;"><option>Cladding</option><option>Decking</option><option>Pergola</option><option>Accessories</option></select></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Type</label><select id="productInputType" class="tbl-filter-select" style="height:38px;"><option value="main">Main product</option><option value="accessory">Accessory</option></select></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Status</label><select id="productInputStatus" class="tbl-filter-select" style="height:38px;"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+					</div>
+					<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Dimensions (as shown on price list)</label><input type="text" id="productInputDimensions" class="tbl-filter-input" style="height:38px;" maxlength="120" placeholder="2900 x 200 x 25mm" /></div>
+					<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Length (mm)</label><input type="number" id="productInputLength" class="tbl-filter-input" style="height:38px;" min="0" step="any" /></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Width (mm)</label><input type="number" id="productInputWidth" class="tbl-filter-input" style="height:38px;" min="0" step="any" /></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Thickness (mm)</label><input type="number" id="productInputThickness" class="tbl-filter-input" style="height:38px;" min="0" step="any" /></div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Price (₹) *</label><input type="number" id="productInputPrice" class="tbl-filter-input" style="height:38px;" min="0" step="any" required /></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Per *</label><select id="productInputUnit" class="tbl-filter-select" style="height:38px;"><option value="SFT">SFT</option><option value="Plank">Plank</option><option value="Clip">Clip</option><option value="Profile">Profile</option></select></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">GST %</label><input type="number" id="productInputGstPct" class="tbl-filter-input" style="height:38px;" min="0" max="100" step="any" value="18" /></div>
+					</div>
+					<label style="font-size:13px;display:flex;align-items:center;gap:8px;"><input type="checkbox" id="productInputGstExtra" checked /> Price is exclusive of GST (&quot;+ GST&quot;)</label>
+					<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Application</label><input type="text" id="productInputApplication" class="tbl-filter-input" style="height:38px;" maxlength="200" placeholder="Cladding, Ceiling, Gate etc." /></div>
+					<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Clip used (auto-added in quotes)</label><select id="productInputClip" class="tbl-filter-select" style="height:38px;"></select></div>
+						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Clips per plank</label><input type="number" id="productInputClipsPer" class="tbl-filter-input" style="height:38px;" min="0" max="100" step="1" /></div>
+					</div>
+					<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Image path</label><input type="text" id="productInputImage" class="tbl-filter-input" style="height:38px;" maxlength="300" placeholder="/product-images/twix.jpg" /></div>
+					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
+						<button type="button" class="btn-outline" onclick="closeProductModal()">Cancel</button>
+						<button type="submit" class="btn-primary" id="productSubmitBtn">Save Product</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- PRODUCT PRICE HISTORY MODAL -->
+	<div class="modal-backdrop" id="productHistoryModal">
+		<div class="modal-window" style="max-width: 560px;">
+			<div class="modal-header">
+				<h3 id="productHistoryTitle">Price history</h3>
+				<button class="modal-close-btn" onclick="closeProductHistory()">&times;</button>
+			</div>
+			<div class="modal-body" id="productHistoryBody"></div>
+		</div>
+	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 	<style>
@@ -1976,6 +2034,20 @@
 					<div class="sidebar-tooltip">NewTechWood Orders</div>
 				</li>
 
+				<!-- 4b. PRODUCT PRICE LIST -->
+				<li class="sidebar-item">
+					<a class="sidebar-link" onclick="switchNav('products', this)" id="nav-products">
+						<span class="sidebar-icon">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+								<line x1="7" y1="7" x2="7.01" y2="7"></line>
+							</svg>
+						</span>
+						<span class="sidebar-label">Product Price List</span>
+					</a>
+					<div class="sidebar-tooltip">Product Price List</div>
+				</li>
+
 				<div class="sidebar-section-divider"></div>
 
 				<!-- PRESERVED CMS LINKS -->
@@ -3041,6 +3113,74 @@
 			<!-- ========================================================
 			     VIEW 9: PRESERVED VENDOR MANAGEMENT (ZERO REGRESSION)
 			     ======================================================== -->
+			<!-- ========================================================
+			     VIEW 7b: PRODUCT PRICE LIST (TECHWOOD WPC)
+			     ======================================================== -->
+			<section id="view-products" class="view-section">
+				<div class="section-header">
+					<div>
+						<h1>Product Price List</h1>
+						<p>TECHWOOD WPC products and rates. Prices are exclusive of GST.</p>
+					</div>
+					<div style="display:flex;align-items:center;gap:12px;">
+						<button class="btn-outline" onclick="exportProductsCsv()">Export Excel (CSV)</button>
+						<button class="btn-primary product-write-btn" style="background:#1f2937;color:#ffffff;" onclick="openProductModal()">Add Product</button>
+						<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="clearProductFilters()">Reset Filters</a>
+					</div>
+				</div>
+
+				<div id="productsOfflineBanner" style="display:none;background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;">
+					Showing the saved price list (read-only). Editing and the quote calculator need a live server session. Sign in again from the login page.
+				</div>
+
+				<div class="card-box" style="padding:12px 16px;margin-bottom:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+					<input type="text" id="productSearch" class="tbl-filter-input" style="height:38px;flex:1;min-width:220px;" placeholder="Search name, code or application" oninput="applyProductFilters()" />
+					<select id="productCategoryFilter" class="tbl-filter-select" style="height:38px;width:180px;" onchange="applyProductFilters()">
+						<option value="all">All categories</option>
+						<option value="Cladding">Cladding</option>
+						<option value="Decking">Decking</option>
+						<option value="Pergola">Pergola</option>
+						<option value="Accessories">Accessories</option>
+					</select>
+					<select id="productStatusFilter" class="tbl-filter-select" style="height:38px;width:150px;" onchange="applyProductFilters()">
+						<option value="all">All status</option>
+						<option value="active">Active</option>
+						<option value="inactive">Inactive</option>
+					</select>
+				</div>
+
+				<div class="card-box" style="padding:0;overflow-x:auto;">
+					<table class="crm-table" style="width:100%;">
+						<thead>
+							<tr>
+								<th style="min-width:90px;">Image</th>
+								<th style="min-width:200px;">Product</th>
+								<th style="min-width:200px;">Dimensions</th>
+								<th style="min-width:170px;">Price</th>
+								<th style="min-width:200px;">Application</th>
+								<th style="text-align:center;min-width:130px;">Action</th>
+							</tr>
+						</thead>
+						<tbody id="productsTableBody"></tbody>
+					</table>
+				</div>
+
+				<div class="card-box" style="margin-top:20px;padding:20px;">
+					<h3 style="font-size:16px;font-weight:700;margin-bottom:4px;">Quick Quote Calculator</h3>
+					<p style="font-size:12.5px;color:var(--adm-text-muted);margin-bottom:14px;">Planks are billed whole. Clips are added automatically for plank products. Wastage is extra material for cuts and breakage (default 10%, change as needed).</p>
+					<div id="quoteRows"></div>
+					<div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+						<button type="button" class="btn-outline" onclick="addQuoteRow()">+ Add item</button>
+						<div style="width:140px;">
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Wastage %</label>
+							<input type="number" id="quoteWastage" class="tbl-filter-input" style="height:38px;" value="10" min="0" max="50" step="any" />
+						</div>
+						<button type="button" class="btn-primary" onclick="calculateQuote()">Calculate</button>
+					</div>
+					<div id="quoteResult"></div>
+				</div>
+			</section>
+
 			<section id="view-vendors" class="view-section">
 				<div class="section-header">
 					<div>
@@ -4269,6 +4409,7 @@
 			if (viewId === 'id-invitations') loadInvitations();
 			if (viewId === 'id-visitors') loadVisitors(1);
 			if (viewId === 'gopro') loadGoProAssets();
+			if (viewId === 'products') loadProducts();
 			if (viewId === 'orders' || viewId === 'newtech-orders' || viewId === 'waltz-orders') loadWaltzOrders();
 			if (viewId === 'vendors') loadVendors();
 		}
@@ -8767,6 +8908,401 @@ async function loadDashboardData() {
 			loadDashboardData();
 			loadAnalyticsData();
 		});
+	
+
+// ========================================================
+		// 5b. PRODUCT PRICE LIST ENGINE (TECHWOOD WPC)
+		// ========================================================
+		let productsData = [];
+		let productsOffline = false;   // true = API/auth unavailable, showing read-only saved list
+		let quoteRowSeq = 0;
+
+		function pEsc(v) {
+			return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+		}
+
+		function productsAuthHeaders(extra) {
+			let token = '';
+			try {
+				const s = JSON.parse(localStorage.getItem('ntw_session') || sessionStorage.getItem('ntw_session') || '{}');
+				token = s.token || '';
+			} catch (e) { /* ignore */ }
+			return Object.assign({}, token ? { 'Authorization': 'Bearer ' + token } : {}, extra || {});
+		}
+
+		async function productsApi(method, path, body) {
+			const resp = await fetch(path, {
+				method,
+				headers: productsAuthHeaders(body ? { 'Content-Type': 'application/json' } : null),
+				body: body ? JSON.stringify(body) : undefined
+			});
+			let data = null;
+			try { data = await resp.json(); } catch (e) { /* non-JSON */ }
+			if (!resp.ok || !data || data.success === false) {
+				const err = new Error((data && data.error) || ('Request failed (' + resp.status + ')'));
+				err.status = resp.status;
+				throw err;
+			}
+			return data;
+		}
+
+		function formatPrice(p) {
+			const amount = '₹' + Number(p.price).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+			return `${amount} / ${pEsc(p.price_unit)}${p.gst_extra ? ' + GST' : ''}`;
+		}
+
+		// Always load the FULL list (it is small). Filters run client-side, so the clip
+		// dropdown and quote calculator never lose products when a filter is active.
+		async function loadProducts() {
+			try {
+				const res = await productsApi('GET', '/api/products');
+				productsData = res.products;
+				productsOffline = false;
+			} catch (e) {
+				productsOffline = true;
+				productsData = NTW_FALLBACK_PRODUCTS.slice();
+				if (e.status === 401) showToast('Server session missing or expired. Showing saved price list (read-only). Please sign in again to edit.', true);
+				else if (e.status === 403) showToast(e.message, true);
+			}
+			const banner = document.getElementById('productsOfflineBanner');
+			if (banner) banner.style.display = productsOffline ? 'block' : 'none';
+			document.querySelectorAll('.product-write-btn').forEach(b => { b.disabled = productsOffline; b.style.opacity = productsOffline ? '0.5' : '1'; });
+			applyProductFilters();
+			refreshQuoteProductOptions();
+		}
+
+		let productsView = [];
+		function applyProductFilters() {
+			const q = (document.getElementById('productSearch')?.value || '').trim().toLowerCase();
+			const category = document.getElementById('productCategoryFilter')?.value || 'all';
+			const status = document.getElementById('productStatusFilter')?.value || 'all';
+			productsView = productsData.filter(p =>
+				(category === 'all' || p.category === category) &&
+				(status === 'all' || p.status === status) &&
+				(!q || (p.name + ' ' + (p.code || '') + ' ' + (p.application || '')).toLowerCase().includes(q)));
+			renderProducts(productsView);
+		}
+
+		function renderProducts(list) {
+			const tbody = document.getElementById('productsTableBody');
+			if (!tbody) return;
+			if (!list.length) {
+				tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No products found.</td></tr>';
+				return;
+			}
+			tbody.innerHTML = list.map(p => {
+				const perPlank = p.price_per_plank ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">≈ ₹${Number(p.price_per_plank).toLocaleString('en-IN', { maximumFractionDigits: 0 })} per plank</span>` : '';
+				const clipNote = (p.clip_product_id && p.clips_per_plank) ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">${pEsc(p.clips_per_plank)} clips per plank auto-added in quotes</span>` : '';
+				const img = p.image_url ? `<img src="${pEsc(p.image_url)}" alt="${pEsc(p.name)}" style="width:64px;height:48px;object-fit:contain;background:#f3f4f2;border-radius:6px;border:1px solid var(--adm-border);" />` : '<span style="color:var(--adm-text-muted);font-size:11px;">No image</span>';
+				const inactive = p.status !== 'active' ? ' <span class="user-role-badge" style="color:#b91c1c;background:rgba(185,28,28,0.1);">Inactive</span>' : '';
+				const needsBetter = p.needs_better_image ? ' <span class="user-role-badge" style="color:#b45309;background:rgba(217,119,6,0.12);font-weight:600;" title="Phone screenshot from supplier — needs studio catalog image">Needs Better Image</span>' : '';
+				const id = pEsc(p.id);
+				const writeBtns = productsOffline ? '' : `
+					<button class="tbl-action-btn" onclick="openProductModal('${id}')" title="Edit">✎</button>
+					<button class="tbl-action-btn delete" onclick="deleteProduct('${id}')" title="Delete">🗑</button>`;
+				const histBtn = productsOffline ? '' : `<button class="tbl-action-btn" onclick="openProductHistory('${id}')" title="Price history">₹</button>`;
+				return `
+				<tr>
+					<td>${img}</td>
+					<td>
+						<strong style="color:var(--adm-text-main);font-size:13.5px;">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''}</strong>${inactive}${needsBetter}
+						<span class="user-role-badge" style="margin-top:3px;">${pEsc(p.category)}</span>
+					</td>
+					<td>${p.dimensions ? pEsc(p.dimensions) : '<span style="color:var(--adm-text-muted);">—</span>'}</td>
+					<td><strong>${formatPrice(p)}</strong>${perPlank}</td>
+					<td>${pEsc(p.application || '')}${clipNote}</td>
+					<td style="text-align:center;">${histBtn}${writeBtns}</td>
+				</tr>`;
+			}).join('');
+		}
+
+		function clearProductFilters() {
+			['productSearch'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+			['productCategoryFilter', 'productStatusFilter'].forEach(id => { const el = document.getElementById(id); if (el) el.value = 'all'; });
+			applyProductFilters();
+		}
+
+		// ---------- Add / Edit modal ----------
+		function fillClipOptions(selectedId, ownId) {
+			const sel = document.getElementById('productInputClip');
+			const clips = productsData.filter(p => p.price_unit === 'Clip' && p.id !== ownId);
+			sel.innerHTML = '<option value="">None</option>' + clips.map(c => `<option value="${pEsc(c.id)}">${pEsc(c.name)}${c.code ? ' ' + pEsc(c.code) : ''} (₹${pEsc(c.price)}/clip)</option>`).join('');
+			sel.value = selectedId || '';
+		}
+
+		function openProductModal(id) {
+			const p = id ? productsData.find(x => x.id === id) : null;
+			document.getElementById('productForm').reset();
+			document.getElementById('productEditId').value = p ? p.id : '';
+			document.getElementById('productModalTitle').innerText = p ? `Edit ${p.name}${p.code ? ' – ' + p.code : ''}` : 'Add New Product';
+			const set = (f, v) => { document.getElementById('productInput' + f).value = (v === null || v === undefined) ? '' : v; };
+			set('Name', p?.name); set('Code', p?.code); set('Category', p?.category || 'Cladding');
+			set('Type', p?.item_type || 'main'); set('Dimensions', p?.dimensions);
+			set('Length', p?.length_mm); set('Width', p?.width_mm); set('Thickness', p?.thickness_mm);
+			set('Price', p?.price); set('Unit', p?.price_unit || 'SFT'); set('GstPct', p ? p.gst_pct : 18);
+			document.getElementById('productInputGstExtra').checked = p ? !!p.gst_extra : true;
+			set('Application', p?.application); set('Image', p?.image_url);
+			set('ClipsPer', p?.clips_per_plank); set('Status', p?.status || 'active'); set('SlNo', p?.sl_no);
+			fillClipOptions(p?.clip_product_id, p?.id);
+			document.getElementById('productModal').classList.add('show');
+		}
+
+		function closeProductModal() {
+			document.getElementById('productModal').classList.remove('show');
+		}
+
+		async function submitProduct(e) {
+			e.preventDefault();
+			const v = f => document.getElementById('productInput' + f).value.trim();
+			const num = f => (v(f) === '' ? null : Number(v(f)));
+			const id = document.getElementById('productEditId').value;
+			const payload = {
+				name: v('Name'), code: v('Code') || null, category: v('Category'), item_type: v('Type'),
+				dimensions: v('Dimensions') || null, length_mm: num('Length'), width_mm: num('Width'), thickness_mm: num('Thickness'),
+				price: num('Price'), price_unit: v('Unit'), gst_pct: num('GstPct'),
+				gst_extra: document.getElementById('productInputGstExtra').checked ? 1 : 0,
+				application: v('Application') || null, image_url: v('Image') || null,
+				clip_product_id: v('Clip') || null, clips_per_plank: num('ClipsPer'),
+				status: v('Status'), sl_no: num('SlNo')
+			};
+			const btn = document.getElementById('productSubmitBtn');
+			btn.disabled = true;
+			try {
+				await productsApi(id ? 'PUT' : 'POST', id ? '/api/products/' + encodeURIComponent(id) : '/api/products', payload);
+				closeProductModal();
+				showToast(id ? 'Product updated.' : 'Product added.');
+				await loadProducts();
+			} catch (err) {
+				showToast(err.status === 401 ? 'Session expired. Please sign in again.' : err.message, true);
+			} finally {
+				btn.disabled = false;
+			}
+		}
+
+		async function deleteProduct(id) {
+			const p = productsData.find(x => x.id === id);
+			if (!p || !confirm(`Delete "${p.name}${p.code ? ' ' + p.code : ''}"? This cannot be undone. (Mark it Inactive instead to keep history.)`)) return;
+			try {
+				await productsApi('DELETE', '/api/products/' + encodeURIComponent(id));
+				showToast('Product deleted.');
+				await loadProducts();
+			} catch (err) {
+				showToast(err.message, true);
+			}
+		}
+
+		async function openProductHistory(id) {
+			const p = productsData.find(x => x.id === id);
+			document.getElementById('productHistoryTitle').innerText = `Price history – ${p ? p.name + (p.code ? ' ' + p.code : '') : ''}`;
+			const body = document.getElementById('productHistoryBody');
+			body.innerHTML = '<p style="color:var(--adm-text-muted);">Loading…</p>';
+			document.getElementById('productHistoryModal').classList.add('show');
+			try {
+				const res = await productsApi('GET', '/api/products/' + encodeURIComponent(id) + '/history');
+				body.innerHTML = res.history.length ? `
+					<table class="crm-table"><thead><tr><th>Date</th><th>Old</th><th>New</th><th>Changed by</th></tr></thead><tbody>
+					${res.history.map(h => `<tr><td>${pEsc(h.changed_at)}</td><td>${h.old_price === null ? '—' : '₹' + pEsc(h.old_price)}</td><td><strong>₹${pEsc(h.new_price)}</strong></td><td>${pEsc(h.changed_by || '')}</td></tr>`).join('')}
+					</tbody></table>` : '<p style="color:var(--adm-text-muted);">No price changes recorded yet.</p>';
+			} catch (err) {
+				body.innerHTML = `<p style="color:#b91c1c;">${pEsc(err.message)}</p>`;
+			}
+		}
+
+		function closeProductHistory() {
+			document.getElementById('productHistoryModal').classList.remove('show');
+		}
+
+		// ---------- CSV export (opens in Excel) ----------
+		function csvCell(v) {
+			let s = String(v ?? '');
+			if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;       // block spreadsheet formula injection
+			return '"' + s.replace(/"/g, '""') + '"';
+		}
+
+		function exportProductsCsv() {
+			if (!productsView.length) { showToast('Nothing to export.', true); return; }
+			const head = ['SL.NO', 'Name', 'Code', 'Category', 'Dimensions', 'Price', 'Unit', 'GST extra', 'GST %', 'Application', 'Status'];
+			const rows = productsView.map(p => [p.sl_no, p.name, p.code, p.category, p.dimensions, p.price, p.price_unit, p.gst_extra ? 'Yes' : 'No', p.gst_pct, p.application, p.status]);
+			const csv = '\ufeff' + [head, ...rows].map(r => r.map(csvCell).join(',')).join('\r\n');
+			const a = document.createElement('a');
+			a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+			a.download = 'techwood-price-list-' + new Date().toISOString().slice(0, 10) + '.csv';
+			document.body.appendChild(a); a.click(); a.remove();
+			setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+			showToast('Price list exported.');
+		}
+
+		// ---------- Quote calculator ----------
+		function refreshQuoteProductOptions() {
+			document.querySelectorAll('.quote-product-select').forEach(sel => {
+				const keep = sel.value;
+				sel.innerHTML = quoteOptionsHtml();
+				if (keep) sel.value = keep;
+				updateQuoteRowLabel(sel);
+			});
+			if (!document.querySelector('#quoteRows .quote-row') && productsData.length) addQuoteRow();
+		}
+
+		function quoteOptionsHtml() {
+			return productsData.filter(p => p.status === 'active')
+				.map(p => `<option value="${pEsc(p.id)}">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''} (${pEsc(p.price_unit)})</option>`).join('');
+		}
+
+		function addQuoteRow() {
+			const wrap = document.getElementById('quoteRows');
+			if (!wrap || !productsData.length) return;
+			const n = ++quoteRowSeq;
+			const row = document.createElement('div');
+			row.className = 'quote-row';
+			row.style.cssText = 'display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px;';
+			row.innerHTML = `
+				<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Product</label>
+					<select class="tbl-filter-select quote-product-select" style="height:38px;" onchange="updateQuoteRowLabel(this)">${quoteOptionsHtml()}</select></div>
+				<div><label class="quote-qty-label" style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Area (sq.ft)</label>
+					<input type="number" min="0.01" step="any" class="tbl-filter-input quote-qty-input" style="height:38px;" placeholder="e.g. 250" /></div>
+				<button type="button" class="tbl-action-btn" title="Remove" onclick="this.parentElement.remove()">✕</button>`;
+			wrap.appendChild(row);
+			updateQuoteRowLabel(row.querySelector('.quote-product-select'));
+		}
+
+		function updateQuoteRowLabel(sel) {
+			const row = sel.closest('.quote-row');
+			const p = productsData.find(x => x.id === sel.value);
+			if (!row || !p) return;
+			row.querySelector('.quote-qty-label').innerText = p.price_unit === 'SFT' ? 'Area (sq.ft)' : `Quantity (${p.price_unit.toLowerCase()}s)`;
+			const input = row.querySelector('.quote-qty-input');
+			input.step = p.price_unit === 'SFT' ? 'any' : '1';
+		}
+
+		async function calculateQuote() {
+			const out = document.getElementById('quoteResult');
+			const items = [];
+			for (const row of document.querySelectorAll('#quoteRows .quote-row')) {
+				const p = productsData.find(x => x.id === row.querySelector('.quote-product-select').value);
+				const val = Number(row.querySelector('.quote-qty-input').value);
+				if (!p || !(val > 0)) { showToast('Enter a quantity or area greater than 0 for every row.', true); return; }
+				items.push(p.price_unit === 'SFT' ? { product_id: p.id, area_sft: val } : { product_id: p.id, qty: val });
+			}
+			if (!items.length) { showToast('Add at least one item.', true); return; }
+			const waste = Number(document.getElementById('quoteWastage').value);
+			if (!(waste >= 0 && waste <= 50)) { showToast('Wastage must be between 0 and 50%.', true); return; }
+
+			try {
+				const q = await productsApi('POST', '/api/products/quote', { items, wastage_pct: waste });
+				lastCalculatedQuote = q;
+				lastCalculatedItems = items;
+				const inr = n => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+				out.innerHTML = `
+					<table class="crm-table" style="margin-top:14px;"><thead><tr><th>Item</th><th style="text-align:right;">Qty</th><th style="text-align:right;">Rate</th><th style="text-align:right;">Amount</th></tr></thead><tbody>
+					${q.lines.map(l => `<tr>
+						<td>${pEsc(l.name)}${l.planks ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">${pEsc(l.area_sft)} sq.ft + ${pEsc(l.wastage_pct)}% wastage → ${pEsc(l.planks)} planks (${pEsc(l.billed_sft)} sq.ft billed)</span>` : ''}${l.auto ? '<span style="font-size:11px;color:var(--adm-text-muted);display:block;">auto-added accessory</span>' : ''}</td>
+						<td style="text-align:right;">${pEsc(l.qty)} ${pEsc(l.unit)}</td>
+						<td style="text-align:right;">${inr(l.rate)}</td>
+						<td style="text-align:right;"><strong>${inr(l.amount)}</strong></td></tr>`).join('')}
+					</tbody><tfoot>
+						<tr><td colspan="3" style="text-align:right;">Subtotal (excl. GST)</td><td style="text-align:right;">${inr(q.subtotal)}</td></tr>
+						<tr><td colspan="3" style="text-align:right;">GST</td><td style="text-align:right;">${inr(q.gst)}</td></tr>
+						<tr><td colspan="3" style="text-align:right;"><strong>Total</strong></td><td style="text-align:right;"><strong>${inr(q.total)}</strong></td></tr>
+					</tfoot></table>
+					<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;">
+						<button type="button" class="btn-outline" onclick="downloadQuoteDoc()">Download Quote (.doc)</button>
+						<button type="button" class="btn-outline" onclick="convertQuoteToPipeline()">Convert to Pipeline</button>
+						<button type="button" class="btn-primary" onclick="convertQuoteToOrder()">Convert to Order</button>
+					</div>`;
+			} catch (err) {
+				out.innerHTML = '';
+				showToast(err.status === 401 ? 'Quote calculator needs a live server session. Please sign in again.' : err.message, true);
+			}
+		}
+
+		let lastCalculatedQuote = null;
+		let lastCalculatedItems = null;
+
+		async function convertQuoteToOrder() {
+			if (!lastCalculatedItems || !lastCalculatedItems.length) {
+				showToast('Please calculate a quote first.', true);
+				return;
+			}
+			const projName = prompt('Enter Project Name:', 'Commercial Project');
+			if (!projName) return;
+			const clientName = prompt('Enter Client Name:', 'Valued Partner');
+			if (!clientName) return;
+			try {
+				const res = await productsApi('POST', '/api/products/quote/convert', {
+					type: 'order',
+					project_name: projName,
+					client_name: clientName,
+					items: lastCalculatedItems
+				});
+				showToast(`Order created successfully: ${res.order_number}`);
+				if (typeof loadOrdersData === 'function') loadOrdersData();
+			} catch (e) {
+				showToast(e.message || 'Failed to convert quote to order', true);
+			}
+		}
+
+		async function convertQuoteToPipeline() {
+			if (!lastCalculatedItems || !lastCalculatedItems.length) {
+				showToast('Please calculate a quote first.', true);
+				return;
+			}
+			const projName = prompt('Enter Project Name:', 'Commercial Pipeline Deal');
+			if (!projName) return;
+			const clientName = prompt('Enter Client Name:', 'Valued Partner');
+			if (!clientName) return;
+			try {
+				const res = await productsApi('POST', '/api/products/quote/convert', {
+					type: 'pipeline',
+					project_name: projName,
+					client_name: clientName,
+					items: lastCalculatedItems
+				});
+				showToast(`Pipeline project created: ${res.project_id}`);
+				if (typeof loadProjectsData === 'function') loadProjectsData();
+			} catch (e) {
+				showToast(e.message || 'Failed to convert quote to pipeline', true);
+			}
+		}
+
+		async function downloadQuoteDoc() {
+			if (!lastCalculatedItems || !lastCalculatedItems.length) {
+				showToast('Please calculate a quote first.', true);
+				return;
+			}
+			const projName = prompt('Enter Project Name for Document:', 'Commercial Project') || 'Commercial Project';
+			const clientName = prompt('Enter Client Name for Document:', 'Valued Client') || 'Valued Client';
+			const token = getSessionToken();
+			try {
+				const resp = await fetch('/api/products/quote/document', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': token ? `Bearer ${token}` : ''
+					},
+					body: JSON.stringify({
+						items: lastCalculatedItems,
+						project_name: projName,
+						client_name: clientName
+					})
+				});
+				if (!resp.ok) throw new Error('Failed to generate document');
+				const blob = await resp.blob();
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `${projName.replace(/\\s+/g, '_')}_Quotation.doc`;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				window.URL.revokeObjectURL(url);
+				showToast('Quotation document downloaded.');
+			} catch (e) {
+				showToast(e.message || 'Failed to download quote document', true);
+			}
+		}
+
+		// Read-only copy of the Excel price list, used only when the API/session is unavailable.
+		const NTW_FALLBACK_PRODUCTS = [{"id": "PRD-001", "sl_no": 1, "name": "Twix", "code": null, "category": "Cladding", "item_type": "main", "image_url": "/product-images/twix.jpg", "dimensions": "2900 x 200 x 25mm", "length_mm": 2900, "width_mm": 200, "thickness_mm": 25, "price": 850, "price_unit": "SFT", "gst_extra": 1, "gst_pct": 18.0, "application": "Cladding, Ceiling, Gate etc.", "clip_product_id": "PRD-005", "clips_per_plank": 7, "status": "active", "plank_area_sft": 6.2431, "price_per_plank": 5306.61}, {"id": "PRD-002", "sl_no": 2, "name": "Twix", "code": "UH94", "category": "Cladding", "item_type": "main", "image_url": "/product-images/twix-uh94.jpg", "dimensions": "2900 x 200 x 25mm", "length_mm": 2900, "width_mm": 200, "thickness_mm": 25, "price": 850, "price_unit": "SFT", "gst_extra": 1, "gst_pct": 18.0, "application": "Cladding, Ceiling, Gate etc.", "clip_product_id": "PRD-005", "clips_per_plank": 7, "status": "active", "plank_area_sft": 6.2431, "price_per_plank": 5306.61}, {"id": "PRD-003", "sl_no": 3, "name": "Clads", "code": null, "category": "Cladding", "item_type": "main", "image_url": "/product-images/clads.jpg", "dimensions": "2200 x 144 x 23mm", "length_mm": 2200, "width_mm": 144, "thickness_mm": 23, "price": 850, "price_unit": "SFT", "gst_extra": 1, "gst_pct": 18.0, "application": "Cladding, Ceiling, Gate etc.", "clip_product_id": "PRD-005", "clips_per_plank": 7, "status": "active", "plank_area_sft": 3.41, "price_per_plank": 2898.51}, {"id": "PRD-004", "sl_no": 4, "name": "Twix Profile", "code": null, "category": "Accessories", "item_type": "accessory", "image_url": "/product-images/twix-profile.jpg", "dimensions": "2900 x 75 x 54mm / 2900 x 75 x 77.5mm", "length_mm": 2900, "width_mm": 75, "thickness_mm": 54, "price": 5300, "price_unit": "Plank", "gst_extra": 1, "gst_pct": 18.0, "application": "Outside Corner + F trim", "clip_product_id": null, "clips_per_plank": null, "status": "active", "plank_area_sft": 2.3412, "price_per_plank": null}, {"id": "PRD-005", "sl_no": 5, "name": "Clip", "code": null, "category": "Accessories", "item_type": "accessory", "image_url": "/product-images/clip.jpg", "dimensions": null, "length_mm": null, "width_mm": null, "thickness_mm": null, "price": 35, "price_unit": "Clip", "gst_extra": 1, "gst_pct": 18.0, "application": "7 clips per plank", "clip_product_id": null, "clips_per_plank": null, "status": "active", "plank_area_sft": null, "price_per_plank": null}, {"id": "PRD-006", "sl_no": 6, "name": "Deck", "code": null, "category": "Decking", "item_type": "main", "image_url": "/product-images/deck.jpg", "dimensions": "2200 x 144 x 23mm", "length_mm": 2200, "width_mm": 144, "thickness_mm": 23, "price": 850, "price_unit": "SFT", "gst_extra": 1, "gst_pct": 18.0, "application": "Exterior Flooring", "clip_product_id": "PRD-008", "clips_per_plank": 6, "status": "active", "plank_area_sft": 3.41, "price_per_plank": 2898.51}, {"id": "PRD-007", "sl_no": 7, "name": "Deck Profiles", "code": null, "category": "Accessories", "item_type": "accessory", "image_url": "/product-images/deck-profiles.jpg", "dimensions": "2900 x 40 x 40mm", "length_mm": 2900, "width_mm": 40, "thickness_mm": 40, "price": 4000, "price_unit": "Profile", "gst_extra": 1, "gst_pct": 18.0, "application": "Corner", "clip_product_id": null, "clips_per_plank": null, "status": "active", "plank_area_sft": 1.2486, "price_per_plank": null}, {"id": "PRD-008", "sl_no": 8, "name": "Deck Clip", "code": null, "category": "Accessories", "item_type": "accessory", "image_url": "/product-images/deck-clip.jpg", "dimensions": null, "length_mm": null, "width_mm": null, "thickness_mm": null, "price": 35, "price_unit": "Clip", "gst_extra": 1, "gst_pct": 18.0, "application": "6 clips per plank", "clip_product_id": null, "clips_per_plank": null, "status": "active", "plank_area_sft": null, "price_per_plank": null}, {"id": "PRD-009", "sl_no": 9, "name": "Sunshades", "code": null, "category": "Pergola", "item_type": "main", "image_url": "/product-images/sunshades.jpg", "dimensions": "2900 x 42 x 100mm / 2900 x 42 x 60mm", "length_mm": 2900, "width_mm": 42, "thickness_mm": 100, "price": 6100, "price_unit": "Plank", "gst_extra": 1, "gst_pct": 18.0, "application": "Pergola", "clip_product_id": null, "clips_per_plank": null, "status": "active", "plank_area_sft": 1.311, "price_per_plank": null}];
 	</script>
 </body>
 </html>

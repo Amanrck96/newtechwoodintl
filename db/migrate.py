@@ -115,8 +115,10 @@ def run_migrations():
         try:
             # Run statements one by one so ALTER TABLE errors can be caught per-statement
             for stmt in sql_script.split(';'):
-                stmt = stmt.strip()
-                if not stmt or stmt.startswith('--'):
+                # Strip out line comments so statements starting with comments are not skipped
+                clean_lines = [l for l in stmt.splitlines() if not l.strip().startswith('--')]
+                stmt = '\n'.join(clean_lines).strip()
+                if not stmt:
                     continue
                 try:
                     cursor.execute(stmt)

@@ -27,6 +27,7 @@ if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
 
 import database
+import products_api
 
 # ─── Password Hashing ─────────────────────────────────────────────────────────
 try:
@@ -1162,6 +1163,10 @@ def _handle_get_internal(handler):
         handler.wfile.write(doc_bytes)
         return
 
+    # Product price list (TECHWOOD WPC)
+    if products_api.route(handler, 'GET', path, qs=qs):
+        return
+
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
 
@@ -1184,6 +1189,10 @@ def _handle_post_internal(handler):
         body = json.loads(body_bytes.decode('utf-8'))
     except Exception:
         body = {}
+
+    # Product price list (TECHWOOD WPC)
+    if products_api.route(handler, 'POST', path, body=body):
+        return
 
     # ── Public: Login ─────────────────────────────────────────────────────────
     if path == '/api/auth/login':
@@ -1434,8 +1443,17 @@ def _handle_post_internal(handler):
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """, (order_id, order_num, proj_name, client_name, country, state, city, order_date, status, final_amount, source, notes, owner_name))
 
+        # P2: Link products to orders — store order lines if provided
+        lines_data = body.get('order_lines')
+        if lines_data and isinstance(lines_data, list):
+            calculated_total = products_api.save_order_lines(order_id, lines_data, tier=auth_user.get('role', 'standard'))
+            final_amount = calculated_total
+            database.execute_commit("UPDATE waltz_orders SET final_amount = ? WHERE id = ?;", (final_amount, order_id))
+
         created = database.execute_one("SELECT * FROM waltz_orders WHERE id = ?;", (order_id,))
-        return send_json(handler, {"success": True, "message": "Order created successfully", "order": dict(created)}, 201)
+        order_dict = dict(created)
+        order_dict['order_lines'] = database.execute_query("SELECT * FROM order_lines WHERE order_id = ?;", (order_id,))
+        return send_json(handler, {"success": True, "message": "Order created successfully", "order": order_dict}, 201)
 
     # ── Protected (any role): Update Order (POST fallback) ───────────────────
     if path == '/api/orders/update':
@@ -1926,6 +1944,10 @@ def _handle_put_internal(handler):
     except Exception:
         body = {}
 
+    # Product price list (TECHWOOD WPC)
+    if products_api.route(handler, 'PUT', path, body=body):
+        return
+
     if path == '/api/orders' or path.startswith('/api/orders/'):
         auth_user = require_auth(handler)
         if not auth_user:
@@ -2004,6 +2026,10 @@ def _handle_delete_internal(handler):
         body = json.loads(body_bytes.decode('utf-8'))
     except Exception:
         body = {}
+
+    # Product price list (TECHWOOD WPC)
+    if products_api.route(handler, 'DELETE', path, body=body):
+        return
 
     if path.startswith('/api/vendors/') and path != '/api/vendors/':
         auth_user = require_auth(handler, roles=['admin', 'superadmin'])
