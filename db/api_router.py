@@ -16,6 +16,10 @@ import uuid
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs
 import math
+import zipfile
+import io
+import base64
+import re
 
 # Ensure db directory is on sys.path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -164,6 +168,253 @@ def _month_to_year(month: int, fy: str) -> int:
     start_year, end_year = _fy_to_year_range(fy)
     # Apr(4)-Mar(3): Apr-Dec belong to start_year, Jan-Mar belong to end_year
     return start_year if month >= 4 else end_year
+
+def _generate_order_quotation_html(order: dict) -> str:
+    amt = float(order.get('final_amount') or 0.0)
+    subtotal = round(amt / 1.18, 2)
+    gst = round(amt - subtotal, 2)
+    order_no = order.get('order_number', 'WO-2026-0000')
+    proj = order.get('project_name', 'Commercial Exterior Project')
+    client = order.get('client_name', 'Valued Partner')
+    city = order.get('city') or 'Bengaluru'
+    state = order.get('state') or 'Karnataka'
+    country = order.get('country') or 'India'
+    date_str = order.get('order_date') or datetime.now().strftime('%Y-%m-%d')
+    notes = order.get('notes') or 'Commercial Grade UltraShield® Composite Decking & Cladding Systems with 25-Year Limited Manufacturer Warranty.'
+    owner = order.get('owner_name') or 'Commercial Sales Desk'
+
+    return f"""<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<title>Commercial Quotation - {order_no}</title>
+<style>
+@page {{
+    size: 21cm 29.7cm;
+    margin: 2cm 2cm 2cm 2cm;
+    mso-header-margin: 1cm;
+    mso-footer-margin: 1cm;
+}}
+body {{
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.45;
+    font-size: 10.5pt;
+}}
+.brand-table {{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    border-bottom: 3px solid #16a34a;
+    padding-bottom: 12px;
+}}
+.brand-name {{
+    font-size: 22pt;
+    font-weight: 800;
+    color: #166534;
+    margin: 0;
+    letter-spacing: -0.5px;
+}}
+.brand-tag {{
+    font-size: 9.5pt;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}}
+.doc-title {{
+    font-size: 18pt;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: right;
+    margin: 0;
+}}
+.meta-grid {{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 22px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}}
+.meta-grid td {{
+    padding: 10px 14px;
+    vertical-align: top;
+    font-size: 10pt;
+}}
+.meta-label {{
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}}
+.meta-val {{
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #0f172a;
+}}
+.table-items {{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}}
+.table-items th {{
+    background: #166534;
+    color: #ffffff;
+    padding: 9px 12px;
+    font-size: 9.5pt;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}}
+.table-items td {{
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 10pt;
+}}
+.table-items tr:nth-child(even) td {{
+    background: #f8fafc;
+}}
+.totals-table {{
+    width: 45%;
+    margin-left: auto;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}}
+.totals-table td {{
+    padding: 6px 10px;
+    font-size: 10pt;
+}}
+.grand-total {{
+    background: #166534;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 12pt;
+}}
+.terms-card {{
+    background: #f8fafc;
+    border-left: 4px solid #16a34a;
+    padding: 12px 16px;
+    margin-top: 25px;
+    font-size: 9pt;
+    color: #475569;
+}}
+.sig-section {{
+    margin-top: 40px;
+    width: 100%;
+    border-collapse: collapse;
+}}
+.sig-box {{
+    width: 50%;
+    vertical-align: top;
+    padding-top: 30px;
+}}
+.sig-line {{
+    width: 200px;
+    border-top: 1px solid #94a3b8;
+    margin-top: 40px;
+    margin-bottom: 4px;
+}}
+</style>
+</head>
+<body>
+
+<table class="brand-table">
+    <tr>
+        <td style="vertical-align:bottom;">
+            <div class="brand-name">NewTechWood®</div>
+            <div class="brand-sub">Architectural Composite Systems • India Operations</div>
+            <div style="font-size:9pt;color:#64748b;margin-top:4px;">Experience Centre • Indiranagar, Bengaluru, Karnataka, 560038</div>
+        </td>
+        <td style="text-align:right;vertical-align:bottom;">
+            <div class="doc-title">OFFICIAL COMMERCIAL QUOTATION</div>
+            <div style="font-size:10pt;color:#16a34a;font-weight:700;margin-top:4px;">Ref: {order_no}</div>
+            <div style="font-size:9.5pt;color:#64748b;">Date: {date_str} • Valid for 30 Days</div>
+        </td>
+    </tr>
+</table>
+
+<table class="meta-grid">
+    <tr>
+        <td style="width:50%;border-right:1px solid #e2e8f0;">
+            <div class="meta-label">Customer / Client Details</div>
+            <div class="meta-val">{client}</div>
+            <div style="color:#475569;margin-top:2px;">Location: {city}, {state}, {country}</div>
+            <div style="color:#64748b;font-size:9pt;margin-top:4px;">Commercial Deal Source: {order.get('source', 'Wholesale Direct')}</div>
+        </td>
+        <td style="width:50%;">
+            <div class="meta-label">Project & Account Representative</div>
+            <div class="meta-val">{proj}</div>
+            <div style="color:#475569;margin-top:2px;">Status: <strong>{order.get('status', 'Pipeline')}</strong></div>
+            <div style="color:#64748b;font-size:9pt;margin-top:4px;">Representative: {owner}</div>
+        </td>
+    </tr>
+</table>
+
+<table class="table-items">
+    <thead>
+        <tr>
+            <th style="width:40px;">#</th>
+            <th>Description of Architectural Composite Material</th>
+            <th style="width:110px;">Specifications</th>
+            <th style="width:80px;text-align:right;">Amount (INR)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>
+                <strong>UltraShield® Composite Architectural Solution</strong><br>
+                <span style="font-size:9pt;color:#64748b;">Commercial grade 360-degree fully co-extruded protective shield against weathering, stains, and fading.</span>
+            </td>
+            <td>Standard BOQ</td>
+            <td style="text-align:right;font-weight:600;">₹{subtotal:,.2f}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="totals-table">
+    <tr>
+        <td>Subtotal (Excl. Taxes):</td>
+        <td style="text-align:right;font-weight:600;">₹{subtotal:,.2f}</td>
+    </tr>
+    <tr>
+        <td>Applicable GST (18%):</td>
+        <td style="text-align:right;font-weight:600;">₹{gst:,.2f}</td>
+    </tr>
+    <tr class="grand-total">
+        <td style="padding:10px;">Total Commercial Quotation:</td>
+        <td style="text-align:right;padding:10px;">₹{amt:,.2f}</td>
+    </tr>
+</table>
+
+<div class="terms-card">
+    <strong style="color:#0f172a;">Commercial Terms & Conditions:</strong><br>
+    1. <strong>Warranty:</strong> Covered by NewTechWood 25-Year Limited Manufacturer Warranty.<br>
+    2. <strong>Payment Terms:</strong> 50% advance along with confirmed purchase order, balance 50% prior to dispatch.<br>
+    3. <strong>Delivery:</strong> Dispatch within 5–7 business days from receipt of advance and site measurements confirmation.<br>
+    4. <strong>Notes:</strong> {notes}
+</div>
+
+<table class="sig-section">
+    <tr>
+        <td class="sig-box">
+            <div style="font-weight:700;color:#0f172a;">Customer Acceptance</div>
+            <div style="font-size:9pt;color:#64748b;">Sign below to confirm commercial quotation acceptance</div>
+            <div class="sig-line"></div>
+            <div style="font-size:9pt;color:#64748b;">Authorized Signatory / Seal</div>
+        </td>
+        <td class="sig-box" style="text-align:right;">
+            <div style="font-weight:700;color:#0f172a;">For NewTechWood® India</div>
+            <div style="font-size:9pt;color:#64748b;">Authorized Commercial Representative</div>
+            <div class="sig-line" style="margin-left:auto;"></div>
+            <div style="font-size:9pt;color:#64748b;">{owner}</div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>"""
 
 # ─── Main Handlers ────────────────────────────────────────────────────────────
 def handle_get(handler):
@@ -583,8 +834,10 @@ def _handle_get_internal(handler):
             page = max(1, int(qs.get('page', ['1'])[0]))
         except Exception:
             page = 1
+        is_export = qs.get('export', [''])[0].lower() in ('1', 'true')
         try:
-            limit = max(1, min(200, int(qs.get('limit', ['25'])[0])))  # clamp 1..200
+            max_limit = 10000 if is_export else 200
+            limit = max(1, min(max_limit, int(qs.get('limit', ['25'])[0])))
         except Exception:
             limit = 25
 
@@ -771,6 +1024,94 @@ def _handle_get_internal(handler):
             ORDER BY created_at DESC;
         """, tuple(params))
         return send_json(handler, {"success": True, "count": len(projects), "projects": [dict(p) for p in projects]})
+
+    # ── Protected: Meeting Images Zip Download ───────────────────────────────
+    if path in ('/api/directory/meetings/images/zip', '/api/meetings/images/zip', '/api/meetings/download-images'):
+        user = require_auth(handler)
+        if not user:
+            return
+
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            meetings = database.execute_query("""
+                SELECT id, meeting_date, firm_name, guest_name, image_urls, discussion_notes
+                FROM meetings ORDER BY meeting_date DESC;
+            """)
+            manifest = []
+            file_counter = 0
+            for m in meetings:
+                m_dict = dict(m)
+                raw_urls = m_dict.get('image_urls') or '[]'
+                try:
+                    urls = json.loads(raw_urls) if isinstance(raw_urls, str) else raw_urls
+                except Exception:
+                    urls = []
+                manifest.append({
+                    "id": m_dict['id'],
+                    "meeting_date": m_dict['meeting_date'],
+                    "firm_name": m_dict['firm_name'],
+                    "guest_name": m_dict['guest_name'],
+                    "images": urls
+                })
+                guest_clean = re.sub(r'[^a-zA-Z0-9_-]', '_', m_dict['guest_name'] or 'guest')
+                folder_name = f"meeting_{m_dict['id']}_{guest_clean}"
+                for idx, u in enumerate(urls):
+                    clean_u = u.lstrip('/').replace('/', os.sep)
+                    full_p = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', clean_u))
+                    arcname = f"{folder_name}/image_{idx+1}_{os.path.basename(clean_u)}"
+                    if os.path.exists(full_p) and os.path.isfile(full_p):
+                        zip_file.write(full_p, arcname=arcname)
+                        file_counter += 1
+                    else:
+                        svg_data = f"""<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="100%" height="100%" fill="#166534"/>
+  <rect x="20" y="20" width="760" height="560" fill="none" stroke="#22c55e" stroke-width="3"/>
+  <text x="400" y="220" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff" text-anchor="middle">NewTechWood® Architectural Meeting Spec</text>
+  <text x="400" y="280" font-family="Arial, sans-serif" font-size="20" fill="#bbf7d0" text-anchor="middle">Meeting ID: {m_dict['id']} • {m_dict['firm_name']}</text>
+  <text x="400" y="330" font-family="Arial, sans-serif" font-size="16" fill="#86efac" text-anchor="middle">Guest: {m_dict['guest_name']} • Date: {m_dict['meeting_date']}</text>
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">Commercial Specification Ref: {u}</text>
+</svg>"""
+                        zip_file.writestr(arcname.replace('.jpg', '.svg').replace('.png', '.svg'), svg_data)
+                        file_counter += 1
+
+            zip_file.writestr("meetings_media_manifest.json", json.dumps(manifest, indent=2))
+
+        zip_data = zip_buffer.getvalue()
+        handler.send_response(200)
+        handler.send_header('Content-Type', 'application/zip')
+        filename = f"NewTechWood_Meeting_Images_{datetime.now().strftime('%Y%m%d')}.zip"
+        handler.send_header('Content-Disposition', f'attachment; filename="{filename}"')
+        handler.send_header('Content-Length', str(len(zip_data)))
+        handler.send_header('Access-Control-Allow-Origin', '*')
+        handler.end_headers()
+        handler.wfile.write(zip_data)
+        return
+
+    # ── Protected: Waltz Order Quotation Word Document Export ────────────────
+    if path.startswith('/api/orders/') and path.endswith('/quotation'):
+        user = require_auth(handler)
+        if not user:
+            return
+
+        order_id = path.split('/')[-2]
+        order = database.execute_one("""
+            SELECT * FROM waltz_orders WHERE id = ? OR order_number = ?;
+        """, (order_id, order_id))
+        if not order:
+            return send_json(handler, {"error": "Order not found"}, 404)
+
+        ord_dict = dict(order)
+        doc_html = _generate_order_quotation_html(ord_dict)
+        doc_bytes = ('\ufeff' + doc_html).encode('utf-8')
+        handler.send_response(200)
+        handler.send_header('Content-Type', 'application/msword; charset=utf-8')
+        filename = f"{ord_dict.get('order_number', 'NTW_Order')}_Commercial_Quotation.doc"
+        handler.send_header('Content-Disposition', f'attachment; filename="{filename}"')
+        handler.send_header('Content-Length', str(len(doc_bytes)))
+        handler.send_header('Access-Control-Allow-Origin', '*')
+        handler.end_headers()
+        handler.wfile.write(doc_bytes)
+        return
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
@@ -1098,12 +1439,19 @@ def _handle_post_internal(handler):
         city = body.get('city', 'Bengaluru')
         notes = body.get('discussion_notes', '')
         owner_name = body.get('owner_name') or auth_user.get('full_name', 'Rohan Verma')
+        raw_imgs = body.get('image_urls')
+        if isinstance(raw_imgs, list):
+            image_urls_json = json.dumps(raw_imgs)
+        elif isinstance(raw_imgs, str):
+            image_urls_json = raw_imgs
+        else:
+            image_urls_json = '[]'
 
         database.execute_commit("""
             INSERT INTO meetings (id, meeting_date, firm_name, guest_name, mobile, user_type, guest_type,
                                   country, state, city, status, discussion_notes, image_urls, owner_name)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Completed', ?, '[]', ?);
-        """, (mtg_id, mtg_date, firm, guest, mobile, user_type, guest_type, country, state, city, notes, owner_name))
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Completed', ?, ?, ?);
+        """, (mtg_id, mtg_date, firm, guest, mobile, user_type, guest_type, country, state, city, notes, image_urls_json, owner_name))
 
         created = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
         return send_json(handler, {"success": True, "message": "Meeting scheduled", "meeting": dict(created)}, 201)
@@ -1437,6 +1785,59 @@ def _handle_post_internal(handler):
         database.execute_commit("UPDATE go_pro_assets SET views_count = coalesce(views_count, 0) + 1 WHERE id = ?;", (asset_id,))
         updated = database.execute_one("SELECT id, views_count FROM go_pro_assets WHERE id = ?;", (asset_id,))
         return send_json(handler, {"success": True, "views_count": updated['views_count'] if updated else 1})
+
+    # ── Protected: Meeting Images Upload ─────────────────────────────────────
+    if path in ('/api/meetings/upload', '/api/upload'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        filename = body.get('filename') or body.get('name') or 'meeting_spec.jpg'
+        b64data = body.get('data') or body.get('base64') or ''
+        if not b64data:
+            return send_json(handler, {"success": False, "error": "No image data payload provided"}, 400)
+
+        if ',' in b64data:
+            b64data = b64data.split(',', 1)[1]
+
+        try:
+            file_bytes = base64.b64decode(b64data)
+        except Exception as e:
+            return send_json(handler, {"success": False, "error": f"Base64 decode failed: {str(e)}"}, 400)
+
+        upload_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'uploads', 'meetings'))
+        os.makedirs(upload_dir, exist_ok=True)
+
+        safe_fname = re.sub(r'[^a-zA-Z0-9_.-]', '_', filename)
+        ts = datetime.now().strftime('%Y%m%d_%H%M%S')
+        unique_name = f"mtg_{ts}_{uuid.uuid4().hex[:6]}_{safe_fname}"
+        file_path = os.path.join(upload_dir, unique_name)
+
+        with open(file_path, 'wb') as f:
+            f.write(file_bytes)
+
+        rel_url = f"/uploads/meetings/{unique_name}"
+        return send_json(handler, {"success": True, "url": rel_url, "filename": unique_name, "size": len(file_bytes)})
+
+    # ── Protected: Convert Order Status (Win / Pipeline / Lost) ──────────────
+    if path in ('/api/orders/convert', '/api/orders/status'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        order_id = body.get('id') or body.get('order_id')
+        new_status = body.get('status')
+        if not order_id or not new_status:
+            return send_json(handler, {"success": False, "error": "Order ID and status are required"}, 400)
+        if new_status not in ('Win', 'Pipeline', 'Lost'):
+            return send_json(handler, {"success": False, "error": f"Invalid status: {new_status}. Allowed values: Win, Pipeline, Lost"}, 400)
+
+        existing = database.execute_one("SELECT * FROM waltz_orders WHERE id = ? OR order_number = ?;", (order_id, order_id))
+        if not existing:
+            return send_json(handler, {"success": False, "error": "Order not found"}, 404)
+
+        real_id = existing['id']
+        database.execute_commit("UPDATE waltz_orders SET status = ? WHERE id = ?;", (new_status, real_id))
+        updated = database.execute_one("SELECT * FROM waltz_orders WHERE id = ?;", (real_id,))
+        return send_json(handler, {"success": True, "message": f"Order status converted to {new_status}", "order": dict(updated)})
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
@@ -1821,15 +2222,25 @@ def _update_meeting_internal(handler, body):
     status = body.get('status', existing.get('status', 'Completed'))
     discussion_notes = body.get('discussion_notes', existing.get('discussion_notes', ''))
     owner_name = body.get('owner_name', existing.get('owner_name', 'Rohan Verma'))
+    raw_imgs = body.get('image_urls')
+    if raw_imgs is not None:
+        if isinstance(raw_imgs, list):
+            image_urls = json.dumps(raw_imgs)
+        elif isinstance(raw_imgs, str):
+            image_urls = raw_imgs
+        else:
+            image_urls = '[]'
+    else:
+        image_urls = existing.get('image_urls', '[]')
 
     database.execute_commit("""
         UPDATE meetings
         SET meeting_date = ?, firm_name = ?, guest_name = ?, mobile = ?,
             user_type = ?, guest_type = ?, country = ?, state = ?, city = ?,
-            status = ?, discussion_notes = ?, owner_name = ?
+            status = ?, discussion_notes = ?, image_urls = ?, owner_name = ?
         WHERE id = ?;
     """, (meeting_date, firm_name, guest_name, mobile, user_type, guest_type,
-          country, state, city, status, discussion_notes, owner_name, mtg_id))
+          country, state, city, status, discussion_notes, image_urls, owner_name, mtg_id))
 
     updated = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
     return send_json(handler, {"success": True, "message": "Meeting updated successfully", "meeting": dict(updated)})

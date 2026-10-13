@@ -2629,15 +2629,15 @@
 					<table class="crm-table meetings-filter-table">
 						<thead>
 							<tr>
-								<th style="min-width:180px;">Meeting date ⇅</th>
-								<th style="min-width:160px;">Firm name</th>
-								<th style="min-width:140px;">Guest name</th>
-								<th style="min-width:130px;">Mobile number</th>
-								<th style="min-width:120px;">Existing/New user</th>
-								<th style="min-width:130px;">Guest Type</th>
-								<th style="min-width:100px;">Country</th>
-								<th style="min-width:120px;">State</th>
-								<th style="min-width:120px;">City</th>
+								<th style="min-width:180px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('meeting_date')">Meeting date ⇅</th>
+								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('firm_name')">Firm name ⇅</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('guest_name')">Guest name ⇅</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('mobile')">Mobile number ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('user_type')">Existing/New user ⇅</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('guest_type')">Guest Type ⇅</th>
+								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('country')">Country ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('state')">State ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('city')">City ⇅</th>
 								<th style="text-align:center;min-width:80px;">ACTION</th>
 							</tr>
 							<!-- Column Filters Row (matching 12.11.25.jpeg) -->
@@ -2765,17 +2765,17 @@
 					<table class="crm-table visitors-filter-table">
 						<thead>
 							<tr>
-								<th style="min-width:140px;">Visitor Type ↑↓</th>
-								<th style="min-width:130px;">Name ↑↓</th>
-								<th style="min-width:120px;">Mobile No. ↑↓</th>
-								<th style="min-width:150px;">Email Address ↑↓</th>
-								<th style="min-width:140px;">Firm Name ↑↓</th>
-								<th style="min-width:140px;">Link Created Date ↓</th>
-								<th style="min-width:140px;">Form Submitted Date ↑↓</th>
-								<th style="min-width:110px;">Country ↑↓</th>
-								<th style="min-width:120px;">State ↑↓</th>
-								<th style="min-width:120px;">City ↑↓</th>
-								<th style="min-width:100px;">Event Year ↑↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('visitor_type')">Visitor Type ↑↓</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('name')">Name ↑↓</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('mobile')">Mobile No. ↑↓</th>
+								<th style="min-width:150px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('email')">Email Address ↑↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('firm')">Firm Name ↑↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('link_created_date')">Link Created Date ↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('form_submitted_date')">Form Submitted Date ↑↓</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('country')">Country ↑↓</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('state')">State ↑↓</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('city')">City ↑↓</th>
+								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('event_year')">Event Year ↑↓</th>
 								<th style="min-width:70px;text-align:center;">Action</th>
 							</tr>
 							<!-- Filter Inputs Row (matching 12.11.43.jpeg) -->
@@ -2944,16 +2944,16 @@
 					<table class="crm-table waltz-orders-table">
 						<thead>
 							<tr>
-								<th style="min-width:130px;">ORDER NUMBER</th>
-								<th style="min-width:160px;">PROJECT NAME ↑↓</th>
-								<th style="min-width:140px;">CLIENT NAME ↑↓</th>
-								<th style="min-width:100px;">COUNTRY ↑↓</th>
-								<th style="min-width:110px;">STATE ↑↓</th>
-								<th style="min-width:110px;">CITY ↑↓</th>
-								<th style="min-width:160px;">DATE ↑↓</th>
-								<th style="min-width:110px;">STATUS ↑↓</th>
-								<th style="min-width:120px;">FINAL AMOUNT ↑↓</th>
-								<th style="min-width:110px;">SOURCE ↑↓</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('order_number')">ORDER NUMBER ⇅</th>
+								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('project_name')">PROJECT NAME ⇅</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('client_name')">CLIENT NAME ⇅</th>
+								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('country')">COUNTRY ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('state')">STATE ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('city')">CITY ⇅</th>
+								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('order_date')">DATE ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('status')">STATUS ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('final_amount')">FINAL AMOUNT ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('source')">SOURCE ⇅</th>
 								<th style="text-align:center;min-width:110px;">ACTION</th>
 							</tr>
 							<!-- Column Filters Row -->
@@ -3462,16 +3462,20 @@
 					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
 						<div>
 							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">State</label>
-							<input type="text" id="newMtgState" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Maharashtra" />
+							<input type="text" id="newMtgState" class="tbl-filter-input" style="height:38px;" value="Karnataka" placeholder="e.g. Karnataka" />
 						</div>
 						<div>
 							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">City</label>
-							<input type="text" id="newMtgCity" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Mumbai" />
+							<input type="text" id="newMtgCity" class="tbl-filter-input" style="height:38px;" value="Bengaluru" placeholder="e.g. Bengaluru" />
 						</div>
 					</div>
 					<div>
 						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Discussion Notes &amp; Specifications</label>
-						<textarea id="newMtgNotes" class="tbl-filter-input" style="height:80px;padding:8px;resize:vertical;" placeholder="Key discussion points, product samples shown, pricing discussed..."></textarea>
+						<textarea id="newMtgNotes" class="tbl-filter-input" style="height:70px;padding:8px;resize:vertical;" placeholder="Key discussion points, product samples shown, pricing discussed..."></textarea>
+					</div>
+					<div>
+						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Attach Site Photos / Architectural Specs</label>
+						<input type="file" id="newMtgImages" multiple accept="image/*" class="tbl-filter-input" style="height:36px;padding-top:4px;" />
 					</div>
 					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
 						<button type="button" class="btn-outline" onclick="closeNewMeetingModal()">Cancel</button>
@@ -7419,6 +7423,11 @@ async function loadDashboardData() {
 		}
 
 		function applyDirectorySearch() {
+			const search = (document.getElementById('dirSearchInput')?.value || '').trim();
+			if (search.length > 0 && search.length < 3) {
+				showToast('Please enter at least 3 characters to search.', true);
+				return;
+			}
 			loadDirectoryMaster();
 		}
 
@@ -7648,6 +7657,35 @@ async function loadDashboardData() {
 
 		async function submitNewMeeting(e) {
 			e.preventDefault();
+			const fileInput = document.getElementById('newMtgImages');
+			const uploadedUrls = [];
+
+			if (fileInput && fileInput.files && fileInput.files.length > 0) {
+				showToast('Uploading meeting photos / specs...');
+				for (let i = 0; i < fileInput.files.length; i++) {
+					const file = fileInput.files[i];
+					try {
+						const b64 = await new Promise((resolve, reject) => {
+							const reader = new FileReader();
+							reader.onload = () => resolve(reader.result);
+							reader.onerror = reject;
+							reader.readAsDataURL(file);
+						});
+						const upResp = await apiFetch('/api/meetings/upload', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ filename: file.name, data: b64 })
+						});
+						const upRes = await upResp.json();
+						if (upRes.success && upRes.url) {
+							uploadedUrls.push(upRes.url);
+						}
+					} catch (uploadErr) {
+						console.warn('Failed to upload file:', file.name, uploadErr);
+					}
+				}
+			}
+
 			const payload = {
 				meeting_date: document.getElementById('newMtgDate')?.value,
 				guest_type: document.getElementById('newMtgGuestType')?.value,
@@ -7655,9 +7693,10 @@ async function loadDashboardData() {
 				guest_name: document.getElementById('newMtgGuest')?.value,
 				mobile: document.getElementById('newMtgMobile')?.value,
 				user_type: document.getElementById('newMtgUserType')?.value,
-				state: document.getElementById('newMtgState')?.value,
-				city: document.getElementById('newMtgCity')?.value,
-				discussion_notes: document.getElementById('newMtgNotes')?.value
+				state: document.getElementById('newMtgState')?.value || 'Karnataka',
+				city: document.getElementById('newMtgCity')?.value || 'Bengaluru',
+				discussion_notes: document.getElementById('newMtgNotes')?.value,
+				image_urls: uploadedUrls
 			};
 
 			try {
@@ -7701,8 +7740,28 @@ async function loadDashboardData() {
 			showToast(`Exported ${exportRows.length} meetings to Excel!`);
 		}
 
-		function downloadMeetingImages() {
-			showToast('Downloading attached meeting photos & specification sheets (ZIP)...');
+		async function downloadMeetingImages() {
+			showToast('Preparing meeting media package ZIP...');
+			try {
+				const resp = await apiFetch('/api/directory/meetings/images/zip');
+				if (resp.ok) {
+					const blob = await resp.blob();
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = `NewTechWood_Meeting_Images_${new Date().toISOString().split('T')[0]}.zip`;
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+					showToast('Meeting images ZIP downloaded successfully!');
+				} else {
+					showToast('No meeting media files found to package.', true);
+				}
+			} catch (e) {
+				console.error('Error downloading meeting images:', e);
+				showToast('Failed to download images ZIP.', true);
+			}
 		}
 
 		// ========================================================
@@ -8037,12 +8096,43 @@ async function loadDashboardData() {
 			showToast('Visitor filters cleared.');
 		}
 
-		function exportVisitorsExcel() {
-			if (visitorsState.visitors.length === 0) {
+		async function exportVisitorsExcel() {
+			showToast('Gathering visitor directory records for export...');
+			let visitorsList = visitorsState.visitors;
+			try {
+				const query = new URLSearchParams({
+					export: 'true',
+					limit: '10000',
+					visitor_type: document.getElementById('visTypeFilter')?.value || 'all',
+					name: document.getElementById('visNameFilter')?.value || '',
+					mobile: document.getElementById('visMobileFilter')?.value || '',
+					email: document.getElementById('visEmailFilter')?.value || '',
+					firm: document.getElementById('visFirmFilter')?.value || '',
+					from_created_date: document.getElementById('visFromCreated')?.value || '',
+					to_created_date: document.getElementById('visToCreated')?.value || '',
+					from_submitted_date: document.getElementById('visFromSubmitted')?.value || '',
+					to_submitted_date: document.getElementById('visToSubmitted')?.value || '',
+					country: document.getElementById('visCountryFilter')?.value || 'all',
+					state: document.getElementById('visStateFilter')?.value || 'all',
+					city: document.getElementById('visCityFilter')?.value || 'all',
+					event_year: document.getElementById('visYearFilter')?.value || 'all'
+				});
+				const resp = await apiFetch('/api/directory/visitors?' + query.toString());
+				if (resp.ok) {
+					const res = await resp.json();
+					if (res.success && Array.isArray(res.visitors) && res.visitors.length > 0) {
+						visitorsList = res.visitors;
+					}
+				}
+			} catch (e) {
+				console.warn('Export query fallback to loaded page:', e);
+			}
+
+			if (!visitorsList || visitorsList.length === 0) {
 				showToast('No visitors to export.', true);
 				return;
 			}
-			const exportRows = visitorsState.visitors.map(v => ({
+			const exportRows = visitorsList.map(v => ({
 				"Visitor Type": v.visitor_type,
 				"Name": v.name,
 				"Mobile Number": v.mobile,
@@ -8288,7 +8378,10 @@ async function loadDashboardData() {
 								<button class="tbl-action-btn" onclick="openEditOrderModal('${o.id}')" title="Edit Order">
 									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 								</button>
-								<button class="tbl-action-btn" onclick="openViewOrderModal('${o.id}')" title="View Order Summary">
+								<button class="tbl-action-btn" onclick="downloadOrderWordDoc('${o.id}')" title="Download Official Word Quotation (.doc)">
+									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+								</button>
+								<button class="tbl-action-btn" onclick="openViewOrderModal('${o.id}')" title="View Order Summary & Status Convert">
 									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 								</button>
 								<button class="tbl-action-btn delete" onclick="deleteOrder('${o.id}')" title="Delete Order">
@@ -8461,9 +8554,23 @@ async function loadDashboardData() {
 					</div>
 				</div>
 
-				<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--adm-border);padding-top:14px;">
-					<button class="btn-outline" onclick="window.print()">Print Order Summary</button>
-					<button class="btn-primary" onclick="closeViewOrderModal()">Close</button>
+				<div style="margin-bottom:16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:12px;">
+					<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+						<span style="font-size:12.5px;font-weight:700;color:var(--adm-text-main);">Quick Convert Status:</span>
+						<div style="display:flex;gap:6px;">
+							<button type="button" class="btn-outline" style="padding:4px 10px;font-size:12px;color:#16a34a;background:#ffffff;border-color:#86efac;" onclick="quickConvertOrderStatus('${o.id}', 'Win')">🏆 Convert to Win</button>
+							<button type="button" class="btn-outline" style="padding:4px 10px;font-size:12px;color:#d97706;background:#ffffff;border-color:#fcd34d;" onclick="quickConvertOrderStatus('${o.id}', 'Pipeline')">⏳ Move to Pipeline</button>
+							<button type="button" class="btn-outline" style="padding:4px 10px;font-size:12px;color:#dc2626;background:#ffffff;border-color:#fca5a5;" onclick="quickConvertOrderStatus('${o.id}', 'Lost')">✕ Mark as Lost</button>
+						</div>
+					</div>
+				</div>
+
+				<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--adm-border);padding-top:14px;flex-wrap:wrap;gap:10px;">
+					<div style="display:flex;gap:8px;flex-wrap:wrap;">
+						<button class="btn-outline" onclick="window.print()">Print Order Summary</button>
+						<button class="btn-primary" style="background:#16a34a;color:#ffffff;" onclick="downloadOrderWordDoc('${o.id}')">📄 Download Word Quotation</button>
+					</div>
+					<button class="btn-outline" onclick="closeViewOrderModal()">Close</button>
 				</div>
 			`;
 
@@ -8496,6 +8603,149 @@ async function loadDashboardData() {
 			}));
 			exportDatasetToExcel(exportRows, `NewTechWood_Orders_${new Date().toISOString().split('T')[0]}.xlsx`, 'Orders');
 			showToast(`Exported ${exportRows.length} orders to Excel!`);
+		}
+
+		async function downloadOrderWordDoc(orderId) {
+			showToast('Generating official Word quotation document...');
+			try {
+				const resp = await apiFetch(`/api/orders/${orderId}/quotation`);
+				if (resp.ok) {
+					const blob = await resp.blob();
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = `NTW_Order_${orderId}_Quotation.doc`;
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+					showToast('Word quotation downloaded successfully!');
+					return;
+				}
+			} catch (e) {
+				console.warn('Backend quote download error, using client generator', e);
+			}
+
+			// Fallback client-side generator
+			const o = waltzOrdersData.find(x => x.id === orderId);
+			if (!o) {
+				showToast('Order details not found.', true);
+				return;
+			}
+			const amt = parseFloat(o.final_amount) || 0;
+			const sub = (amt / 1.18).toFixed(2);
+			const gst = (amt - sub).toFixed(2);
+			const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${o.order_number}</title></head><body>
+				<h2>NewTechWood Official Commercial Quotation</h2>
+				<p>Order: <strong>${o.order_number}</strong> | Date: ${o.order_date}</p>
+				<p>Client: ${o.client_name} | Project: ${o.project_name}</p>
+				<p>Location: ${o.city || ''}, ${o.state || ''} (${o.country || 'India'})</p>
+				<table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;">
+					<tr><th>Description</th><th>Subtotal</th><th>GST (18%)</th><th>Total Amount</th></tr>
+					<tr><td>UltraShield® Architectural Composite Solution</td><td>₹${sub}</td><td>₹${gst}</td><td>₹${amt.toFixed(2)}</td></tr>
+				</table>
+				<p>25-Year Limited Manufacturer Warranty Included.</p>
+			</body></html>`;
+			const blob = new Blob(['\ufeff' + html], { type: 'application/msword;charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${o.order_number}_Quotation.doc`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			window.URL.revokeObjectURL(url);
+			showToast('Word quotation downloaded!');
+		}
+
+		async function quickConvertOrderStatus(orderId, newStatus) {
+			try {
+				const resp = await apiFetch('/api/orders/convert', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: orderId, status: newStatus })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					showToast(`Order status converted to ${newStatus}!`);
+					loadWaltzOrders();
+					closeViewOrderModal();
+					if (typeof loadDashboardData === 'function') loadDashboardData();
+				} else {
+					alert(res.error || 'Failed to convert order status');
+				}
+			} catch (e) {
+				alert('Network error converting order status');
+			}
+		}
+
+		// Table Sorting Helpers
+		let visSortCol = 'link_created_date';
+		let visSortAsc = false;
+		function sortVisitorsTable(col) {
+			if (visSortCol === col) {
+				visSortAsc = !visSortAsc;
+			} else {
+				visSortCol = col;
+				visSortAsc = true;
+			}
+			visitorsState.visitors.sort((a, b) => {
+				let valA = a[col] || '';
+				let valB = b[col] || '';
+				if (typeof valA === 'string') valA = valA.toLowerCase();
+				if (typeof valB === 'string') valB = valB.toLowerCase();
+				if (valA < valB) return visSortAsc ? -1 : 1;
+				if (valA > valB) return visSortAsc ? 1 : -1;
+				return 0;
+			});
+			renderVisitors(visitorsState.visitors);
+		}
+
+		let mtgSortCol = 'meeting_date';
+		let mtgSortAsc = false;
+		function sortMeetingsTable(col) {
+			if (mtgSortCol === col) {
+				mtgSortAsc = !mtgSortAsc;
+			} else {
+				mtgSortCol = col;
+				mtgSortAsc = true;
+			}
+			meetingsData.sort((a, b) => {
+				let valA = a[col] || '';
+				let valB = b[col] || '';
+				if (typeof valA === 'string') valA = valA.toLowerCase();
+				if (typeof valB === 'string') valB = valB.toLowerCase();
+				if (valA < valB) return mtgSortAsc ? -1 : 1;
+				if (valA > valB) return mtgSortAsc ? 1 : -1;
+				return 0;
+			});
+			renderMeetings(meetingsData);
+		}
+
+		let ordSortCol = 'order_date';
+		let ordSortAsc = false;
+		function sortOrdersTable(col) {
+			if (ordSortCol === col) {
+				ordSortAsc = !ordSortAsc;
+			} else {
+				ordSortCol = col;
+				ordSortAsc = true;
+			}
+			waltzOrdersData.sort((a, b) => {
+				let valA = a[col] || '';
+				let valB = b[col] || '';
+				if (col === 'final_amount') {
+					valA = parseFloat(valA) || 0;
+					valB = parseFloat(valB) || 0;
+				} else {
+					if (typeof valA === 'string') valA = valA.toLowerCase();
+					if (typeof valB === 'string') valB = valB.toLowerCase();
+				}
+				if (valA < valB) return ordSortAsc ? -1 : 1;
+				if (valA > valB) return ordSortAsc ? 1 : -1;
+				return 0;
+			});
+			renderWaltzOrders(waltzOrdersData);
 		}
 
 		// Boot
