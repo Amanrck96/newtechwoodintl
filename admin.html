@@ -25,13 +25,47 @@
 					window.location.replace('/admin/vendor.html');
 					return;
 				}
-			} catch (e) {
+		} catch (e) {
 				window.location.replace('/login/');
 			}
 		})();
 	</script>
 
-	<!-- Fonts -->
+	<!-- GLOBAL AUTH HELPER: apiFetch() auto-attaches Bearer token & handles 401 -->
+	<script>
+		function getSessionToken() {
+			try {
+				const s = JSON.parse(localStorage.getItem('ntw_session') || sessionStorage.getItem('ntw_session') || 'null');
+				return s ? (s.token || null) : null;
+			} catch (e) { return null; }
+		}
+
+		/**
+		 * Drop-in replacement for fetch() for /api/* calls.
+		 * Automatically adds Authorization: Bearer <token> and redirects on 401.
+		 * Usage: await apiapiFetch('/api/orders', { method: 'POST', body: JSON.stringify({...}) })
+		 */
+		async function apiFetch(url, options = {}) {
+			const token = getSessionToken();
+			if (!options.headers) options.headers = {};
+			if (token) {
+				options.headers['Authorization'] = `Bearer ${token}`;
+			}
+			if (options.body && !options.headers['Content-Type']) {
+				options.headers['Content-Type'] = 'application/json';
+			}
+			const resp = await fetch(url, options);
+			if (resp.status === 401) {
+				localStorage.removeItem('ntw_session');
+				sessionStorage.removeItem('ntw_session');
+				window.location.replace('/login/');
+				return resp;
+			}
+			return resp;
+		}
+	</script>
+
+
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -3905,7 +3939,7 @@
 			const pill = document.getElementById('dbStatusPill');
 			const statusText = document.getElementById('dbStatusText');
 			try {
-				const resp = await fetch('/api/health');
+				const resp = await apiFetch('/api/health');
 				if (resp.ok) {
 					const data = await resp.json();
 					if (data.counts) {
@@ -4028,7 +4062,7 @@
 
 			let loaded = [];
 			try {
-				const resp = await fetch('/api/vendors');
+				const resp = await apiFetch('/api/vendors');
 				if (resp.ok) {
 					const data = await resp.json();
 					if (data.success && Array.isArray(data.vendors)) {
@@ -4399,7 +4433,7 @@
 
 			// 1. Try SQLite Backend API
 			try {
-				const resp = await fetch('/api/vendors', {
+				const resp = await apiFetch('/api/vendors', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
@@ -4540,7 +4574,7 @@ Login: https://newtechwood.in/login/`;
 		async function toggleVendorStatus(userId, currentStatus) {
 			const newStatus = (currentStatus || 'active').toLowerCase() === 'active' ? 'inactive' : 'active';
 			try {
-				await fetch('/api/vendors/status', {
+				await apiFetch('/api/vendors/status', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ id: userId, status: newStatus })
@@ -4559,7 +4593,7 @@ Login: https://newtechwood.in/login/`;
 				return;
 			}
 			try {
-				const resp = await fetch('/api/vendors/delete', {
+				const resp = await apiFetch('/api/vendors/delete', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ id: userId })
@@ -4720,7 +4754,7 @@ Login: https://newtechwood.in/login/`;
 		// 6. Admin Logout
 		async function adminLogout() {
 			try {
-				await fetch('/api/auth/logout', { method: 'POST' });
+				await apiFetch('/api/auth/logout', { method: 'POST' });
 			} catch (e) {}
 			localStorage.removeItem('ntw_session');
 			sessionStorage.removeItem('ntw_session');
@@ -5660,7 +5694,7 @@ async function loadDashboardData() {
 
 				let res = null;
 				try {
-					const resp = await fetch('/api/dashboard?' + params.toString());
+					const resp = await apiFetch('/api/dashboard?' + params.toString());
 					if (resp.ok) {
 						const apiJson = await resp.json();
 						if (apiJson && apiJson.success) {
@@ -6261,7 +6295,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/analytics?' + query.toString());
+				const resp = await apiFetch('/api/analytics?' + query.toString());
 				if (resp.ok) {
 					const apiJson = await resp.json();
 					if (apiJson && apiJson.success) {
@@ -6701,7 +6735,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/directory/firms?' + params.toString());
+				const resp = await apiFetch('/api/directory/firms?' + params.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.firms)) {
@@ -6888,7 +6922,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/directory/meetings?' + query.toString());
+				const resp = await apiFetch('/api/directory/meetings?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.meetings)) {
@@ -7034,7 +7068,7 @@ async function loadDashboardData() {
 			};
 
 			try {
-				const resp = await fetch('/api/directory/meetings', {
+				const resp = await apiFetch('/api/directory/meetings', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
@@ -7086,7 +7120,7 @@ async function loadDashboardData() {
 		async function loadInvitations() {
 			let data = null;
 			try {
-				const resp = await fetch('/api/directory/invitations');
+				const resp = await apiFetch('/api/directory/invitations');
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.invitations)) {
@@ -7158,7 +7192,7 @@ async function loadDashboardData() {
 			};
 
 			try {
-				const resp = await fetch('/api/directory/invitations', {
+				const resp = await apiFetch('/api/directory/invitations', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
@@ -7215,7 +7249,7 @@ async function loadDashboardData() {
 
 			let res = null;
 			try {
-				const resp = await fetch('/api/directory/visitors?' + query.toString());
+				const resp = await apiFetch('/api/directory/visitors?' + query.toString());
 				if (resp.ok) {
 					const apiJson = await resp.json();
 					if (apiJson.success) {
@@ -7382,7 +7416,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/gopro/assets?' + query.toString());
+				const resp = await apiFetch('/api/gopro/assets?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.assets)) {
@@ -7497,7 +7531,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/orders?' + query.toString());
+				const resp = await apiFetch('/api/orders?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.orders)) {
@@ -7657,13 +7691,13 @@ async function loadDashboardData() {
 			try {
 				let resp;
 				if (editId) {
-					resp = await fetch(`/api/orders/${editId}`, {
+					resp = await apiFetch(`/api/orders/${editId}`, {
 						method: 'PUT',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(payload)
 					});
 				} else {
-					resp = await fetch('/api/orders', {
+					resp = await apiFetch('/api/orders', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(payload)
@@ -7685,7 +7719,7 @@ async function loadDashboardData() {
 		async function deleteOrder(id) {
 			if (!confirm('Are you sure you want to delete this order?')) return;
 			try {
-				const resp = await fetch(`/api/orders/${id}`, { method: 'DELETE' });
+				const resp = await apiFetch(`/api/orders/${id}`, { method: 'DELETE' });
 				const res = await resp.json();
 				if (res.success) {
 					loadWaltzOrders();
@@ -7787,3 +7821,4 @@ async function loadDashboardData() {
 	</script>
 </body>
 </html>
+

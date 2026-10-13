@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS pipeline_projects (
     city TEXT,
     state TEXT,
     country TEXT DEFAULT 'India',
-    financial_year TEXT NOT NULL, -- e.g. 'FY 25-26'
+    financial_year TEXT NOT NULL, -- e.g. 'FY 26-27'
     month INTEGER NOT NULL CHECK(month BETWEEN 1 AND 12),
     day_bracket TEXT NOT NULL CHECK(day_bracket IN ('1-5', '6-10', '11-15', '16-20', '21-25', '26-31')),
     category TEXT, -- e.g. 'Decking', 'Cladding', 'Pergola'
@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS pipeline_projects (
     sq_ft REAL NOT NULL DEFAULT 0.0,
     discount_pct REAL NOT NULL DEFAULT 0.0,
     days_pipeline_to_win INTEGER DEFAULT 0,
+    stage TEXT NOT NULL DEFAULT 'Pipeline' CHECK(stage IN ('Pipeline', 'Win', 'Lost')), -- REQUIRED: was missing from schema.sql
     feedback_pending BOOLEAN DEFAULT 0,
     feedback_notes TEXT,
     owner_name TEXT DEFAULT 'Rohan Verma',

@@ -1,0 +1,66 @@
+# =============================================
+# NewTechWood CRM — .gitignore
+# =============================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.spec
+
+# --- Virtual Environments ---
+venv/
+.venv/
+env/
+.env
+
+# --- Database (NEVER commit live DB or credentials) ---
+db/ntw_crm.db
+db/*.db
+db/*.sqlite
+db/*.sqlite3
+*.db
+*.sqlite
+
+# --- Secrets & Env Files ---
+.env
+.env.*
+*.secret
+secrets.json
+credentials.json
+
+# --- Scratch / temp files ---
+scratch/
+*.tmp
+*.bak
+*.swp
+
+# --- Mirror / Query crawl artifacts (803 MB) ---
+query_p_*/
+mirror_site.py
+failed_urls.txt
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- Logs ---
+*.log
+logs/
