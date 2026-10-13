@@ -5551,7 +5551,7 @@ Login: https://newtechwood.in/login/`;
 								</div>
 
 								<h4 style="font-size:13px;font-weight:700;margin-bottom:12px;color:#0f172a;">Activity &amp; Communication History</h4>
-								<div style="max-height:280px;overflow-y:auto;padding-right:6px;">
+								<div id="reqActivityTimeline" style="max-height:280px;overflow-y:auto;padding-right:6px;">
 									${actHtml || '<div style="color:var(--adm-text-muted);font-size:12px;">No activity logged yet.</div>'}
 								</div>
 
@@ -5645,7 +5645,6 @@ Login: https://newtechwood.in/login/`;
 				body: JSON.stringify({ status: newStatus, comment: `Status updated to ${newStatus}` })
 			});
 			if (res.ok) {
-				alert('Status updated successfully!');
 				openRequestDetailModal(reqId);
 				loadVendorInbox();
 			} else {
@@ -5662,7 +5661,6 @@ Login: https://newtechwood.in/login/`;
 				body: JSON.stringify({ assigned_to: assignedTo })
 			});
 			if (res.ok) {
-				alert('Assignment updated successfully!');
 				openRequestDetailModal(reqId);
 				loadVendorInbox();
 			} else {
@@ -5686,19 +5684,21 @@ Login: https://newtechwood.in/login/`;
 					return;
 				}
 				const data = await res.json();
-				const v = data.vendor || {};
+				const v = data.vendor || data.profile || {};
 				const reqs = data.requests || [];
 				const orders = data.orders || [];
 				const meets = data.meetings || [];
 				const invs = data.invitations || [];
+				const m = data.metrics || {};
 				const e = window.esc || (s => s);
 
 				if (title) title.innerText = `${v.full_name || 'Vendor'} — 360° Profile`;
 
 				// Formulate formatted business value
+				const totalVal = data.total_business_value ?? m.total_business_value ?? 0;
 				const bVal = (typeof formatCurrencyINR === 'function') 
-					? formatCurrencyINR(data.total_business_value || 0)
-					: ('₹ ' + Number(data.total_business_value || 0).toLocaleString('en-IN'));
+					? formatCurrencyINR(totalVal)
+					: ('₹ ' + Number(totalVal).toLocaleString('en-IN'));
 
 				const reqRows = reqs.map(r => `
 					<tr>
@@ -5729,21 +5729,22 @@ Login: https://newtechwood.in/login/`;
 							</div>
 							<div class="card-box" style="padding:14px;background:#f8fafc;border-left:4px solid #3b82f6;">
 								<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;">Total Orders</div>
-								<div style="font-size:20px;font-weight:700;color:#1e293b;margin-top:4px;">${data.orders_count || 0}</div>
+								<div style="font-size:20px;font-weight:700;color:#1e293b;margin-top:4px;">${data.orders_count ?? m.total_orders ?? orders.length}</div>
 							</div>
 							<div class="card-box" style="padding:14px;background:#f8fafc;border-left:4px solid #f59e0b;">
 								<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;">Requests (Open / Closed)</div>
-								<div style="font-size:20px;font-weight:700;color:#d97706;margin-top:4px;">${data.open_requests_count || 0} / ${data.closed_requests_count || 0}</div>
+								<div style="font-size:20px;font-weight:700;color:#d97706;margin-top:4px;">${data.open_requests_count ?? m.open_requests ?? 0} / ${data.closed_requests_count ?? m.closed_requests ?? 0}</div>
 							</div>
 							<div class="card-box" style="padding:14px;background:#f8fafc;border-left:4px solid #8b5cf6;">
 								<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;">Avg Response Time</div>
-								<div style="font-size:20px;font-weight:700;color:#6d28d9;margin-top:4px;">${data.avg_response_time_hours || 0} hrs</div>
+								<div style="font-size:20px;font-weight:700;color:#6d28d9;margin-top:4px;">${data.avg_response_time_hours ?? m.avg_response_time_hours ?? 0} hrs</div>
 							</div>
 						</div>
 
 						<!-- Profile Details Row -->
 						<div class="card-box" style="padding:14px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
 							<div>
+								<div style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:4px;">${e(v.full_name || 'Partner')}</div>
 								<span style="font-size:12px;color:var(--adm-text-muted);">Partner ID:</span> <strong>${e(v.vendor_id || v.id)}</strong> &bull;
 								<span style="font-size:12px;color:var(--adm-text-muted);margin-left:8px;">Email:</span> <code>${e(v.email)}</code> &bull;
 								<span style="font-size:12px;color:var(--adm-text-muted);margin-left:8px;">Role:</span> <span class="rbac-role-badge">${e(v.role || '')}</span> &bull;

@@ -793,74 +793,9 @@
 	     AUTHENTICATION & STORAGE SCRIPTS
 	     ======================================================== -->
 	<script>
-		// Initialize Default Users
-		const INITIAL_USERS = [
-			{
-				id: 'admin',
-				vendorId: 'ADMIN-001',
-				name: 'Super Administrator',
-				email: 'admin',
-				password: 'admin',
-				role: 'superadmin',
-				status: 'active'
-			},
-			{
-				id: 'admin_email',
-				vendorId: 'ADMIN-001',
-				name: 'Super Administrator',
-				email: 'admin@newtechwood.in',
-				password: 'admin',
-				role: 'superadmin',
-				status: 'active'
-			},
-			{
-				id: 'v1',
-				vendorId: 'VND-2026-001',
-				name: 'Skyline Architecture Studio',
-				email: 'architect@studio.design',
-				password: 'UltraShield2026',
-				role: 'architect',
-				status: 'active'
-			},
-			{
-				id: 'v2',
-				vendorId: 'DLR-902-IND',
-				name: 'Lumber Life Premier Partner',
-				email: 'dealer@lumberlife.in',
-				password: 'Dealer@2026',
-				role: 'dealer',
-				status: 'active'
-			}
-		];
-
-		function getUsers() {
-			let users = INITIAL_USERS;
-			const saved = localStorage.getItem('ntw_users');
-			if (saved) {
-				try {
-					const parsed = JSON.parse(saved);
-					if (Array.isArray(parsed)) {
-						const merged = [...parsed];
-						INITIAL_USERS.forEach(initU => {
-							const idx = merged.findIndex(m => m.id === initU.id || (m.email && m.email.toLowerCase() === initU.email.toLowerCase()));
-							if (idx === -1) {
-								merged.unshift(initU);
-							} else if (initU.role === 'superadmin') {
-								merged[idx] = { ...merged[idx], ...initU };
-							}
-						});
-						users = merged;
-						localStorage.setItem('ntw_users', JSON.stringify(users));
-					}
-				} catch (e) {
-					users = INITIAL_USERS;
-					localStorage.setItem('ntw_users', JSON.stringify(INITIAL_USERS));
-				}
-			} else {
-				localStorage.setItem('ntw_users', JSON.stringify(INITIAL_USERS));
-			}
-			return users;
-		}
+		// SECURITY: All user data lives in the backend database only.
+		// No hardcoded credentials, no localStorage user DB.
+		// Authentication exclusively via /api/auth/login.
 
 		// Role Definitions
 		const roleConfigs = {
@@ -1017,88 +952,17 @@
 					}
 				}
 			} catch (apiErr) {
-				// Server API not running; seamlessly continue to client-side fallback
-			}
-
-			// 2. Direct Super Admin Master Authentication (Immune to stale cache)
-			if ((email === 'admin' || email === 'admin@newtechwood.in' || email === 'admin-001') && 
-			    (password.toLowerCase() === 'admin' || password === 'admin123')) {
-				const superAdmin = {
-					id: 'admin',
-					vendorId: 'ADMIN-001',
-					name: 'Super Administrator',
-					email: 'admin@newtechwood.in',
-					password: 'admin',
-					role: 'superadmin',
-					status: 'active'
-				};
-
-				if (remember) {
-					localStorage.setItem('ntw_session', JSON.stringify(superAdmin));
-					sessionStorage.removeItem('ntw_session');
-				} else {
-					sessionStorage.setItem('ntw_session', JSON.stringify(superAdmin));
-					localStorage.removeItem('ntw_session');
-				}
-				
-				// Self-heal ntw_users in localStorage
-				const curUsers = getUsers();
-				if (!curUsers.some(u => u.role === 'superadmin')) {
-					curUsers.unshift(superAdmin);
-					localStorage.setItem('ntw_users', JSON.stringify(curUsers));
-				}
-
-				setTimeout(() => {
-					btn.disabled = false;
-					btnText.innerText = 'Sign In';
-					showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
-					setTimeout(() => {
-						window.location.href = '/admin/';
-					}, 500);
-				}, 400);
+				// Backend not reachable — show error, do NOT fall back to client-side auth
+				btn.disabled = false;
+				btnText.innerText = 'Sign In';
+				showToast('Cannot connect to authentication server. Please ensure the backend is running.', true);
 				return;
 			}
 
-			// 3. Vendor Database Authentication
-			const users = getUsers();
-			const matched = users.find(u => 
-				(u.email.toLowerCase() === email || (u.vendorId && u.vendorId.toLowerCase() === email) || (u.id && u.id.toLowerCase() === email)) && 
-				u.password === password
-			);
-
-			setTimeout(() => {
-				btn.disabled = false;
-				btnText.innerText = 'Sign In';
-
-				if (matched) {
-					if (matched.status === 'inactive') {
-						showToast('Access Denied: This account has been deactivated.', true);
-						return;
-					}
-
-					if (remember) {
-						localStorage.setItem('ntw_session', JSON.stringify(matched));
-						sessionStorage.removeItem('ntw_session');
-					} else {
-						sessionStorage.setItem('ntw_session', JSON.stringify(matched));
-						localStorage.removeItem('ntw_session');
-					}
-
-					if (matched.role === 'superadmin' || matched.role === 'admin') {
-						showToast('Welcome, Super Administrator! Opening CMS Dashboard...');
-						setTimeout(() => {
-							window.location.href = '/admin/';
-						}, 500);
-					} else {
-						showToast(`Welcome back, ${matched.name}! Loading partner resources...`);
-						setTimeout(() => {
-							window.location.href = '/admin/vendor.html';
-						}, 500);
-					}
-				} else {
-					showToast('Access Denied: Unrecognized credentials. Please verify your details.', true);
-				}
-			}, 500);
+			// API returned non-OK status (e.g. 401 wrong password)
+			btn.disabled = false;
+			btnText.innerText = 'Sign In';
+			showToast('Access Denied: Invalid credentials. Please verify your details.', true);
 		}
 
 		function openForgotModal(e) {
@@ -1123,9 +987,6 @@
 		window.addEventListener('keydown', (e) => {
 			if (e.key === 'Escape') closeForgotModal();
 		});
-
-		// Initialize default users in storage
-		getUsers();
 
 		// Auto-redirect if already logged in
 		(function checkExistingSession() {

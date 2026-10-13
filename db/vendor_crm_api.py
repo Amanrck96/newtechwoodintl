@@ -6,12 +6,20 @@ import json
 import sqlite3
 from datetime import datetime, date
 
-from db.notifications import (
-    send_notification,
-    get_user_notifications,
-    mark_notification_read,
-    get_unread_count
-)
+try:
+    from db.notifications import (
+        send_notification,
+        get_user_notifications,
+        mark_notification_read,
+        get_unread_count
+    )
+except ImportError:
+    from notifications import (
+        send_notification,
+        get_user_notifications,
+        mark_notification_read,
+        get_unread_count
+    )
 
 DB_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ntw_crm.db")
 
@@ -183,6 +191,18 @@ def route(handler, method, path, qs=None, body=None, db_path=None):
         api.send_json(handler, data, status_code)
         return True
 
+    # 5b. Status, Assign, Cancel sub-routes on Request
+    if path.startswith("/api/vendor-requests/") and (path.endswith("/status") or path.endswith("/assign") or path.endswith("/cancel")):
+        req_id = path.split("/")[3]
+        if path.endswith("/cancel") and method in ("POST", "PUT"):
+            status_code, data = update_request(req_id, {"status": "Cancelled", "comment": (body or {}).get("comment", "Request cancelled")}, auth_user, db_path=db_path)
+        elif method in ("PUT", "PATCH", "POST"):
+            status_code, data = update_request(req_id, body or {}, auth_user, db_path=db_path)
+        else:
+            status_code, data = 405, {"error": "Method not allowed"}
+        api.send_json(handler, data, status_code)
+        return True
+
     # 6. Attachments on Request
     if path.startswith("/api/vendor-requests/") and path.endswith("/attachments"):
         req_id = path.split("/")[3]
@@ -311,6 +331,10 @@ def create_request(body, auth_user, db_path=None):
     title = body.get("title", "").strip()
     details = body.get("details", "").strip()
     priority = body.get("priority", "Medium")
+    if isinstance(priority, str):
+        priority = priority.capitalize()
+        if priority not in ("Low", "Medium", "High", "Urgent"):
+            priority = "Medium"
     due_date = body.get("due_date")
     linked_product_id = body.get("linked_product_id")
     linked_order_id = body.get("linked_order_id")
@@ -368,6 +392,7 @@ def create_request(body, auth_user, db_path=None):
         "success": True,
         "id": new_id,
         "ref_no": ref_no,
+        "request": {"id": new_id, "ref_no": ref_no},
         "message": f"Request {ref_no} submitted successfully"
     }
 
@@ -746,7 +771,7 @@ def get_vendor_360(vendor_id, db_path=None):
     conn = get_connection(db_path)
     cur = conn.cursor()
 
-    cur.execute("SELECT id, full_name, email, role, phone, vendor_id, avatar_initials, created_at FROM users WHERE id = ?", (vendor_id,))
+    cur.execute("SELECT id, full_name, email, role, phone, vendor_id, avatar_initials, created_at FROM users WHERE id = ? OR vendor_id = ?", (vendor_id, vendor_id))
     vendor_row = cur.fetchone()
     if not vendor_row:
         conn.close()
@@ -836,7 +861,13 @@ def get_vendor_360(vendor_id, db_path=None):
 
     return 200, {
         "success": True,
+        "vendor": profile,
         "profile": profile,
+        "total_business_value": total_order_value,
+        "orders_count": len(orders),
+        "open_requests_count": len(open_requests),
+        "closed_requests_count": len(closed_requests),
+        "avg_response_time_hours": avg_response_hours,
         "metrics": {
             "total_requests": len(requests),
             "open_requests": len(open_requests),

@@ -25,7 +25,7 @@ Hardening security, core bug fixes, Product Price List integration, Vendor <-> A
 - [x] **B7. Context-Aware Location & Owner Defaults**: Default location and owner derived from logged-in user context rather than hardcoding static locations.
 - [x] **B8. Sequential Order Numbers**: Collision-safe sequential numbering per financial year (e.g. `ORD-2026-0001`).
 - [x] **B9. Code Duplication Cleanup & Shared Assets**: Synchronized `admin.html` and `admin/index.html` with parity and shared helpers.
-- [ ] **B10. Large Asset / Mirrored Directory Management**: Address mirrored `query_p_*` folders to optimize repository size while preserving public access.
+- [x] **B10. Large Asset / Mirrored Directory Management**: Untracked 137 legacy crawl mirror folders (`query_p_*`), mapped in `query_p_map.json` to canonical URLs, and added HTTP 301 permanent redirects in `serve.py`. *(Commit: `f6c58c24`)*
 - [x] **B11. Cloud Deployment Configuration**: Created Vercel serverless bridge (`api/index.py`), Dockerfile, and Render blueprint with PostgreSQL support toggle. *(Commit: `41a938d7`)*
 
 ---
@@ -43,12 +43,12 @@ Hardening security, core bug fixes, Product Price List integration, Vendor <-> A
 ---
 
 ### Workstream 2: Vendor <-> Admin CRM
-- [ ] **Data Model (Migration 006)**: Create `vendor_requests`, `request_activity`, and `request_attachments` tables; link `vendor_user_id` to orders, meetings, invitations, pipeline projects.
-- [ ] **Server-Side Scoping**: Enforce that vendor tokens can only read and write rows where `vendor_user_id == user.id`. Forbidden/not-found (403/404) for cross-vendor access.
-- [ ] **Vendor Portal (`admin/vendor.html`)**: Dedicated portal for vendors: My Open Requests, New Request form, Status Timeline & reply box, My Orders, Tiered Catalog.
-- [ ] **Admin Request Inbox**: Request inbox with status badges, SLA traffic-light indicators (green on time, amber due soon, red overdue), assignment, comments, internal-only notes.
-- [ ] **Vendor 360 View**: Comprehensive vendor profile, all linked requests, orders, meetings, invitations, total business value, average response time.
-- [ ] **Export & Pluggable Notifications**: CSV/Excel export of requests and vendor history; pluggable notifications interface (email/WhatsApp).
+- [x] **Data Model (Migration 006)**: Create `vendor_requests`, `request_activity`, and `request_attachments` tables; link `vendor_user_id` to orders, meetings, invitations, pipeline projects. *(Verified in `tests/test_workstream2.py`)*
+- [x] **Server-Side Scoping**: Enforce that vendor tokens can only read and write rows where `vendor_user_id == user.id`. Forbidden/not-found (403/404) for cross-vendor access. *(Verified in `tests/test_workstream2.py`)*
+- [x] **Vendor Portal (`admin/vendor.html`)**: Dedicated portal for vendors: My Open Requests, New Request form, Status Timeline & reply box, My Orders, Tiered Catalog. *(Verified in `tests/test_e2e_playwright.py`)*
+- [x] **Admin Request Inbox**: Request inbox with status badges, SLA traffic-light indicators (green on time, amber due soon, red overdue), assignment, comments, internal-only notes. *(Verified in `tests/test_workstream2.py` and `tests/test_e2e_playwright.py`)*
+- [x] **Vendor 360 View**: Comprehensive vendor profile, all linked requests, orders, meetings, invitations, total business value, average response time. *(Verified in `tests/test_workstream2.py` and `tests/test_e2e_playwright.py`)*
+- [x] **Export & Pluggable Notifications**: CSV/Excel export of requests and vendor history; pluggable notifications interface (email/WhatsApp). *(Verified in `tests/test_workstream2.py`)*
 
 ---
 
