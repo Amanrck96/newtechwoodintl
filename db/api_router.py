@@ -726,6 +726,52 @@ def _handle_get_internal(handler):
         """, tuple(params))
         return send_json(handler, {"success": True, "count": len(orders), "orders": [dict(o) for o in orders]})
 
+    # ── Protected (any role): Pipeline Projects List / Single Project ────────
+    if path == '/api/projects' or path.startswith('/api/projects/'):
+        user = require_auth(handler)
+        if not user:
+            return
+
+        if path.startswith('/api/projects/') and path != '/api/projects':
+            proj_id = path.split('/')[-1]
+            proj = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+            if not proj:
+                return send_json(handler, {"success": False, "error": "Project not found"}, 404)
+            return send_json(handler, {"success": True, "project": dict(proj)})
+
+        stage_filter = qs.get('stage', [''])[0].strip()
+        fy_filter = qs.get('financial_year', [''])[0].strip()
+        month_filter = qs.get('month', [''])[0].strip()
+        search = qs.get('search', [''])[0].strip().lower()
+        feedback_pending = qs.get('feedback_pending', [''])[0].strip()
+
+        where_clauses = []
+        params = []
+        if stage_filter and stage_filter.lower() != 'all':
+            where_clauses.append("stage = ?"); params.append(stage_filter)
+        if fy_filter and fy_filter.lower() != 'all':
+            where_clauses.append("financial_year = ?"); params.append(fy_filter)
+        if month_filter and month_filter.lower() != 'all':
+            try:
+                where_clauses.append("month = ?"); params.append(int(month_filter))
+            except Exception:
+                pass
+        if feedback_pending in ('1', 'true', 'True'):
+            where_clauses.append("feedback_pending = 1")
+        elif feedback_pending in ('0', 'false', 'False'):
+            where_clauses.append("feedback_pending = 0")
+        if search:
+            where_clauses.append("(lower(project_name) LIKE ? OR lower(client_name) LIKE ? OR lower(city) LIKE ?)")
+            params.extend([f"%{search}%", f"%{search}%", f"%{search}%"])
+
+        where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
+        projects = database.execute_query(f"""
+            SELECT * FROM pipeline_projects
+            {where_sql}
+            ORDER BY created_at DESC;
+        """, tuple(params))
+        return send_json(handler, {"success": True, "count": len(projects), "projects": [dict(p) for p in projects]})
+
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
 
@@ -1019,7 +1065,7 @@ def _handle_post_internal(handler):
 
         inv_code = f"NTW-INV-{uuid.uuid4().hex[:6].upper()}"
         inv_link = f"https://newtechwood.in/invite/{inv_code}"
-        inv_id = f"INV-{uuid.uuid4().hex[:8]}"
+        inv_id = body.get('id') or f"INV-{uuid.uuid4().hex[:8]}"
         expires_at = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
 
         database.execute_commit("""
@@ -1042,14 +1088,14 @@ def _handle_post_internal(handler):
         if not firm or not guest:
             return send_json(handler, {"success": False, "error": "Firm and guest names required"}, 400)
 
-        mtg_id = f"MTG-{uuid.uuid4().hex[:8]}"
+        mtg_id = body.get('id') or f"MTG-{uuid.uuid4().hex[:8]}"
         mtg_date = body.get('meeting_date') or datetime.now().strftime("%Y-%m-%d")
         mobile = body.get('mobile', '')
         user_type = body.get('user_type', 'New')
         guest_type = body.get('guest_type', 'Architect')
         country = body.get('country', 'India')
-        state = body.get('state', 'Karnataka')          # default changed to Karnataka
-        city = body.get('city', 'Bengaluru')            # default changed to Bengaluru
+        state = body.get('state', 'Karnataka')
+        city = body.get('city', 'Bengaluru')
         notes = body.get('discussion_notes', '')
         owner_name = body.get('owner_name') or auth_user.get('full_name', 'Rohan Verma')
 
@@ -1061,6 +1107,336 @@ def _handle_post_internal(handler):
 
         created = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
         return send_json(handler, {"success": True, "message": "Meeting scheduled", "meeting": dict(created)}, 201)
+
+    # ── Protected: Create Pipeline Project ───────────────────────────────────
+    if path == '/api/projects':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+
+        proj_name = body.get('project_name', '').strip()
+        client_name = body.get('client_name', '').strip()
+        if not proj_name or not client_name:
+            return send_json(handler, {"success": False, "error": "Project and client name are required"}, 400)
+
+        proj_id = body.get('id') or f"PRJ-NTW-{uuid.uuid4().hex[:8]}"
+        category = body.get('category', 'Decking')
+        try:
+            total_value = float(body.get('total_value', 0.0))
+        except Exception:
+            total_value = 0.0
+        try:
+            sq_ft = float(body.get('sq_ft', 0.0))
+        except Exception:
+            sq_ft = 0.0
+        try:
+            discount_pct = float(body.get('discount_pct', 0.0))
+        except Exception:
+            discount_pct = 0.0
+        location = body.get('location', 'Bengaluru, Karnataka')
+        city = body.get('city', 'Bengaluru')
+        state = body.get('state', 'Karnataka')
+        country = body.get('country', 'India')
+        financial_year = body.get('financial_year') or _default_fy()
+        now = datetime.now()
+        month = int(body.get('month') or now.month)
+
+        if body.get('day_bracket'):
+            day_bracket = body['day_bracket']
+        else:
+            d = now.day
+            if d <= 5: day_bracket = '1-5'
+            elif d <= 10: day_bracket = '6-10'
+            elif d <= 15: day_bracket = '11-15'
+            elif d <= 20: day_bracket = '16-20'
+            elif d <= 25: day_bracket = '21-25'
+            else: day_bracket = '26-31'
+
+        stage = body.get('stage', 'Pipeline')
+        days_to_win = int(body.get('days_pipeline_to_win') or (1 if stage == 'Win' else 0))
+        feedback_pending = 1 if body.get('feedback_pending') in (1, '1', True, 'true', 'True') else 0
+        feedback_notes = body.get('feedback_notes', '')
+        owner_name = body.get('owner_name') or auth_user.get('full_name', 'Rohan Verma')
+
+        database.execute_commit("""
+            INSERT INTO pipeline_projects (id, project_name, client_name, location, city, state, country,
+                                          financial_year, month, day_bracket, category, total_value, sq_ft,
+                                          discount_pct, days_pipeline_to_win, stage, feedback_pending,
+                                          feedback_notes, owner_name)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """, (proj_id, proj_name, client_name, location, city, state, country,
+              financial_year, month, day_bracket, category, total_value, sq_ft,
+              discount_pct, days_to_win, stage, feedback_pending, feedback_notes, owner_name))
+
+        created = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+        return send_json(handler, {"success": True, "message": "Project created successfully", "project": dict(created)}, 201)
+
+    # ── Protected: Update Pipeline Project (POST fallback) ───────────────────
+    if path == '/api/projects/update':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        return _update_project_internal(handler, body)
+
+    # ── Protected: Delete Pipeline Project (POST fallback) ───────────────────
+    if path == '/api/projects/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        proj_id = body.get('id')
+        return _delete_project_internal(handler, proj_id)
+
+    # ── Protected: Feedback Pending Workflow (Resolve / Update) ──────────────
+    if path == '/api/projects/feedback':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        proj_id = body.get('project_id') or body.get('id')
+        if not proj_id:
+            return send_json(handler, {"success": False, "error": "project_id is required"}, 400)
+        existing = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+        if not existing:
+            return send_json(handler, {"success": False, "error": "Project not found"}, 404)
+
+        action = (body.get('action') or 'update').lower()
+        notes = (body.get('feedback_notes') or body.get('notes') or '').strip()
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        if action == 'resolve':
+            feedback_pending = 0
+            existing_notes = (existing.get('feedback_notes') or '').strip()
+            if notes:
+                new_notes = f"{existing_notes} | [Resolved {timestamp}]: {notes}".strip(' |')
+            else:
+                new_notes = f"{existing_notes} | [Resolved {timestamp}]".strip(' |')
+        else:
+            feedback_pending = 1
+            new_notes = notes or existing.get('feedback_notes') or ''
+
+        database.execute_commit("""
+            UPDATE pipeline_projects
+            SET feedback_pending = ?, feedback_notes = ?
+            WHERE id = ?;
+        """, (feedback_pending, new_notes, proj_id))
+
+        updated = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+        pending_count = database.execute_one("SELECT COUNT(*) as count FROM pipeline_projects WHERE feedback_pending = 1;")['count']
+        return send_json(handler, {
+            "success": True,
+            "message": "Feedback resolved" if feedback_pending == 0 else "Feedback updated",
+            "feedback_pending_count": pending_count,
+            "project": dict(updated)
+        })
+
+    # ── Protected: Directory Firms CRUD ──────────────────────────────────────
+    if path == '/api/directory/firms':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        firm_name = body.get('firm_name', '').strip()
+        if not firm_name:
+            return send_json(handler, {"success": False, "error": "Firm name is required"}, 400)
+        category = body.get('category', 'Architect')
+        if category not in ('PRO', 'Architect', 'PROPLUS'):
+            category = 'Architect'
+        city = body.get('city', 'Bengaluru')
+        state = body.get('state', 'Karnataka')
+        country = body.get('country', 'India')
+        status = body.get('status', 'active')
+        firm_id = body.get('id') or f"FRM-NTW-{uuid.uuid4().hex[:8]}"
+
+        database.execute_commit("""
+            INSERT INTO directory_firms (id, firm_name, category, city, state, country, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+        """, (firm_id, firm_name, category, city, state, country, status))
+
+        contacts = body.get('contacts') or []
+        for c in contacts:
+            first_name = c.get('first_name', '').strip()
+            if not first_name:
+                continue
+            cnt_id = f"CNT-NTW-{uuid.uuid4().hex[:8]}"
+            last_name = c.get('last_name', '').strip()
+            user_type = c.get('user_type', 'Principal Architect')
+            mobile = c.get('mobile', '')
+            email = c.get('email', '')
+            is_primary = 1 if c.get('is_primary') else 0
+            database.execute_commit("""
+                INSERT INTO directory_contacts (id, firm_id, first_name, last_name, user_type, mobile, email, is_primary)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            """, (cnt_id, firm_id, first_name, last_name, user_type, mobile, email, is_primary))
+
+        created = database.execute_one("SELECT * FROM directory_firms WHERE id = ?;", (firm_id,))
+        created_contacts = database.execute_query("SELECT * FROM directory_contacts WHERE firm_id = ?;", (firm_id,))
+        res = dict(created)
+        res['contacts'] = [dict(c) for c in created_contacts]
+        return send_json(handler, {"success": True, "message": "Firm created successfully", "firm": res}, 201)
+
+    if path == '/api/directory/firms/update':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        return _update_firm_internal(handler, body)
+
+    if path == '/api/directory/firms/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        firm_id = body.get('id')
+        return _delete_firm_internal(handler, firm_id)
+
+    if path == '/api/directory/contacts':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        firm_id = body.get('firm_id')
+        first_name = body.get('first_name', '').strip()
+        if not firm_id or not first_name:
+            return send_json(handler, {"success": False, "error": "firm_id and first_name are required"}, 400)
+        cnt_id = f"CNT-NTW-{uuid.uuid4().hex[:8]}"
+        last_name = body.get('last_name', '').strip()
+        user_type = body.get('user_type', 'Associate')
+        mobile = body.get('mobile', '')
+        email = body.get('email', '')
+        is_primary = 1 if body.get('is_primary') else 0
+        database.execute_commit("""
+            INSERT INTO directory_contacts (id, firm_id, first_name, last_name, user_type, mobile, email, is_primary)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        """, (cnt_id, firm_id, first_name, last_name, user_type, mobile, email, is_primary))
+        created = database.execute_one("SELECT * FROM directory_contacts WHERE id = ?;", (cnt_id,))
+        return send_json(handler, {"success": True, "message": "Contact added", "contact": dict(created)}, 201)
+
+    if path == '/api/directory/contacts/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        cnt_id = body.get('id')
+        if not cnt_id:
+            return send_json(handler, {"success": False, "error": "Contact ID required"}, 400)
+        database.execute_commit("DELETE FROM directory_contacts WHERE id = ?;", (cnt_id,))
+        return send_json(handler, {"success": True, "message": "Contact deleted"})
+
+    # ── Protected: Directory Meetings Update & Delete ────────────────────────
+    if path == '/api/directory/meetings/update':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        return _update_meeting_internal(handler, body)
+
+    if path == '/api/directory/meetings/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        mtg_id = body.get('id')
+        return _delete_meeting_internal(handler, mtg_id)
+
+    # ── Protected: Directory Invitations Update, Resend & Delete ─────────────
+    if path == '/api/directory/invitations/update':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        return _update_invitation_internal(handler, body)
+
+    if path == '/api/directory/invitations/resend':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        inv_id = body.get('id')
+        return _resend_invitation_internal(handler, inv_id)
+
+    if path == '/api/directory/invitations/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        inv_id = body.get('id')
+        return _delete_invitation_internal(handler, inv_id)
+
+    # ── Protected: Directory Visitors CRUD ───────────────────────────────────
+    if path == '/api/directory/visitors':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        name = body.get('name', '').strip()
+        firm = body.get('firm', '').strip()
+        if not name or not firm:
+            return send_json(handler, {"success": False, "error": "Visitor name and firm are required"}, 400)
+        vis_id = body.get('id') or f"VIS-NTW-{uuid.uuid4().hex[:8]}"
+        visitor_type = body.get('visitor_type', 'Architect')
+        mobile = body.get('mobile', '')
+        email = body.get('email', '')
+        link_created = body.get('link_created_date') or datetime.now().strftime("%Y-%m-%d")
+        form_submitted = body.get('form_submitted_date')
+        country = body.get('country', 'India')
+        state = body.get('state', 'Karnataka')
+        city = body.get('city', 'Bengaluru')
+        event_year = body.get('event_year', str(datetime.now().year))
+
+        database.execute_commit("""
+            INSERT INTO id_visitors (id, visitor_type, name, mobile, email, firm, link_created_date,
+                                     form_submitted_date, country, state, city, event_year)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """, (vis_id, visitor_type, name, mobile, email, firm, link_created, form_submitted, country, state, city, event_year))
+
+        created = database.execute_one("SELECT * FROM id_visitors WHERE id = ?;", (vis_id,))
+        return send_json(handler, {"success": True, "message": "Visitor created", "visitor": dict(created)}, 201)
+
+    if path == '/api/directory/visitors/update':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        return _update_visitor_internal(handler, body)
+
+    if path == '/api/directory/visitors/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        vis_id = body.get('id')
+        return _delete_visitor_internal(handler, vis_id)
+
+    # ── Protected: GoPro Assets CRUD & View Tracker ──────────────────────────
+    if path == '/api/gopro/assets':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        subject = body.get('subject', '').strip()
+        creator = body.get('creator', '').strip()
+        video_url = body.get('video_url', '').strip()
+        if not subject or not creator or not video_url:
+            return send_json(handler, {"success": False, "error": "Subject, creator and video_url required"}, 400)
+        asset_id = body.get('id') or f"GP-NTW-{uuid.uuid4().hex[:8]}"
+        file_type = body.get('file_type', 'MP4 Video')
+        duration = body.get('duration', '10:00')
+        thumbnail_url = body.get('thumbnail_url', '')
+        category = body.get('category', 'Installation Guide')
+
+        database.execute_commit("""
+            INSERT INTO go_pro_assets (id, subject, creator, file_type, duration, video_url, thumbnail_url, category, views_count)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0);
+        """, (asset_id, subject, creator, file_type, duration, video_url, thumbnail_url, category))
+
+        created = database.execute_one("SELECT * FROM go_pro_assets WHERE id = ?;", (asset_id,))
+        return send_json(handler, {"success": True, "message": "GoPro asset created", "asset": dict(created)}, 201)
+
+    if path == '/api/gopro/assets/update':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        return _update_gopro_internal(handler, body)
+
+    if path == '/api/gopro/assets/delete':
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        asset_id = body.get('id')
+        return _delete_gopro_internal(handler, asset_id)
+
+    if path == '/api/gopro/assets/view':
+        asset_id = body.get('id') or body.get('asset_id')
+        if not asset_id:
+            return send_json(handler, {"success": False, "error": "Asset ID is required"}, 400)
+        database.execute_commit("UPDATE go_pro_assets SET views_count = coalesce(views_count, 0) + 1 WHERE id = ?;", (asset_id,))
+        updated = database.execute_one("SELECT id, views_count FROM go_pro_assets WHERE id = ?;", (asset_id,))
+        return send_json(handler, {"success": True, "views_count": updated['views_count'] if updated else 1})
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
@@ -1089,9 +1465,57 @@ def _handle_put_internal(handler):
         auth_user = require_auth(handler)
         if not auth_user:
             return
-        if path.startswith('/api/orders/') and path != '/api/orders/':
+        if path.startswith('/api/orders/') and path != '/api/orders':
             body['id'] = path.split('/')[-1]
         return _update_order_internal(handler, body)
+
+    if path == '/api/projects' or path.startswith('/api/projects/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        if path.startswith('/api/projects/') and path != '/api/projects':
+            body['id'] = path.split('/')[-1]
+        return _update_project_internal(handler, body)
+
+    if path == '/api/directory/firms' or path.startswith('/api/directory/firms/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        if path.startswith('/api/directory/firms/') and path != '/api/directory/firms':
+            body['id'] = path.split('/')[-1]
+        return _update_firm_internal(handler, body)
+
+    if path == '/api/directory/meetings' or path.startswith('/api/directory/meetings/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        if path.startswith('/api/directory/meetings/') and path != '/api/directory/meetings':
+            body['id'] = path.split('/')[-1]
+        return _update_meeting_internal(handler, body)
+
+    if path == '/api/directory/invitations' or path.startswith('/api/directory/invitations/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        if path.startswith('/api/directory/invitations/') and path != '/api/directory/invitations':
+            body['id'] = path.split('/')[-1]
+        return _update_invitation_internal(handler, body)
+
+    if path == '/api/directory/visitors' or path.startswith('/api/directory/visitors/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        if path.startswith('/api/directory/visitors/') and path != '/api/directory/visitors':
+            body['id'] = path.split('/')[-1]
+        return _update_visitor_internal(handler, body)
+
+    if path == '/api/gopro/assets' or path.startswith('/api/gopro/assets/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        if path.startswith('/api/gopro/assets/') and path != '/api/gopro/assets':
+            body['id'] = path.split('/')[-1]
+        return _update_gopro_internal(handler, body)
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
@@ -1146,13 +1570,67 @@ def _handle_delete_internal(handler):
         database.execute_commit("DELETE FROM users WHERE id = ?;", (curr['id'],))
         return send_json(handler, {"success": True, "message": "Vendor deleted successfully", "id": curr['id']})
 
-    if path.startswith('/api/orders/') and path != '/api/orders/':
+    if path == '/api/orders' or path.startswith('/api/orders/'):
         auth_user = require_auth(handler)
         if not auth_user:
             return
-        order_id = path.split('/')[-1]
+        order_id = path.split('/')[-1] if (path.startswith('/api/orders/') and path != '/api/orders') else body.get('id')
+        if not order_id:
+            return send_json(handler, {"success": False, "error": "Order ID required"}, 400)
         database.execute_commit("DELETE FROM waltz_orders WHERE id = ?;", (order_id,))
         return send_json(handler, {"success": True, "message": "Order deleted successfully", "id": order_id})
+
+    if path == '/api/projects' or path.startswith('/api/projects/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        proj_id = path.split('/')[-1] if (path.startswith('/api/projects/') and path != '/api/projects') else body.get('id')
+        return _delete_project_internal(handler, proj_id)
+
+    if path == '/api/directory/firms' or path.startswith('/api/directory/firms/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        firm_id = path.split('/')[-1] if (path.startswith('/api/directory/firms/') and path != '/api/directory/firms') else body.get('id')
+        return _delete_firm_internal(handler, firm_id)
+
+    if path == '/api/directory/contacts' or path.startswith('/api/directory/contacts/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        cnt_id = path.split('/')[-1] if (path.startswith('/api/directory/contacts/') and path != '/api/directory/contacts') else body.get('id')
+        if not cnt_id:
+            return send_json(handler, {"success": False, "error": "Contact ID required"}, 400)
+        database.execute_commit("DELETE FROM directory_contacts WHERE id = ?;", (cnt_id,))
+        return send_json(handler, {"success": True, "message": "Contact deleted", "id": cnt_id})
+
+    if path == '/api/directory/meetings' or path.startswith('/api/directory/meetings/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        mtg_id = path.split('/')[-1] if (path.startswith('/api/directory/meetings/') and path != '/api/directory/meetings') else body.get('id')
+        return _delete_meeting_internal(handler, mtg_id)
+
+    if path == '/api/directory/invitations' or path.startswith('/api/directory/invitations/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        inv_id = path.split('/')[-1] if (path.startswith('/api/directory/invitations/') and path != '/api/directory/invitations') else body.get('id')
+        return _delete_invitation_internal(handler, inv_id)
+
+    if path == '/api/directory/visitors' or path.startswith('/api/directory/visitors/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        vis_id = path.split('/')[-1] if (path.startswith('/api/directory/visitors/') and path != '/api/directory/visitors') else body.get('id')
+        return _delete_visitor_internal(handler, vis_id)
+
+    if path == '/api/gopro/assets' or path.startswith('/api/gopro/assets/'):
+        auth_user = require_auth(handler)
+        if not auth_user:
+            return
+        asset_id = path.split('/')[-1] if (path.startswith('/api/gopro/assets/') and path != '/api/gopro/assets') else body.get('id')
+        return _delete_gopro_internal(handler, asset_id)
 
     send_json(handler, {"error": "Endpoint not found", "path": path}, 404)
 
@@ -1190,3 +1668,294 @@ def _update_order_internal(handler, body):
 
     updated = database.execute_one("SELECT * FROM waltz_orders WHERE id = ?;", (order_id,))
     return send_json(handler, {"success": True, "message": "Order updated", "order": dict(updated)})
+
+
+# ─── Project Update Helper (With Auto Pipeline → Win Days Calculation) ──────
+def _update_project_internal(handler, body):
+    proj_id = body.get('id')
+    if not proj_id:
+        return send_json(handler, {"success": False, "error": "Project ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Project not found"}, 404)
+
+    proj_name = body.get('project_name', existing['project_name'])
+    client_name = body.get('client_name', existing['client_name'])
+    category = body.get('category', existing['category'])
+    try:
+        total_value = float(body.get('total_value', existing['total_value']))
+    except Exception:
+        total_value = existing['total_value']
+    try:
+        sq_ft = float(body.get('sq_ft', existing['sq_ft']))
+    except Exception:
+        sq_ft = existing['sq_ft']
+    try:
+        discount_pct = float(body.get('discount_pct', existing['discount_pct']))
+    except Exception:
+        discount_pct = existing['discount_pct']
+    location = body.get('location', existing['location'])
+    city = body.get('city', existing['city'])
+    state = body.get('state', existing['state'])
+    country = body.get('country', existing.get('country', 'India'))
+    financial_year = body.get('financial_year', existing['financial_year'])
+    try:
+        month = int(body.get('month', existing['month']))
+    except Exception:
+        month = existing['month']
+    day_bracket = body.get('day_bracket', existing['day_bracket'])
+    stage = body.get('stage', existing['stage'])
+
+    # Auto-calculate days_pipeline_to_win on Pipeline -> Win transition
+    days_to_win = existing.get('days_pipeline_to_win') or 0
+    if stage == 'Win' and existing.get('stage') != 'Win':
+        if 'days_pipeline_to_win' in body and body['days_pipeline_to_win'] is not None:
+            try:
+                days_to_win = int(body['days_pipeline_to_win'])
+            except Exception:
+                days_to_win = 1
+        else:
+            created_at_str = str(existing.get('created_at') or '')
+            try:
+                if 'T' in created_at_str:
+                    c_dt = datetime.fromisoformat(created_at_str.replace('Z', ''))
+                elif ' ' in created_at_str:
+                    c_dt = datetime.strptime(created_at_str[:19], '%Y-%m-%d %H:%M:%S')
+                else:
+                    c_dt = datetime.strptime(created_at_str[:10], '%Y-%m-%d')
+                diff_days = (datetime.now() - c_dt).days
+                days_to_win = max(1, diff_days)
+            except Exception:
+                days_to_win = 1
+    elif 'days_pipeline_to_win' in body and body['days_pipeline_to_win'] is not None:
+        try:
+            days_to_win = int(body['days_pipeline_to_win'])
+        except Exception:
+            days_to_win = existing.get('days_pipeline_to_win') or 0
+
+    if 'feedback_pending' in body:
+        feedback_pending = 1 if body['feedback_pending'] in (1, '1', True, 'true', 'True') else 0
+    else:
+        feedback_pending = existing.get('feedback_pending', 0)
+
+    feedback_notes = body.get('feedback_notes', existing.get('feedback_notes', ''))
+    owner_name = body.get('owner_name', existing.get('owner_name', 'Rohan Verma'))
+
+    database.execute_commit("""
+        UPDATE pipeline_projects
+        SET project_name = ?, client_name = ?, category = ?, total_value = ?, sq_ft = ?,
+            discount_pct = ?, location = ?, city = ?, state = ?, country = ?,
+            financial_year = ?, month = ?, day_bracket = ?, stage = ?,
+            days_pipeline_to_win = ?, feedback_pending = ?, feedback_notes = ?, owner_name = ?
+        WHERE id = ?;
+    """, (proj_name, client_name, category, total_value, sq_ft, discount_pct,
+          location, city, state, country, financial_year, month, day_bracket,
+          stage, days_to_win, feedback_pending, feedback_notes, owner_name, proj_id))
+
+    updated = database.execute_one("SELECT * FROM pipeline_projects WHERE id = ?;", (proj_id,))
+    return send_json(handler, {"success": True, "message": "Project updated successfully", "project": dict(updated)})
+
+def _delete_project_internal(handler, proj_id):
+    if not proj_id:
+        return send_json(handler, {"success": False, "error": "Project ID is required"}, 400)
+    database.execute_commit("DELETE FROM pipeline_projects WHERE id = ?;", (proj_id,))
+    return send_json(handler, {"success": True, "message": "Project deleted successfully", "id": proj_id})
+
+
+# ─── Directory Firm Helpers ──────────────────────────────────────────────────
+def _update_firm_internal(handler, body):
+    firm_id = body.get('id')
+    if not firm_id:
+        return send_json(handler, {"success": False, "error": "Firm ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM directory_firms WHERE id = ?;", (firm_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Firm not found"}, 404)
+
+    firm_name = body.get('firm_name', existing['firm_name']).strip()
+    category = body.get('category', existing['category'])
+    if category not in ('PRO', 'Architect', 'PROPLUS'):
+        category = existing['category']
+    city = body.get('city', existing['city'])
+    state = body.get('state', existing['state'])
+    country = body.get('country', existing.get('country', 'India'))
+    status = body.get('status', existing.get('status', 'active'))
+
+    database.execute_commit("""
+        UPDATE directory_firms
+        SET firm_name = ?, category = ?, city = ?, state = ?, country = ?, status = ?
+        WHERE id = ?;
+    """, (firm_name, category, city, state, country, status, firm_id))
+
+    updated = database.execute_one("SELECT * FROM directory_firms WHERE id = ?;", (firm_id,))
+    contacts = database.execute_query("SELECT * FROM directory_contacts WHERE firm_id = ?;", (firm_id,))
+    res = dict(updated)
+    res['contacts'] = [dict(c) for c in contacts]
+    return send_json(handler, {"success": True, "message": "Firm updated successfully", "firm": res})
+
+def _delete_firm_internal(handler, firm_id):
+    if not firm_id:
+        return send_json(handler, {"success": False, "error": "Firm ID is required"}, 400)
+    database.execute_commit("DELETE FROM directory_contacts WHERE firm_id = ?;", (firm_id,))
+    database.execute_commit("DELETE FROM directory_firms WHERE id = ?;", (firm_id,))
+    return send_json(handler, {"success": True, "message": "Firm and associated contacts deleted successfully", "id": firm_id})
+
+
+# ─── Directory Meeting Helpers ───────────────────────────────────────────────
+def _update_meeting_internal(handler, body):
+    mtg_id = body.get('id')
+    if not mtg_id:
+        return send_json(handler, {"success": False, "error": "Meeting ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Meeting not found"}, 404)
+
+    meeting_date = body.get('meeting_date', existing['meeting_date'])
+    firm_name = body.get('firm_name', existing['firm_name'])
+    guest_name = body.get('guest_name', existing['guest_name'])
+    mobile = body.get('mobile', existing['mobile'])
+    user_type = body.get('user_type', existing['user_type'])
+    guest_type = body.get('guest_type', existing['guest_type'])
+    country = body.get('country', existing.get('country', 'India'))
+    state = body.get('state', existing.get('state', 'Karnataka'))
+    city = body.get('city', existing.get('city', 'Bengaluru'))
+    status = body.get('status', existing.get('status', 'Completed'))
+    discussion_notes = body.get('discussion_notes', existing.get('discussion_notes', ''))
+    owner_name = body.get('owner_name', existing.get('owner_name', 'Rohan Verma'))
+
+    database.execute_commit("""
+        UPDATE meetings
+        SET meeting_date = ?, firm_name = ?, guest_name = ?, mobile = ?,
+            user_type = ?, guest_type = ?, country = ?, state = ?, city = ?,
+            status = ?, discussion_notes = ?, owner_name = ?
+        WHERE id = ?;
+    """, (meeting_date, firm_name, guest_name, mobile, user_type, guest_type,
+          country, state, city, status, discussion_notes, owner_name, mtg_id))
+
+    updated = database.execute_one("SELECT * FROM meetings WHERE id = ?;", (mtg_id,))
+    return send_json(handler, {"success": True, "message": "Meeting updated successfully", "meeting": dict(updated)})
+
+def _delete_meeting_internal(handler, mtg_id):
+    if not mtg_id:
+        return send_json(handler, {"success": False, "error": "Meeting ID is required"}, 400)
+    database.execute_commit("DELETE FROM meetings WHERE id = ?;", (mtg_id,))
+    return send_json(handler, {"success": True, "message": "Meeting deleted successfully", "id": mtg_id})
+
+
+# ─── Directory Invitation Helpers ─────────────────────────────────────────────
+def _update_invitation_internal(handler, body):
+    inv_id = body.get('id')
+    if not inv_id:
+        return send_json(handler, {"success": False, "error": "Invitation ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Invitation not found"}, 404)
+
+    status = body.get('status', existing.get('status', 'Active'))
+    recipient_name = body.get('recipient_name', existing['recipient_name'])
+    firm_name = body.get('firm_name', existing['firm_name'])
+    recipient_email = body.get('recipient_email', existing['recipient_email'])
+    mobile = body.get('mobile', existing['mobile'])
+
+    database.execute_commit("""
+        UPDATE id_invitations
+        SET status = ?, recipient_name = ?, firm_name = ?, recipient_email = ?, mobile = ?
+        WHERE id = ?;
+    """, (status, recipient_name, firm_name, recipient_email, mobile, inv_id))
+
+    updated = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
+    return send_json(handler, {"success": True, "message": "Invitation updated successfully", "invitation": dict(updated)})
+
+def _resend_invitation_internal(handler, inv_id):
+    if not inv_id:
+        return send_json(handler, {"success": False, "error": "Invitation ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Invitation not found"}, 404)
+
+    new_expiry = (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
+    database.execute_commit("""
+        UPDATE id_invitations
+        SET status = 'Active', expires_at = ?
+        WHERE id = ?;
+    """, (new_expiry, inv_id))
+
+    updated = database.execute_one("SELECT * FROM id_invitations WHERE id = ?;", (inv_id,))
+    return send_json(handler, {"success": True, "message": "Invitation validity extended by 30 days", "invitation": dict(updated)})
+
+def _delete_invitation_internal(handler, inv_id):
+    if not inv_id:
+        return send_json(handler, {"success": False, "error": "Invitation ID is required"}, 400)
+    database.execute_commit("DELETE FROM id_invitations WHERE id = ?;", (inv_id,))
+    return send_json(handler, {"success": True, "message": "Invitation deleted successfully", "id": inv_id})
+
+
+# ─── Directory Visitor Helpers ───────────────────────────────────────────────
+def _update_visitor_internal(handler, body):
+    vis_id = body.get('id')
+    if not vis_id:
+        return send_json(handler, {"success": False, "error": "Visitor ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM id_visitors WHERE id = ?;", (vis_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "Visitor not found"}, 404)
+
+    name = body.get('name', existing['name'])
+    firm = body.get('firm', existing['firm'])
+    visitor_type = body.get('visitor_type', existing['visitor_type'])
+    mobile = body.get('mobile', existing['mobile'])
+    email = body.get('email', existing['email'])
+    country = body.get('country', existing.get('country', 'India'))
+    state = body.get('state', existing.get('state', 'Karnataka'))
+    city = body.get('city', existing.get('city', 'Bengaluru'))
+    event_year = body.get('event_year', existing.get('event_year', str(datetime.now().year)))
+    form_submitted_date = body.get('form_submitted_date', existing.get('form_submitted_date'))
+
+    database.execute_commit("""
+        UPDATE id_visitors
+        SET name = ?, firm = ?, visitor_type = ?, mobile = ?, email = ?,
+            country = ?, state = ?, city = ?, event_year = ?, form_submitted_date = ?
+        WHERE id = ?;
+    """, (name, firm, visitor_type, mobile, email, country, state, city, event_year, form_submitted_date, vis_id))
+
+    updated = database.execute_one("SELECT * FROM id_visitors WHERE id = ?;", (vis_id,))
+    return send_json(handler, {"success": True, "message": "Visitor updated successfully", "visitor": dict(updated)})
+
+def _delete_visitor_internal(handler, vis_id):
+    if not vis_id:
+        return send_json(handler, {"success": False, "error": "Visitor ID is required"}, 400)
+    database.execute_commit("DELETE FROM id_visitors WHERE id = ?;", (vis_id,))
+    return send_json(handler, {"success": True, "message": "Visitor deleted successfully", "id": vis_id})
+
+
+# ─── GoPro Asset Helpers ─────────────────────────────────────────────────────
+def _update_gopro_internal(handler, body):
+    asset_id = body.get('id')
+    if not asset_id:
+        return send_json(handler, {"success": False, "error": "Asset ID is required"}, 400)
+    existing = database.execute_one("SELECT * FROM go_pro_assets WHERE id = ?;", (asset_id,))
+    if not existing:
+        return send_json(handler, {"success": False, "error": "GoPro asset not found"}, 404)
+
+    subject = body.get('subject', existing['subject'])
+    creator = body.get('creator', existing['creator'])
+    file_type = body.get('file_type', existing.get('file_type', 'MP4 Video'))
+    duration = body.get('duration', existing['duration'])
+    video_url = body.get('video_url', existing['video_url'])
+    thumbnail_url = body.get('thumbnail_url', existing.get('thumbnail_url'))
+    category = body.get('category', existing.get('category', 'Installation Guide'))
+
+    database.execute_commit("""
+        UPDATE go_pro_assets
+        SET subject = ?, creator = ?, file_type = ?, duration = ?,
+            video_url = ?, thumbnail_url = ?, category = ?
+        WHERE id = ?;
+    """, (subject, creator, file_type, duration, video_url, thumbnail_url, category, asset_id))
+
+    updated = database.execute_one("SELECT * FROM go_pro_assets WHERE id = ?;", (asset_id,))
+    return send_json(handler, {"success": True, "message": "GoPro asset updated successfully", "asset": dict(updated)})
+
+def _delete_gopro_internal(handler, asset_id):
+    if not asset_id:
+        return send_json(handler, {"success": False, "error": "Asset ID is required"}, 400)
+    database.execute_commit("DELETE FROM go_pro_assets WHERE id = ?;", (asset_id,))
+    return send_json(handler, {"success": True, "message": "GoPro asset deleted successfully", "id": asset_id})
+
