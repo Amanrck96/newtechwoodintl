@@ -14,6 +14,16 @@ except ImportError:
 PORT = 8000
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
+import json
+QUERY_P_MAP = {}
+_map_file = os.path.join(DIRECTORY, "query_p_map.json")
+if os.path.isfile(_map_file):
+    try:
+        with open(_map_file, "r", encoding="utf-8") as f:
+            QUERY_P_MAP = json.load(f)
+    except Exception:
+        pass
+
 class RangeRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
@@ -31,6 +41,19 @@ class RangeRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith('/api/') and api_router:
             return api_router.handle_get(self)
+
+        # Handle legacy WordPress query_p redirects cleanly to canonical pages
+        clean_path = self.path.split('?')[0].strip('/')
+        folder_match = re.match(r'^(query_p_\d+)', clean_path)
+        if folder_match:
+            folder_key = folder_match.group(1)
+            target = QUERY_P_MAP.get(folder_key)
+            if target:
+                self.send_response(301)
+                self.send_header('Location', target)
+                self.end_headers()
+                return
+
         return super().do_GET()
 
     def do_POST(self):
