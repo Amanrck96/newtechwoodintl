@@ -25,13 +25,59 @@
 					window.location.replace('/admin/vendor.html');
 					return;
 				}
-			} catch (e) {
+		} catch (e) {
 				window.location.replace('/login/');
 			}
 		})();
 	</script>
 
-	<!-- Fonts -->
+	<!-- GLOBAL AUTH HELPER: apiFetch() auto-attaches Bearer token & handles 401 -->
+	<script>
+		function getSessionToken() {
+			try {
+				const s = JSON.parse(localStorage.getItem('ntw_session') || sessionStorage.getItem('ntw_session') || 'null');
+				return s ? (s.token || null) : null;
+			} catch (e) { return null; }
+		}
+
+		/**
+		 * Drop-in replacement for fetch() for /api/* calls.
+		 * Automatically adds Authorization: Bearer <token> and redirects on 401.
+		 * Usage: await apiapiFetch('/api/orders', { method: 'POST', body: JSON.stringify({...}) })
+		 */
+		async function apiFetch(url, options = {}) {
+			const token = getSessionToken();
+			if (!options.headers) options.headers = {};
+			if (token) {
+				options.headers['Authorization'] = `Bearer ${token}`;
+			}
+			if (options.body && !options.headers['Content-Type']) {
+				options.headers['Content-Type'] = 'application/json';
+			}
+			const resp = await fetch(url, options);
+			if (resp.status === 401) {
+				localStorage.removeItem('ntw_session');
+				sessionStorage.removeItem('ntw_session');
+				window.location.replace('/login/');
+				return resp;
+			}
+			return resp;
+		}
+
+		function esc(str) {
+			if (str === null || str === undefined) return '';
+			return String(str)
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#39;');
+		}
+		window.esc = esc;
+		window.apiFetch = apiFetch;
+	</script>
+
+
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -2285,7 +2331,10 @@
 							<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--adm-gold)" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 							<span>Top 10 Pipeline Projects (Highest Commercial Value)</span>
 						</h3>
-						<span style="font-size:12px;color:var(--adm-text-muted);font-weight:600;">Ranked by Project Total Value</span>
+						<div style="display:flex;align-items:center;gap:12px;">
+							<span style="font-size:12px;color:var(--adm-text-muted);font-weight:600;">Ranked by Project Total Value</span>
+							<button class="btn-primary" style="padding:4px 12px;font-size:12px;background:var(--adm-green);" onclick="openNewProjectModal()">+ Add Project</button>
+						</div>
 					</div>
 
 					<div class="table-responsive-container">
@@ -2301,11 +2350,12 @@
 									<th>Discount %</th>
 									<th>Feedback Status</th>
 									<th>Representative</th>
+									<th style="text-align:center;min-width:110px;">Actions</th>
 								</tr>
 							</thead>
 							<tbody id="top10PipelineBody">
 								<tr>
-									<td colspan="9" style="text-align:center;padding:28px;color:var(--adm-text-muted);">
+									<td colspan="10" style="text-align:center;padding:28px;color:var(--adm-text-muted);">
 										Loading Top 10 Pipeline Projects...
 									</td>
 								</tr>
@@ -2511,6 +2561,10 @@
 						<p>Architect firms directory with associated key contacts, categories &amp; regional coverage</p>
 					</div>
 					<div style="display:flex;align-items:center;gap:12px;">
+						<button class="btn-primary" style="background:#2563eb;color:#ffffff;" onclick="openNewFirmModal()">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+							<span>+ Add Architect Firm</span>
+						</button>
 						<button class="btn-primary" style="background:#14b8a6;color:#ffffff;" onclick="exportDirectoryMasterExcel()">
 							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
 							<span>Export Architect Firm Details</span>
@@ -2587,15 +2641,15 @@
 					<table class="crm-table meetings-filter-table">
 						<thead>
 							<tr>
-								<th style="min-width:180px;">Meeting date ⇅</th>
-								<th style="min-width:160px;">Firm name</th>
-								<th style="min-width:140px;">Guest name</th>
-								<th style="min-width:130px;">Mobile number</th>
-								<th style="min-width:120px;">Existing/New user</th>
-								<th style="min-width:130px;">Guest Type</th>
-								<th style="min-width:100px;">Country</th>
-								<th style="min-width:120px;">State</th>
-								<th style="min-width:120px;">City</th>
+								<th style="min-width:180px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('meeting_date')">Meeting date ⇅</th>
+								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('firm_name')">Firm name ⇅</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('guest_name')">Guest name ⇅</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('mobile')">Mobile number ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('user_type')">Existing/New user ⇅</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('guest_type')">Guest Type ⇅</th>
+								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('country')">Country ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('state')">State ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortMeetingsTable('city')">City ⇅</th>
 								<th style="text-align:center;min-width:80px;">ACTION</th>
 							</tr>
 							<!-- Column Filters Row (matching 12.11.25.jpeg) -->
@@ -2706,6 +2760,10 @@
 						<p>Exhibition &amp; Experience Centre registered visitors directory</p>
 					</div>
 					<div style="display:flex;align-items:center;gap:12px;">
+						<button class="btn-primary" style="background:#2563eb;color:#ffffff;" onclick="openNewVisitorModal()">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+							<span>+ Register Visitor</span>
+						</button>
 						<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="clearVisitorFilters()">Clear All Filter</a>
 						<button class="btn-primary" style="background:#14b8a6;color:#ffffff;" onclick="exportVisitorsExcel()">
 							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -2719,17 +2777,18 @@
 					<table class="crm-table visitors-filter-table">
 						<thead>
 							<tr>
-								<th style="min-width:140px;">Visitor Type ↑↓</th>
-								<th style="min-width:130px;">Name ↑↓</th>
-								<th style="min-width:120px;">Mobile No. ↑↓</th>
-								<th style="min-width:150px;">Email Address ↑↓</th>
-								<th style="min-width:140px;">Firm Name ↑↓</th>
-								<th style="min-width:140px;">Link Created Date ↓</th>
-								<th style="min-width:140px;">Form Submitted Date ↑↓</th>
-								<th style="min-width:110px;">Country ↑↓</th>
-								<th style="min-width:120px;">State ↑↓</th>
-								<th style="min-width:120px;">City ↑↓</th>
-								<th style="min-width:100px;">Event Year ↑↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('visitor_type')">Visitor Type ↑↓</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('name')">Name ↑↓</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('mobile')">Mobile No. ↑↓</th>
+								<th style="min-width:150px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('email')">Email Address ↑↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('firm')">Firm Name ↑↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('link_created_date')">Link Created Date ↓</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('form_submitted_date')">Form Submitted Date ↑↓</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('country')">Country ↑↓</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('state')">State ↑↓</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('city')">City ↑↓</th>
+								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortVisitorsTable('event_year')">Event Year ↑↓</th>
+								<th style="min-width:70px;text-align:center;">Action</th>
 							</tr>
 							<!-- Filter Inputs Row (matching 12.11.43.jpeg) -->
 							<tr class="table-filter-row">
@@ -2794,6 +2853,7 @@
 										<option value="2025">2025</option>
 									</select>
 								</td>
+								<td></td>
 							</tr>
 						</thead>
 						<tbody id="visitorsTableBody">
@@ -2829,7 +2889,13 @@
 						<h1>Go Pro</h1>
 						<p>Commercial education, technical drawing plans, and site manager video masterclasses</p>
 					</div>
-					<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="clearGoProFilters()">Clear Filter</a>
+					<div style="display:flex;align-items:center;gap:12px;">
+						<button class="btn-primary" style="background:#2563eb;color:#ffffff;" onclick="openNewGoProModal()">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+							<span>+ Add Video Asset</span>
+						</button>
+						<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="clearGoProFilters()">Clear Filter</a>
+					</div>
 				</div>
 
 				<!-- Go Pro Table with Column Filters -->
@@ -2890,16 +2956,16 @@
 					<table class="crm-table waltz-orders-table">
 						<thead>
 							<tr>
-								<th style="min-width:130px;">ORDER NUMBER</th>
-								<th style="min-width:160px;">PROJECT NAME ↑↓</th>
-								<th style="min-width:140px;">CLIENT NAME ↑↓</th>
-								<th style="min-width:100px;">COUNTRY ↑↓</th>
-								<th style="min-width:110px;">STATE ↑↓</th>
-								<th style="min-width:110px;">CITY ↑↓</th>
-								<th style="min-width:160px;">DATE ↑↓</th>
-								<th style="min-width:110px;">STATUS ↑↓</th>
-								<th style="min-width:120px;">FINAL AMOUNT ↑↓</th>
-								<th style="min-width:110px;">SOURCE ↑↓</th>
+								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('order_number')">ORDER NUMBER ⇅</th>
+								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('project_name')">PROJECT NAME ⇅</th>
+								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('client_name')">CLIENT NAME ⇅</th>
+								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('country')">COUNTRY ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('state')">STATE ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('city')">CITY ⇅</th>
+								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('order_date')">DATE ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('status')">STATUS ⇅</th>
+								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('final_amount')">FINAL AMOUNT ⇅</th>
+								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('source')">SOURCE ⇅</th>
 								<th style="text-align:center;min-width:110px;">ACTION</th>
 							</tr>
 							<!-- Column Filters Row -->
@@ -3408,16 +3474,20 @@
 					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
 						<div>
 							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">State</label>
-							<input type="text" id="newMtgState" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Maharashtra" />
+							<input type="text" id="newMtgState" class="tbl-filter-input" style="height:38px;" value="Karnataka" placeholder="e.g. Karnataka" />
 						</div>
 						<div>
 							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">City</label>
-							<input type="text" id="newMtgCity" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Mumbai" />
+							<input type="text" id="newMtgCity" class="tbl-filter-input" style="height:38px;" value="Bengaluru" placeholder="e.g. Bengaluru" />
 						</div>
 					</div>
 					<div>
 						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Discussion Notes &amp; Specifications</label>
-						<textarea id="newMtgNotes" class="tbl-filter-input" style="height:80px;padding:8px;resize:vertical;" placeholder="Key discussion points, product samples shown, pricing discussed..."></textarea>
+						<textarea id="newMtgNotes" class="tbl-filter-input" style="height:70px;padding:8px;resize:vertical;" placeholder="Key discussion points, product samples shown, pricing discussed..."></textarea>
+					</div>
+					<div>
+						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Attach Site Photos / Architectural Specs</label>
+						<input type="file" id="newMtgImages" multiple accept="image/*" class="tbl-filter-input" style="height:36px;padding-top:4px;" />
 					</div>
 					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
 						<button type="button" class="btn-outline" onclick="closeNewMeetingModal()">Cancel</button>
@@ -3494,6 +3564,227 @@
 						<button class="btn-outline" onclick="showToast('CAD &amp; Spec Sheet downloaded!')">Download Spec PDF</button>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- PIPELINE PROJECT MODAL -->
+	<div class="modal-backdrop" id="newProjectModal">
+		<div class="modal-window" style="max-width: 620px;">
+			<div class="modal-header">
+				<h3>Create New Pipeline Project</h3>
+				<button class="modal-close-btn" onclick="closeNewProjectModal()">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form id="newProjectForm" onsubmit="submitNewProject(event)" style="display:flex;flex-direction:column;gap:14px;">
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Project Name *</label>
+							<input type="text" id="prjInputName" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Prestige Golfshire Villa Deck" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Client Name *</label>
+							<input type="text" id="prjInputClient" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Ar. Vinay Kulkarni" required />
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Category</label>
+							<select id="prjInputCategory" class="tbl-filter-select" style="height:38px;">
+								<option value="Decking">Decking</option>
+								<option value="Cladding">Cladding</option>
+								<option value="Pergola">Pergola</option>
+								<option value="Railing">Railing</option>
+							</select>
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Commercial Value (₹) *</label>
+							<input type="number" id="prjInputValue" class="tbl-filter-input" style="height:38px;" placeholder="e.g. 850000" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Sq.Ft</label>
+							<input type="number" id="prjInputSqft" class="tbl-filter-input" style="height:38px;" placeholder="e.g. 1500" />
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Discount %</label>
+							<input type="number" step="0.1" id="prjInputDiscount" class="tbl-filter-input" style="height:38px;" value="0" />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">State</label>
+							<input type="text" id="prjInputState" class="tbl-filter-input" style="height:38px;" value="Karnataka" />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">City</label>
+							<input type="text" id="prjInputCity" class="tbl-filter-input" style="height:38px;" value="Bengaluru" />
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Initial Stage</label>
+							<select id="prjInputStage" class="tbl-filter-select" style="height:38px;">
+								<option value="Pipeline">Pipeline</option>
+								<option value="Win">Win</option>
+								<option value="Lost">Lost</option>
+							</select>
+						</div>
+						<div style="display:flex;align-items:center;margin-top:20px;gap:8px;">
+							<input type="checkbox" id="prjInputFeedback" style="width:16px;height:16px;" />
+							<label for="prjInputFeedback" style="font-size:12.5px;font-weight:600;color:#dc2626;">Mark Client Feedback Pending</label>
+						</div>
+					</div>
+					<div>
+						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Feedback / Specification Notes</label>
+						<textarea id="prjInputNotes" class="tbl-filter-input" style="height:60px;padding:8px;resize:vertical;" placeholder="Sample submission details, color code preferences..."></textarea>
+					</div>
+					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
+						<button type="button" class="btn-outline" onclick="closeNewProjectModal()">Cancel</button>
+						<button type="submit" class="btn-primary" style="background:var(--adm-green);">Create Project</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- NEW ARCHITECT FIRM MODAL -->
+	<div class="modal-backdrop" id="newFirmModal">
+		<div class="modal-window" style="max-width: 580px;">
+			<div class="modal-header">
+				<h3>Register Architect / Partner Firm</h3>
+				<button class="modal-close-btn" onclick="closeNewFirmModal()">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form id="newFirmForm" onsubmit="submitNewFirm(event)" style="display:flex;flex-direction:column;gap:14px;">
+					<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Firm Name *</label>
+							<input type="text" id="firmInputName" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Studio Lotus Architects" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Category *</label>
+							<select id="firmInputCategory" class="tbl-filter-select" style="height:38px;" required>
+								<option value="Architect">Architect</option>
+								<option value="PRO">PRO</option>
+								<option value="PROPLUS">PROPLUS</option>
+							</select>
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">City</label>
+							<input type="text" id="firmInputCity" class="tbl-filter-input" style="height:38px;" value="Bengaluru" />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">State</label>
+							<input type="text" id="firmInputState" class="tbl-filter-input" style="height:38px;" value="Karnataka" />
+						</div>
+					</div>
+					<div style="background:#f9faf8;border:1px solid var(--adm-border);border-radius:8px;padding:12px;">
+						<strong style="font-size:12.5px;color:var(--adm-text-main);display:block;margin-bottom:8px;">Primary Key Contact (Optional)</strong>
+						<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+							<input type="text" id="firmInputContactFirst" class="tbl-filter-input" style="height:34px;" placeholder="First Name" />
+							<input type="text" id="firmInputContactLast" class="tbl-filter-input" style="height:34px;" placeholder="Last Name" />
+						</div>
+						<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+							<input type="text" id="firmInputContactMobile" class="tbl-filter-input" style="height:34px;" placeholder="Mobile Number" />
+							<input type="email" id="firmInputContactEmail" class="tbl-filter-input" style="height:34px;" placeholder="Email Address" />
+						</div>
+					</div>
+					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
+						<button type="button" class="btn-outline" onclick="closeNewFirmModal()">Cancel</button>
+						<button type="submit" class="btn-primary" style="background:var(--adm-green);">Save Firm</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- REGISTER NEW VISITOR MODAL -->
+	<div class="modal-backdrop" id="newVisitorModal">
+		<div class="modal-window" style="max-width: 580px;">
+			<div class="modal-header">
+				<h3>Register ID Visitor</h3>
+				<button class="modal-close-btn" onclick="closeNewVisitorModal()">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form id="newVisitorForm" onsubmit="submitNewVisitor(event)" style="display:flex;flex-direction:column;gap:14px;">
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Full Name *</label>
+							<input type="text" id="visInputName" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Ar. Sanjay Puri" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Firm Name *</label>
+							<input type="text" id="visInputFirm" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Sanjay Puri Architects" required />
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Visitor Type</label>
+							<select id="visInputType" class="tbl-filter-select" style="height:38px;">
+								<option value="Architect">Architect</option>
+								<option value="VIP Guest">VIP Guest</option>
+								<option value="Contractor">Contractor</option>
+								<option value="Partner">Partner</option>
+							</select>
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Mobile Number</label>
+							<input type="text" id="visInputMobile" class="tbl-filter-input" style="height:38px;" placeholder="e.g. 9876543210" />
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Email Address</label>
+							<input type="email" id="visInputEmail" class="tbl-filter-input" style="height:38px;" placeholder="name@firm.com" />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Event Year</label>
+							<input type="text" id="visInputYear" class="tbl-filter-input" style="height:38px;" value="2026" />
+						</div>
+					</div>
+					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
+						<button type="button" class="btn-outline" onclick="closeNewVisitorModal()">Cancel</button>
+						<button type="submit" class="btn-primary" style="background:var(--adm-green);">Register Visitor</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- NEW GOPRO ASSET MODAL -->
+	<div class="modal-backdrop" id="newGoProModal">
+		<div class="modal-window" style="max-width: 580px;">
+			<div class="modal-header">
+				<h3>Add Go Pro Educational Video</h3>
+				<button class="modal-close-btn" onclick="closeNewGoProModal()">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form id="newGoProForm" onsubmit="submitNewGoPro(event)" style="display:flex;flex-direction:column;gap:14px;">
+					<div>
+						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Subject / Training Module Title *</label>
+						<input type="text" id="gpInputSubject" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Composite Cladding Substructure Installation" required />
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Creator / Presenter *</label>
+							<input type="text" id="gpInputCreator" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Tech Support Team" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Duration</label>
+							<input type="text" id="gpInputDuration" class="tbl-filter-input" style="height:38px;" placeholder="e.g. 12:45" value="12:30" />
+						</div>
+					</div>
+					<div>
+						<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Video URL (MP4 / Stream) *</label>
+						<input type="url" id="gpInputUrl" class="tbl-filter-input" style="height:38px;" placeholder="https://assets.newtechwood.in/videos/module.mp4" value="https://assets.newtechwood.in/videos/demo_cladding.mp4" required />
+					</div>
+					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
+						<button type="button" class="btn-outline" onclick="closeNewGoProModal()">Cancel</button>
+						<button type="submit" class="btn-primary" style="background:var(--adm-green);">Save Video Asset</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -3905,7 +4196,7 @@
 			const pill = document.getElementById('dbStatusPill');
 			const statusText = document.getElementById('dbStatusText');
 			try {
-				const resp = await fetch('/api/health');
+				const resp = await apiFetch('/api/health');
 				if (resp.ok) {
 					const data = await resp.json();
 					if (data.counts) {
@@ -4028,7 +4319,7 @@
 
 			let loaded = [];
 			try {
-				const resp = await fetch('/api/vendors');
+				const resp = await apiFetch('/api/vendors');
 				if (resp.ok) {
 					const data = await resp.json();
 					if (data.success && Array.isArray(data.vendors)) {
@@ -4399,7 +4690,7 @@
 
 			// 1. Try SQLite Backend API
 			try {
-				const resp = await fetch('/api/vendors', {
+				const resp = await apiFetch('/api/vendors', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
@@ -4540,7 +4831,7 @@ Login: https://newtechwood.in/login/`;
 		async function toggleVendorStatus(userId, currentStatus) {
 			const newStatus = (currentStatus || 'active').toLowerCase() === 'active' ? 'inactive' : 'active';
 			try {
-				await fetch('/api/vendors/status', {
+				await apiFetch('/api/vendors/status', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ id: userId, status: newStatus })
@@ -4559,7 +4850,7 @@ Login: https://newtechwood.in/login/`;
 				return;
 			}
 			try {
-				const resp = await fetch('/api/vendors/delete', {
+				const resp = await apiFetch('/api/vendors/delete', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ id: userId })
@@ -4720,7 +5011,7 @@ Login: https://newtechwood.in/login/`;
 		// 6. Admin Logout
 		async function adminLogout() {
 			try {
-				await fetch('/api/auth/logout', { method: 'POST' });
+				await apiFetch('/api/auth/logout', { method: 'POST' });
 			} catch (e) {}
 			localStorage.removeItem('ntw_session');
 			sessionStorage.removeItem('ntw_session');
@@ -5660,7 +5951,7 @@ async function loadDashboardData() {
 
 				let res = null;
 				try {
-					const resp = await fetch('/api/dashboard?' + params.toString());
+					const resp = await apiFetch('/api/dashboard?' + params.toString());
 					if (resp.ok) {
 						const apiJson = await resp.json();
 						if (apiJson && apiJson.success) {
@@ -6119,9 +6410,238 @@ async function loadDashboardData() {
 						<td><span style="font-weight:600;color:${p.discount_pct > 12 ? '#dc2626' : 'var(--adm-text-main)'};">${p.discount_pct}%</span></td>
 						<td>${fbBadge}</td>
 						<td><span class="user-role-badge" style="font-size:11px;">${p.owner_name || 'Rohan Verma'}</span></td>
+						<td style="text-align:center;white-space:nowrap;">
+							<button class="btn-outline" style="padding:3px 8px;font-size:11px;color:#16a34a;border-color:#bbf7d0;" onclick="convertProjectToWin('${p.id}')" title="Convert to Win">🏆 Win</button>
+							<button class="btn-outline" style="padding:3px 8px;font-size:11px;color:#dc2626;border-color:#fca5a5;margin-left:4px;" onclick="deleteProject('${p.id}')" title="Delete Project">🗑</button>
+						</td>
 					</tr>
 				`;
 			}).join('');
+		}
+
+		function openNewProjectModal() {
+			const form = document.getElementById('newProjectForm');
+			if (form) form.reset();
+			const modal = document.getElementById('newProjectModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeNewProjectModal() {
+			const modal = document.getElementById('newProjectModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		async function submitNewProject(e) {
+			e.preventDefault();
+			const payload = {
+				project_name: document.getElementById('prjInputName')?.value,
+				client_name: document.getElementById('prjInputClient')?.value,
+				category: document.getElementById('prjInputCategory')?.value,
+				total_value: parseFloat(document.getElementById('prjInputValue')?.value || 0),
+				sq_ft: parseFloat(document.getElementById('prjInputSqft')?.value || 0),
+				discount_pct: parseFloat(document.getElementById('prjInputDiscount')?.value || 0),
+				state: document.getElementById('prjInputState')?.value,
+				city: document.getElementById('prjInputCity')?.value,
+				stage: document.getElementById('prjInputStage')?.value,
+				feedback_pending: document.getElementById('prjInputFeedback')?.checked ? 1 : 0,
+				feedback_notes: document.getElementById('prjInputNotes')?.value
+			};
+
+			try {
+				const resp = await apiFetch('/api/projects', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				const res = await resp.json();
+				if (res.success) {
+					closeNewProjectModal();
+					loadDashboardData();
+					showToast('Pipeline project created successfully!');
+				} else {
+					alert(res.error || 'Failed to create project');
+				}
+			} catch (err) {
+				alert('Network error creating project');
+			}
+		}
+
+		async function convertProjectToWin(projId) {
+			if (!confirm('Mark this Pipeline Project as WON? This will calculate the Pipeline-to-Win days automatically.')) return;
+			try {
+				const resp = await apiFetch('/api/projects/update', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: projId, stage: 'Win' })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					const days = res.project?.days_pipeline_to_win || 1;
+					showToast(`🎉 Project marked WON! Converted in ${days} day${days > 1 ? 's' : ''}.`);
+					loadDashboardData();
+				} else {
+					alert(res.error || 'Failed to update project');
+				}
+			} catch (e) {
+				alert('Network error updating project');
+			}
+		}
+
+		async function deleteProject(projId) {
+			if (!confirm('Are you sure you want to permanently delete this project?')) return;
+			try {
+				const resp = await apiFetch('/api/projects/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: projId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					showToast('Project deleted successfully.');
+					loadDashboardData();
+				} else {
+					alert(res.error || 'Failed to delete project');
+				}
+			} catch (e) {
+				alert('Network error deleting project');
+			}
+		}
+
+		function openNewFirmModal() {
+			const form = document.getElementById('newFirmForm');
+			if (form) form.reset();
+			const modal = document.getElementById('newFirmModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeNewFirmModal() {
+			const modal = document.getElementById('newFirmModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		async function submitNewFirm(e) {
+			e.preventDefault();
+			const payload = {
+				firm_name: document.getElementById('firmInputName')?.value,
+				category: document.getElementById('firmInputCategory')?.value,
+				city: document.getElementById('firmInputCity')?.value,
+				state: document.getElementById('firmInputState')?.value,
+				contacts: []
+			};
+			const cFirst = document.getElementById('firmInputContactFirst')?.value;
+			if (cFirst) {
+				payload.contacts.push({
+					first_name: cFirst,
+					last_name: document.getElementById('firmInputContactLast')?.value || '',
+					user_type: 'Principal Architect',
+					mobile: document.getElementById('firmInputContactMobile')?.value || '',
+					email: document.getElementById('firmInputContactEmail')?.value || '',
+					is_primary: true
+				});
+			}
+
+			try {
+				const resp = await apiFetch('/api/directory/firms', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				const res = await resp.json();
+				if (res.success) {
+					closeNewFirmModal();
+					loadDirectoryMaster();
+					showToast('Architect firm registered successfully!');
+				} else {
+					alert(res.error || 'Failed to save firm');
+				}
+			} catch (err) {
+				alert('Network error saving firm');
+			}
+		}
+
+		function openNewVisitorModal() {
+			const form = document.getElementById('newVisitorForm');
+			if (form) form.reset();
+			const modal = document.getElementById('newVisitorModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeNewVisitorModal() {
+			const modal = document.getElementById('newVisitorModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		async function submitNewVisitor(e) {
+			e.preventDefault();
+			const payload = {
+				name: document.getElementById('visInputName')?.value,
+				firm: document.getElementById('visInputFirm')?.value,
+				visitor_type: document.getElementById('visInputType')?.value,
+				mobile: document.getElementById('visInputMobile')?.value,
+				email: document.getElementById('visInputEmail')?.value,
+				city: 'Bengaluru',
+				state: 'Karnataka',
+				event_year: document.getElementById('visInputYear')?.value || '2026'
+			};
+
+			try {
+				const resp = await apiFetch('/api/directory/visitors', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				const res = await resp.json();
+				if (res.success) {
+					closeNewVisitorModal();
+					loadVisitors(1);
+					showToast('ID Visitor registered successfully!');
+				} else {
+					alert(res.error || 'Failed to register visitor');
+				}
+			} catch (err) {
+				alert('Network error registering visitor');
+			}
+		}
+
+		function openNewGoProModal() {
+			const form = document.getElementById('newGoProForm');
+			if (form) form.reset();
+			const modal = document.getElementById('newGoProModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeNewGoProModal() {
+			const modal = document.getElementById('newGoProModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		async function submitNewGoPro(e) {
+			e.preventDefault();
+			const payload = {
+				subject: document.getElementById('gpInputSubject')?.value,
+				creator: document.getElementById('gpInputCreator')?.value,
+				duration: document.getElementById('gpInputDuration')?.value || '10:00',
+				video_url: document.getElementById('gpInputUrl')?.value,
+				category: 'Installation Guide'
+			};
+
+			try {
+				const resp = await apiFetch('/api/gopro/assets', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				const res = await resp.json();
+				if (res.success) {
+					closeNewGoProModal();
+					loadGoProAssets();
+					showToast('GoPro training video asset saved!');
+				} else {
+					alert(res.error || 'Failed to save asset');
+				}
+			} catch (err) {
+				alert('Network error saving asset');
+			}
 		}
 
 		function switchChartType(type, btn) {
@@ -6191,7 +6711,7 @@ async function loadDashboardData() {
 			}
 		});
 
-		// Feedback Pending Modal
+		// Feedback Pending Modal Workflow
 		function openFeedbackModal() {
 			const modal = document.getElementById('feedbackModal');
 			const modalBody = document.getElementById('feedbackModalBody');
@@ -6199,24 +6719,29 @@ async function loadDashboardData() {
 
 			const pendingList = dashState.data?.alert?.feedback_pending_projects || [];
 			if (pendingList.length === 0) {
-				modalBody.innerHTML = `<div style="text-align:center;padding:24px;color:var(--adm-text-muted);">No projects currently marked as feedback pending.</div>`;
+				modalBody.innerHTML = `<div style="text-align:center;padding:24px;color:var(--adm-text-muted);">No projects currently marked as feedback pending. All approvals clear!</div>`;
 			} else {
 				modalBody.innerHTML = `
 					<div style="margin-bottom:12px;font-size:12.5px;color:var(--adm-text-muted);">
-						The following <strong>${pendingList.length} projects</strong> are waiting for client feedback or specification approvals:
+						The following <strong>${pendingList.length} projects</strong> are waiting for client feedback or specification approvals. Review notes or click <strong>Resolve</strong> once approved:
 					</div>
-					<div style="display:flex;flex-direction:column;gap:12px;">
+					<div style="display:flex;flex-direction:column;gap:12px;max-height:500px;overflow-y:auto;padding-right:4px;">
 						${pendingList.map(p => `
-							<div style="background:#f9faf8;border:1px solid #e5ebe4;border-left:4px solid #e53e3e;border-radius:8px;padding:12px 14px;">
+							<div style="background:#f9faf8;border:1px solid #e5ebe4;border-left:4px solid #e53e3e;border-radius:8px;padding:14px;" id="fb-card-${p.id}">
 								<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-									<strong style="font-size:13.5px;color:var(--adm-text-main);">${p.project_name}</strong>
+									<strong style="font-size:14px;color:var(--adm-text-main);">${p.project_name}</strong>
 									<span style="font-weight:700;color:#d97706;font-size:13px;">${formatExactINR(p.total_value)}</span>
 								</div>
-								<div style="font-size:12px;color:var(--adm-text-muted);margin-bottom:6px;">
-									Client: <strong>${p.client_name}</strong> • Representative: <strong>${p.owner_name || 'Rohan Verma'}</strong> • Discount: <strong>${p.discount_pct}%</strong>
+								<div style="font-size:12px;color:var(--adm-text-muted);margin-bottom:8px;">
+									Client: <strong>${p.client_name}</strong> • Rep: <strong>${p.owner_name || 'Rohan Verma'}</strong> • Discount: <strong>${p.discount_pct}%</strong>
 								</div>
-								<div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;font-size:12px;color:#991b1b;">
-									<strong>Feedback Note:</strong> ${p.feedback_notes || 'Pending client discussion on quotation specifications'}
+								<div style="margin-bottom:10px;">
+									<label style="font-size:11px;font-weight:600;color:#6b7280;display:block;margin-bottom:3px;">Feedback Notes &amp; Action Items:</label>
+									<textarea id="fb-note-${p.id}" class="tbl-filter-input" style="width:100%;min-height:50px;font-size:12px;resize:vertical;padding:6px 8px;" placeholder="Add details of client feedback or sample requirements...">${p.feedback_notes || ''}</textarea>
+								</div>
+								<div style="display:flex;gap:8px;justify-content:flex-end;">
+									<button class="btn-outline" style="padding:4px 10px;font-size:11.5px;" onclick="saveProjectFeedbackNote('${p.id}')">💾 Save Note</button>
+									<button class="btn-primary" style="padding:4px 12px;font-size:11.5px;background:#16a34a;" onclick="resolveProjectFeedback('${p.id}')">✓ Mark Resolved</button>
 								</div>
 							</div>
 						`).join('')}
@@ -6225,6 +6750,56 @@ async function loadDashboardData() {
 			}
 
 			modal.classList.add('show');
+		}
+
+		async function resolveProjectFeedback(projId) {
+			const noteEl = document.getElementById(`fb-note-${projId}`);
+			const noteVal = noteEl ? noteEl.value.trim() : '';
+			try {
+				const resp = await apiFetch('/api/projects/feedback', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ project_id: projId, action: 'resolve', feedback_notes: noteVal })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					showToast('Client feedback resolved! Dashboard alert updated.');
+					if (dashState.data && dashState.data.alert) {
+						dashState.data.alert.feedback_pending_count = res.feedback_pending_count;
+						dashState.data.alert.feedback_pending_projects = (dashState.data.alert.feedback_pending_projects || []).filter(p => p.id !== projId);
+						const alertEl = document.getElementById('dashFeedbackAlert');
+						const alertHeading = document.getElementById('dashFeedbackAlertHeading');
+						if (alertHeading) alertHeading.innerText = `${res.feedback_pending_count} projects are on feedback pending`;
+						if (alertEl) alertEl.style.display = res.feedback_pending_count > 0 ? 'flex' : 'none';
+					}
+					openFeedbackModal();
+					loadDashboardData();
+				} else {
+					alert(res.error || 'Failed to resolve feedback');
+				}
+			} catch (e) {
+				alert('Network error resolving feedback');
+			}
+		}
+
+		async function saveProjectFeedbackNote(projId) {
+			const noteEl = document.getElementById(`fb-note-${projId}`);
+			const noteVal = noteEl ? noteEl.value.trim() : '';
+			try {
+				const resp = await apiFetch('/api/projects/feedback', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ project_id: projId, action: 'update', feedback_notes: noteVal })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					showToast('Feedback note updated successfully!');
+				} else {
+					alert(res.error || 'Failed to update feedback');
+				}
+			} catch (e) {
+				alert('Network error saving feedback note');
+			}
 		}
 
 		function closeFeedbackModal() {
@@ -6261,7 +6836,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/analytics?' + query.toString());
+				const resp = await apiFetch('/api/analytics?' + query.toString());
 				if (resp.ok) {
 					const apiJson = await resp.json();
 					if (apiJson && apiJson.success) {
@@ -6701,7 +7276,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/directory/firms?' + params.toString());
+				const resp = await apiFetch('/api/directory/firms?' + params.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.firms)) {
@@ -6759,7 +7334,10 @@ async function loadDashboardData() {
 						<td><span class="user-role-badge">Firm Entity</span></td>
 						<td>—</td>
 						<td>—</td>
-						<td><span class="${catBadge}">${firm.category}</span></td>
+						<td style="white-space:nowrap;">
+							<span class="${catBadge}">${firm.category}</span>
+							<button class="tbl-action-btn" style="color:#dc2626;margin-left:8px;" onclick="event.stopPropagation(); deleteFirm('${firm.id}')" title="Delete Firm &amp; Contacts">🗑</button>
+						</td>
 					</tr>
 				`;
 
@@ -6777,7 +7355,10 @@ async function loadDashboardData() {
 								<td><span class="user-role-badge" style="font-size:11px;">${c.user_type}</span></td>
 								<td><a href="tel:${c.mobile}" style="color:var(--adm-green);text-decoration:none;font-weight:600;">${c.mobile}</a></td>
 								<td><a href="mailto:${c.email}" style="color:#2563eb;text-decoration:none;">${c.email}</a></td>
-								<td><span style="font-size:11px;color:#6b7280;">${firm.category}</span></td>
+								<td style="white-space:nowrap;">
+									<span style="font-size:11px;color:#6b7280;">${firm.category}</span>
+									<button class="tbl-action-btn" style="color:#dc2626;margin-left:8px;" onclick="event.stopPropagation(); deleteContact('${c.id}')" title="Remove Contact">🗑</button>
+								</td>
 							</tr>
 						`;
 					});
@@ -6794,6 +7375,46 @@ async function loadDashboardData() {
 			});
 
 			tbody.innerHTML = html;
+		}
+
+		async function deleteFirm(firmId) {
+			if (!confirm('Are you sure you want to delete this architect firm and all key contacts?')) return;
+			try {
+				const resp = await apiFetch('/api/directory/firms/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: firmId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					loadDirectoryMaster();
+					showToast('Firm and associated contacts deleted.');
+				} else {
+					alert(res.error || 'Failed to delete firm');
+				}
+			} catch (e) {
+				alert('Network error deleting firm');
+			}
+		}
+
+		async function deleteContact(cntId) {
+			if (!confirm('Are you sure you want to remove this contact?')) return;
+			try {
+				const resp = await apiFetch('/api/directory/contacts/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: cntId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					loadDirectoryMaster();
+					showToast('Contact removed successfully.');
+				} else {
+					alert(res.error || 'Failed to remove contact');
+				}
+			} catch (e) {
+				alert('Network error removing contact');
+			}
 		}
 
 		function toggleFirmAccordion(firmId) {
@@ -6814,6 +7435,11 @@ async function loadDashboardData() {
 		}
 
 		function applyDirectorySearch() {
+			const search = (document.getElementById('dirSearchInput')?.value || '').trim();
+			if (search.length > 0 && search.length < 3) {
+				showToast('Please enter at least 3 characters to search.', true);
+				return;
+			}
 			loadDirectoryMaster();
 		}
 
@@ -6888,7 +7514,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/directory/meetings?' + query.toString());
+				const resp = await apiFetch('/api/directory/meetings?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.meetings)) {
@@ -6991,13 +7617,35 @@ async function loadDashboardData() {
 						${mtg.discussion_notes || 'No discussion notes logged for this session.'}
 					</div>
 				</div>
-				<div style="display:flex;justify-content:flex-end;">
+				<div style="display:flex;justify-content:space-between;align-items:center;">
+					<button class="btn-outline" style="color:#dc2626;border-color:#fca5a5;padding:6px 12px;font-size:12px;" onclick="deleteMeeting('${mtg.id}')">🗑 Delete Meeting</button>
 					<button class="btn-primary" onclick="closeMeetingModal()">Done</button>
 				</div>
 			`;
 
 			const modal = document.getElementById('meetingDetailsModal');
 			if (modal) modal.classList.add('show');
+		}
+
+		async function deleteMeeting(mtgId) {
+			if (!confirm('Are you sure you want to permanently delete this meeting record?')) return;
+			try {
+				const resp = await apiFetch('/api/directory/meetings/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: mtgId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					closeMeetingModal();
+					loadMeetings();
+					showToast('Meeting record deleted successfully.');
+				} else {
+					alert(res.error || 'Failed to delete meeting');
+				}
+			} catch (e) {
+				alert('Network error deleting meeting');
+			}
 		}
 
 		function closeMeetingModal() {
@@ -7021,6 +7669,35 @@ async function loadDashboardData() {
 
 		async function submitNewMeeting(e) {
 			e.preventDefault();
+			const fileInput = document.getElementById('newMtgImages');
+			const uploadedUrls = [];
+
+			if (fileInput && fileInput.files && fileInput.files.length > 0) {
+				showToast('Uploading meeting photos / specs...');
+				for (let i = 0; i < fileInput.files.length; i++) {
+					const file = fileInput.files[i];
+					try {
+						const b64 = await new Promise((resolve, reject) => {
+							const reader = new FileReader();
+							reader.onload = () => resolve(reader.result);
+							reader.onerror = reject;
+							reader.readAsDataURL(file);
+						});
+						const upResp = await apiFetch('/api/meetings/upload', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ filename: file.name, data: b64 })
+						});
+						const upRes = await upResp.json();
+						if (upRes.success && upRes.url) {
+							uploadedUrls.push(upRes.url);
+						}
+					} catch (uploadErr) {
+						console.warn('Failed to upload file:', file.name, uploadErr);
+					}
+				}
+			}
+
 			const payload = {
 				meeting_date: document.getElementById('newMtgDate')?.value,
 				guest_type: document.getElementById('newMtgGuestType')?.value,
@@ -7028,13 +7705,14 @@ async function loadDashboardData() {
 				guest_name: document.getElementById('newMtgGuest')?.value,
 				mobile: document.getElementById('newMtgMobile')?.value,
 				user_type: document.getElementById('newMtgUserType')?.value,
-				state: document.getElementById('newMtgState')?.value,
-				city: document.getElementById('newMtgCity')?.value,
-				discussion_notes: document.getElementById('newMtgNotes')?.value
+				state: document.getElementById('newMtgState')?.value || 'Karnataka',
+				city: document.getElementById('newMtgCity')?.value || 'Bengaluru',
+				discussion_notes: document.getElementById('newMtgNotes')?.value,
+				image_urls: uploadedUrls
 			};
 
 			try {
-				const resp = await fetch('/api/directory/meetings', {
+				const resp = await apiFetch('/api/directory/meetings', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
@@ -7074,8 +7752,28 @@ async function loadDashboardData() {
 			showToast(`Exported ${exportRows.length} meetings to Excel!`);
 		}
 
-		function downloadMeetingImages() {
-			showToast('Downloading attached meeting photos & specification sheets (ZIP)...');
+		async function downloadMeetingImages() {
+			showToast('Preparing meeting media package ZIP...');
+			try {
+				const resp = await apiFetch('/api/directory/meetings/images/zip');
+				if (resp.ok) {
+					const blob = await resp.blob();
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = `NewTechWood_Meeting_Images_${new Date().toISOString().split('T')[0]}.zip`;
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+					showToast('Meeting images ZIP downloaded successfully!');
+				} else {
+					showToast('No meeting media files found to package.', true);
+				}
+			} catch (e) {
+				console.error('Error downloading meeting images:', e);
+				showToast('Failed to download images ZIP.', true);
+			}
 		}
 
 		// ========================================================
@@ -7086,7 +7784,7 @@ async function loadDashboardData() {
 		async function loadInvitations() {
 			let data = null;
 			try {
-				const resp = await fetch('/api/directory/invitations');
+				const resp = await apiFetch('/api/directory/invitations');
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.invitations)) {
@@ -7129,11 +7827,52 @@ async function loadDashboardData() {
 					</td>
 					<td><span class="badge-status badge-${inv.status === 'Active' ? 'active' : (inv.status === 'Accepted' ? 'act-order' : 'lost')}">${inv.status}</span></td>
 					<td>${formatDateDisplay(inv.expires_at)}</td>
-					<td style="text-align:center;">
-						<button class="btn-outline" style="padding:3px 8px;font-size:11px;" onclick="copyInvitationLink('${inv.invitation_link}')">Copy Link</button>
+					<td style="text-align:center;white-space:nowrap;">
+						<button class="btn-outline" style="padding:3px 8px;font-size:11px;" onclick="copyInvitationLink('${inv.invitation_link}')">Copy</button>
+						<button class="btn-outline" style="padding:3px 8px;font-size:11px;color:var(--adm-green);border-color:var(--adm-green);" onclick="resendInvitation('${inv.id}')" title="Extend validity & Resend">Resend</button>
+						<button class="btn-outline" style="padding:3px 8px;font-size:11px;color:#dc2626;border-color:#fca5a5;" onclick="deleteInvitation('${inv.id}')" title="Delete Invitation">🗑</button>
 					</td>
 				</tr>
 			`).join('');
+		}
+
+		async function resendInvitation(invId) {
+			try {
+				const resp = await apiFetch('/api/directory/invitations/resend', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: invId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					loadInvitations();
+					showToast('Invitation validity extended by 30 days and link refreshed!');
+				} else {
+					alert(res.error || 'Failed to resend invitation');
+				}
+			} catch (e) {
+				alert('Network error resending invitation');
+			}
+		}
+
+		async function deleteInvitation(invId) {
+			if (!confirm('Are you sure you want to permanently delete this invitation link?')) return;
+			try {
+				const resp = await apiFetch('/api/directory/invitations/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: invId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					loadInvitations();
+					showToast('Invitation record deleted.');
+				} else {
+					alert(res.error || 'Failed to delete invitation');
+				}
+			} catch (e) {
+				alert('Network error deleting invitation');
+			}
 		}
 
 		function openNewInvitationModal() {
@@ -7158,7 +7897,7 @@ async function loadDashboardData() {
 			};
 
 			try {
-				const resp = await fetch('/api/directory/invitations', {
+				const resp = await apiFetch('/api/directory/invitations', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
@@ -7215,7 +7954,7 @@ async function loadDashboardData() {
 
 			let res = null;
 			try {
-				const resp = await fetch('/api/directory/visitors?' + query.toString());
+				const resp = await apiFetch('/api/directory/visitors?' + query.toString());
 				if (resp.ok) {
 					const apiJson = await resp.json();
 					if (apiJson.success) {
@@ -7277,7 +8016,7 @@ async function loadDashboardData() {
 			if (!tbody) return;
 
 			if (visitors.length === 0) {
-				tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No visitors match criteria.</td></tr>`;
+				tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No visitors match criteria.</td></tr>`;
 				return;
 			}
 
@@ -7294,8 +8033,31 @@ async function loadDashboardData() {
 					<td>${v.state || ''}</td>
 					<td>${v.city || ''}</td>
 					<td><span class="user-role-badge">${v.event_year}</span></td>
+					<td style="text-align:center;">
+						<button class="tbl-action-btn" style="color:#dc2626;" onclick="deleteVisitor('${v.id}')" title="Delete Visitor Record">🗑</button>
+					</td>
 				</tr>
 			`).join('');
+		}
+
+		async function deleteVisitor(visId) {
+			if (!confirm('Are you sure you want to permanently delete this visitor registration?')) return;
+			try {
+				const resp = await apiFetch('/api/directory/visitors/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: visId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					loadVisitors(visitorsState.page);
+					showToast('Visitor record deleted successfully.');
+				} else {
+					alert(res.error || 'Failed to delete visitor');
+				}
+			} catch (e) {
+				alert('Network error deleting visitor');
+			}
 		}
 
 		function renderVisitorPagination() {
@@ -7346,12 +8108,43 @@ async function loadDashboardData() {
 			showToast('Visitor filters cleared.');
 		}
 
-		function exportVisitorsExcel() {
-			if (visitorsState.visitors.length === 0) {
+		async function exportVisitorsExcel() {
+			showToast('Gathering visitor directory records for export...');
+			let visitorsList = visitorsState.visitors;
+			try {
+				const query = new URLSearchParams({
+					export: 'true',
+					limit: '10000',
+					visitor_type: document.getElementById('visTypeFilter')?.value || 'all',
+					name: document.getElementById('visNameFilter')?.value || '',
+					mobile: document.getElementById('visMobileFilter')?.value || '',
+					email: document.getElementById('visEmailFilter')?.value || '',
+					firm: document.getElementById('visFirmFilter')?.value || '',
+					from_created_date: document.getElementById('visFromCreated')?.value || '',
+					to_created_date: document.getElementById('visToCreated')?.value || '',
+					from_submitted_date: document.getElementById('visFromSubmitted')?.value || '',
+					to_submitted_date: document.getElementById('visToSubmitted')?.value || '',
+					country: document.getElementById('visCountryFilter')?.value || 'all',
+					state: document.getElementById('visStateFilter')?.value || 'all',
+					city: document.getElementById('visCityFilter')?.value || 'all',
+					event_year: document.getElementById('visYearFilter')?.value || 'all'
+				});
+				const resp = await apiFetch('/api/directory/visitors?' + query.toString());
+				if (resp.ok) {
+					const res = await resp.json();
+					if (res.success && Array.isArray(res.visitors) && res.visitors.length > 0) {
+						visitorsList = res.visitors;
+					}
+				}
+			} catch (e) {
+				console.warn('Export query fallback to loaded page:', e);
+			}
+
+			if (!visitorsList || visitorsList.length === 0) {
 				showToast('No visitors to export.', true);
 				return;
 			}
-			const exportRows = visitorsState.visitors.map(v => ({
+			const exportRows = visitorsList.map(v => ({
 				"Visitor Type": v.visitor_type,
 				"Name": v.name,
 				"Mobile Number": v.mobile,
@@ -7382,7 +8175,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/gopro/assets?' + query.toString());
+				const resp = await apiFetch('/api/gopro/assets?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.assets)) {
@@ -7428,13 +8221,36 @@ async function loadDashboardData() {
 					<td>${a.creator}</td>
 					<td><span class="user-role-badge">${a.file_type}</span></td>
 					<td><strong>${a.duration}</strong></td>
-					<td style="text-align:center;">
+					<td style="text-align:center;white-space:nowrap;">
 						<button class="tbl-action-btn" onclick="openGoProPlayer('${a.id}')" title="Play Video">
 							<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+						</button>
+						<button class="tbl-action-btn" style="color:#dc2626;margin-left:6px;" onclick="deleteGoProAsset('${a.id}')" title="Delete Video Asset">
+							🗑
 						</button>
 					</td>
 				</tr>
 			`).join('');
+		}
+
+		async function deleteGoProAsset(assetId) {
+			if (!confirm('Are you sure you want to delete this educational training asset?')) return;
+			try {
+				const resp = await apiFetch('/api/gopro/assets/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: assetId })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					loadGoProAssets();
+					showToast('Training asset deleted.');
+				} else {
+					alert(res.error || 'Failed to delete asset');
+				}
+			} catch (e) {
+				alert('Network error deleting asset');
+			}
 		}
 
 		function applyGoProFilters() {
@@ -7455,6 +8271,13 @@ async function loadDashboardData() {
 		function openGoProPlayer(id) {
 			const asset = goProAssetsData.find(a => a.id === id);
 			if (!asset) return;
+
+			// Live server view count tracking
+			apiFetch('/api/gopro/assets/view', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ id: id })
+			}).catch(e => console.warn('Could not record video view', e));
 
 			const titleEl = document.getElementById('goproPlayerTitle');
 			if (titleEl) titleEl.innerText = asset.subject;
@@ -7497,7 +8320,7 @@ async function loadDashboardData() {
 
 			let data = null;
 			try {
-				const resp = await fetch('/api/orders?' + query.toString());
+				const resp = await apiFetch('/api/orders?' + query.toString());
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.orders)) {
@@ -7567,7 +8390,10 @@ async function loadDashboardData() {
 								<button class="tbl-action-btn" onclick="openEditOrderModal('${o.id}')" title="Edit Order">
 									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 								</button>
-								<button class="tbl-action-btn" onclick="openViewOrderModal('${o.id}')" title="View Order Summary">
+								<button class="tbl-action-btn" onclick="downloadOrderWordDoc('${o.id}')" title="Download Official Word Quotation (.doc)">
+									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+								</button>
+								<button class="tbl-action-btn" onclick="openViewOrderModal('${o.id}')" title="View Order Summary & Status Convert">
 									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 								</button>
 								<button class="tbl-action-btn delete" onclick="deleteOrder('${o.id}')" title="Delete Order">
@@ -7657,13 +8483,13 @@ async function loadDashboardData() {
 			try {
 				let resp;
 				if (editId) {
-					resp = await fetch(`/api/orders/${editId}`, {
+					resp = await apiFetch(`/api/orders/${editId}`, {
 						method: 'PUT',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(payload)
 					});
 				} else {
-					resp = await fetch('/api/orders', {
+					resp = await apiFetch('/api/orders', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify(payload)
@@ -7685,7 +8511,7 @@ async function loadDashboardData() {
 		async function deleteOrder(id) {
 			if (!confirm('Are you sure you want to delete this order?')) return;
 			try {
-				const resp = await fetch(`/api/orders/${id}`, { method: 'DELETE' });
+				const resp = await apiFetch(`/api/orders/${id}`, { method: 'DELETE' });
 				const res = await resp.json();
 				if (res.success) {
 					loadWaltzOrders();
@@ -7740,9 +8566,23 @@ async function loadDashboardData() {
 					</div>
 				</div>
 
-				<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--adm-border);padding-top:14px;">
-					<button class="btn-outline" onclick="window.print()">Print Order Summary</button>
-					<button class="btn-primary" onclick="closeViewOrderModal()">Close</button>
+				<div style="margin-bottom:16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:12px;">
+					<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+						<span style="font-size:12.5px;font-weight:700;color:var(--adm-text-main);">Quick Convert Status:</span>
+						<div style="display:flex;gap:6px;">
+							<button type="button" class="btn-outline" style="padding:4px 10px;font-size:12px;color:#16a34a;background:#ffffff;border-color:#86efac;" onclick="quickConvertOrderStatus('${o.id}', 'Win')">🏆 Convert to Win</button>
+							<button type="button" class="btn-outline" style="padding:4px 10px;font-size:12px;color:#d97706;background:#ffffff;border-color:#fcd34d;" onclick="quickConvertOrderStatus('${o.id}', 'Pipeline')">⏳ Move to Pipeline</button>
+							<button type="button" class="btn-outline" style="padding:4px 10px;font-size:12px;color:#dc2626;background:#ffffff;border-color:#fca5a5;" onclick="quickConvertOrderStatus('${o.id}', 'Lost')">✕ Mark as Lost</button>
+						</div>
+					</div>
+				</div>
+
+				<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--adm-border);padding-top:14px;flex-wrap:wrap;gap:10px;">
+					<div style="display:flex;gap:8px;flex-wrap:wrap;">
+						<button class="btn-outline" onclick="window.print()">Print Order Summary</button>
+						<button class="btn-primary" style="background:#16a34a;color:#ffffff;" onclick="downloadOrderWordDoc('${o.id}')">📄 Download Word Quotation</button>
+					</div>
+					<button class="btn-outline" onclick="closeViewOrderModal()">Close</button>
 				</div>
 			`;
 
@@ -7777,6 +8617,149 @@ async function loadDashboardData() {
 			showToast(`Exported ${exportRows.length} orders to Excel!`);
 		}
 
+		async function downloadOrderWordDoc(orderId) {
+			showToast('Generating official Word quotation document...');
+			try {
+				const resp = await apiFetch(`/api/orders/${orderId}/quotation`);
+				if (resp.ok) {
+					const blob = await resp.blob();
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = `NTW_Order_${orderId}_Quotation.doc`;
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+					showToast('Word quotation downloaded successfully!');
+					return;
+				}
+			} catch (e) {
+				console.warn('Backend quote download error, using client generator', e);
+			}
+
+			// Fallback client-side generator
+			const o = waltzOrdersData.find(x => x.id === orderId);
+			if (!o) {
+				showToast('Order details not found.', true);
+				return;
+			}
+			const amt = parseFloat(o.final_amount) || 0;
+			const sub = (amt / 1.18).toFixed(2);
+			const gst = (amt - sub).toFixed(2);
+			const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${o.order_number}</title></head><body>
+				<h2>NewTechWood Official Commercial Quotation</h2>
+				<p>Order: <strong>${o.order_number}</strong> | Date: ${o.order_date}</p>
+				<p>Client: ${o.client_name} | Project: ${o.project_name}</p>
+				<p>Location: ${o.city || ''}, ${o.state || ''} (${o.country || 'India'})</p>
+				<table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;">
+					<tr><th>Description</th><th>Subtotal</th><th>GST (18%)</th><th>Total Amount</th></tr>
+					<tr><td>UltraShield® Architectural Composite Solution</td><td>₹${sub}</td><td>₹${gst}</td><td>₹${amt.toFixed(2)}</td></tr>
+				</table>
+				<p>25-Year Limited Manufacturer Warranty Included.</p>
+			</body></html>`;
+			const blob = new Blob(['\ufeff' + html], { type: 'application/msword;charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${o.order_number}_Quotation.doc`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			window.URL.revokeObjectURL(url);
+			showToast('Word quotation downloaded!');
+		}
+
+		async function quickConvertOrderStatus(orderId, newStatus) {
+			try {
+				const resp = await apiFetch('/api/orders/convert', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id: orderId, status: newStatus })
+				});
+				const res = await resp.json();
+				if (res.success) {
+					showToast(`Order status converted to ${newStatus}!`);
+					loadWaltzOrders();
+					closeViewOrderModal();
+					if (typeof loadDashboardData === 'function') loadDashboardData();
+				} else {
+					alert(res.error || 'Failed to convert order status');
+				}
+			} catch (e) {
+				alert('Network error converting order status');
+			}
+		}
+
+		// Table Sorting Helpers
+		let visSortCol = 'link_created_date';
+		let visSortAsc = false;
+		function sortVisitorsTable(col) {
+			if (visSortCol === col) {
+				visSortAsc = !visSortAsc;
+			} else {
+				visSortCol = col;
+				visSortAsc = true;
+			}
+			visitorsState.visitors.sort((a, b) => {
+				let valA = a[col] || '';
+				let valB = b[col] || '';
+				if (typeof valA === 'string') valA = valA.toLowerCase();
+				if (typeof valB === 'string') valB = valB.toLowerCase();
+				if (valA < valB) return visSortAsc ? -1 : 1;
+				if (valA > valB) return visSortAsc ? 1 : -1;
+				return 0;
+			});
+			renderVisitors(visitorsState.visitors);
+		}
+
+		let mtgSortCol = 'meeting_date';
+		let mtgSortAsc = false;
+		function sortMeetingsTable(col) {
+			if (mtgSortCol === col) {
+				mtgSortAsc = !mtgSortAsc;
+			} else {
+				mtgSortCol = col;
+				mtgSortAsc = true;
+			}
+			meetingsData.sort((a, b) => {
+				let valA = a[col] || '';
+				let valB = b[col] || '';
+				if (typeof valA === 'string') valA = valA.toLowerCase();
+				if (typeof valB === 'string') valB = valB.toLowerCase();
+				if (valA < valB) return mtgSortAsc ? -1 : 1;
+				if (valA > valB) return mtgSortAsc ? 1 : -1;
+				return 0;
+			});
+			renderMeetings(meetingsData);
+		}
+
+		let ordSortCol = 'order_date';
+		let ordSortAsc = false;
+		function sortOrdersTable(col) {
+			if (ordSortCol === col) {
+				ordSortAsc = !ordSortAsc;
+			} else {
+				ordSortCol = col;
+				ordSortAsc = true;
+			}
+			waltzOrdersData.sort((a, b) => {
+				let valA = a[col] || '';
+				let valB = b[col] || '';
+				if (col === 'final_amount') {
+					valA = parseFloat(valA) || 0;
+					valB = parseFloat(valB) || 0;
+				} else {
+					if (typeof valA === 'string') valA = valA.toLowerCase();
+					if (typeof valB === 'string') valB = valB.toLowerCase();
+				}
+				if (valA < valB) return ordSortAsc ? -1 : 1;
+				if (valA > valB) return ordSortAsc ? 1 : -1;
+				return 0;
+			});
+			renderWaltzOrders(waltzOrdersData);
+		}
+
 		// Boot
 		window.addEventListener('DOMContentLoaded', () => {
 			initSession();
@@ -7787,3 +8770,4 @@ async function loadDashboardData() {
 	</script>
 </body>
 </html>
+

@@ -1,0 +1,69 @@
+# NewTechWood CRM & Admin System - Implementation Progress
+
+## Project Overview
+Hardening security, core bug fixes, Product Price List integration, Vendor <-> Admin CRM portal, and JB Glass CRM feature parity for NewTechWood India CRM.
+
+---
+
+## Task Matrix & Status
+
+### Workstream 0: Security & Core Bugs
+- [x] **S1. Password Hashing**: Passwords hashed with bcrypt, legacy plain text verified/migrated, passwords never returned in API responses. *(Commit: `e84caa97`)*
+- [x] **S2. Restrict Sensitive Endpoints**: `/api/users` and `/api/vendors` restricted to admin/superadmin with no password leaks. *(Commit: `e84caa97`)*
+- [x] **S3. Role & Token Verification**: `require_auth` helper checks token on all protected endpoints, returning 401 (unauthorized) and 403 (forbidden). *(Commit: `e84caa97`)*
+- [x] **S4. Frontend Auth Fetch Wrapper**: `admin.html` and `admin/index.html` send Bearer tokens via centralized `authFetch` / `api` helper, handling 401 redirect to `/login/`. *(Commit: `e84caa97`)*
+- [x] **S5. Elimination of Hardcoded Fallback Credentials**: Removed hardcoded admin credentials and localStorage mock login fallbacks from `login/index.html` and seed scripts. *(Commit: `e84caa97`)*
+- [x] **S6. Git Hygiene**: Removed tracked `db/ntw_crm.db` and `__pycache__` artifacts from git; updated `.gitignore`. *(Commit: `e84caa97`)*
+- [x] **S7. XSS Mitigation**: Dynamic `esc()` helper escapes HTML values across tables and modals, exposed globally on `window.esc`.
+- [x] **S8. Rate Limiting & Session Hygiene**: Added IP/account-based rate limiting on `/api/auth/login` (max 5 failed attempts in 5 mins), automatic session expiry purge, and protected session checks.
+- [x] **B1. Schema & Migration Alignment**: Fixed missing columns (`stage` in `pipeline_projects`) across schema and migrations. *(Commit: `e84caa97`)*
+- [x] **B2. Dynamic Analytics Date Range**: Derived date range dynamically from `financial_year` instead of hardcoding 2025/2026. *(Commit: `e84caa97`)*
+- [x] **B3. Financial Year Label Standardization**: Unified UI and API on standard "FY 25-26" format. *(Commit: `e84caa97`)*
+- [x] **B4. Deal Source of Truth & Analytics Maths**: Deduplicated deals between waltz_orders and pipeline_projects; excluded meetings from win-rate; mathematical accuracy certified by automated tests.
+- [x] **B5. Pagination Input Clamping**: Enforced `limit` clamping (1..100) and `page` >= 1 to prevent ZeroDivisionError and negative offsets. *(Commit: `e84caa97`)*
+- [x] **B6. SQL Directory Search & Min-3 Rule**: Replaced N+1 Python filtering with SQL join and enforced minimum 3 characters. *(Commit: `00f2bee2`)*
+- [x] **B7. Context-Aware Location & Owner Defaults**: Default location and owner derived from logged-in user context rather than hardcoding static locations.
+- [x] **B8. Sequential Order Numbers**: Collision-safe sequential numbering per financial year (e.g. `ORD-2026-0001`).
+- [x] **B9. Code Duplication Cleanup & Shared Assets**: Synchronized `admin.html` and `admin/index.html` with parity and shared helpers.
+- [ ] **B10. Large Asset / Mirrored Directory Management**: Address mirrored `query_p_*` folders to optimize repository size while preserving public access.
+- [x] **B11. Cloud Deployment Configuration**: Created Vercel serverless bridge (`api/index.py`), Dockerfile, and Render blueprint with PostgreSQL support toggle. *(Commit: `41a938d7`)*
+
+---
+
+### Workstream 1: Product Price List (TECHWOOD WPC)
+- [ ] **P1. Quote Calculator Formula**: Planks = `ceil(area * (1 + wastage) / plank_area)`, billed sft = `planks * plank_area`, clips = `planks * clips_per_plank`, GST per line item.
+- [ ] **P2. Link Products to Orders**: Add/Edit Order product selector with quantity/area auto-filling `final_amount` and saving order lines.
+- [ ] **P3. Product Distribution Dashboard Chart**: Feed "Product Chart by Amount / Sq.ft" from real order line data grouped by product category.
+- [ ] **P4. Role-Based Price Tiers**: Architect and Dealer specific pricing catalogs supported via permissions.
+- [ ] **P5. Quotation Document Generation**: Generate formatted PDF/Doc quote with logo and "Convert quote to Pipeline / Order" action.
+- [ ] **P6. Excel Bulk Import / Update**: Bulk import/update from `PPT - TECHWOOD.xlsx` with validation and preview.
+- [ ] **P7. Variants, Validity & Stock**: Product color variants (Antique, Teak, IPE, Maple), price validity dates, and stock/lead time indicators.
+- [ ] **P8. Image Management**: Real image upload with validation and flagging images that "need better image".
+
+---
+
+### Workstream 2: Vendor <-> Admin CRM
+- [ ] **Data Model (Migration 006)**: Create `vendor_requests`, `request_activity`, and `request_attachments` tables; link `vendor_user_id` to orders, meetings, invitations, pipeline projects.
+- [ ] **Server-Side Scoping**: Enforce that vendor tokens can only read and write rows where `vendor_user_id == user.id`. Forbidden/not-found (403/404) for cross-vendor access.
+- [ ] **Vendor Portal (`admin/vendor.html`)**: Dedicated portal for vendors: My Open Requests, New Request form, Status Timeline & reply box, My Orders, Tiered Catalog.
+- [ ] **Admin Request Inbox**: Request inbox with status badges, SLA traffic-light indicators (green on time, amber due soon, red overdue), assignment, comments, internal-only notes.
+- [ ] **Vendor 360 View**: Comprehensive vendor profile, all linked requests, orders, meetings, invitations, total business value, average response time.
+- [ ] **Export & Pluggable Notifications**: CSV/Excel export of requests and vendor history; pluggable notifications interface (email/WhatsApp).
+
+---
+
+### Workstream 3: JB Glass CRM Feature Parity
+- [x] **Dashboard Parity**: Multi-select Month with Apply, FY selector, chart filter toggles. *(Commit: `00f2bee2`)*
+- [x] **Feedback Resolution**: Interactive feedback-pending workflow with live badge update. *(Commit: `b7f708f9`)*
+- [x] **Directory & Meeting Parity**: Multi-sheet Excel exports, base64 meeting images upload and ZIP download (`/api/directory/meetings/images/zip`). *(Commit: `00f2bee2`)*
+- [x] **Waltz Orders Parity**: Word quote `.doc` export, `/api/orders/convert` status lifecycle. *(Commit: `00f2bee2`)*
+- [x] **Sortable Tables & Min-3 Search**: Table headers sortable on Meetings, Visitors, Orders; min-3 characters search enforced. *(Commit: `00f2bee2`)*
+
+---
+
+## Assumptions & Design Choices
+1. **GST Slab**: Default 18% applied to WPC products and accessories.
+2. **Clad Clips**: Default 7 clips per plank for Clads.
+3. **Product Codes**: UH94 is preserved as a distinct variation/code of Twix.
+4. **Backend Architecture**: Python HTTP server locally (`serve.py`), Vercel serverless entrypoint (`api/index.py`), Dockerfile container for production platforms.
+5. **Session Lifetime**: 24-hour token expiry with automatic cleanup of expired records.

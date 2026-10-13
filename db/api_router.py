@@ -92,9 +92,29 @@ def _safe_user(user: dict) -> dict:
     u.pop('password', None)
     return u
 
-# ─── Auth ─────────────────────────────────────────────────────────────────────
+# ─── Auth & Rate Limiting ──────────────────────────────────────────────────────
+_LOGIN_ATTEMPTS = {}  # key -> list of float timestamps
+
+def _check_rate_limit(key: str) -> bool:
+    import time
+    now = time.time()
+    attempts = _LOGIN_ATTEMPTS.get(key, [])
+    attempts = [t for t in attempts if now - t < 300]
+    _LOGIN_ATTEMPTS[key] = attempts
+    return len(attempts) < 5
+
+def _record_failed_attempt(key: str):
+    import time
+    now = time.time()
+    attempts = _LOGIN_ATTEMPTS.get(key, [])
+    attempts.append(now)
+    _LOGIN_ATTEMPTS[key] = attempts
+
+def _reset_attempts(key: str):
+    _LOGIN_ATTEMPTS.pop(key, None)
+
 def get_auth_user(handler):
-    """Resolve Bearer token → user dict (no password field). Returns None if invalid."""
+    """Resolve Bearer token → user dict (no password field). Returns None if invalid or expired."""
     auth_header = handler.headers.get('Authorization', '')
     token = None
     if auth_header.startswith('Bearer '):
@@ -108,11 +128,16 @@ def get_auth_user(handler):
     if not token:
         return None
 
+    now_iso = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     session = database.execute_one(
-        "SELECT * FROM sessions WHERE token = ? AND expires_at > datetime('now');",
+        "SELECT * FROM sessions WHERE token = ?;",
         (token,)
     )
     if not session:
+        return None
+
+    exp = session.get('expires_at', '')
+    if exp and exp <= now_iso:
         return None
 
     user = database.execute_one(
@@ -168,6 +193,27 @@ def _month_to_year(month: int, fy: str) -> int:
     start_year, end_year = _fy_to_year_range(fy)
     # Apr(4)-Mar(3): Apr-Dec belong to start_year, Jan-Mar belong to end_year
     return start_year if month >= 4 else end_year
+
+def _generate_sequential_order_number(fy: str = None) -> str:
+    """Generate sequential collision-safe order number per year, e.g. ORD-2026-0001."""
+    now_year = datetime.now().year
+    prefix = f"ORD-{now_year}-"
+    with database.get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT order_number FROM waltz_orders WHERE order_number LIKE ? ORDER BY order_number DESC LIMIT 1;",
+            (f"{prefix}%",)
+        )
+        row = cursor.fetchone()
+        if row and row['order_number']:
+            try:
+                last_seq = int(row['order_number'].split('-')[-1])
+                next_seq = last_seq + 1
+            except Exception:
+                next_seq = 1
+        else:
+            next_seq = 1
+        return f"{prefix}{next_seq:04d}"
 
 def _generate_order_quotation_html(order: dict) -> str:
     amt = float(order.get('final_amount') or 0.0)
@@ -643,9 +689,12 @@ def _handle_get_internal(handler):
             b = p_dict.get('day_bracket', '1-5')
             day = bracket_days.get(b, '15')
             p_dict['activity_date'] = f"{year}-{m:02d}-{day}"
-            normalized_projects.append(p_dict)
+        # Deduplicate deals: if an order exists with matching project title and client,
+        # use the order as the single source of truth and omit the duplicate pipeline project
+        order_deal_keys = set((o['title'].strip().lower(), o['client'].strip().lower()) for o in orders if o.get('title') and o.get('client'))
+        unique_projects = [p for p in normalized_projects if (p.get('title', '').strip().lower(), p.get('client', '').strip().lower()) not in order_deal_keys]
 
-        all_activities = [dict(o) for o in orders] + normalized_projects + [dict(m) for m in meetings]
+        all_activities = [dict(o) for o in orders] + unique_projects + [dict(m) for m in meetings]
 
         distinct_users = sorted(list(set(a['owner_name'] for a in all_activities if a.get('owner_name'))))
 
@@ -1138,6 +1187,12 @@ def _handle_post_internal(handler):
 
     # ── Public: Login ─────────────────────────────────────────────────────────
     if path == '/api/auth/login':
+        client_ip = handler.headers.get('X-Forwarded-For', '')
+        if not client_ip and hasattr(handler, 'client_address') and handler.client_address:
+            client_ip = handler.client_address[0]
+        if not client_ip:
+            client_ip = '127.0.0.1'
+
         email = (body.get('email') or '').strip().lower()
         password = (body.get('password') or '').strip()
         remember = bool(body.get('remember', False))
@@ -1145,18 +1200,27 @@ def _handle_post_internal(handler):
         if not email or not password:
             return send_json(handler, {"success": False, "error": "Email and password are required"}, 400)
 
+        # Check rate limiting
+        if not _check_rate_limit(client_ip) or not _check_rate_limit(email):
+            return send_json(handler, {"success": False, "error": "Too many failed login attempts. Please try again after 5 minutes."}, 429)
+
         user = database.execute_one(
             "SELECT * FROM users WHERE (lower(email) = ? OR lower(id) = ? OR lower(COALESCE(vendor_id, '')) = ?) AND status = 'active';",
             (email, email, email)
         )
 
-        if not user:
+        if not user or not _verify_password(password, user.get('password', '')):
+            _record_failed_attempt(client_ip)
+            _record_failed_attempt(email)
             return send_json(handler, {"success": False, "error": "Invalid username or password"}, 401)
 
-        # Secure password verification — bcrypt or sha256 hash
-        stored_pw = user.get('password', '')
-        if not _verify_password(password, stored_pw):
-            return send_json(handler, {"success": False, "error": "Invalid username or password"}, 401)
+        # Login succeeded: reset rate limit attempts
+        _reset_attempts(client_ip)
+        _reset_attempts(email)
+
+        # Purge expired sessions
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        database.execute_commit("DELETE FROM sessions WHERE expires_at < ?;", (now_str,))
 
         token = 'ntw_' + uuid.uuid4().hex
         expires_days = 30 if remember else 1
@@ -1346,14 +1410,14 @@ def _handle_post_internal(handler):
         client_name = body.get('client_name', '').strip()
         order_num = body.get('order_number', '').strip()
         if not order_num:
-            order_num = f"NTW-{datetime.now().year}-{uuid.uuid4().hex[:6].upper()}"
+            order_num = _generate_sequential_order_number()
         if not proj_name or not client_name:
             return send_json(handler, {"success": False, "error": "Project and client name are required"}, 400)
 
         order_id = f"ORD-NTW-{uuid.uuid4().hex[:8]}"
         country = body.get('country', 'India')
-        state = body.get('state', 'Karnataka')          # default changed to Karnataka
-        city = body.get('city', 'Bengaluru')            # default changed to Bengaluru
+        state = body.get('state', '') or ''
+        city = body.get('city', '') or ''
         order_date = body.get('order_date') or datetime.now().strftime("%Y-%m-%d")
         status = body.get('status', 'Pipeline')
         try:
@@ -1362,7 +1426,7 @@ def _handle_post_internal(handler):
             final_amount = 0.0
         source = body.get('source', 'Direct Architect')
         notes = body.get('notes', '')
-        owner_name = body.get('owner_name') or auth_user.get('full_name', 'Rohan Verma')
+        owner_name = body.get('owner_name') or auth_user.get('full_name') or 'Admin'
 
         database.execute_commit("""
             INSERT INTO waltz_orders (id, order_number, project_name, client_name, country, state, city,
@@ -1435,10 +1499,10 @@ def _handle_post_internal(handler):
         user_type = body.get('user_type', 'New')
         guest_type = body.get('guest_type', 'Architect')
         country = body.get('country', 'India')
-        state = body.get('state', 'Karnataka')
-        city = body.get('city', 'Bengaluru')
+        state = body.get('state', '') or ''
+        city = body.get('city', '') or ''
         notes = body.get('discussion_notes', '')
-        owner_name = body.get('owner_name') or auth_user.get('full_name', 'Rohan Verma')
+        owner_name = body.get('owner_name') or auth_user.get('full_name') or 'Admin'
         raw_imgs = body.get('image_urls')
         if isinstance(raw_imgs, list):
             image_urls_json = json.dumps(raw_imgs)
