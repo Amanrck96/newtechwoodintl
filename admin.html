@@ -1870,6 +1870,640 @@
 			white-space: pre-wrap;
 			word-break: break-all;
 		}
+
+		/* ========================================================
+		   DIRECTORY MASTER REDESIGN STYLES (ORION & FORGE)
+		   ======================================================== */
+		.dir-metrics-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 16px;
+			margin-bottom: 24px;
+		}
+
+		.dir-metric-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: var(--adm-radius);
+			padding: 16px 20px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			transition: all 0.2s ease;
+		}
+
+		.dir-metric-card:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+			border-color: #cbd5e1;
+		}
+
+		.dir-metric-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		.dir-metric-icon.gold { background: rgba(201, 168, 76, 0.15); color: #92400e; }
+		.dir-metric-icon.green { background: rgba(45, 106, 45, 0.12); color: var(--adm-green); }
+		.dir-metric-icon.blue { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+		.dir-metric-icon.purple { background: rgba(124, 58, 237, 0.12); color: #7c3aed; }
+
+		.dir-metric-val {
+			font-size: 22px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+			line-height: 1.2;
+		}
+
+		.dir-metric-lbl {
+			font-size: 11px;
+			color: var(--adm-text-muted);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.6px;
+		}
+
+		.dir-metric-sub {
+			font-size: 11.5px;
+			color: #94a3b8;
+			margin-top: 2px;
+		}
+
+		/* Toolbar & Filter Deck */
+		.dir-toolbar-box {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: var(--adm-radius);
+			padding: 18px 20px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+			margin-bottom: 22px;
+		}
+
+		.dir-toolbar-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+			flex-wrap: wrap;
+		}
+
+		.dir-search-wrap {
+			flex: 1;
+			min-width: 280px;
+			position: relative;
+		}
+
+		.dir-search-input {
+			width: 100%;
+			height: 42px;
+			padding: 0 38px 0 40px;
+			border: 1.5px solid var(--adm-border);
+			border-radius: 8px;
+			font-size: 13.5px;
+			color: var(--adm-text-main);
+			background: #f8fafc;
+			transition: all 0.2s ease;
+		}
+
+		.dir-search-input:focus {
+			outline: none;
+			background: #ffffff;
+			border-color: var(--adm-green);
+			box-shadow: 0 0 0 3px rgba(45, 106, 45, 0.14);
+		}
+
+		.dir-search-icon {
+			position: absolute;
+			left: 13px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #94a3b8;
+			pointer-events: none;
+		}
+
+		.dir-search-clear {
+			position: absolute;
+			right: 12px;
+			top: 50%;
+			transform: translateY(-50%);
+			background: transparent;
+			border: none;
+			color: #94a3b8;
+			cursor: pointer;
+			font-size: 16px;
+			line-height: 1;
+			display: none;
+			padding: 4px;
+		}
+
+		.dir-search-clear.show { display: block; }
+
+		.dir-filter-actions {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.dir-toolbar-bottom {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin-top: 14px;
+			padding-top: 14px;
+			border-top: 1px solid #f1f5f9;
+		}
+
+		.dir-pills-wrap {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.dir-pill-btn {
+			padding: 6px 14px;
+			border-radius: 100px;
+			font-size: 12px;
+			font-weight: 600;
+			cursor: pointer;
+			border: 1px solid var(--adm-border);
+			background: #ffffff;
+			color: var(--adm-text-muted);
+			transition: all 0.15s ease;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			user-select: none;
+		}
+
+		.dir-pill-btn:hover {
+			border-color: #cbd5e1;
+			color: var(--adm-text-main);
+		}
+
+		.dir-pill-btn.active {
+			background: var(--adm-text-main);
+			color: #ffffff;
+			border-color: var(--adm-text-main);
+		}
+
+		.dir-pill-btn.proplus.active {
+			background: #92400e;
+			border-color: #92400e;
+			color: #ffffff;
+		}
+
+		.dir-pill-btn.pro.active {
+			background: #065f46;
+			border-color: #065f46;
+			color: #ffffff;
+		}
+
+		.dir-pill-btn.architect.active {
+			background: #3730a3;
+			border-color: #3730a3;
+			color: #ffffff;
+		}
+
+		.dir-pill-badge {
+			background: rgba(0,0,0,0.06);
+			border-radius: 10px;
+			padding: 1px 7px;
+			font-size: 11px;
+			font-weight: 700;
+		}
+
+		.dir-pill-btn.active .dir-pill-badge {
+			background: rgba(255,255,255,0.25);
+		}
+
+		.dir-toggle-all-btn {
+			font-size: 12.5px;
+			color: #475569;
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			padding: 6px 12px;
+			border-radius: 6px;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			font-weight: 600;
+			transition: all 0.15s;
+		}
+
+		.dir-toggle-all-btn:hover {
+			background: #f1f5f9;
+			color: var(--adm-text-main);
+		}
+
+		/* Firms Accordion Cards Container */
+		.dir-cards-list {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		.dir-firm-entry {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 10px;
+			box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+			transition: all 0.2s ease;
+			overflow: hidden;
+		}
+
+		.dir-firm-entry:hover {
+			border-color: #cbd5e1;
+			box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+		}
+
+		.dir-firm-entry.expanded {
+			border-color: var(--adm-green);
+			box-shadow: 0 4px 18px rgba(45, 106, 45, 0.08);
+		}
+
+		.dir-firm-main {
+			padding: 16px 20px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+			cursor: pointer;
+			user-select: none;
+			transition: background 0.15s;
+		}
+
+		.dir-firm-main:hover {
+			background: #fafcfa;
+		}
+
+		.dir-firm-main-left {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			min-width: 0;
+			flex: 1;
+		}
+
+		.dir-chevron-btn {
+			width: 32px;
+			height: 32px;
+			border-radius: 8px;
+			background: #f1f5f9;
+			color: #64748b;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s, color 0.2s;
+			flex-shrink: 0;
+		}
+
+		.dir-firm-entry.expanded .dir-chevron-btn {
+			transform: rotate(90deg);
+			background: rgba(45, 106, 45, 0.15);
+			color: var(--adm-green);
+		}
+
+		.dir-firm-monogram {
+			width: 44px;
+			height: 44px;
+			border-radius: 10px;
+			background: #f1f5f9;
+			border: 1px solid var(--adm-border);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 800;
+			font-size: 14px;
+			color: #334155;
+			flex-shrink: 0;
+			letter-spacing: 0.5px;
+		}
+
+		.dir-firm-monogram.proplus {
+			background: #fef3c7;
+			color: #92400e;
+			border-color: #fde68a;
+		}
+
+		.dir-firm-monogram.pro {
+			background: #d1fae5;
+			color: #065f46;
+			border-color: #a7f3d0;
+		}
+
+		.dir-firm-monogram.architect {
+			background: #e0e7ff;
+			color: #3730a3;
+			border-color: #c7d2fe;
+		}
+
+		.dir-firm-text {
+			min-width: 0;
+			flex: 1;
+		}
+
+		.dir-firm-title-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.dir-firm-title {
+			font-size: 15px;
+			font-weight: 700;
+			color: var(--adm-text-main);
+			margin: 0;
+		}
+
+		.dir-firm-status-tag {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			font-size: 11px;
+			font-weight: 600;
+			color: #065f46;
+			background: #ecfdf5;
+			padding: 2px 7px;
+			border-radius: 4px;
+		}
+
+		.dir-firm-location {
+			font-size: 12.5px;
+			color: var(--adm-text-muted);
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			margin-top: 4px;
+		}
+
+		.dir-firm-main-right {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			flex-shrink: 0;
+		}
+
+		.dir-cat-badge {
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 0.6px;
+			text-transform: uppercase;
+			padding: 4px 10px;
+			border-radius: 6px;
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.dir-cat-badge.proplus {
+			background: #fef3c7;
+			color: #92400e;
+			border: 1px solid #fcd34d;
+		}
+
+		.dir-cat-badge.pro {
+			background: #d1fae5;
+			color: #065f46;
+			border: 1px solid #6ee7b7;
+		}
+
+		.dir-cat-badge.architect {
+			background: #e0e7ff;
+			color: #3730a3;
+			border: 1px solid #a5b4fc;
+		}
+
+		.dir-count-pill {
+			font-size: 12px;
+			font-weight: 600;
+			color: #475569;
+			background: #f1f5f9;
+			padding: 4px 10px;
+			border-radius: 100px;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+		}
+
+		.dir-action-group {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.dir-row-btn {
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			border-radius: 6px;
+			padding: 6px 10px;
+			font-size: 12px;
+			font-weight: 600;
+			color: var(--adm-text-main);
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			transition: all 0.15s;
+		}
+
+		.dir-row-btn:hover {
+			background: #f1f5f9;
+			border-color: #cbd5e1;
+		}
+
+		.dir-row-btn.add:hover {
+			background: rgba(45, 106, 45, 0.08);
+			border-color: var(--adm-green);
+			color: var(--adm-green);
+		}
+
+		.dir-row-btn.del {
+			color: #dc2626;
+			padding: 6px 8px;
+		}
+
+		.dir-row-btn.del:hover {
+			background: #fee2e2;
+			border-color: #fca5a5;
+		}
+
+		/* Nested Contacts Panel */
+		.dir-subpanel {
+			display: none;
+			border-top: 1px solid var(--adm-border);
+			background: #fafbfa;
+			padding: 18px 20px 22px;
+		}
+
+		.dir-firm-entry.expanded .dir-subpanel {
+			display: block;
+			animation: fadeInView 0.2s ease;
+		}
+
+		.dir-subpanel-bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 12px;
+		}
+
+		.dir-subpanel-heading {
+			font-size: 12.5px;
+			font-weight: 700;
+			color: #475569;
+			text-transform: uppercase;
+			letter-spacing: 0.6px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.dir-nested-tbl {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0;
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 8px;
+			overflow: hidden;
+		}
+
+		.dir-nested-tbl th {
+			background: #f8fafc;
+			padding: 10px 16px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			color: #64748b;
+			border-bottom: 1px solid var(--adm-border);
+			text-align: left;
+		}
+
+		.dir-nested-tbl td {
+			padding: 12px 16px;
+			font-size: 13px;
+			color: #1e293b;
+			border-bottom: 1px solid #f1f5f9;
+			vertical-align: middle;
+		}
+
+		.dir-nested-tbl tr:last-child td {
+			border-bottom: none;
+		}
+
+		.dir-nested-tbl tr:hover td {
+			background: #fcfdfc;
+		}
+
+		.dir-contact-name-cell {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.dir-contact-mini-avatar {
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			background: #e2e8f0;
+			color: #334155;
+			font-size: 11.5px;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		.dir-lead-star {
+			background: #fef3c7;
+			color: #92400e;
+			border: 1px solid #fde68a;
+			font-size: 10px;
+			font-weight: 700;
+			padding: 2px 7px;
+			border-radius: 4px;
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+			margin-left: 6px;
+		}
+
+		.dir-desig-tag {
+			background: #f1f5f9;
+			color: #334155;
+			padding: 3px 8px;
+			border-radius: 4px;
+			font-size: 11.5px;
+			font-weight: 600;
+			display: inline-block;
+		}
+
+		.dir-link-call {
+			color: var(--adm-green);
+			text-decoration: none;
+			font-weight: 600;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: color 0.15s;
+		}
+
+		.dir-link-call:hover {
+			color: var(--adm-green-light);
+			text-decoration: underline;
+		}
+
+		.dir-link-email {
+			color: #2563eb;
+			text-decoration: none;
+			font-weight: 500;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: color 0.15s;
+		}
+
+		.dir-link-email:hover {
+			color: #1d4ed8;
+			text-decoration: underline;
+		}
+
+		.dir-no-contacts-box {
+			text-align: center;
+			padding: 24px 20px;
+			background: #ffffff;
+			border: 1px dashed var(--adm-border);
+			border-radius: 8px;
+			color: var(--adm-text-muted);
+			font-size: 13px;
+		}
+
+		@media (max-width: 900px) {
+			.dir-firm-main {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+			.dir-firm-main-right {
+				width: 100%;
+				justify-content: space-between;
+				padding-top: 10px;
+				border-top: 1px solid #f1f5f9;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -2638,65 +3272,131 @@
 			</section>
 
 			<!-- ========================================================
-			     VIEW 3: DIRECTORY MASTER (MATCHING 12.11.13.jpeg)
+			     VIEW 3: DIRECTORY MASTER (MASTER-DETAIL EXECUTIVE ARCHITECTURE)
 			     ======================================================== -->
 			<section id="view-directory-master" class="view-section">
 				<div class="section-header">
 					<div>
-						<h1>Directory Master</h1>
-						<p>Architect firms directory with associated key contacts, categories &amp; regional coverage</p>
+						<h1>Architectural Directory Master</h1>
+						<p>Enterprise directory of partner firms, key contacts, tier classifications &amp; regional coverage</p>
 					</div>
-					<div style="display:flex;align-items:center;gap:12px;">
-						<button class="btn-primary" style="background:#2563eb;color:#ffffff;" onclick="openNewFirmModal()">
+					<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+						<button class="btn-primary" style="background:var(--adm-green);color:#ffffff;" onclick="openNewFirmModal()">
 							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 							<span>+ Add Architect Firm</span>
 						</button>
 						<button class="btn-primary" style="background:#14b8a6;color:#ffffff;" onclick="exportDirectoryMasterExcel()">
 							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-							<span>Export Architect Firm Details</span>
+							<span>Export to Excel</span>
 						</button>
 						<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="resetDirectoryFilters()">Reset Filters</a>
 					</div>
 				</div>
 
-				<!-- Filter Bar (matching 12.11.13.jpeg) -->
-				<div class="card-box" style="padding:16px 20px;margin-bottom:20px;">
-					<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-						<div style="flex:1;min-width:300px;position:relative;">
-							<input type="text" id="dirSearchInput" class="tbl-filter-input" style="width:100%;height:40px;padding-left:36px;border-radius:8px;font-size:13px;" placeholder="Type min. 3 letters and press enter to search" onkeyup="if(event.key==='Enter') applyDirectorySearch()" />
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" style="position:absolute;left:12px;top:12px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+				<!-- Executive KPI Metrics Summary Cards -->
+				<div class="dir-metrics-grid">
+					<div class="dir-metric-card">
+						<div class="dir-metric-icon gold">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 9h.01"/><path d="M15 15h.01"/></svg>
 						</div>
-						<div style="display:flex;align-items:center;gap:10px;">
-							<select id="dirCategorySelect" class="tbl-filter-select" style="height:40px;border-radius:8px;padding:0 12px;font-size:13px;" onchange="applyDirectorySearch()">
-								<option value="all">Add Filter: Category (All)</option>
-								<option value="PRO">PRO</option>
-								<option value="Architect">Architect</option>
-								<option value="PROPLUS">PROPLUS</option>
-							</select>
-							<button class="btn-primary" style="height:40px;padding:0 18px;" onclick="applyDirectorySearch()">Search</button>
+						<div>
+							<div class="dir-metric-val" id="dirStatTotalFirms">0</div>
+							<div class="dir-metric-lbl">Enrolled Firms</div>
+							<div class="dir-metric-sub">Architect &amp; Design Practices</div>
+						</div>
+					</div>
+
+					<div class="dir-metric-card">
+						<div class="dir-metric-icon green">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+						</div>
+						<div>
+							<div class="dir-metric-val" id="dirStatTotalContacts">0</div>
+							<div class="dir-metric-lbl">Key Contacts</div>
+							<div class="dir-metric-sub">Principals &amp; Associates</div>
+						</div>
+					</div>
+
+					<div class="dir-metric-card">
+						<div class="dir-metric-icon blue">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+						</div>
+						<div>
+							<div class="dir-metric-val" id="dirStatTiers" style="font-size:15px;line-height:1.4;letter-spacing:-0.2px;">0 PRO+ • 0 PRO</div>
+							<div class="dir-metric-lbl">Tier Distribution</div>
+							<div class="dir-metric-sub" id="dirStatTiersSub">Categorized Portfolios</div>
+						</div>
+					</div>
+
+					<div class="dir-metric-card">
+						<div class="dir-metric-icon purple">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+						</div>
+						<div>
+							<div class="dir-metric-val" id="dirStatCities">0 Cities</div>
+							<div class="dir-metric-lbl">Geographic Footprint</div>
+							<div class="dir-metric-sub" id="dirStatStates">National Coverage</div>
 						</div>
 					</div>
 				</div>
 
-				<!-- Directory Accordion Table -->
-				<div class="card-box" style="padding:0;overflow:hidden;">
-					<table class="crm-table">
-						<thead>
-							<tr>
-								<th style="width:36px;"></th>
-								<th>FIRST NAME / FIRM NAME</th>
-								<th>LAST NAME</th>
-								<th>USER TYPE</th>
-								<th>MOBILE</th>
-								<th>EMAIL</th>
-								<th>CATEGORY</th>
-							</tr>
-						</thead>
-						<tbody id="directoryMasterBody">
-							<!-- Populated via loadDirectoryMaster() -->
-						</tbody>
-					</table>
+				<!-- Command & Filter Toolbar -->
+				<div class="dir-toolbar-box">
+					<div class="dir-toolbar-top">
+						<div class="dir-search-wrap">
+							<svg class="dir-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+							<input type="text" id="dirSearchInput" class="dir-search-input" placeholder="Search by firm name, contact, phone, email, or city..." oninput="onDirectorySearchInput()" onkeyup="if(event.key==='Enter') applyDirectorySearch()" />
+							<button type="button" id="dirSearchClear" class="dir-search-clear" onclick="clearDirectorySearch()" title="Clear search">&times;</button>
+						</div>
+						<div class="dir-filter-actions">
+							<select id="dirLocationSelect" class="tbl-filter-select" style="height:42px;border-radius:8px;padding:0 12px;font-size:13px;min-width:160px;" onchange="applyDirectorySearch()">
+								<option value="all">All Locations (All Cities)</option>
+							</select>
+							<button class="btn-primary" style="height:42px;padding:0 20px;background:var(--adm-green);" onclick="applyDirectorySearch()">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+								Filter
+							</button>
+						</div>
+					</div>
+
+					<div class="dir-toolbar-bottom">
+						<div class="dir-pills-wrap">
+							<span style="font-size:12px;font-weight:700;color:#64748b;margin-right:4px;">TIER CATEGORY:</span>
+							<button type="button" class="dir-pill-btn active" id="dirPillAll" onclick="setDirectoryCategoryFilter('all')">
+								All Categories <span class="dir-pill-badge" id="dirBadgeCountAll">0</span>
+							</button>
+							<button type="button" class="dir-pill-btn proplus" id="dirPillProPlus" onclick="setDirectoryCategoryFilter('PROPLUS')">
+								PROPLUS <span class="dir-pill-badge" id="dirBadgeCountProPlus">0</span>
+							</button>
+							<button type="button" class="dir-pill-btn pro" id="dirPillPro" onclick="setDirectoryCategoryFilter('PRO')">
+								PRO <span class="dir-pill-badge" id="dirBadgeCountPro">0</span>
+							</button>
+							<button type="button" class="dir-pill-btn architect" id="dirPillArchitect" onclick="setDirectoryCategoryFilter('Architect')">
+								Architect <span class="dir-pill-badge" id="dirBadgeCountArchitect">0</span>
+							</button>
+						</div>
+						<button type="button" class="dir-toggle-all-btn" id="dirToggleAllBtn" onclick="toggleAllDirectoryFirms()">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+							<span>Expand All Details</span>
+						</button>
+					</div>
 				</div>
+
+				<!-- Hidden category select for backwards-compatible scripts -->
+				<select id="dirCategorySelect" style="display:none;" onchange="applyDirectorySearch()">
+					<option value="all">all</option>
+					<option value="PROPLUS">PROPLUS</option>
+					<option value="PRO">PRO</option>
+					<option value="Architect">Architect</option>
+				</select>
+
+				<!-- Master-Detail Cards Stream -->
+				<div id="directoryMasterContainer" class="dir-cards-list">
+					<!-- Dynamically rendered via renderDirectoryMaster() -->
+				</div>
+
+				<!-- Hidden tbody for backwards safety if queried -->
+				<table style="display:none;"><tbody id="directoryMasterBody"></tbody></table>
 			</section>
 
 			<!-- ========================================================
@@ -3946,6 +4646,69 @@
 					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
 						<button type="button" class="btn-outline" onclick="closeNewFirmModal()">Cancel</button>
 						<button type="submit" class="btn-primary" style="background:var(--adm-green);">Save Firm</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- NEW KEY CONTACT MODAL (FORGE & ORION) -->
+	<div class="modal-backdrop" id="newContactModal">
+		<div class="modal-window" style="max-width: 520px;">
+			<div class="modal-header">
+				<div>
+					<h3 style="margin:0;font-size:16px;">Add Key Contact</h3>
+					<span id="contactModalFirmSub" style="font-size:12px;color:var(--adm-text-muted);display:block;margin-top:2px;">Associate contact with firm</span>
+				</div>
+				<button class="modal-close-btn" onclick="closeNewContactModal()">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form id="newContactForm" onsubmit="submitNewContact(event)" style="display:flex;flex-direction:column;gap:14px;">
+					<input type="hidden" id="contactInputFirmId" />
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">First Name *</label>
+							<input type="text" id="contactInputFirst" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Rahul" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Last Name</label>
+							<input type="text" id="contactInputLast" class="tbl-filter-input" style="height:38px;" placeholder="e.g. Mehta" />
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Designation / Role *</label>
+							<select id="contactInputRole" class="tbl-filter-select" style="height:38px;" required>
+								<option value="Principal Architect">Principal Architect</option>
+								<option value="Senior Associate">Senior Associate</option>
+								<option value="Project Architect">Project Architect</option>
+								<option value="Interior Designer">Interior Designer</option>
+								<option value="Procurement Head">Procurement Head</option>
+								<option value="Partner">Partner</option>
+								<option value="Associate">Associate</option>
+							</select>
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Lead Status</label>
+							<div style="display:flex;align-items:center;height:38px;gap:8px;">
+								<input type="checkbox" id="contactInputPrimary" style="width:18px;height:18px;cursor:pointer;" />
+								<label for="contactInputPrimary" style="font-size:12.5px;color:#374151;cursor:pointer;">Primary Contact</label>
+							</div>
+						</div>
+					</div>
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Mobile *</label>
+							<input type="text" id="contactInputMobile" class="tbl-filter-input" style="height:38px;" placeholder="+91 98765 43210" required />
+						</div>
+						<div>
+							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Email</label>
+							<input type="email" id="contactInputEmail" class="tbl-filter-input" style="height:38px;" placeholder="name@firm.com" />
+						</div>
+					</div>
+					<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
+						<button type="button" class="btn-outline" onclick="closeNewContactModal()">Cancel</button>
+						<button type="submit" class="btn-primary" style="background:var(--adm-green);">Save Contact</button>
 					</div>
 				</form>
 			</div>
@@ -8043,18 +8806,17 @@ async function loadDashboardData() {
 		}
 
 		// ========================================================
-		// 1. DIRECTORY MASTER ENGINE (12.11.13.jpeg)
+		// 1. DIRECTORY MASTER ENGINE (MASTER-DETAIL EXECUTIVE ARCHITECTURE)
 		// ========================================================
 		let directoryMasterData = [];
+		let allDirectoryFirmsList = [];
+		let activeCategoryFilter = 'all';
+		let directorySearchDebounceTimer = null;
 
 		async function loadDirectoryMaster() {
-			const search = document.getElementById('dirSearchInput')?.value || '';
-			const cat = document.getElementById('dirCategorySelect')?.value || 'all';
-			const params = new URLSearchParams({ search: search, category: cat });
-
 			let data = null;
 			try {
-				const resp = await apiFetch('/api/directory/firms?' + params.toString());
+				const resp = await apiFetch('/api/directory/firms');
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.firms)) {
@@ -8065,94 +8827,427 @@ async function loadDashboardData() {
 				console.warn('Directory API offline, using client fallback:', e);
 			}
 
-			if (!data) {
-				data = (typeof NTW_FALLBACK_FIRMS !== 'undefined' ? NTW_FALLBACK_FIRMS : []).filter(f => {
-					if (cat && cat.toLowerCase() !== 'all' && f.category.toLowerCase() !== cat.toLowerCase()) return false;
-					if (search) {
-						const q = search.toLowerCase();
-						const match = (f.firm_name.toLowerCase().includes(q) ||
-							(f.city || '').toLowerCase().includes(q) ||
-							(f.state || '').toLowerCase().includes(q) ||
-							(f.contacts || []).some(c => (c.first_name || '').toLowerCase().includes(q) || (c.last_name || '').toLowerCase().includes(q) || (c.email || '').toLowerCase().includes(q) || (c.mobile || '').includes(q)));
-						if (!match) return false;
-					}
-					return true;
-				});
+			if (!data || data.length === 0) {
+				data = (typeof NTW_FALLBACK_FIRMS !== 'undefined' ? NTW_FALLBACK_FIRMS : []);
 			}
 
-			directoryMasterData = data;
+			allDirectoryFirmsList = data;
+			updateDirectoryMetrics(allDirectoryFirmsList);
+			populateDirectoryLocationOptions(allDirectoryFirmsList);
+			applyDirectorySearch();
+		}
+
+		function updateDirectoryMetrics(firms) {
+			const totalFirms = firms.length;
+			let totalContacts = 0;
+			let proPlusCount = 0;
+			let proCount = 0;
+			let archCount = 0;
+			const citiesSet = new Set();
+			const statesSet = new Set();
+
+			firms.forEach(f => {
+				const cntList = f.contacts || [];
+				totalContacts += cntList.length;
+
+				const cat = (f.category || '').toUpperCase();
+				if (cat === 'PROPLUS') proPlusCount++;
+				else if (cat === 'PRO') proCount++;
+				else archCount++;
+
+				if (f.city && f.city.trim()) citiesSet.add(f.city.trim());
+				if (f.state && f.state.trim()) statesSet.add(f.state.trim());
+			});
+
+			const elTotalFirms = document.getElementById('dirStatTotalFirms');
+			if (elTotalFirms) elTotalFirms.innerText = totalFirms;
+
+			const elTotalContacts = document.getElementById('dirStatTotalContacts');
+			if (elTotalContacts) elTotalContacts.innerText = totalContacts;
+
+			const elTiers = document.getElementById('dirStatTiers');
+			if (elTiers) elTiers.innerText = `${proPlusCount} PRO+ • ${proCount} PRO • ${archCount} Arch`;
+
+			const elTiersSub = document.getElementById('dirStatTiersSub');
+			if (elTiersSub) elTiersSub.innerText = `${Math.round(((proPlusCount + proCount) / (totalFirms || 1)) * 100)}% Premier Partner Coverage`;
+
+			const elCities = document.getElementById('dirStatCities');
+			if (elCities) elCities.innerText = `${citiesSet.size} Cities`;
+
+			const elStates = document.getElementById('dirStatStates');
+			if (elStates) elStates.innerText = `${statesSet.size} States & Territories`;
+
+			// Update pill count badges
+			const bAll = document.getElementById('dirBadgeCountAll');
+			if (bAll) bAll.innerText = totalFirms;
+
+			const bProPlus = document.getElementById('dirBadgeCountProPlus');
+			if (bProPlus) bProPlus.innerText = proPlusCount;
+
+			const bPro = document.getElementById('dirBadgeCountPro');
+			if (bPro) bPro.innerText = proCount;
+
+			const bArch = document.getElementById('dirBadgeCountArchitect');
+			if (bArch) bArch.innerText = archCount;
+		}
+
+		function populateDirectoryLocationOptions(firms) {
+			const locSelect = document.getElementById('dirLocationSelect');
+			if (!locSelect) return;
+
+			const currentVal = locSelect.value;
+			const cities = Array.from(new Set(firms.map(f => (f.city || '').trim()).filter(Boolean))).sort();
+
+			let optionsHtml = '<option value="all">All Locations (All Cities)</option>';
+			cities.forEach(city => {
+				const isSel = city.toLowerCase() === currentVal.toLowerCase() ? 'selected' : '';
+				optionsHtml += `<option value="${city}" ${isSel}>${city}</option>`;
+			});
+
+			locSelect.innerHTML = optionsHtml;
+		}
+
+		function applyDirectorySearch() {
+			const search = (document.getElementById('dirSearchInput')?.value || '').trim().toLowerCase();
+			const selectedLoc = (document.getElementById('dirLocationSelect')?.value || 'all').toLowerCase();
+			const catFilter = activeCategoryFilter.toLowerCase();
+
+			const filtered = allDirectoryFirmsList.filter(f => {
+				// Category filter
+				if (catFilter !== 'all') {
+					if ((f.category || '').toLowerCase() !== catFilter) return false;
+				}
+
+				// Location filter
+				if (selectedLoc !== 'all') {
+					if ((f.city || '').toLowerCase() !== selectedLoc) return false;
+				}
+
+				// Text search
+				if (search) {
+					const firmMatch = (f.firm_name || '').toLowerCase().includes(search) ||
+						(f.city || '').toLowerCase().includes(search) ||
+						(f.state || '').toLowerCase().includes(search) ||
+						(f.category || '').toLowerCase().includes(search);
+
+					const contactMatch = (f.contacts || []).some(c =>
+						(c.first_name || '').toLowerCase().includes(search) ||
+						(c.last_name || '').toLowerCase().includes(search) ||
+						(c.email || '').toLowerCase().includes(search) ||
+						(c.mobile || '').includes(search) ||
+						(c.user_type || '').toLowerCase().includes(search)
+					);
+
+					if (!firmMatch && !contactMatch) return false;
+				}
+
+				return true;
+			});
+
+			directoryMasterData = filtered;
 			renderDirectoryMaster(directoryMasterData);
 		}
 
 		function renderDirectoryMaster(firms) {
-			const tbody = document.getElementById('directoryMasterBody');
-			if (!tbody) return;
+			const container = document.getElementById('directoryMasterContainer');
+			if (!container) return;
 
 			if (firms.length === 0) {
-				tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No architect firms match your criteria.</td></tr>`;
+				container.innerHTML = `
+					<div class="card-box" style="padding:48px 24px;text-align:center;">
+						<div style="width:56px;height:56px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#94a3b8;">
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+						</div>
+						<h3 style="font-size:16px;color:var(--adm-text-main);margin:0 0 6px;">No Architect Firms Found</h3>
+						<p style="font-size:13px;color:var(--adm-text-muted);margin:0 0 16px;">No firm records match your active search terms or category selection.</p>
+						<button class="btn-outline" onclick="resetDirectoryFilters()" style="padding:7px 18px;font-size:12.5px;">Clear Filters &amp; Show All</button>
+					</div>
+				`;
 				return;
 			}
 
 			let html = '';
 			firms.forEach(firm => {
-				const catBadge = firm.category === 'PROPLUS' ? 'badge-cat-proplus' : (firm.category === 'PRO' ? 'badge-cat-pro' : 'badge-cat-architect');
-				const contactCount = (firm.contacts || []).length;
-
-				// Firm Parent Accordion Row
-				html += `
-					<tr class="accordion-firm-row" id="firm-row-${firm.id}" onclick="toggleFirmAccordion('${firm.id}')">
-						<td>
-							<span class="accordion-toggle-btn" id="arrow-${firm.id}">▶</span>
-						</td>
-						<td>
-							<strong style="color:var(--adm-text-main);font-size:13.5px;">${firm.firm_name}</strong>
-							<span style="font-size:11px;color:var(--adm-text-muted);display:block;">${firm.city || ''}, ${firm.state || ''} • (${contactCount} Key Contacts)</span>
-						</td>
-						<td>—</td>
-						<td><span class="user-role-badge">Firm Entity</span></td>
-						<td>—</td>
-						<td>—</td>
-						<td style="white-space:nowrap;">
-							<span class="${catBadge}">${firm.category}</span>
-							<button class="tbl-action-btn" style="color:#dc2626;margin-left:8px;" onclick="event.stopPropagation(); deleteFirm('${firm.id}')" title="Delete Firm &amp; Contacts">🗑</button>
-						</td>
-					</tr>
-				`;
-
-				// Nested Contact Rows
-				if (firm.contacts && firm.contacts.length > 0) {
-					firm.contacts.forEach(c => {
-						html += `
-							<tr class="nested-contact-row nested-for-${firm.id}">
-								<td></td>
-								<td style="padding-left:36px;color:#374151;">
-									<span style="color:var(--adm-green);font-weight:700;margin-right:6px;">↳</span>
-									<strong>${c.first_name}</strong>
-								</td>
-								<td>${c.last_name}</td>
-								<td><span class="user-role-badge" style="font-size:11px;">${c.user_type}</span></td>
-								<td><a href="tel:${c.mobile}" style="color:var(--adm-green);text-decoration:none;font-weight:600;">${c.mobile}</a></td>
-								<td><a href="mailto:${c.email}" style="color:#2563eb;text-decoration:none;">${c.email}</a></td>
-								<td style="white-space:nowrap;">
-									<span style="font-size:11px;color:#6b7280;">${firm.category}</span>
-									<button class="tbl-action-btn" style="color:#dc2626;margin-left:8px;" onclick="event.stopPropagation(); deleteContact('${c.id}')" title="Remove Contact">🗑</button>
-								</td>
-							</tr>
-						`;
-					});
-				} else {
-					html += `
-						<tr class="nested-contact-row nested-for-${firm.id}">
-							<td></td>
-							<td colspan="6" style="padding-left:36px;font-size:12px;color:var(--adm-text-muted);font-style:italic;">
-								No individual contacts recorded under this firm yet.
-							</td>
-						</tr>
-					`;
+				const catRaw = (firm.category || 'Architect').toUpperCase();
+				let catClass = 'architect';
+				let catBadgeText = 'Architect';
+				if (catRaw === 'PROPLUS') {
+					catClass = 'proplus';
+					catBadgeText = '★ PROPLUS';
+				} else if (catRaw === 'PRO') {
+					catClass = 'pro';
+					catBadgeText = 'PRO';
 				}
+
+				const words = (firm.firm_name || 'AF').trim().split(/\s+/);
+				let initials = words.length > 1 ? (words[0][0] + words[1][0]) : words[0].slice(0, 2);
+				initials = initials.toUpperCase();
+
+				const contacts = firm.contacts || [];
+				const contactCount = contacts.length;
+				const locationStr = [firm.city, firm.state].filter(Boolean).join(', ') || 'India Coverage';
+				const escapedFirmName = encodeURIComponent(firm.firm_name);
+
+				html += `
+					<div class="dir-firm-entry" id="dir-firm-card-${firm.id}">
+						<!-- Main Firm Header Accordion Bar -->
+						<div class="dir-firm-main" onclick="toggleFirmAccordion('${firm.id}')">
+							<div class="dir-firm-main-left">
+								<div class="dir-chevron-btn" title="Click to view key contacts">
+									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+								</div>
+								<div class="dir-firm-monogram ${catClass}">${initials}</div>
+								<div class="dir-firm-text">
+									<div class="dir-firm-title-row">
+										<h3 class="dir-firm-title">${firm.firm_name}</h3>
+										<span class="dir-firm-status-tag">
+											<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>
+											Active Practice
+										</span>
+									</div>
+									<div class="dir-firm-location">
+										<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+										<span>${locationStr}</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="dir-firm-main-right">
+								<span class="dir-cat-badge ${catClass}">${catBadgeText}</span>
+								<span class="dir-count-pill">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+									${contactCount} Key Contact${contactCount === 1 ? '' : 's'}
+								</span>
+								<div class="dir-action-group">
+									<button class="dir-row-btn add" onclick="event.stopPropagation(); openNewContactModal('${firm.id}', '${escapedFirmName}')" title="Add Key Contact to ${firm.firm_name}">
+										<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+										<span>Add Contact</span>
+									</button>
+									<button class="dir-row-btn del" onclick="event.stopPropagation(); deleteFirm('${firm.id}')" title="Delete Firm &amp; All Contacts">
+										<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- Nested Key Contacts Subpanel -->
+						<div class="dir-subpanel">
+							<div class="dir-subpanel-bar">
+								<div class="dir-subpanel-heading">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+									<span>Key Contacts &amp; Project Representatives (${contactCount})</span>
+								</div>
+								<button class="dir-row-btn add" onclick="openNewContactModal('${firm.id}', '${escapedFirmName}')">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+									<span>+ Add Contact</span>
+								</button>
+							</div>
+
+							${contacts.length > 0 ? `
+								<div style="overflow-x:auto;">
+									<table class="dir-nested-tbl">
+										<thead>
+											<tr>
+												<th>Contact Name &amp; Lead Status</th>
+												<th>Designation / Role</th>
+												<th>Mobile / Direct Dial</th>
+												<th>Email Address</th>
+												<th style="width:70px;text-align:right;">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											${contacts.map(c => {
+												const cInitials = ((c.first_name ? c.first_name[0] : '') + (c.last_name ? c.last_name[0] : '')).toUpperCase() || 'C';
+												const isPrimary = c.is_primary;
+												return `
+													<tr>
+														<td>
+															<div class="dir-contact-name-cell">
+																<div class="dir-contact-mini-avatar">${cInitials}</div>
+																<div>
+																	<strong style="color:var(--adm-text-main);">${c.first_name} ${c.last_name || ''}</strong>
+																	${isPrimary ? '<span class="dir-lead-star">★ Primary Lead</span>' : ''}
+																</div>
+															</div>
+														</td>
+														<td>
+															<span class="dir-desig-tag">${c.user_type || 'Associate'}</span>
+														</td>
+														<td>
+															${c.mobile ? `
+																<a href="tel:${c.mobile}" class="dir-link-call" onclick="event.stopPropagation()">
+																	<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+																	${c.mobile}
+																</a>
+															` : '<span style="color:#94a3b8;">—</span>'}
+														</td>
+														<td>
+															${c.email ? `
+																<a href="mailto:${c.email}" class="dir-link-email" onclick="event.stopPropagation()">
+																	<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+																	${c.email}
+																</a>
+															` : '<span style="color:#94a3b8;">—</span>'}
+														</td>
+														<td style="text-align:right;">
+															<button class="dir-row-btn del" onclick="event.stopPropagation(); deleteContact('${c.id}')" title="Remove Contact">
+																<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+															</button>
+														</td>
+													</tr>
+												`;
+											}).join('')}
+										</tbody>
+									</table>
+								</div>
+							` : `
+								<div class="dir-no-contacts-box">
+									<p style="margin:0 0 10px;">No individual key contacts recorded under this firm yet.</p>
+									<button class="btn-primary" style="padding:5px 14px;font-size:12px;background:var(--adm-green);" onclick="openNewContactModal('${firm.id}', '${escapedFirmName}')">
+										+ Add Primary Contact
+									</button>
+								</div>
+							`}
+						</div>
+					</div>
+				`;
 			});
 
-			tbody.innerHTML = html;
+			container.innerHTML = html;
+		}
+
+		function toggleFirmAccordion(firmId) {
+			const firmEntry = document.getElementById(`dir-firm-card-${firmId}`);
+			if (!firmEntry) return;
+			firmEntry.classList.toggle('expanded');
+		}
+
+		function toggleAllDirectoryFirms() {
+			const entries = document.querySelectorAll('.dir-firm-entry');
+			if (entries.length === 0) return;
+			const btn = document.getElementById('dirToggleAllBtn');
+			const someCollapsed = Array.from(entries).some(e => !e.classList.contains('expanded'));
+			if (someCollapsed) {
+				entries.forEach(e => e.classList.add('expanded'));
+				if (btn) btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline></svg><span>Collapse All Details</span>`;
+			} else {
+				entries.forEach(e => e.classList.remove('expanded'));
+				if (btn) btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg><span>Expand All Details</span>`;
+			}
+		}
+
+		function setDirectoryCategoryFilter(cat) {
+			activeCategoryFilter = cat;
+			['dirPillAll', 'dirPillProPlus', 'dirPillPro', 'dirPillArchitect'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el) el.classList.remove('active');
+			});
+			if (cat === 'all') document.getElementById('dirPillAll')?.classList.add('active');
+			else if (cat === 'PROPLUS') document.getElementById('dirPillProPlus')?.classList.add('active');
+			else if (cat === 'PRO') document.getElementById('dirPillPro')?.classList.add('active');
+			else if (cat === 'Architect') document.getElementById('dirPillArchitect')?.classList.add('active');
+
+			const sel = document.getElementById('dirCategorySelect');
+			if (sel) sel.value = cat;
+
+			applyDirectorySearch();
+		}
+
+		function onDirectorySearchInput() {
+			const val = document.getElementById('dirSearchInput')?.value || '';
+			const clearBtn = document.getElementById('dirSearchClear');
+			if (clearBtn) {
+				if (val.length > 0) clearBtn.classList.add('show');
+				else clearBtn.classList.remove('show');
+			}
+			clearTimeout(directorySearchDebounceTimer);
+			directorySearchDebounceTimer = setTimeout(() => {
+				applyDirectorySearch();
+			}, 150);
+		}
+
+		function clearDirectorySearch() {
+			const input = document.getElementById('dirSearchInput');
+			if (input) input.value = '';
+			const clearBtn = document.getElementById('dirSearchClear');
+			if (clearBtn) clearBtn.classList.remove('show');
+			applyDirectorySearch();
+		}
+
+		function resetDirectoryFilters() {
+			const input = document.getElementById('dirSearchInput');
+			if (input) input.value = '';
+			const clearBtn = document.getElementById('dirSearchClear');
+			if (clearBtn) clearBtn.classList.remove('show');
+
+			const loc = document.getElementById('dirLocationSelect');
+			if (loc) loc.value = 'all';
+
+			setDirectoryCategoryFilter('all');
+			showToast('Directory filters reset.');
+		}
+
+		function openNewContactModal(firmId, encodedFirmName) {
+			const firmName = decodeURIComponent(encodedFirmName || '');
+			const form = document.getElementById('newContactForm');
+			if (form) form.reset();
+			const fId = document.getElementById('contactInputFirmId');
+			if (fId) fId.value = firmId;
+			const sub = document.getElementById('contactModalFirmSub');
+			if (sub) sub.innerText = `Associate key contact under: ${firmName}`;
+			const modal = document.getElementById('newContactModal');
+			if (modal) modal.classList.add('show');
+		}
+
+		function closeNewContactModal() {
+			const modal = document.getElementById('newContactModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		async function submitNewContact(e) {
+			e.preventDefault();
+			const firmId = document.getElementById('contactInputFirmId')?.value;
+			const firstName = document.getElementById('contactInputFirst')?.value.trim();
+			const lastName = document.getElementById('contactInputLast')?.value.trim();
+			const role = document.getElementById('contactInputRole')?.value;
+			const mobile = document.getElementById('contactInputMobile')?.value.trim();
+			const email = document.getElementById('contactInputEmail')?.value.trim();
+			const isPrimary = document.getElementById('contactInputPrimary')?.checked;
+
+			if (!firmId || !firstName) {
+				alert('Firm ID and First Name are required');
+				return;
+			}
+
+			try {
+				const resp = await apiFetch('/api/directory/contacts', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						firm_id: firmId,
+						first_name: firstName,
+						last_name: lastName,
+						user_type: role,
+						mobile: mobile,
+						email: email,
+						is_primary: isPrimary
+					})
+				});
+				const res = await resp.json();
+				if (res.success) {
+					closeNewContactModal();
+					showToast(`Contact "${firstName}" added successfully!`);
+					await loadDirectoryMaster();
+					setTimeout(() => {
+						const card = document.getElementById(`dir-firm-card-${firmId}`);
+						if (card) card.classList.add('expanded');
+					}, 100);
+				} else {
+					alert(res.error || 'Failed to add contact');
+				}
+			} catch (err) {
+				alert('Network error saving contact');
+			}
 		}
 
 		async function deleteFirm(firmId) {
@@ -8195,41 +9290,6 @@ async function loadDashboardData() {
 			}
 		}
 
-		function toggleFirmAccordion(firmId) {
-			const firmRow = document.getElementById(`firm-row-${firmId}`);
-			const arrow = document.getElementById(`arrow-${firmId}`);
-			const nestedRows = document.querySelectorAll(`.nested-for-${firmId}`);
-
-			if (!firmRow) return;
-			const isExpanded = firmRow.classList.contains('expanded');
-
-			if (isExpanded) {
-				firmRow.classList.remove('expanded');
-				nestedRows.forEach(r => r.classList.remove('open'));
-			} else {
-				firmRow.classList.add('expanded');
-				nestedRows.forEach(r => r.classList.add('open'));
-			}
-		}
-
-		function applyDirectorySearch() {
-			const search = (document.getElementById('dirSearchInput')?.value || '').trim();
-			if (search.length > 0 && search.length < 3) {
-				showToast('Please enter at least 3 characters to search.', true);
-				return;
-			}
-			loadDirectoryMaster();
-		}
-
-		function resetDirectoryFilters() {
-			const input = document.getElementById('dirSearchInput');
-			if (input) input.value = '';
-			const sel = document.getElementById('dirCategorySelect');
-			if (sel) sel.value = 'all';
-			loadDirectoryMaster();
-			showToast('Directory filters reset.');
-		}
-
 		function exportDirectoryMasterExcel() {
 			if (directoryMasterData.length === 0) {
 				showToast('No directory records to export.', true);
@@ -8245,11 +9305,11 @@ async function loadDashboardData() {
 							"City": f.city || "",
 							"State": f.state || "",
 							"First Name": c.first_name,
-							"Last Name": c.last_name,
-							"User Type / Designation": c.user_type,
+							"Last Name": c.last_name || "",
+							"Designation / Role": c.user_type,
 							"Mobile": c.mobile,
 							"Email": c.email,
-							"Is Primary Contact": c.is_primary ? "Yes" : "No"
+							"Is Primary Lead": c.is_primary ? "Yes" : "No"
 						});
 					});
 				} else {
@@ -8260,10 +9320,10 @@ async function loadDashboardData() {
 						"State": f.state || "",
 						"First Name": "—",
 						"Last Name": "—",
-						"User Type / Designation": "—",
+						"Designation / Role": "—",
 						"Mobile": "—",
 						"Email": "—",
-						"Is Primary Contact": "—"
+						"Is Primary Lead": "—"
 					});
 				}
 			});
