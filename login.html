@@ -951,18 +951,33 @@
 						return;
 					}
 				}
+
+				// Parse error response from backend
+				let errMsg = 'Access Denied: Invalid credentials. Please verify your details.';
+				try {
+					const errData = await resp.json();
+					if (errData && errData.error) {
+						errMsg = errData.error;
+					}
+				} catch (e) {}
+
+				if (resp.status === 404) {
+					errMsg = 'API endpoint not found (404). Please ensure you opened http://localhost:8000/login.html via python serve.py.';
+				} else if (resp.status >= 500) {
+					errMsg = `Server error (${resp.status}): ${errMsg}`;
+				}
+
+				btn.disabled = false;
+				btnText.innerText = 'Sign In';
+				showToast(errMsg, true);
+				return;
 			} catch (apiErr) {
 				// Backend not reachable — show error, do NOT fall back to client-side auth
 				btn.disabled = false;
 				btnText.innerText = 'Sign In';
-				showToast('Cannot connect to authentication server. Please ensure the backend is running.', true);
+				showToast('Cannot connect to authentication server. Please ensure python serve.py is running on http://localhost:8000.', true);
 				return;
 			}
-
-			// API returned non-OK status (e.g. 401 wrong password)
-			btn.disabled = false;
-			btnText.innerText = 'Sign In';
-			showToast('Access Denied: Invalid credentials. Please verify your details.', true);
 		}
 
 		function openForgotModal(e) {
