@@ -2645,7 +2645,7 @@
 			flex-wrap: wrap;
 		}
 
-		.ord-toolbar-bottom {
+		.ord-toolbar-middle {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -2720,12 +2720,250 @@
 			background: rgba(255,255,255,0.25);
 		}
 
+		.ord-view-switch {
+			display: inline-flex;
+			background: #f1f5f9;
+			border: 1px solid var(--adm-border);
+			border-radius: 8px;
+			padding: 3px;
+			gap: 3px;
+		}
+
+		.ord-view-btn {
+			padding: 6px 14px;
+			border-radius: 6px;
+			border: none;
+			background: transparent;
+			color: #64748b;
+			font-size: 12px;
+			font-weight: 700;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: all 0.15s ease;
+			user-select: none;
+		}
+
+		.ord-view-btn:hover {
+			color: var(--adm-text-main);
+		}
+
+		.ord-view-btn.active {
+			background: #ffffff;
+			color: var(--adm-text-main);
+			box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+		}
+
+		.ord-toolbar-bottom {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin-top: 12px;
+			padding-top: 12px;
+			border-top: 1px dashed #e2e8f0;
+		}
+
+		.ord-date-presets {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			flex-wrap: wrap;
+		}
+
+		.ord-preset-chip {
+			padding: 4px 10px;
+			border-radius: 6px;
+			font-size: 11.5px;
+			font-weight: 600;
+			cursor: pointer;
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			color: #475569;
+			transition: all 0.15s ease;
+		}
+
+		.ord-preset-chip:hover {
+			background: #f1f5f9;
+			color: var(--adm-text-main);
+		}
+
+		.ord-preset-chip.active {
+			background: var(--adm-green);
+			color: #ffffff;
+			border-color: var(--adm-green);
+		}
+
 		.ord-date-range {
 			display: flex;
 			align-items: center;
 			gap: 8px;
-			font-size: 12.5px;
+			font-size: 12px;
 			color: var(--adm-text-muted);
+		}
+
+		/* Kanban Board Styles */
+		.ord-kanban-board {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(320px, 1fr));
+			gap: 18px;
+			align-items: flex-start;
+			overflow-x: auto;
+			padding-bottom: 12px;
+		}
+
+		.ord-kanban-col {
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			border-radius: 12px;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+		}
+
+		.ord-kanban-col.pipeline { border-top: 4px solid #f59e0b; }
+		.ord-kanban-col.win { border-top: 4px solid #10b981; }
+		.ord-kanban-col.lost { border-top: 4px solid #ef4444; }
+
+		.ord-kanban-col-head {
+			padding: 14px 16px;
+			background: #ffffff;
+			border-bottom: 1px solid var(--adm-border);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.ord-kanban-col-title {
+			font-size: 13.5px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin: 0;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.ord-kanban-col-meta {
+			text-align: right;
+		}
+
+		.ord-kanban-col-val {
+			font-size: 13px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+		}
+
+		.ord-kanban-col-cards {
+			padding: 14px;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			max-height: 680px;
+			overflow-y: auto;
+		}
+
+		.ord-kanban-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 10px;
+			padding: 14px;
+			box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+			transition: all 0.2s ease;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			cursor: default;
+		}
+
+		.ord-kanban-card:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(0,0,0,0.07);
+			border-color: #cbd5e1;
+		}
+
+		.ord-kanban-card-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.ord-kanban-card-title {
+			font-size: 14px;
+			font-weight: 700;
+			color: var(--adm-text-main);
+			margin: 0;
+			line-height: 1.3;
+		}
+
+		.ord-kanban-card-client {
+			font-size: 12px;
+			color: #64748b;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.ord-kanban-card-val-row {
+			background: #f8fafc;
+			border: 1px solid #f1f5f9;
+			border-radius: 8px;
+			padding: 8px 10px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.ord-kanban-card-val {
+			font-size: 15px;
+			font-weight: 800;
+			color: var(--adm-green);
+		}
+
+		.ord-kanban-card-actions {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding-top: 8px;
+			border-top: 1px dashed #f1f5f9;
+		}
+
+		.ord-stage-move-btn {
+			padding: 4px 8px;
+			border-radius: 4px;
+			font-size: 11px;
+			font-weight: 700;
+			border: 1px solid var(--adm-border);
+			background: #ffffff;
+			cursor: pointer;
+			transition: all 0.15s;
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.ord-stage-move-btn.win:hover {
+			background: #dcfce7;
+			color: #15803d;
+			border-color: #86efac;
+		}
+
+		.ord-stage-move-btn.pipe:hover {
+			background: #fef3c7;
+			color: #b45309;
+			border-color: #fde68a;
+		}
+
+		.ord-stage-move-btn.lost:hover {
+			background: #fee2e2;
+			color: #b91c1c;
+			border-color: #fca5a5;
 		}
 
 		/* Orders Data Table */
@@ -2894,6 +3132,52 @@
 			color: #dc2626;
 			background: #fee2e2;
 			border-color: #fca5a5;
+		}
+
+		/* Table Pagination Bar */
+		.ord-pagination-bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 14px 18px;
+			background: #f8fafc;
+			border-top: 1px solid var(--adm-border);
+			flex-wrap: wrap;
+			gap: 12px;
+		}
+
+		.ord-page-btns {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.ord-page-btn {
+			padding: 5px 10px;
+			border-radius: 6px;
+			font-size: 12px;
+			font-weight: 600;
+			border: 1px solid var(--adm-border);
+			background: #ffffff;
+			color: #475569;
+			cursor: pointer;
+			transition: all 0.15s;
+		}
+
+		.ord-page-btn:hover:not(:disabled) {
+			background: #f1f5f9;
+			color: var(--adm-text-main);
+		}
+
+		.ord-page-btn.active {
+			background: var(--adm-green);
+			color: #ffffff;
+			border-color: var(--adm-green);
+		}
+
+		.ord-page-btn:disabled {
+			opacity: 0.4;
+			cursor: not-allowed;
 		}
 	</style>
 </head>
@@ -4204,6 +4488,16 @@
 							<button class="btn-primary" style="height:42px;padding:0 18px;background:var(--adm-green);" onclick="applyOrderFilters()">
 								Filter
 							</button>
+							<div class="ord-view-switch" style="margin-left:6px;">
+								<button type="button" class="ord-view-btn active" id="ordViewBtnKanban" onclick="switchOrderView('kanban')" title="Kanban Pipeline Board">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+									<span>Pipeline Board</span>
+								</button>
+								<button type="button" class="ord-view-btn" id="ordViewBtnTable" onclick="switchOrderView('table')" title="Detailed Ledger Table">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+									<span>Data Ledger</span>
+								</button>
+							</div>
 						</div>
 					</div>
 
@@ -4224,12 +4518,21 @@
 							</button>
 						</div>
 
-						<div class="ord-date-range">
-							<span>Date:</span>
-							<input type="date" id="ordFromDate" class="tbl-filter-input" style="height:34px;font-size:12px;width:130px;" title="From date" onchange="applyOrderFilters()" />
-							<span>to</span>
-							<input type="date" id="ordToDate" class="tbl-filter-input" style="height:34px;font-size:12px;width:130px;" title="To date" onchange="applyOrderFilters()" />
-							<button type="button" class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="clearOrderDates()" title="Clear date range">Clear Dates</button>
+						<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+							<div class="ord-date-presets">
+								<span style="font-size:11.5px;font-weight:700;color:#64748b;">DATE:</span>
+								<button type="button" class="ord-preset-chip active" id="ordDateChipAll" onclick="setDatePreset('all')">All Time</button>
+								<button type="button" class="ord-preset-chip" id="ordDateChipMonth" onclick="setDatePreset('this-month')">This Month</button>
+								<button type="button" class="ord-preset-chip" id="ordDateChip30" onclick="setDatePreset('last-30')">Last 30 Days</button>
+								<button type="button" class="ord-preset-chip" id="ordDateChipToday" onclick="setDatePreset('today')">Today</button>
+							</div>
+
+							<div class="ord-date-range">
+								<input type="date" id="ordFromDate" class="tbl-filter-input" style="height:34px;font-size:12px;width:130px;" title="From date" onchange="onCustomDateChange()" />
+								<span>to</span>
+								<input type="date" id="ordToDate" class="tbl-filter-input" style="height:34px;font-size:12px;width:130px;" title="To date" onchange="onCustomDateChange()" />
+								<button type="button" class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="clearOrderDates()" title="Clear date range">Clear Dates</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -4244,8 +4547,13 @@
 				<select id="ordStatusFilter" style="display:none;"><option value="all">all</option></select>
 				<select id="ordSourceFilter" style="display:none;"><option value="all">all</option></select>
 
-				<!-- Orders Data Table Card -->
-				<div class="ord-table-card">
+				<!-- Kanban Pipeline Board (Active Default) -->
+				<div id="ordKanbanContainer" class="ord-kanban-board">
+					<!-- Dynamically rendered via renderOrdersKanban() -->
+				</div>
+
+				<!-- Orders Data Table Card (Switched via View Toggle) -->
+				<div id="ordTableContainer" class="ord-table-card" style="display:none;">
 					<div style="overflow-x:auto;">
 						<table class="ord-data-table">
 							<thead>
@@ -4261,9 +4569,28 @@
 								</tr>
 							</thead>
 							<tbody id="waltzOrdersBody">
-								<!-- Dynamically populated via renderWaltzOrders() -->
+								<!-- Dynamically populated via renderOrdersTable() -->
 							</tbody>
 						</table>
+					</div>
+
+					<!-- Table Pagination Bar -->
+					<div class="ord-pagination-bar" id="ordPaginationBar">
+						<div style="font-size:12.5px;color:#64748b;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+							<span>Showing <strong id="ordPageStart" style="color:var(--adm-text-main);">0</strong> to <strong id="ordPageEnd" style="color:var(--adm-text-main);">0</strong> of <strong id="ordPageTotal" style="color:var(--adm-text-main);">0</strong> orders</span>
+							<span style="color:#cbd5e1;">|</span>
+							<div style="display:flex;align-items:center;gap:6px;">
+								<span>Per page:</span>
+								<select id="ordRowsPerPageSelect" class="tbl-filter-select" style="height:28px;padding:0 6px;font-size:12px;border-radius:4px;" onchange="changeOrderRowsPerPage(this.value)">
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+								</select>
+							</div>
+						</div>
+						<div class="ord-page-btns" id="ordPaginationBtns">
+							<!-- Page buttons populated dynamically -->
+						</div>
 					</div>
 				</div>
 			</section>
@@ -10588,6 +10915,10 @@ async function loadDashboardData() {
 		let allWaltzOrdersList = [];
 		let activeOrderStatusFilter = 'all';
 		let orderSearchDebounceTimer = null;
+		let currentOrderViewMode = 'kanban'; // 'kanban' | 'table'
+		let orderCurrentPage = 1;
+		let orderRowsPerPage = 10;
+		let orderActiveDatePreset = 'all';
 
 		async function loadWaltzOrders() {
 			let data = null;
@@ -10696,7 +11027,76 @@ async function loadDashboardData() {
 			locSelect.innerHTML = html;
 		}
 
+		function switchOrderView(mode) {
+			currentOrderViewMode = mode;
+			const btnKanban = document.getElementById('ordViewBtnKanban');
+			const btnTable = document.getElementById('ordViewBtnTable');
+			const kanbanCont = document.getElementById('ordKanbanContainer');
+			const tableCont = document.getElementById('ordTableContainer');
+
+			if (mode === 'kanban') {
+				if (btnKanban) btnKanban.classList.add('active');
+				if (btnTable) btnTable.classList.remove('active');
+				if (kanbanCont) kanbanCont.style.display = 'grid';
+				if (tableCont) tableCont.style.display = 'none';
+			} else {
+				if (btnTable) btnTable.classList.add('active');
+				if (btnKanban) btnKanban.classList.remove('active');
+				if (kanbanCont) kanbanCont.style.display = 'none';
+				if (tableCont) tableCont.style.display = 'block';
+			}
+			renderWaltzOrders(waltzOrdersData);
+		}
+
+		function setDatePreset(preset) {
+			orderActiveDatePreset = preset;
+			['ordDateChipAll', 'ordDateChipMonth', 'ordDateChip30', 'ordDateChipToday'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el) el.classList.remove('active');
+			});
+
+			const now = new Date();
+			const pad = n => String(n).padStart(2, '0');
+			const toIso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+			const fromInput = document.getElementById('ordFromDate');
+			const toInput = document.getElementById('ordToDate');
+
+			if (preset === 'all') {
+				document.getElementById('ordDateChipAll')?.classList.add('active');
+				if (fromInput) fromInput.value = '';
+				if (toInput) toInput.value = '';
+			} else if (preset === 'this-month') {
+				document.getElementById('ordDateChipMonth')?.classList.add('active');
+				const start = new Date(now.getFullYear(), now.getMonth(), 1);
+				const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+				if (fromInput) fromInput.value = toIso(start);
+				if (toInput) toInput.value = toIso(end);
+			} else if (preset === 'last-30') {
+				document.getElementById('ordDateChip30')?.classList.add('active');
+				const start = new Date();
+				start.setDate(now.getDate() - 30);
+				if (fromInput) fromInput.value = toIso(start);
+				if (toInput) toInput.value = toIso(now);
+			} else if (preset === 'today') {
+				document.getElementById('ordDateChipToday')?.classList.add('active');
+				const todayStr = toIso(now);
+				if (fromInput) fromInput.value = todayStr;
+				if (toInput) toInput.value = todayStr;
+			}
+			applyOrderFilters();
+		}
+
+		function onCustomDateChange() {
+			['ordDateChipAll', 'ordDateChipMonth', 'ordDateChip30', 'ordDateChipToday'].forEach(id => {
+				document.getElementById(id)?.classList.remove('active');
+			});
+			orderActiveDatePreset = 'custom';
+			applyOrderFilters();
+		}
+
 		function applyOrderFilters() {
+			orderCurrentPage = 1;
 			const search = (document.getElementById('ordSearchInput')?.value || '').trim().toLowerCase();
 			const selectedLoc = (document.getElementById('ordLocationSelect')?.value || 'all').toLowerCase();
 			const selectedSource = document.getElementById('ordSourceSelect')?.value || 'all';
@@ -10746,6 +11146,161 @@ async function loadDashboardData() {
 		}
 
 		function renderWaltzOrders(orders) {
+			renderOrdersKanban(orders);
+			renderOrdersTable(orders);
+		}
+
+		function renderOrdersKanban(orders) {
+			const container = document.getElementById('ordKanbanContainer');
+			if (!container) return;
+
+			// Group orders by deal stage
+			const pipeList = orders.filter(o => {
+				const st = (o.status || '').toLowerCase();
+				return st !== 'win' && st !== 'lost';
+			});
+			const winList = orders.filter(o => (o.status || '').toLowerCase() === 'win');
+			const lostList = orders.filter(o => (o.status || '').toLowerCase() === 'lost');
+
+			const calcSum = list => list.reduce((acc, x) => acc + (parseFloat(x.final_amount) || 0), 0);
+
+			const renderCard = (o, stage) => {
+				const locStr = [o.city, o.state].filter(Boolean).join(', ') || o.country || 'India';
+				let stageButtons = '';
+
+				if (stage === 'pipe') {
+					stageButtons = `
+						<button type="button" class="ord-stage-move-btn win" onclick="quickConvertOrderStatus('${o.id}', 'Win')" title="Convert to Confirmed Win">
+							🏆 Win
+						</button>
+						<button type="button" class="ord-stage-move-btn lost" onclick="quickConvertOrderStatus('${o.id}', 'Lost')" title="Mark as Lost">
+							✕ Lost
+						</button>
+					`;
+				} else if (stage === 'win') {
+					stageButtons = `
+						<button type="button" class="ord-stage-move-btn pipe" onclick="quickConvertOrderStatus('${o.id}', 'Pipeline')" title="Move back to Pipeline">
+							⏳ To Pipeline
+						</button>
+					`;
+				} else if (stage === 'lost') {
+					stageButtons = `
+						<button type="button" class="ord-stage-move-btn pipe" onclick="quickConvertOrderStatus('${o.id}', 'Pipeline')" title="Re-open into Pipeline">
+							⏳ Re-open
+						</button>
+					`;
+				}
+
+				return `
+					<div class="ord-kanban-card">
+						<div class="ord-kanban-card-top">
+							<a href="javascript:void(0)" class="ord-badge-number" onclick="openViewOrderModal('${o.id}')" title="View details for #${o.order_number}">
+								#${o.order_number}
+							</a>
+							<span style="font-size:11.5px;color:#64748b;font-weight:600;">${formatDateDisplay(o.order_date)}</span>
+						</div>
+						<div>
+							<h4 class="ord-kanban-card-title">${o.project_name}</h4>
+							<div class="ord-kanban-card-client" style="margin-top:4px;">
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+								<span>${o.client_name}</span>
+							</div>
+							<div style="font-size:11.5px;color:#64748b;margin-top:3px;display:flex;align-items:center;gap:4px;">
+								<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+								<span>${locStr}</span>
+							</div>
+						</div>
+						<div class="ord-kanban-card-val-row">
+							<div>
+								<div style="font-size:10.5px;color:#64748b;font-weight:600;text-transform:uppercase;">Deal Value</div>
+								<div class="ord-kanban-card-val">${formatExactINR(o.final_amount)}</div>
+							</div>
+							<span class="ord-source-pill" style="font-size:10.5px;padding:3px 8px;">${o.source || 'Direct Architect'}</span>
+						</div>
+						<div class="ord-kanban-card-actions">
+							<div style="display:flex;gap:4px;">
+								${stageButtons}
+							</div>
+							<div style="display:flex;gap:4px;">
+								<button class="ord-btn-action view" onclick="openViewOrderModal('${o.id}')" title="View Details" style="width:26px;height:26px;">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+								</button>
+								<button class="ord-btn-action" onclick="openEditOrderModal('${o.id}')" title="Edit Order" style="width:26px;height:26px;">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+								</button>
+								<button class="ord-btn-action doc" onclick="downloadOrderWordDoc('${o.id}')" title="Download Word Quotation" style="width:26px;height:26px;">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+								</button>
+								<button class="ord-btn-action del" onclick="deleteOrder('${o.id}')" title="Delete Order" style="width:26px;height:26px;">
+									<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				`;
+			};
+
+			const emptyColMsg = (stageName) => `
+				<div style="text-align:center;padding:32px 14px;color:#94a3b8;font-size:12.5px;background:#ffffff;border:1px dashed #e2e8f0;border-radius:8px;">
+					No deals currently in ${stageName}
+				</div>
+			`;
+
+			container.innerHTML = `
+				<!-- Column 1: Pipeline Deals -->
+				<div class="ord-kanban-col pipeline">
+					<div class="ord-kanban-col-head">
+						<div class="ord-kanban-col-title">
+							<span style="color:#d97706;">⏳</span>
+							<span>Active Pipeline</span>
+							<span class="ord-pill-badge" style="background:#fef3c7;color:#b45309;">${pipeList.length}</span>
+						</div>
+						<div class="ord-kanban-col-meta">
+							<div class="ord-kanban-col-val">${formatExactINR(calcSum(pipeList))}</div>
+						</div>
+					</div>
+					<div class="ord-kanban-col-cards">
+						${pipeList.length > 0 ? pipeList.map(o => renderCard(o, 'pipe')).join('') : emptyColMsg('Pipeline')}
+					</div>
+				</div>
+
+				<!-- Column 2: Confirmed Wins -->
+				<div class="ord-kanban-col win">
+					<div class="ord-kanban-col-head">
+						<div class="ord-kanban-col-title">
+							<span style="color:#10b981;">🏆</span>
+							<span>Confirmed Wins</span>
+							<span class="ord-pill-badge" style="background:#dcfce7;color:#15803d;">${winList.length}</span>
+						</div>
+						<div class="ord-kanban-col-meta">
+							<div class="ord-kanban-col-val" style="color:#10b981;">${formatExactINR(calcSum(winList))}</div>
+						</div>
+					</div>
+					<div class="ord-kanban-col-cards">
+						${winList.length > 0 ? winList.map(o => renderCard(o, 'win')).join('') : emptyColMsg('Confirmed Wins')}
+					</div>
+				</div>
+
+				<!-- Column 3: Closed Lost -->
+				<div class="ord-kanban-col lost">
+					<div class="ord-kanban-col-head">
+						<div class="ord-kanban-col-title">
+							<span style="color:#ef4444;">✕</span>
+							<span>Closed Lost</span>
+							<span class="ord-pill-badge" style="background:#fee2e2;color:#b91c1c;">${lostList.length}</span>
+						</div>
+						<div class="ord-kanban-col-meta">
+							<div class="ord-kanban-col-val" style="color:#ef4444;">${formatExactINR(calcSum(lostList))}</div>
+						</div>
+					</div>
+					<div class="ord-kanban-col-cards">
+						${lostList.length > 0 ? lostList.map(o => renderCard(o, 'lost')).join('') : emptyColMsg('Closed Lost')}
+					</div>
+				</div>
+			`;
+		}
+
+		function renderOrdersTable(orders) {
 			const tbody = document.getElementById('waltzOrdersBody');
 			if (!tbody) return;
 
@@ -10762,10 +11317,21 @@ async function loadDashboardData() {
 						</td>
 					</tr>
 				`;
+				updateOrdersPagination(0, 0, 0, 1);
 				return;
 			}
 
-			tbody.innerHTML = orders.map(o => {
+			// Client-side pagination
+			const totalItems = orders.length;
+			const totalPages = Math.ceil(totalItems / orderRowsPerPage) || 1;
+			if (orderCurrentPage > totalPages) orderCurrentPage = totalPages;
+			if (orderCurrentPage < 1) orderCurrentPage = 1;
+
+			const startIndex = (orderCurrentPage - 1) * orderRowsPerPage;
+			const endIndex = Math.min(startIndex + orderRowsPerPage, totalItems);
+			const pageOrders = orders.slice(startIndex, endIndex);
+
+			tbody.innerHTML = pageOrders.map(o => {
 				const st = (o.status || 'Pipeline').toLowerCase();
 				let stTag = `<span class="ord-status-tag pipeline"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pipeline</span>`;
 				if (st === 'win') {
@@ -10823,6 +11389,64 @@ async function loadDashboardData() {
 					</tr>
 				`;
 			}).join('');
+
+			updateOrdersPagination(startIndex + 1, endIndex, totalItems, totalPages);
+		}
+
+		function updateOrdersPagination(start, end, total, totalPages) {
+			const elStart = document.getElementById('ordPageStart');
+			const elEnd = document.getElementById('ordPageEnd');
+			const elTotal = document.getElementById('ordPageTotal');
+			const btnContainer = document.getElementById('ordPaginationBtns');
+
+			if (elStart) elStart.innerText = total === 0 ? 0 : start;
+			if (elEnd) elEnd.innerText = end;
+			if (elTotal) elTotal.innerText = total;
+
+			if (!btnContainer) return;
+
+			let html = `
+				<button type="button" class="ord-page-btn" ${orderCurrentPage <= 1 ? 'disabled' : ''} onclick="changeOrderPage(${orderCurrentPage - 1})">
+					« Prev
+				</button>
+			`;
+
+			for (let p = 1; p <= totalPages; p++) {
+				if (totalPages > 7) {
+					if (p > 1 && p < orderCurrentPage - 2 && p !== 2) {
+						if (p === 2) html += `<span style="padding:0 4px;color:#94a3b8;">...</span>`;
+						continue;
+					}
+					if (p < totalPages && p > orderCurrentPage + 2 && p !== totalPages - 1) {
+						if (p === totalPages - 1) html += `<span style="padding:0 4px;color:#94a3b8;">...</span>`;
+						continue;
+					}
+				}
+				html += `
+					<button type="button" class="ord-page-btn ${p === orderCurrentPage ? 'active' : ''}" onclick="changeOrderPage(${p})">
+						${p}
+					</button>
+				`;
+			}
+
+			html += `
+				<button type="button" class="ord-page-btn" ${orderCurrentPage >= totalPages ? 'disabled' : ''} onclick="changeOrderPage(${orderCurrentPage + 1})">
+					Next »
+				</button>
+			`;
+
+			btnContainer.innerHTML = html;
+		}
+
+		function changeOrderPage(p) {
+			orderCurrentPage = p;
+			renderOrdersTable(waltzOrdersData);
+		}
+
+		function changeOrderRowsPerPage(val) {
+			orderRowsPerPage = parseInt(val, 10) || 10;
+			orderCurrentPage = 1;
+			renderOrdersTable(waltzOrdersData);
 		}
 
 		function setOrderStatusFilter(st) {
@@ -10866,7 +11490,7 @@ async function loadDashboardData() {
 			if (f) f.value = '';
 			const t = document.getElementById('ordToDate');
 			if (t) t.value = '';
-			applyOrderFilters();
+			setDatePreset('all');
 		}
 
 		function resetOrderFilters() {
@@ -10886,6 +11510,7 @@ async function loadDashboardData() {
 			const t = document.getElementById('ordToDate');
 			if (t) t.value = '';
 
+			setDatePreset('all');
 			setOrderStatusFilter('all');
 			showToast('Order filters reset.');
 		}
