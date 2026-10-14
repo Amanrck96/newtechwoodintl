@@ -7,9 +7,12 @@ import re
 # Import DB API Router
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "db"))
 try:
-    import api_router
+    from db import api_router
 except ImportError:
-    api_router = None
+    try:
+        import api_router
+    except ImportError:
+        api_router = None
 
 PORT = 8000
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))

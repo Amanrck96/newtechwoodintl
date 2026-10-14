@@ -32,9 +32,10 @@ def setup_e2e_database():
         except OSError:
             pass
 
-    os.environ["CRM_DB_FILE"] = E2E_DB
-    sys.path.insert(0, os.path.join(PROJECT_DIR, "db"))
-    import migrate
+    try:
+        from db import migrate
+    except ImportError:
+        import migrate
     migrate.run_migrations(db_path=E2E_DB)
 
     conn = sqlite3.connect(E2E_DB)

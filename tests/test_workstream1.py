@@ -51,6 +51,7 @@ class MockHandler:
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_products():
+    os.environ.pop("CRM_DB_FILE", None)
     migrate.run_migrations()
     seed_products.seed(reset=True)
 

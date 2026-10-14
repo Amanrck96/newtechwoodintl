@@ -12,8 +12,11 @@ DB_DIR = os.path.join(BASE_DIR, 'db')
 if DB_DIR not in sys.path:
     sys.path.insert(0, DB_DIR)
 
-import database
-import api_router
+try:
+    from db import database, api_router
+except ImportError:
+    import database
+    import api_router
 
 
 class MockHandler:
@@ -49,8 +52,12 @@ class MockHandler:
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_test_db():
-    import migrate
-    import seed
+    os.environ.pop("CRM_DB_FILE", None)
+    try:
+        from db import migrate, seed
+    except ImportError:
+        import migrate
+        import seed
     migrate.run_migrations()
     seed.seed_database()
     migrate.run_migrations() # ensure plain passwords are hashed
