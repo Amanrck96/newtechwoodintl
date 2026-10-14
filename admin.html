@@ -2503,6 +2503,395 @@
 				padding-top: 10px;
 				border-top: 1px solid #f1f5f9;
 			}
+		/* ========================================================
+		   NEWTECHWOOD ORDERS SUITE REDESIGN (ORION & FORGE)
+		   ======================================================== */
+		.ord-metrics-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+			gap: 16px;
+			margin-bottom: 24px;
+		}
+
+		.ord-metric-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: var(--adm-radius);
+			padding: 16px 20px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			transition: all 0.2s ease;
+		}
+
+		.ord-metric-card:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+			border-color: #cbd5e1;
+		}
+
+		.ord-metric-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		.ord-metric-icon.gold { background: rgba(201, 168, 76, 0.15); color: #92400e; }
+		.ord-metric-icon.green { background: rgba(22, 163, 74, 0.12); color: #16a34a; }
+		.ord-metric-icon.blue { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+		.ord-metric-icon.purple { background: rgba(124, 58, 237, 0.12); color: #7c3aed; }
+
+		.ord-metric-val {
+			font-size: 22px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+			line-height: 1.2;
+		}
+
+		.ord-metric-lbl {
+			font-size: 11px;
+			color: var(--adm-text-muted);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.6px;
+		}
+
+		.ord-metric-sub {
+			font-size: 11.5px;
+			color: #94a3b8;
+			margin-top: 2px;
+		}
+
+		/* Toolbar Box */
+		.ord-toolbar-box {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: var(--adm-radius);
+			padding: 18px 20px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+			margin-bottom: 22px;
+		}
+
+		.ord-toolbar-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 14px;
+			flex-wrap: wrap;
+		}
+
+		.ord-search-wrap {
+			flex: 1;
+			min-width: 280px;
+			position: relative;
+		}
+
+		.ord-search-input {
+			width: 100%;
+			height: 42px;
+			padding: 0 38px 0 40px;
+			border: 1.5px solid var(--adm-border);
+			border-radius: 8px;
+			font-size: 13.5px;
+			color: var(--adm-text-main);
+			background: #f8fafc;
+			transition: all 0.2s ease;
+		}
+
+		.ord-search-input:focus {
+			outline: none;
+			background: #ffffff;
+			border-color: var(--adm-green);
+			box-shadow: 0 0 0 3px rgba(45, 106, 45, 0.14);
+		}
+
+		.ord-search-icon {
+			position: absolute;
+			left: 13px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #94a3b8;
+			pointer-events: none;
+		}
+
+		.ord-search-clear {
+			position: absolute;
+			right: 12px;
+			top: 50%;
+			transform: translateY(-50%);
+			background: transparent;
+			border: none;
+			color: #94a3b8;
+			cursor: pointer;
+			font-size: 16px;
+			line-height: 1;
+			display: none;
+			padding: 4px;
+		}
+
+		.ord-search-clear.show { display: block; }
+
+		.ord-filter-dropdowns {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.ord-toolbar-bottom {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin-top: 14px;
+			padding-top: 14px;
+			border-top: 1px solid #f1f5f9;
+		}
+
+		.ord-status-pills {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.ord-pill-btn {
+			padding: 6px 14px;
+			border-radius: 100px;
+			font-size: 12px;
+			font-weight: 600;
+			cursor: pointer;
+			border: 1px solid var(--adm-border);
+			background: #ffffff;
+			color: var(--adm-text-muted);
+			transition: all 0.15s ease;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			user-select: none;
+		}
+
+		.ord-pill-btn:hover {
+			border-color: #cbd5e1;
+			color: var(--adm-text-main);
+		}
+
+		.ord-pill-btn.active {
+			background: var(--adm-text-main);
+			color: #ffffff;
+			border-color: var(--adm-text-main);
+		}
+
+		.ord-pill-btn.win.active {
+			background: #15803d;
+			border-color: #15803d;
+			color: #ffffff;
+		}
+
+		.ord-pill-btn.pipeline.active {
+			background: #b45309;
+			border-color: #b45309;
+			color: #ffffff;
+		}
+
+		.ord-pill-btn.lost.active {
+			background: #b91c1c;
+			border-color: #b91c1c;
+			color: #ffffff;
+		}
+
+		.ord-pill-badge {
+			background: rgba(0,0,0,0.06);
+			border-radius: 10px;
+			padding: 1px 7px;
+			font-size: 11px;
+			font-weight: 700;
+		}
+
+		.ord-pill-btn.active .ord-pill-badge {
+			background: rgba(255,255,255,0.25);
+		}
+
+		.ord-date-range {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 12.5px;
+			color: var(--adm-text-muted);
+		}
+
+		/* Orders Data Table */
+		.ord-table-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 10px;
+			box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+			overflow: hidden;
+		}
+
+		.ord-data-table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0;
+		}
+
+		.ord-data-table th {
+			background: #f8fafc;
+			padding: 12px 16px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			color: #64748b;
+			border-bottom: 1.5px solid var(--adm-border);
+			text-align: left;
+			cursor: pointer;
+			user-select: none;
+			white-space: nowrap;
+			transition: background 0.15s;
+		}
+
+		.ord-data-table th:hover {
+			background: #f1f5f9;
+			color: var(--adm-text-main);
+		}
+
+		.ord-data-table td {
+			padding: 14px 16px;
+			font-size: 13px;
+			color: #1e293b;
+			border-bottom: 1px solid #f1f5f9;
+			vertical-align: middle;
+		}
+
+		.ord-data-table tr:last-child td {
+			border-bottom: none;
+		}
+
+		.ord-data-table tr:hover td {
+			background: #fafcfa;
+		}
+
+		.ord-badge-number {
+			font-family: monospace;
+			font-size: 12.5px;
+			font-weight: 700;
+			color: #1e293b;
+			background: #f1f5f9;
+			padding: 3px 8px;
+			border-radius: 6px;
+			border: 1px solid #e2e8f0;
+			display: inline-block;
+			text-decoration: none;
+			cursor: pointer;
+			transition: all 0.15s;
+		}
+
+		.ord-badge-number:hover {
+			background: rgba(45, 106, 45, 0.1);
+			color: var(--adm-green);
+			border-color: var(--adm-green);
+		}
+
+		.ord-status-tag {
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			font-size: 11.5px;
+			font-weight: 700;
+			padding: 4px 10px;
+			border-radius: 100px;
+			letter-spacing: 0.3px;
+			white-space: nowrap;
+		}
+
+		.ord-status-tag.win {
+			background: #dcfce7;
+			color: #15803d;
+			border: 1px solid #86efac;
+		}
+
+		.ord-status-tag.pipeline {
+			background: #fef3c7;
+			color: #b45309;
+			border: 1px solid #fde68a;
+		}
+
+		.ord-status-tag.lost {
+			background: #fee2e2;
+			color: #b91c1c;
+			border: 1px solid #fca5a5;
+		}
+
+		.ord-source-pill {
+			background: #f1f5f9;
+			color: #475569;
+			padding: 3px 9px;
+			border-radius: 100px;
+			font-size: 11.5px;
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		.ord-amount-cell {
+			font-size: 14px;
+			font-weight: 800;
+			color: #0f172a;
+			white-space: nowrap;
+		}
+
+		.ord-amount-cell.high {
+			color: var(--adm-green);
+		}
+
+		.ord-actions-flex {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 4px;
+		}
+
+		.ord-btn-action {
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			border-radius: 6px;
+			padding: 6px 8px;
+			color: #64748b;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.15s;
+		}
+
+		.ord-btn-action:hover {
+			background: #f1f5f9;
+			color: var(--adm-text-main);
+			border-color: #cbd5e1;
+		}
+
+		.ord-btn-action.view:hover {
+			color: #2563eb;
+			background: #eff6ff;
+			border-color: #bfdbfe;
+		}
+
+		.ord-btn-action.doc:hover {
+			color: var(--adm-green);
+			background: #ecfdf5;
+			border-color: #a7f3d0;
+		}
+
+		.ord-btn-action.del:hover {
+			color: #dc2626;
+			background: #fee2e2;
+			border-color: #fca5a5;
 		}
 	</style>
 </head>
@@ -3722,105 +4111,158 @@
 			<!-- ========================================================
 			     VIEW 8: ORDERS MANAGEMENT (MATCHING 12.12.10.jpeg)
 			     ======================================================== -->
+			<!-- ========================================================
+			     VIEW 8: ORDERS MANAGEMENT (EXECUTIVE SALES & DEALS COMMAND CENTER)
+			     ======================================================== -->
 			<section id="view-waltz-orders" class="view-section">
 				<div class="section-header">
 					<div>
-						<h1>NewTechWood Orders</h1>
-						<p>Commercial composite orders tracking, deal conversions, invoices and fulfillment statuses</p>
+						<h1>Commercial Orders &amp; Fulfillment Suite</h1>
+						<p>Enterprise tracking for composite decking, cladding &amp; pergola commercial deals, quotations &amp; conversions</p>
 					</div>
-					<div style="display:flex;align-items:center;gap:12px;">
-						<button class="btn-primary" style="background:#1f2937;color:#ffffff;" onclick="openAddOrderModal()">
+					<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+						<button class="btn-primary" style="background:var(--adm-green);color:#ffffff;" onclick="openAddOrderModal()">
 							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-							<span>Add New Order</span>
+							<span>+ Add New Order</span>
+						</button>
+						<button class="btn-primary" style="background:#14b8a6;color:#ffffff;" onclick="exportOrdersExcel()">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+							<span>Export to Excel</span>
 						</button>
 						<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="resetOrderFilters()">Reset Filters</a>
 					</div>
 				</div>
 
-				<!-- Orders Table with Column-Level Filters (12.12.10.jpeg) -->
-				<div class="card-box" style="padding:0;overflow-x:auto;">
-					<table class="crm-table waltz-orders-table">
-						<thead>
-							<tr>
-								<th style="min-width:130px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('order_number')">ORDER NUMBER ⇅</th>
-								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('project_name')">PROJECT NAME ⇅</th>
-								<th style="min-width:140px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('client_name')">CLIENT NAME ⇅</th>
-								<th style="min-width:100px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('country')">COUNTRY ⇅</th>
-								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('state')">STATE ⇅</th>
-								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('city')">CITY ⇅</th>
-								<th style="min-width:160px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('order_date')">DATE ⇅</th>
-								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('status')">STATUS ⇅</th>
-								<th style="min-width:120px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('final_amount')">FINAL AMOUNT ⇅</th>
-								<th style="min-width:110px;cursor:pointer;user-select:none;" onclick="sortOrdersTable('source')">SOURCE ⇅</th>
-								<th style="text-align:center;min-width:110px;">ACTION</th>
-							</tr>
-							<!-- Column Filters Row -->
-							<tr class="table-filter-row">
-								<td><input type="text" id="ordNumFilter" class="tbl-filter-input" placeholder="Search by order #" oninput="applyOrderFilters()" /></td>
-								<td><input type="text" id="ordProjFilter" class="tbl-filter-input" placeholder="Search by project" oninput="applyOrderFilters()" /></td>
-								<td><input type="text" id="ordClientFilter" class="tbl-filter-input" placeholder="Search by client" oninput="applyOrderFilters()" /></td>
-								<td>
-									<select id="ordCountryFilter" class="tbl-filter-select" onchange="applyOrderFilters()">
-										<option value="all">Select...</option>
-										<option value="India">India</option>
-									</select>
-								</td>
-								<td>
-									<select id="ordStateFilter" class="tbl-filter-select" onchange="applyOrderFilters()">
-										<option value="all">Select...</option>
-										<option value="Goa">Goa</option>
-										<option value="Maharashtra">Maharashtra</option>
-										<option value="Haryana">Haryana</option>
-										<option value="Karnataka">Karnataka</option>
-										<option value="Telangana">Telangana</option>
-										<option value="Tamil Nadu">Tamil Nadu</option>
-									</select>
-								</td>
-								<td>
-									<select id="ordCityFilter" class="tbl-filter-select" onchange="applyOrderFilters()">
-										<option value="all">Select...</option>
-										<option value="Candolim">Candolim</option>
-										<option value="Alibaug">Alibaug</option>
-										<option value="Gurugram">Gurugram</option>
-										<option value="Bengaluru">Bengaluru</option>
-										<option value="Lonavala">Lonavala</option>
-										<option value="Hyderabad">Hyderabad</option>
-										<option value="Chennai">Chennai</option>
-									</select>
-								</td>
-								<td>
-									<div style="display:flex;gap:4px;">
-										<input type="date" id="ordFromDate" class="tbl-filter-input" title="From" onchange="applyOrderFilters()" />
-										<input type="date" id="ordToDate" class="tbl-filter-input" title="To" onchange="applyOrderFilters()" />
-									</div>
-								</td>
-								<td>
-									<select id="ordStatusFilter" class="tbl-filter-select" onchange="applyOrderFilters()">
-										<option value="all">Select status</option>
-										<option value="Lost">Lost</option>
-										<option value="Pipeline">Pipeline</option>
-										<option value="Win">Win</option>
-									</select>
-								</td>
-								<td></td>
-								<td>
-									<select id="ordSourceFilter" class="tbl-filter-select" onchange="applyOrderFilters()">
-										<option value="all">Select</option>
-										<option value="Direct Architect">Direct Architect</option>
-										<option value="Experience Centre">Experience Centre</option>
-										<option value="Dealer Referral">Dealer Referral</option>
-										<option value="Website Lead">Website Lead</option>
-									</select>
-								</td>
-								<td style="text-align:center;">
-									<button class="tbl-action-btn" onclick="resetOrderFilters()" title="Reset">↺</button>
-								</td>
-							</tr>
-						</thead>
-						<tbody id="waltzOrdersBody">
-							<!-- Populated via loadWaltzOrders() -->
-						</tbody>
-					</table>
+				<!-- Executive KPI Metrics Summary Cards -->
+				<div class="ord-metrics-grid">
+					<div class="ord-metric-card">
+						<div class="ord-metric-icon gold">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+						</div>
+						<div>
+							<div class="ord-metric-val" id="ordStatTotalOrders">0</div>
+							<div class="ord-metric-lbl">Total Commercial Orders</div>
+							<div class="ord-metric-sub" id="ordStatTotalVal">₹0 Total Commercial Value</div>
+						</div>
+					</div>
+
+					<div class="ord-metric-card">
+						<div class="ord-metric-icon green">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+						</div>
+						<div>
+							<div class="ord-metric-val" id="ordStatWonRevenue">₹0</div>
+							<div class="ord-metric-lbl">Confirmed Won Revenue</div>
+							<div class="ord-metric-sub" id="ordStatWonCount">0 Invoiced &amp; Closed Wins</div>
+						</div>
+					</div>
+
+					<div class="ord-metric-card">
+						<div class="ord-metric-icon blue">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+						</div>
+						<div>
+							<div class="ord-metric-val" id="ordStatPipelineRevenue">₹0</div>
+							<div class="ord-metric-lbl">Active Pipeline Value</div>
+							<div class="ord-metric-sub" id="ordStatPipelineCount">0 Deals Under Negotiation</div>
+						</div>
+					</div>
+
+					<div class="ord-metric-card">
+						<div class="ord-metric-icon purple">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+						</div>
+						<div>
+							<div class="ord-metric-val" id="ordStatWinRate">0%</div>
+							<div class="ord-metric-lbl">Deal Win / Conversion Rate</div>
+							<div class="ord-metric-sub" id="ordStatWinRateSub">Based on Decided Deals</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Command & Filter Toolbar -->
+				<div class="ord-toolbar-box">
+					<div class="ord-toolbar-top">
+						<div class="ord-search-wrap">
+							<svg class="ord-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+							<input type="text" id="ordSearchInput" class="ord-search-input" placeholder="Search by order #, project, client name, city or source..." oninput="onOrderSearchInput()" onkeyup="if(event.key==='Enter') applyOrderFilters()" />
+							<button type="button" id="ordSearchClear" class="ord-search-clear" onclick="clearOrderSearch()" title="Clear search">&times;</button>
+						</div>
+						<div class="ord-filter-dropdowns">
+							<select id="ordLocationSelect" class="tbl-filter-select" style="height:42px;border-radius:8px;padding:0 12px;font-size:13px;min-width:150px;" onchange="applyOrderFilters()">
+								<option value="all">All Locations (All Cities)</option>
+							</select>
+							<select id="ordSourceSelect" class="tbl-filter-select" style="height:42px;border-radius:8px;padding:0 12px;font-size:13px;min-width:150px;" onchange="applyOrderFilters()">
+								<option value="all">All Lead Sources</option>
+								<option value="Direct Architect">Direct Architect</option>
+								<option value="Experience Centre">Experience Centre</option>
+								<option value="Dealer Referral">Dealer Referral</option>
+								<option value="Website Lead">Website Lead</option>
+							</select>
+							<button class="btn-primary" style="height:42px;padding:0 18px;background:var(--adm-green);" onclick="applyOrderFilters()">
+								Filter
+							</button>
+						</div>
+					</div>
+
+					<div class="ord-toolbar-bottom">
+						<div class="ord-status-pills">
+							<span style="font-size:12px;font-weight:700;color:#64748b;margin-right:4px;">STATUS:</span>
+							<button type="button" class="ord-pill-btn active" id="ordPillAll" onclick="setOrderStatusFilter('all')">
+								All Orders <span class="ord-pill-badge" id="ordBadgeAll">0</span>
+							</button>
+							<button type="button" class="ord-pill-btn win" id="ordPillWin" onclick="setOrderStatusFilter('Win')">
+								🏆 Confirmed Wins <span class="ord-pill-badge" id="ordBadgeWin">0</span>
+							</button>
+							<button type="button" class="ord-pill-btn pipeline" id="ordPillPipeline" onclick="setOrderStatusFilter('Pipeline')">
+								⏳ Pipeline <span class="ord-pill-badge" id="ordBadgePipeline">0</span>
+							</button>
+							<button type="button" class="ord-pill-btn lost" id="ordPillLost" onclick="setOrderStatusFilter('Lost')">
+								✕ Lost <span class="ord-pill-badge" id="ordBadgeLost">0</span>
+							</button>
+						</div>
+
+						<div class="ord-date-range">
+							<span>Date:</span>
+							<input type="date" id="ordFromDate" class="tbl-filter-input" style="height:34px;font-size:12px;width:130px;" title="From date" onchange="applyOrderFilters()" />
+							<span>to</span>
+							<input type="date" id="ordToDate" class="tbl-filter-input" style="height:34px;font-size:12px;width:130px;" title="To date" onchange="applyOrderFilters()" />
+							<button type="button" class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="clearOrderDates()" title="Clear date range">Clear Dates</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Hidden compatibility inputs so any existing references never crash -->
+				<input type="hidden" id="ordNumFilter" />
+				<input type="hidden" id="ordProjFilter" />
+				<input type="hidden" id="ordClientFilter" />
+				<select id="ordCountryFilter" style="display:none;"><option value="all">all</option></select>
+				<select id="ordStateFilter" style="display:none;"><option value="all">all</option></select>
+				<select id="ordCityFilter" style="display:none;"><option value="all">all</option></select>
+				<select id="ordStatusFilter" style="display:none;"><option value="all">all</option></select>
+				<select id="ordSourceFilter" style="display:none;"><option value="all">all</option></select>
+
+				<!-- Orders Data Table Card -->
+				<div class="ord-table-card">
+					<div style="overflow-x:auto;">
+						<table class="ord-data-table">
+							<thead>
+								<tr>
+									<th style="min-width:140px;" onclick="sortOrdersTable('order_number')">ORDER # ⇅</th>
+									<th style="min-width:220px;" onclick="sortOrdersTable('project_name')">PROJECT &amp; CLIENT ⇅</th>
+									<th style="min-width:140px;" onclick="sortOrdersTable('city')">LOCATION ⇅</th>
+									<th style="min-width:110px;" onclick="sortOrdersTable('order_date')">DATE ⇅</th>
+									<th style="min-width:130px;" onclick="sortOrdersTable('status')">DEAL STATUS ⇅</th>
+									<th style="min-width:140px;" onclick="sortOrdersTable('final_amount')">COMMERCIAL VALUE ⇅</th>
+									<th style="min-width:130px;" onclick="sortOrdersTable('source')">LEAD SOURCE ⇅</th>
+									<th style="text-align:right;min-width:140px;">ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody id="waltzOrdersBody">
+								<!-- Dynamically populated via renderWaltzOrders() -->
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</section>
 
@@ -10138,27 +10580,17 @@ async function loadDashboardData() {
 		}
 
 		// ========================================================
-		// 6. WALTZ ORDERS ENGINE (12.12.10.jpeg)
+		// 6. WALTZ ORDERS ENGINE (EXECUTIVE SALES & DEALS SUITE)
 		// ========================================================
 		let waltzOrdersData = [];
+		let allWaltzOrdersList = [];
+		let activeOrderStatusFilter = 'all';
+		let orderSearchDebounceTimer = null;
 
 		async function loadWaltzOrders() {
-			const query = new URLSearchParams({
-				order_number: document.getElementById('ordNumFilter')?.value || '',
-				project_name: document.getElementById('ordProjFilter')?.value || '',
-				client_name: document.getElementById('ordClientFilter')?.value || '',
-				country: document.getElementById('ordCountryFilter')?.value || 'all',
-				state: document.getElementById('ordStateFilter')?.value || 'all',
-				city: document.getElementById('ordCityFilter')?.value || 'all',
-				from_date: document.getElementById('ordFromDate')?.value || '',
-				to_date: document.getElementById('ordToDate')?.value || '',
-				status: document.getElementById('ordStatusFilter')?.value || 'all',
-				source: document.getElementById('ordSourceFilter')?.value || 'all'
-			});
-
 			let data = null;
 			try {
-				const resp = await apiFetch('/api/orders?' + query.toString());
+				const resp = await apiFetch('/api/orders');
 				if (resp.ok) {
 					const res = await resp.json();
 					if (res.success && Array.isArray(res.orders)) {
@@ -10169,34 +10601,145 @@ async function loadDashboardData() {
 				console.warn('Orders API offline, using client cache', e);
 			}
 
-			if (!data) {
-				data = (typeof NTW_FALLBACK_ORDERS !== 'undefined' ? NTW_FALLBACK_ORDERS : []).filter(o => {
-					const ordNum = (document.getElementById('ordNumFilter')?.value || '').toLowerCase();
-					const proj = (document.getElementById('ordProjFilter')?.value || '').toLowerCase();
-					const client = (document.getElementById('ordClientFilter')?.value || '').toLowerCase();
-					const country = document.getElementById('ordCountryFilter')?.value || 'all';
-					const state = document.getElementById('ordStateFilter')?.value || 'all';
-					const city = document.getElementById('ordCityFilter')?.value || 'all';
-					const fromDate = document.getElementById('ordFromDate')?.value || '';
-					const toDate = document.getElementById('ordToDate')?.value || '';
-					const status = document.getElementById('ordStatusFilter')?.value || 'all';
-					const source = document.getElementById('ordSourceFilter')?.value || 'all';
-
-					if (ordNum && !o.order_number.toLowerCase().includes(ordNum)) return false;
-					if (proj && !o.project_name.toLowerCase().includes(proj)) return false;
-					if (client && !o.client_name.toLowerCase().includes(client)) return false;
-					if (country !== 'all' && (o.country || 'India') !== country) return false;
-					if (state !== 'all' && (o.state || '') !== state) return false;
-					if (city !== 'all' && (o.city || '') !== city) return false;
-					if (fromDate && o.order_date < fromDate) return false;
-					if (toDate && o.order_date > toDate) return false;
-					if (status !== 'all' && o.status !== status) return false;
-					if (source !== 'all' && o.source !== source) return false;
-					return true;
-				});
+			if (!data || data.length === 0) {
+				data = (typeof NTW_FALLBACK_ORDERS !== 'undefined' ? NTW_FALLBACK_ORDERS : []);
 			}
 
-			waltzOrdersData = data;
+			allWaltzOrdersList = data;
+			updateOrderMetrics(allWaltzOrdersList);
+			populateOrderLocationOptions(allWaltzOrdersList);
+			applyOrderFilters();
+		}
+
+		function updateOrderMetrics(orders) {
+			const totalOrders = orders.length;
+			let totalVal = 0;
+			let wonRevenue = 0;
+			let wonCount = 0;
+			let pipelineRevenue = 0;
+			let pipelineCount = 0;
+			let lostCount = 0;
+
+			orders.forEach(o => {
+				const amt = parseFloat(o.final_amount) || 0;
+				totalVal += amt;
+
+				const st = (o.status || '').toLowerCase();
+				if (st === 'win') {
+					wonRevenue += amt;
+					wonCount++;
+				} else if (st === 'lost') {
+					lostCount++;
+				} else {
+					pipelineRevenue += amt;
+					pipelineCount++;
+				}
+			});
+
+			const decidedDeals = wonCount + lostCount;
+			const winRate = decidedDeals > 0 ? Math.round((wonCount / decidedDeals) * 100) : (totalOrders > 0 ? Math.round((wonCount / totalOrders) * 100) : 0);
+
+			// Populate KPI Cards
+			const elTotalOrders = document.getElementById('ordStatTotalOrders');
+			if (elTotalOrders) elTotalOrders.innerText = totalOrders;
+
+			const elTotalVal = document.getElementById('ordStatTotalVal');
+			if (elTotalVal) elTotalVal.innerText = `${formatExactINR(totalVal)} Commercial Value`;
+
+			const elWonRev = document.getElementById('ordStatWonRevenue');
+			if (elWonRev) elWonRev.innerText = formatExactINR(wonRevenue);
+
+			const elWonCount = document.getElementById('ordStatWonCount');
+			if (elWonCount) elWonCount.innerText = `${wonCount} Confirmed Won Deal${wonCount === 1 ? '' : 's'}`;
+
+			const elPipeRev = document.getElementById('ordStatPipelineRevenue');
+			if (elPipeRev) elPipeRev.innerText = formatExactINR(pipelineRevenue);
+
+			const elPipeCount = document.getElementById('ordStatPipelineCount');
+			if (elPipeCount) elPipeCount.innerText = `${pipelineCount} Active Deal${pipelineCount === 1 ? '' : 's'} in Negotiation`;
+
+			const elWinRate = document.getElementById('ordStatWinRate');
+			if (elWinRate) elWinRate.innerText = `${winRate}%`;
+
+			const elWinRateSub = document.getElementById('ordStatWinRateSub');
+			if (elWinRateSub) elWinRateSub.innerText = `${wonCount} Won vs ${lostCount} Lost Deals`;
+
+			// Populate Status Badges
+			const bAll = document.getElementById('ordBadgeAll');
+			if (bAll) bAll.innerText = totalOrders;
+
+			const bWin = document.getElementById('ordBadgeWin');
+			if (bWin) bWin.innerText = wonCount;
+
+			const bPipe = document.getElementById('ordBadgePipeline');
+			if (bPipe) bPipe.innerText = pipelineCount;
+
+			const bLost = document.getElementById('ordBadgeLost');
+			if (bLost) bLost.innerText = lostCount;
+		}
+
+		function populateOrderLocationOptions(orders) {
+			const locSelect = document.getElementById('ordLocationSelect');
+			if (!locSelect) return;
+
+			const currentVal = locSelect.value;
+			const cities = Array.from(new Set(orders.map(o => (o.city || '').trim()).filter(Boolean))).sort();
+
+			let html = '<option value="all">All Locations (All Cities)</option>';
+			cities.forEach(c => {
+				const isSel = c.toLowerCase() === currentVal.toLowerCase() ? 'selected' : '';
+				html += `<option value="${c}" ${isSel}>${c}</option>`;
+			});
+
+			locSelect.innerHTML = html;
+		}
+
+		function applyOrderFilters() {
+			const search = (document.getElementById('ordSearchInput')?.value || '').trim().toLowerCase();
+			const selectedLoc = (document.getElementById('ordLocationSelect')?.value || 'all').toLowerCase();
+			const selectedSource = document.getElementById('ordSourceSelect')?.value || 'all';
+			const fromDate = document.getElementById('ordFromDate')?.value || '';
+			const toDate = document.getElementById('ordToDate')?.value || '';
+			const statusFilter = activeOrderStatusFilter.toLowerCase();
+
+			const filtered = allWaltzOrdersList.filter(o => {
+				// Status Filter
+				if (statusFilter !== 'all') {
+					if ((o.status || '').toLowerCase() !== statusFilter) return false;
+				}
+
+				// Location Filter
+				if (selectedLoc !== 'all') {
+					if ((o.city || '').toLowerCase() !== selectedLoc) return false;
+				}
+
+				// Lead Source Filter
+				if (selectedSource !== 'all') {
+					if ((o.source || '').toLowerCase() !== selectedSource.toLowerCase()) return false;
+				}
+
+				// Date Range Filter
+				if (fromDate && o.order_date < fromDate) return false;
+				if (toDate && o.order_date > toDate) return false;
+
+				// Live Text Search
+				if (search) {
+					const match = (o.order_number || '').toLowerCase().includes(search) ||
+						(o.project_name || '').toLowerCase().includes(search) ||
+						(o.client_name || '').toLowerCase().includes(search) ||
+						(o.city || '').toLowerCase().includes(search) ||
+						(o.state || '').toLowerCase().includes(search) ||
+						(o.source || '').toLowerCase().includes(search) ||
+						(o.status || '').toLowerCase().includes(search) ||
+						String(o.final_amount || '').includes(search);
+
+					if (!match) return false;
+				}
+
+				return true;
+			});
+
+			waltzOrdersData = filtered;
 			renderWaltzOrders(waltzOrdersData);
 		}
 
@@ -10205,37 +10748,73 @@ async function loadDashboardData() {
 			if (!tbody) return;
 
 			if (orders.length === 0) {
-				tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No orders found matching filters.</td></tr>`;
+				tbody.innerHTML = `
+					<tr>
+						<td colspan="8" style="text-align:center;padding:48px 24px;">
+							<div style="width:52px;height:52px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#94a3b8;">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+							</div>
+							<h4 style="font-size:15px;color:var(--adm-text-main);margin:0 0 4px;">No Commercial Orders Found</h4>
+							<p style="font-size:13px;color:var(--adm-text-muted);margin:0 0 14px;">No order records match the active search terms, status or date range.</p>
+							<button class="btn-outline" onclick="resetOrderFilters()" style="padding:6px 16px;font-size:12px;">Reset Filters</button>
+						</td>
+					</tr>
+				`;
 				return;
 			}
 
 			tbody.innerHTML = orders.map(o => {
-				const stBadge = o.status === 'Lost' ? 'badge-status-lost' : (o.status === 'Win' ? 'badge-status-win' : 'badge-status-pipeline');
+				const st = (o.status || 'Pipeline').toLowerCase();
+				let stTag = `<span class="ord-status-tag pipeline"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pipeline</span>`;
+				if (st === 'win') {
+					stTag = `<span class="ord-status-tag win"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Won / Confirmed</span>`;
+				} else if (st === 'lost') {
+					stTag = `<span class="ord-status-tag lost"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Closed Lost</span>`;
+				}
+
+				const locStr = [o.city, o.state].filter(Boolean).join(', ') || o.country || 'India';
+
 				return `
 					<tr>
-						<td><strong>${o.order_number}</strong></td>
-						<td><strong style="color:var(--adm-text-main);">${o.project_name}</strong></td>
-						<td>${o.client_name}</td>
-						<td>${o.country || 'India'}</td>
-						<td>${o.state || ''}</td>
-						<td>${o.city || ''}</td>
-						<td>${formatDateDisplay(o.order_date)}</td>
-						<td><span class="${stBadge}">${o.status}</span></td>
-						<td><strong style="color:var(--adm-green);font-size:13.5px;">${formatExactINR(o.final_amount)}</strong></td>
-						<td><span class="badge-source-others">${o.source}</span></td>
-						<td style="text-align:center;">
-							<div style="display:flex;align-items:center;justify-content:center;gap:4px;">
-								<button class="tbl-action-btn" onclick="openEditOrderModal('${o.id}')" title="Edit Order">
-									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+						<td>
+							<a href="javascript:void(0)" class="ord-badge-number" onclick="openViewOrderModal('${o.id}')" title="View details for #${o.order_number}">
+								#${o.order_number}
+							</a>
+						</td>
+						<td>
+							<div>
+								<strong style="color:var(--adm-text-main);font-size:13.5px;display:block;">${o.project_name}</strong>
+								<span style="font-size:12px;color:var(--adm-text-muted);display:block;margin-top:2px;">${o.client_name}</span>
+							</div>
+						</td>
+						<td>
+							<span style="font-size:12.5px;color:#334155;">${locStr}</span>
+						</td>
+						<td>
+							<span style="font-size:12.5px;color:#475569;white-space:nowrap;">${formatDateDisplay(o.order_date)}</span>
+						</td>
+						<td>
+							${stTag}
+						</td>
+						<td>
+							<span class="ord-amount-cell ${st === 'win' ? 'high' : ''}">${formatExactINR(o.final_amount)}</span>
+						</td>
+						<td>
+							<span class="ord-source-pill">${o.source || 'Direct Architect'}</span>
+						</td>
+						<td style="text-align:right;">
+							<div class="ord-actions-flex">
+								<button class="ord-btn-action view" onclick="openViewOrderModal('${o.id}')" title="View Order &amp; Quick Convert">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 								</button>
-								<button class="tbl-action-btn" onclick="downloadOrderWordDoc('${o.id}')" title="Download Official Word Quotation (.doc)">
-									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+								<button class="ord-btn-action" onclick="openEditOrderModal('${o.id}')" title="Edit Order Details">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
 								</button>
-								<button class="tbl-action-btn" onclick="openViewOrderModal('${o.id}')" title="View Order Summary & Status Convert">
-									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+								<button class="ord-btn-action doc" onclick="downloadOrderWordDoc('${o.id}')" title="Download Official Word Quotation (.doc)">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
 								</button>
-								<button class="tbl-action-btn delete" onclick="deleteOrder('${o.id}')" title="Delete Order">
-									<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+								<button class="ord-btn-action del" onclick="deleteOrder('${o.id}')" title="Delete Order">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 								</button>
 							</div>
 						</td>
@@ -10244,20 +10823,68 @@ async function loadDashboardData() {
 			}).join('');
 		}
 
-		function applyOrderFilters() {
-			loadWaltzOrders();
+		function setOrderStatusFilter(st) {
+			activeOrderStatusFilter = st;
+			['ordPillAll', 'ordPillWin', 'ordPillPipeline', 'ordPillLost'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el) el.classList.remove('active');
+			});
+
+			if (st === 'all') document.getElementById('ordPillAll')?.classList.add('active');
+			else if (st === 'Win') document.getElementById('ordPillWin')?.classList.add('active');
+			else if (st === 'Pipeline') document.getElementById('ordPillPipeline')?.classList.add('active');
+			else if (st === 'Lost') document.getElementById('ordPillLost')?.classList.add('active');
+
+			applyOrderFilters();
+		}
+
+		function onOrderSearchInput() {
+			const val = document.getElementById('ordSearchInput')?.value || '';
+			const clearBtn = document.getElementById('ordSearchClear');
+			if (clearBtn) {
+				if (val.length > 0) clearBtn.classList.add('show');
+				else clearBtn.classList.remove('show');
+			}
+			clearTimeout(orderSearchDebounceTimer);
+			orderSearchDebounceTimer = setTimeout(() => {
+				applyOrderFilters();
+			}, 150);
+		}
+
+		function clearOrderSearch() {
+			const input = document.getElementById('ordSearchInput');
+			if (input) input.value = '';
+			const clearBtn = document.getElementById('ordSearchClear');
+			if (clearBtn) clearBtn.classList.remove('show');
+			applyOrderFilters();
+		}
+
+		function clearOrderDates() {
+			const f = document.getElementById('ordFromDate');
+			if (f) f.value = '';
+			const t = document.getElementById('ordToDate');
+			if (t) t.value = '';
+			applyOrderFilters();
 		}
 
 		function resetOrderFilters() {
-			['ordNumFilter', 'ordProjFilter', 'ordClientFilter', 'ordFromDate', 'ordToDate'].forEach(id => {
-				const el = document.getElementById(id);
-				if (el) el.value = '';
-			});
-			['ordCountryFilter', 'ordStateFilter', 'ordCityFilter', 'ordStatusFilter', 'ordSourceFilter'].forEach(id => {
-				const el = document.getElementById(id);
-				if (el) el.value = 'all';
-			});
-			loadWaltzOrders();
+			const input = document.getElementById('ordSearchInput');
+			if (input) input.value = '';
+			const clearBtn = document.getElementById('ordSearchClear');
+			if (clearBtn) clearBtn.classList.remove('show');
+
+			const loc = document.getElementById('ordLocationSelect');
+			if (loc) loc.value = 'all';
+
+			const src = document.getElementById('ordSourceSelect');
+			if (src) src.value = 'all';
+
+			const f = document.getElementById('ordFromDate');
+			if (f) f.value = '';
+			const t = document.getElementById('ordToDate');
+			if (t) t.value = '';
+
+			setOrderStatusFilter('all');
 			showToast('Order filters reset.');
 		}
 
