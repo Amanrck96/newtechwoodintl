@@ -7,24 +7,29 @@ from datetime import datetime, timedelta
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_FILE = os.path.join(BASE_DIR, "ntw_crm.db")
 
-def seed_database():
-    conn = sqlite3.connect(DB_FILE)
+def seed_database(conn=None):
+    close_when_done = False
+    if conn is None:
+        conn = sqlite3.connect(DB_FILE)
+        close_when_done = True
     cursor = conn.cursor()
 
     print("Seeding database...")
 
-    # 1. Users
-    users_data = [
-        ("admin", "admin@newtechwood.in", "admin", "Super Administrator", "superadmin", "active", "SA"),
-        ("admin_user", "admin", "admin", "System Administrator", "admin", "active", "AD"),
-        ("sales_01", "sales@newtechwood.in", "sales123", "Rohan Verma", "sales", "active", "RV"),
-        ("arch_01", "architect@studio.design", "UltraShield2026", "Skyline Architecture Studio", "architect", "active", "SK"),
-        ("dlr_01", "dealer@lumberlife.in", "Dealer@2026", "Lumber Life Premier Partner", "dealer", "active", "LL"),
-    ]
-    cursor.executemany("""
-        INSERT OR REPLACE INTO users (id, email, password, full_name, role, status, avatar_initials)
-        VALUES (?, ?, ?, ?, ?, ?, ?);
-    """, users_data)
+    # 1. Users (only if table is empty)
+    cursor.execute("SELECT COUNT(*) FROM users;")
+    if cursor.fetchone()[0] == 0:
+        users_data = [
+            ("admin", "admin@newtechwood.in", "admin", "Super Administrator", "superadmin", "active", "SA"),
+            ("admin_user", "admin", "admin", "System Administrator", "admin", "active", "AD"),
+            ("sales_01", "sales@newtechwood.in", "sales123", "Rohan Verma", "sales", "active", "RV"),
+            ("arch_01", "architect@studio.design", "UltraShield2026", "Skyline Architecture Studio", "architect", "active", "SK"),
+            ("dlr_01", "dealer@lumberlife.in", "Dealer@2026", "Lumber Life Premier Partner", "dealer", "active", "LL"),
+        ]
+        cursor.executemany("""
+            INSERT OR REPLACE INTO users (id, email, password, full_name, role, status, avatar_initials)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+        """, users_data)
 
     # 2. Pipeline Projects
     projects_data = [
@@ -172,7 +177,8 @@ def seed_database():
     """, orders_data)
 
     conn.commit()
-    conn.close()
+    if close_when_done:
+        conn.close()
     print("Database seeding completed with rich sample records!")
 
 if __name__ == "__main__":

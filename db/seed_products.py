@@ -44,22 +44,27 @@ COLS = ("id, sl_no, name, code, category, item_type, image_url, dimensions, leng
         "clips_per_plank, needs_better_image, variants, validity_date")
 
 
-def seed(reset=False):
-    with database.get_connection() as conn:
-        cur = conn.cursor()
+def seed(reset=False, conn=None):
+    def _do_seed(c):
+        cur = c.cursor()
         if reset:
             cur.execute("DELETE FROM order_lines;")
             cur.execute("DELETE FROM products WHERE id IN (%s);" % ",".join("?" * len(PRODUCTS)),
                         tuple(p[0] for p in PRODUCTS))
-        # clip rows first, so the clip_product_id foreign key always resolves
         ordered = sorted(PRODUCTS, key=lambda p: p[16] is not None)
         added = 0
         for p in ordered:
             row_data = p + (DEFAULT_VARIANTS, VALIDITY_DATE)
             cur.execute(f"INSERT OR REPLACE INTO products ({COLS}) VALUES ({','.join('?' * len(row_data))});", row_data)
             added += 1
-        conn.commit()
-    print(f"Products seeded: {added} processed.")
+        c.commit()
+        print(f"Products seeded: {added} processed.")
+
+    if conn is not None:
+        _do_seed(conn)
+    else:
+        with database.get_connection() as c:
+            _do_seed(c)
 
 
 if __name__ == "__main__":

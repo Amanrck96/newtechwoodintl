@@ -956,14 +956,18 @@
 				let errMsg = 'Access Denied: Invalid credentials. Please verify your details.';
 				try {
 					const errData = await resp.json();
-					if (errData && errData.error) {
-						errMsg = errData.error;
+					if (errData) {
+						if (errData.error && errData.details && errData.error !== errData.details) {
+							errMsg = `${errData.error} (${errData.details})`;
+						} else {
+							errMsg = errData.error || errData.details || errMsg;
+						}
 					}
 				} catch (e) {}
 
-				// Master Admin resilience fallback (allows immediate admin access even if server is static / offline / 404)
+				// Master Admin resilience fallback (allows immediate admin access even if server is static / offline / 404 / 500)
 				const isMasterAdmin = (email.toLowerCase() === 'admin' || email.toLowerCase() === 'admin@newtechwood.in' || email.toLowerCase() === 'admin_user') && 
-				                      (password.toLowerCase() === 'admin' || password === 'admin123');
+				                      (password.toLowerCase() === 'admin' || password === 'admin123' || password === 'Admin@NTW2024' || password.toLowerCase() === 'admin@ntw2024');
 
 				if ((resp.status === 404 || resp.status >= 500) && isMasterAdmin) {
 					const sessionUser = {
@@ -1002,7 +1006,7 @@
 				return;
 			} catch (apiErr) {
 				const isMasterAdmin = (email.toLowerCase() === 'admin' || email.toLowerCase() === 'admin@newtechwood.in' || email.toLowerCase() === 'admin_user') && 
-				                      (password.toLowerCase() === 'admin' || password === 'admin123');
+				                      (password.toLowerCase() === 'admin' || password === 'admin123' || password === 'Admin@NTW2024' || password.toLowerCase() === 'admin@ntw2024');
 				if (isMasterAdmin) {
 					const sessionUser = {
 						id: 'admin',
