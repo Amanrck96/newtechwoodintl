@@ -3179,6 +3179,451 @@
 			opacity: 0.4;
 			cursor: not-allowed;
 		}
+
+		/* ========================================================
+		   PRODUCT CATALOG & COMMERCIAL BOQ STUDIO STYLES
+		   ======================================================== */
+		.prd-metrics-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+			gap: 16px;
+			margin-bottom: 20px;
+		}
+
+		.prd-metric-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 12px;
+			padding: 16px 18px;
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+			transition: transform 0.15s ease, box-shadow 0.15s ease;
+		}
+
+		.prd-metric-card:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+		}
+
+		.prd-metric-icon {
+			width: 44px;
+			height: 44px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		.prd-metric-icon.gold { background: #fef3c7; color: #b45309; }
+		.prd-metric-icon.green { background: #dcfce7; color: #15803d; }
+		.prd-metric-icon.blue { background: #dbeafe; color: #1d4ed8; }
+		.prd-metric-icon.purple { background: #f3e8ff; color: #7e22ce; }
+
+		.prd-metric-val {
+			font-size: 20px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+			line-height: 1.1;
+		}
+
+		.prd-metric-lbl {
+			font-size: 11.5px;
+			color: var(--adm-text-muted);
+			font-weight: 600;
+			margin-top: 3px;
+		}
+
+		/* Product Toolbar */
+		.prd-toolbar-box {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 12px;
+			padding: 16px;
+			margin-bottom: 20px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.prd-toolbar-top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+
+		.prd-cat-pills {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			flex-wrap: wrap;
+		}
+
+		.prd-cat-pill {
+			padding: 6px 12px;
+			border-radius: 8px;
+			font-size: 12px;
+			font-weight: 600;
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			color: #475569;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: all 0.15s ease;
+		}
+
+		.prd-cat-pill:hover {
+			background: #f1f5f9;
+			color: var(--adm-text-main);
+		}
+
+		.prd-cat-pill.active {
+			background: var(--adm-green);
+			color: #ffffff;
+			border-color: var(--adm-green);
+		}
+
+		.prd-cat-badge {
+			padding: 1px 6px;
+			border-radius: 10px;
+			font-size: 10.5px;
+			background: rgba(0,0,0,0.06);
+		}
+
+		.prd-cat-pill.active .prd-cat-badge {
+			background: rgba(255,255,255,0.25);
+			color: #ffffff;
+		}
+
+		/* Product Visual Grid */
+		.prd-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+			gap: 18px;
+			margin-bottom: 24px;
+		}
+
+		.prd-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 14px;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+			transition: all 0.2s ease;
+			position: relative;
+		}
+
+		.prd-card:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+			border-color: #cbd5e1;
+		}
+
+		.prd-card-media {
+			position: relative;
+			height: 180px;
+			background: #f8fafc;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-bottom: 1px solid #f1f5f9;
+		}
+
+		.prd-card-img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform 0.35s ease;
+		}
+
+		.prd-card:hover .prd-card-img {
+			transform: scale(1.06);
+		}
+
+		.prd-card-category-badge {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			background: rgba(15, 23, 42, 0.85);
+			color: #ffffff;
+			backdrop-filter: blur(4px);
+			padding: 4px 10px;
+			border-radius: 6px;
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 0.3px;
+			text-transform: uppercase;
+		}
+
+		.prd-card-status-badge {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 3px 8px;
+			border-radius: 6px;
+			font-size: 10.5px;
+			font-weight: 700;
+		}
+
+		.prd-card-status-badge.active {
+			background: #dcfce7;
+			color: #15803d;
+		}
+
+		.prd-card-status-badge.inactive {
+			background: #fee2e2;
+			color: #b91c1c;
+		}
+
+		.prd-card-body {
+			padding: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			flex: 1;
+		}
+
+		.prd-card-title {
+			font-size: 16px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+			margin: 0;
+			line-height: 1.25;
+		}
+
+		.prd-card-dim {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			font-size: 12px;
+			color: #64748b;
+			background: #f8fafc;
+			border: 1px solid #f1f5f9;
+			padding: 4px 8px;
+			border-radius: 6px;
+			font-weight: 600;
+			width: fit-content;
+		}
+
+		.prd-card-price-box {
+			background: #f8faf8;
+			border: 1px solid #e2ece2;
+			border-radius: 10px;
+			padding: 10px 12px;
+			margin-top: 2px;
+		}
+
+		.prd-card-price-main {
+			font-size: 18px;
+			font-weight: 800;
+			color: var(--adm-green);
+			display: flex;
+			align-items: baseline;
+			gap: 4px;
+		}
+
+		.prd-card-price-unit {
+			font-size: 12px;
+			font-weight: 600;
+			color: #64748b;
+		}
+
+		.prd-card-price-sub {
+			font-size: 11.5px;
+			color: #64748b;
+			margin-top: 3px;
+			font-weight: 500;
+		}
+
+		.prd-card-app {
+			font-size: 12px;
+			color: #475569;
+			display: flex;
+			align-items: flex-start;
+			gap: 6px;
+			line-height: 1.4;
+		}
+
+		.prd-card-clip-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			font-size: 11px;
+			font-weight: 600;
+			color: #0369a1;
+			background: #f0f9ff;
+			border: 1px solid #bae6fd;
+			padding: 3px 8px;
+			border-radius: 6px;
+			width: fit-content;
+		}
+
+		.prd-card-footer {
+			padding: 12px 16px;
+			background: #f8fafc;
+			border-top: 1px solid #f1f5f9;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.prd-btn-quote-add {
+			padding: 6px 12px;
+			border-radius: 6px;
+			font-size: 12px;
+			font-weight: 700;
+			background: #ffffff;
+			border: 1px solid #cbd5e1;
+			color: var(--adm-text-main);
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			transition: all 0.15s ease;
+		}
+
+		.prd-btn-quote-add:hover {
+			background: #ecfdf5;
+			color: var(--adm-green);
+			border-color: #86efac;
+		}
+
+		/* Commercial BOQ Studio Layout */
+		.quote-studio-box {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 14px;
+			padding: 24px;
+			margin-top: 28px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+		}
+
+		.quote-studio-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			padding-bottom: 16px;
+			border-bottom: 1px solid #f1f5f9;
+			flex-wrap: wrap;
+			gap: 12px;
+		}
+
+		.quote-studio-grid {
+			display: grid;
+			grid-template-columns: 1.25fr 1fr;
+			gap: 24px;
+			align-items: flex-start;
+		}
+
+		@media (max-width: 992px) {
+			.quote-studio-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		.quote-builder-card {
+			background: #f8fafc;
+			border: 1px solid var(--adm-border);
+			border-radius: 12px;
+			padding: 18px;
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.quote-row-card {
+			background: #ffffff;
+			border: 1px solid var(--adm-border);
+			border-radius: 10px;
+			padding: 14px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			transition: border-color 0.15s ease;
+		}
+
+		.quote-row-card:hover {
+			border-color: #94a3b8;
+		}
+
+		.quote-row-top {
+			display: grid;
+			grid-template-columns: 2fr 1fr auto;
+			gap: 10px;
+			align-items: flex-end;
+		}
+
+		.quote-row-yield {
+			font-size: 11.5px;
+			color: #0369a1;
+			background: #f0f9ff;
+			border: 1px solid #e0f2fe;
+			padding: 6px 10px;
+			border-radius: 6px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			font-weight: 500;
+		}
+
+		.quote-summary-card {
+			background: #ffffff;
+			border: 1.5px solid var(--adm-border);
+			border-radius: 12px;
+			padding: 20px;
+			box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+			position: sticky;
+			top: 20px;
+		}
+
+		.quote-summary-title {
+			font-size: 15px;
+			font-weight: 800;
+			color: var(--adm-text-main);
+			margin: 0 0 14px 0;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.quote-total-grand {
+			background: #f8faf8;
+			border: 1.5px solid #d1e7dd;
+			border-radius: 10px;
+			padding: 16px;
+			margin: 16px 0;
+			text-align: right;
+		}
+
+		.quote-total-grand-lbl {
+			font-size: 12px;
+			font-weight: 700;
+			color: var(--adm-text-muted);
+			text-transform: uppercase;
+		}
+
+		.quote-total-grand-val {
+			font-size: 28px;
+			font-weight: 900;
+			color: var(--adm-green);
+			line-height: 1.1;
+			margin-top: 4px;
+		}
 	</style>
 </head>
 <body>
@@ -4604,12 +5049,18 @@
 			<section id="view-products" class="view-section">
 				<div class="section-header">
 					<div>
-						<h1>Product Price List</h1>
-						<p>TECHWOOD WPC products and rates. Prices are exclusive of GST.</p>
+						<h1>Architectural WPC Products &amp; Commercial Price Matrix</h1>
+						<p>Official TECHWOOD composite specifications, plank coverage, wholesale pricing &amp; commercial BOQ estimation studio</p>
 					</div>
-					<div style="display:flex;align-items:center;gap:12px;">
-						<button class="btn-outline" onclick="exportProductsCsv()">Export Excel (CSV)</button>
-						<button class="btn-primary product-write-btn" style="background:#1f2937;color:#ffffff;" onclick="openProductModal()">Add Product</button>
+					<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+						<button class="btn-primary product-write-btn" style="background:var(--adm-green);color:#ffffff;" onclick="openProductModal()">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+							<span>+ Add New Product</span>
+						</button>
+						<button class="btn-primary" style="background:#14b8a6;color:#ffffff;" onclick="exportProductsCsv()">
+							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+							<span>Export Excel (CSV)</span>
+						</button>
 						<a href="javascript:void(0)" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;" onclick="clearProductFilters()">Reset Filters</a>
 					</div>
 				</div>
@@ -4618,23 +5069,115 @@
 					Showing the saved price list (read-only). Editing and the quote calculator need a live server session. Sign in again from the login page.
 				</div>
 
-				<div class="card-box" style="padding:12px 16px;margin-bottom:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-					<input type="text" id="productSearch" class="tbl-filter-input" style="height:38px;flex:1;min-width:220px;" placeholder="Search name, code or application" oninput="applyProductFilters()" />
-					<select id="productCategoryFilter" class="tbl-filter-select" style="height:38px;width:180px;" onchange="applyProductFilters()">
+				<!-- Product Metric Cards Strip -->
+				<div class="prd-metrics-grid">
+					<div class="prd-metric-card">
+						<div class="prd-metric-icon gold">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+						</div>
+						<div>
+							<div class="prd-metric-val" id="prdStatTotal">9</div>
+							<div class="prd-metric-lbl">Total WPC Profiles</div>
+						</div>
+					</div>
+
+					<div class="prd-metric-card">
+						<div class="prd-metric-icon green">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+						</div>
+						<div>
+							<div class="prd-metric-val" id="prdStatCladding">3</div>
+							<div class="prd-metric-lbl">Cladding Systems</div>
+						</div>
+					</div>
+
+					<div class="prd-metric-card">
+						<div class="prd-metric-icon blue">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+						</div>
+						<div>
+							<div class="prd-metric-val" id="prdStatOutdoor">2</div>
+							<div class="prd-metric-lbl">Decking &amp; Pergola</div>
+						</div>
+					</div>
+
+					<div class="prd-metric-card">
+						<div class="prd-metric-icon purple">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+						</div>
+						<div>
+							<div class="prd-metric-val" id="prdStatAccessories">4</div>
+							<div class="prd-metric-lbl">Accessories &amp; Clips</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Command & Filter Toolbar -->
+				<div class="prd-toolbar-box">
+					<div class="prd-toolbar-top">
+						<div class="ord-search-wrap" style="flex:1;min-width:240px;">
+							<svg class="ord-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+							<input type="text" id="productSearch" class="ord-search-input" placeholder="Search product name, code, dimension or application..." oninput="applyProductFilters()" />
+						</div>
+
+						<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+							<select id="productStatusFilter" class="tbl-filter-select" style="height:42px;width:140px;border-radius:8px;font-size:12.5px;" onchange="applyProductFilters()">
+								<option value="all">All Status</option>
+								<option value="active">Active Only</option>
+								<option value="inactive">Inactive</option>
+							</select>
+
+							<!-- Segmented View Mode Switcher -->
+							<div class="ord-view-switch" id="prdViewSwitch">
+								<button type="button" class="ord-view-btn active" id="prdViewBtnGrid" onclick="switchProductView('grid')" title="Visual Spec Grid View">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+									<span>Visual Spec Grid</span>
+								</button>
+								<button type="button" class="ord-view-btn" id="prdViewBtnTable" onclick="switchProductView('table')" title="Detailed Price Matrix Table">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+									<span>Price Matrix</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Category Filter Chips -->
+					<div class="prd-cat-pills">
+						<span style="font-size:11.5px;font-weight:700;color:#64748b;margin-right:4px;">CATEGORY:</span>
+						<button type="button" class="prd-cat-pill active" id="prdCatPillAll" onclick="setProductCategory('all')">
+							All Profiles <span class="prd-cat-badge" id="prdCatBadgeAll">9</span>
+						</button>
+						<button type="button" class="prd-cat-pill" id="prdCatPillCladding" onclick="setProductCategory('Cladding')">
+							Cladding <span class="prd-cat-badge" id="prdCatBadgeCladding">3</span>
+						</button>
+						<button type="button" class="prd-cat-pill" id="prdCatPillDecking" onclick="setProductCategory('Decking')">
+							Decking <span class="prd-cat-badge" id="prdCatBadgeDecking">1</span>
+						</button>
+						<button type="button" class="prd-cat-pill" id="prdCatPillPergola" onclick="setProductCategory('Pergola')">
+							Pergola <span class="prd-cat-badge" id="prdCatBadgePergola">1</span>
+						</button>
+						<button type="button" class="prd-cat-pill" id="prdCatPillAccessories" onclick="setProductCategory('Accessories')">
+							Accessories <span class="prd-cat-badge" id="prdCatBadgeAccessories">4</span>
+						</button>
+					</div>
+
+					<!-- Hidden select for compatibility -->
+					<select id="productCategoryFilter" style="display:none;" onchange="applyProductFilters()">
 						<option value="all">All categories</option>
 						<option value="Cladding">Cladding</option>
 						<option value="Decking">Decking</option>
 						<option value="Pergola">Pergola</option>
 						<option value="Accessories">Accessories</option>
 					</select>
-					<select id="productStatusFilter" class="tbl-filter-select" style="height:38px;width:150px;" onchange="applyProductFilters()">
-						<option value="all">All status</option>
-						<option value="active">Active</option>
-						<option value="inactive">Inactive</option>
-					</select>
 				</div>
 
-				<div class="card-box" style="padding:0;overflow-x:auto;">
+				<!-- Visual Spec Grid Container (Default Active) -->
+				<div id="prdGridContainer" class="prd-grid">
+					<!-- Dynamically rendered via renderProductsGrid() -->
+				</div>
+
+				<!-- Price Matrix Table Container (Switched via View Toggle) -->
+				<div id="prdTableContainer" class="card-box" style="display:none;padding:0;overflow-x:auto;">
 					<table class="crm-table" style="width:100%;">
 						<thead>
 							<tr>
@@ -4650,19 +5193,73 @@
 					</table>
 				</div>
 
-				<div class="card-box" style="margin-top:20px;padding:20px;">
-					<h3 style="font-size:16px;font-weight:700;margin-bottom:4px;">Quick Quote Calculator</h3>
-					<p style="font-size:12.5px;color:var(--adm-text-muted);margin-bottom:14px;">Planks are billed whole. Clips are added automatically for plank products. Wastage is extra material for cuts and breakage (default 10%, change as needed).</p>
-					<div id="quoteRows"></div>
-					<div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
-						<button type="button" class="btn-outline" onclick="addQuoteRow()">+ Add item</button>
-						<div style="width:140px;">
-							<label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Wastage %</label>
-							<input type="number" id="quoteWastage" class="tbl-filter-input" style="height:38px;" value="10" min="0" max="50" step="any" />
+				<!-- Architectural Commercial BOQ & Quote Studio -->
+				<div class="quote-studio-box">
+					<div class="quote-studio-header">
+						<div>
+							<h3 style="font-size:18px;font-weight:800;color:var(--adm-text-main);margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
+								<span>📐 Commercial BOQ &amp; Quick Quotation Studio</span>
+							</h3>
+							<p style="font-size:12.5px;color:var(--adm-text-muted);margin:0;">
+								Architectural material estimator: Planks billed whole with exact coverage math &amp; auto-calculated locking clips.
+							</p>
 						</div>
-						<button type="button" class="btn-primary" onclick="calculateQuote()">Calculate</button>
+						<div style="display:flex;align-items:center;gap:8px;">
+							<button type="button" class="btn-outline" style="padding:5px 12px;font-size:12px;" onclick="resetQuoteStudio()">
+								Reset Calculator
+							</button>
+						</div>
 					</div>
-					<div id="quoteResult"></div>
+
+					<div class="quote-studio-grid">
+						<!-- Left Column: BOQ Spec Line Items Builder -->
+						<div class="quote-builder-card">
+							<div style="display:flex;justify-content:space-between;align-items:center;">
+								<span style="font-size:12.5px;font-weight:700;color:var(--adm-text-main);text-transform:uppercase;letter-spacing:0.5px;">Specification Line Items</span>
+								<button type="button" class="btn-outline" style="padding:4px 10px;font-size:11.5px;background:#ffffff;" onclick="addQuoteRow()">
+									+ Add Item
+								</button>
+							</div>
+
+							<div id="quoteRows"></div>
+
+							<!-- Wastage & Controls -->
+							<div style="background:#ffffff;border:1px solid var(--adm-border);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:6px;">
+								<div style="display:flex;align-items:center;gap:10px;">
+									<label style="font-size:12.5px;font-weight:700;color:var(--adm-text-main);">Wastage Allowance:</label>
+									<input type="number" id="quoteWastage" class="tbl-filter-input" style="height:34px;width:70px;text-align:center;font-weight:700;" value="10" min="0" max="50" step="any" oninput="calculateQuote()" />
+									<span style="font-size:12.5px;font-weight:600;color:#64748b;">%</span>
+								</div>
+
+								<div style="display:flex;align-items:center;gap:6px;">
+									<button type="button" class="ord-preset-chip" onclick="setQuoteWastage(5)">5%</button>
+									<button type="button" class="ord-preset-chip active" id="chipWaste10" onclick="setQuoteWastage(10)">10% (Std)</button>
+									<button type="button" class="ord-preset-chip" onclick="setQuoteWastage(15)">15%</button>
+									<button type="button" class="ord-preset-chip" onclick="setQuoteWastage(20)">20%</button>
+								</div>
+							</div>
+
+							<button type="button" class="btn-primary" style="height:44px;font-size:14px;font-weight:700;background:var(--adm-green);justify-content:center;margin-top:4px;" onclick="calculateQuote()">
+								⚡ Calculate Commercial BOQ Quote
+							</button>
+						</div>
+
+						<!-- Right Column: Commercial Summary & Deal Conversion Panel -->
+						<div class="quote-summary-card">
+							<div class="quote-summary-title">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+								<span>Commercial BOQ Summary</span>
+							</div>
+
+							<div id="quoteResult">
+								<div style="text-align:center;padding:48px 16px;color:#94a3b8;">
+									<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 10px;display:block;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+									<div style="font-size:14px;font-weight:600;color:var(--adm-text-main);margin-bottom:4px;">No Calculation Yet</div>
+									<div style="font-size:12px;">Configure the area or quantity on the left and click <strong>Calculate</strong> to view commercial pricing.</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 
@@ -11866,7 +12463,9 @@ async function loadDashboardData() {
 		// ========================================================
 		let productsData = [];
 		let productsOffline = false;   // true = API/auth unavailable, showing read-only saved list
+		let currentProductView = 'grid'; // 'grid' | 'table'
 		let quoteRowSeq = 0;
+		let quoteCalcDebounceTimer = null;
 
 		function pEsc(v) {
 			return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -11902,8 +12501,6 @@ async function loadDashboardData() {
 			return `${amount} / ${pEsc(p.price_unit)}${p.gst_extra ? ' + GST' : ''}`;
 		}
 
-		// Always load the FULL list (it is small). Filters run client-side, so the clip
-		// dropdown and quote calculator never lose products when a filter is active.
 		async function loadProducts() {
 			try {
 				const res = await productsApi('GET', '/api/products');
@@ -11918,8 +12515,69 @@ async function loadDashboardData() {
 			const banner = document.getElementById('productsOfflineBanner');
 			if (banner) banner.style.display = productsOffline ? 'block' : 'none';
 			document.querySelectorAll('.product-write-btn').forEach(b => { b.disabled = productsOffline; b.style.opacity = productsOffline ? '0.5' : '1'; });
+			
+			updateProductMetrics(productsData);
 			applyProductFilters();
 			refreshQuoteProductOptions();
+		}
+
+		function updateProductMetrics(list) {
+			const total = list.length;
+			const clads = list.filter(p => (p.category || '').toLowerCase() === 'cladding').length;
+			const deck = list.filter(p => (p.category || '').toLowerCase() === 'decking').length;
+			const perg = list.filter(p => (p.category || '').toLowerCase() === 'pergola').length;
+			const acc = list.filter(p => (p.category || '').toLowerCase() === 'accessories').length;
+
+			const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+			setTxt('prdStatTotal', total);
+			setTxt('prdStatCladding', clads);
+			setTxt('prdStatOutdoor', deck + perg);
+			setTxt('prdStatAccessories', acc);
+
+			setTxt('prdCatBadgeAll', total);
+			setTxt('prdCatBadgeCladding', clads);
+			setTxt('prdCatBadgeDecking', deck);
+			setTxt('prdCatBadgePergola', perg);
+			setTxt('prdCatBadgeAccessories', acc);
+		}
+
+		function switchProductView(mode) {
+			currentProductView = mode;
+			const btnGrid = document.getElementById('prdViewBtnGrid');
+			const btnTable = document.getElementById('prdViewBtnTable');
+			const gridCont = document.getElementById('prdGridContainer');
+			const tableCont = document.getElementById('prdTableContainer');
+
+			if (mode === 'grid') {
+				if (btnGrid) btnGrid.classList.add('active');
+				if (btnTable) btnTable.classList.remove('active');
+				if (gridCont) gridCont.style.display = 'grid';
+				if (tableCont) tableCont.style.display = 'none';
+			} else {
+				if (btnTable) btnTable.classList.add('active');
+				if (btnGrid) btnGrid.classList.remove('active');
+				if (gridCont) gridCont.style.display = 'none';
+				if (tableCont) tableCont.style.display = 'block';
+			}
+			renderProducts(productsView);
+		}
+
+		function setProductCategory(cat) {
+			const sel = document.getElementById('productCategoryFilter');
+			if (sel) sel.value = cat;
+
+			['prdCatPillAll', 'prdCatPillCladding', 'prdCatPillDecking', 'prdCatPillPergola', 'prdCatPillAccessories'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el) el.classList.remove('active');
+			});
+
+			if (cat === 'all') document.getElementById('prdCatPillAll')?.classList.add('active');
+			else if (cat === 'Cladding') document.getElementById('prdCatPillCladding')?.classList.add('active');
+			else if (cat === 'Decking') document.getElementById('prdCatPillDecking')?.classList.add('active');
+			else if (cat === 'Pergola') document.getElementById('prdCatPillPergola')?.classList.add('active');
+			else if (cat === 'Accessories') document.getElementById('prdCatPillAccessories')?.classList.add('active');
+
+			applyProductFilters();
 		}
 
 		let productsView = [];
@@ -11930,11 +12588,104 @@ async function loadDashboardData() {
 			productsView = productsData.filter(p =>
 				(category === 'all' || p.category === category) &&
 				(status === 'all' || p.status === status) &&
-				(!q || (p.name + ' ' + (p.code || '') + ' ' + (p.application || '')).toLowerCase().includes(q)));
+				(!q || (p.name + ' ' + (p.code || '') + ' ' + (p.application || '') + ' ' + (p.dimensions || '')).toLowerCase().includes(q)));
 			renderProducts(productsView);
 		}
 
 		function renderProducts(list) {
+			list = list || productsView || productsData || [];
+			renderProductsGrid(list);
+			renderProductsTable(list);
+		}
+
+		function renderProductsGrid(list) {
+			const container = document.getElementById('prdGridContainer');
+			if (!container) return;
+
+			if (!list.length) {
+				container.innerHTML = `
+					<div style="grid-column: 1 / -1; text-align:center; padding:56px 20px; background:#ffffff; border:1px dashed #cbd5e1; border-radius:12px; color:#64748b;">
+						<div style="width:48px;height:48px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#94a3b8;">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+						</div>
+						<h4 style="font-size:15px;color:var(--adm-text-main);margin:0 0 4px;">No Architectural Products Found</h4>
+						<p style="font-size:13px;color:var(--adm-text-muted);margin:0 0 14px;">No items match the current search keywords or category filter.</p>
+						<button class="btn-outline" onclick="clearProductFilters()" style="padding:6px 16px;font-size:12px;">Reset Filters</button>
+					</div>
+				`;
+				return;
+			}
+
+			container.innerHTML = list.map(p => {
+				const id = pEsc(p.id);
+				const imgUrl = p.image_url || '/product-images/twix.jpg';
+				const perPlank = p.price_per_plank ? `≈ ₹${Number(p.price_per_plank).toLocaleString('en-IN', { maximumFractionDigits: 0 })} per plank${p.plank_area_sft ? ` (${p.plank_area_sft.toFixed(2)} SFT)` : ''}` : '';
+				const clipBadge = (p.clip_product_id && p.clips_per_plank) ? `
+					<div class="prd-card-clip-badge">
+						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+						<span>${pEsc(p.clips_per_plank)} clips/plank auto-added</span>
+					</div>` : '';
+
+				return `
+					<div class="prd-card">
+						<div class="prd-card-media">
+							<img src="${pEsc(imgUrl)}" alt="${pEsc(p.name)}" class="prd-card-img" onerror="this.src='/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg';this.style.objectFit='contain';this.style.padding='24px';" />
+							<span class="prd-card-category-badge">${pEsc(p.category)}</span>
+							<span class="prd-card-status-badge ${p.status === 'active' ? 'active' : 'inactive'}">
+								${p.status === 'active' ? 'Active' : 'Inactive'}
+							</span>
+						</div>
+
+						<div class="prd-card-body">
+							<h3 class="prd-card-title">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''}</h3>
+							
+							<div class="prd-card-dim">
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+								<span>${p.dimensions ? pEsc(p.dimensions) : 'Profile Accessory'}</span>
+							</div>
+
+							<div class="prd-card-price-box">
+								<div class="prd-card-price-main">
+									₹${Number(p.price).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+									<span class="prd-card-price-unit">/ ${pEsc(p.price_unit)}${p.gst_extra ? ' + GST' : ''}</span>
+								</div>
+								${perPlank ? `<div class="prd-card-price-sub">${perPlank}</div>` : ''}
+							</div>
+
+							<div class="prd-card-app">
+								<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;color:#64748b;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+								<span>${pEsc(p.application || 'Standard WPC Installation')}</span>
+							</div>
+
+							${clipBadge}
+						</div>
+
+						<div class="prd-card-footer">
+							<button type="button" class="prd-btn-quote-add" onclick="addProductToQuote('${id}')" title="Add this product to the Quote Calculator">
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+								<span>Add to Quote</span>
+							</button>
+
+							<div style="display:flex;align-items:center;gap:4px;">
+								<button class="ord-btn-action" onclick="openProductHistory('${id}')" title="Price History" style="width:28px;height:28px;">
+									<span style="font-weight:700;font-size:12px;">₹</span>
+								</button>
+								${productsOffline ? '' : `
+									<button class="ord-btn-action" onclick="openProductModal('${id}')" title="Edit Product" style="width:28px;height:28px;">
+										<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+									</button>
+									<button class="ord-btn-action del" onclick="deleteProduct('${id}')" title="Delete Product" style="width:28px;height:28px;">
+										<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+									</button>
+								`}
+							</div>
+						</div>
+					</div>
+				`;
+			}).join('');
+		}
+
+		function renderProductsTable(list) {
 			const tbody = document.getElementById('productsTableBody');
 			if (!tbody) return;
 			if (!list.length) {
@@ -11943,10 +12694,9 @@ async function loadDashboardData() {
 			}
 			tbody.innerHTML = list.map(p => {
 				const perPlank = p.price_per_plank ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">≈ ₹${Number(p.price_per_plank).toLocaleString('en-IN', { maximumFractionDigits: 0 })} per plank</span>` : '';
-				const clipNote = (p.clip_product_id && p.clips_per_plank) ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">${pEsc(p.clips_per_plank)} clips per plank auto-added in quotes</span>` : '';
-				const img = p.image_url ? `<img src="${pEsc(p.image_url)}" alt="${pEsc(p.name)}" style="width:64px;height:48px;object-fit:contain;background:#f3f4f2;border-radius:6px;border:1px solid var(--adm-border);" />` : '<span style="color:var(--adm-text-muted);font-size:11px;">No image</span>';
+				const clipNote = (p.clip_product_id && p.clips_per_plank) ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">${pEsc(p.clips_per_plank)} clips per plank auto-added</span>` : '';
+				const img = p.image_url ? `<img src="${pEsc(p.image_url)}" alt="${pEsc(p.name)}" style="width:52px;height:40px;object-fit:cover;background:#f3f4f2;border-radius:6px;border:1px solid var(--adm-border);" onerror="this.src='/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg';" />` : '<span style="color:var(--adm-text-muted);font-size:11px;">No image</span>';
 				const inactive = p.status !== 'active' ? ' <span class="user-role-badge" style="color:#b91c1c;background:rgba(185,28,28,0.1);">Inactive</span>' : '';
-				const needsBetter = p.needs_better_image ? ' <span class="user-role-badge" style="color:#b45309;background:rgba(217,119,6,0.12);font-weight:600;" title="Phone screenshot from supplier — needs studio catalog image">Needs Better Image</span>' : '';
 				const id = pEsc(p.id);
 				const writeBtns = productsOffline ? '' : `
 					<button class="tbl-action-btn" onclick="openProductModal('${id}')" title="Edit">✎</button>
@@ -11956,13 +12706,19 @@ async function loadDashboardData() {
 				<tr>
 					<td>${img}</td>
 					<td>
-						<strong style="color:var(--adm-text-main);font-size:13.5px;">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''}</strong>${inactive}${needsBetter}
+						<strong style="color:var(--adm-text-main);font-size:13.5px;">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''}</strong>${inactive}
 						<span class="user-role-badge" style="margin-top:3px;">${pEsc(p.category)}</span>
 					</td>
 					<td>${p.dimensions ? pEsc(p.dimensions) : '<span style="color:var(--adm-text-muted);">—</span>'}</td>
 					<td><strong>${formatPrice(p)}</strong>${perPlank}</td>
 					<td>${pEsc(p.application || '')}${clipNote}</td>
-					<td style="text-align:center;">${histBtn}${writeBtns}</td>
+					<td style="text-align:center;">
+						<div style="display:inline-flex;align-items:center;gap:4px;">
+							<button class="prd-btn-quote-add" onclick="addProductToQuote('${id}')" style="padding:4px 8px;font-size:11px;" title="Add to Quote">⚡ Quote</button>
+							${histBtn}
+							${writeBtns}
+						</div>
+					</td>
 				</tr>`;
 			}).join('');
 		}
@@ -11970,6 +12726,11 @@ async function loadDashboardData() {
 		function clearProductFilters() {
 			['productSearch'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 			['productCategoryFilter', 'productStatusFilter'].forEach(id => { const el = document.getElementById(id); if (el) el.value = 'all'; });
+			['prdCatPillAll', 'prdCatPillCladding', 'prdCatPillDecking', 'prdCatPillPergola', 'prdCatPillAccessories'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el) el.classList.remove('active');
+			});
+			document.getElementById('prdCatPillAll')?.classList.add('active');
 			applyProductFilters();
 		}
 
@@ -12083,7 +12844,7 @@ async function loadDashboardData() {
 			showToast('Price list exported.');
 		}
 
-		// ---------- Quote calculator ----------
+		// ---------- Quote Studio Engine ----------
 		function refreshQuoteProductOptions() {
 			document.querySelectorAll('.quote-product-select').forEach(sel => {
 				const keep = sel.value;
@@ -12096,7 +12857,7 @@ async function loadDashboardData() {
 
 		function quoteOptionsHtml() {
 			return productsData.filter(p => p.status === 'active')
-				.map(p => `<option value="${pEsc(p.id)}">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''} (${pEsc(p.price_unit)})</option>`).join('');
+				.map(p => `<option value="${pEsc(p.id)}">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''} (${pEsc(p.category)} • ₹${Number(p.price).toLocaleString('en-IN')}/${pEsc(p.price_unit)})</option>`).join('');
 		}
 
 		function addQuoteRow() {
@@ -12104,14 +12865,23 @@ async function loadDashboardData() {
 			if (!wrap || !productsData.length) return;
 			const n = ++quoteRowSeq;
 			const row = document.createElement('div');
-			row.className = 'quote-row';
-			row.style.cssText = 'display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px;';
+			row.className = 'quote-row-card quote-row';
 			row.innerHTML = `
-				<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Product</label>
-					<select class="tbl-filter-select quote-product-select" style="height:38px;" onchange="updateQuoteRowLabel(this)">${quoteOptionsHtml()}</select></div>
-				<div><label class="quote-qty-label" style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Area (sq.ft)</label>
-					<input type="number" min="0.01" step="any" class="tbl-filter-input quote-qty-input" style="height:38px;" placeholder="e.g. 250" /></div>
-				<button type="button" class="tbl-action-btn" title="Remove" onclick="this.parentElement.remove()">✕</button>`;
+				<div class="quote-row-top">
+					<div>
+						<label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;color:var(--adm-text-main);">Product Specification</label>
+						<select class="tbl-filter-select quote-product-select" style="height:38px;border-radius:8px;" onchange="updateQuoteRowLabel(this); calculateQuoteLive();">${quoteOptionsHtml()}</select>
+					</div>
+					<div>
+						<label class="quote-qty-label" style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;color:var(--adm-text-main);">Area (sq.ft)</label>
+						<input type="number" min="0.01" step="any" class="tbl-filter-input quote-qty-input" style="height:38px;border-radius:8px;" placeholder="e.g. 250" oninput="calculateQuoteLive();" />
+					</div>
+					<button type="button" class="ord-btn-action del" style="width:38px;height:38px;border-radius:8px;" title="Remove Line Item" onclick="this.closest('.quote-row').remove(); calculateQuoteLive();">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+					</button>
+				</div>
+				<div class="quote-row-yield" style="display:none;"></div>
+			`;
 			wrap.appendChild(row);
 			updateQuoteRowLabel(row.querySelector('.quote-product-select'));
 		}
@@ -12123,46 +12893,214 @@ async function loadDashboardData() {
 			row.querySelector('.quote-qty-label').innerText = p.price_unit === 'SFT' ? 'Area (sq.ft)' : `Quantity (${p.price_unit.toLowerCase()}s)`;
 			const input = row.querySelector('.quote-qty-input');
 			input.step = p.price_unit === 'SFT' ? 'any' : '1';
+			input.placeholder = p.price_unit === 'SFT' ? 'e.g. 250' : 'e.g. 10';
+			updateQuoteYieldPreview(row);
 		}
 
-		async function calculateQuote() {
+		function updateQuoteYieldPreview(row) {
+			const sel = row.querySelector('.quote-product-select');
+			const input = row.querySelector('.quote-qty-input');
+			const yieldDiv = row.querySelector('.quote-row-yield');
+			if (!sel || !input || !yieldDiv) return;
+
+			const p = productsData.find(x => x.id === sel.value);
+			const val = parseFloat(input.value) || 0;
+			const waste = parseFloat(document.getElementById('quoteWastage')?.value) || 10;
+
+			if (!p || val <= 0 || p.price_unit !== 'SFT' || !p.plank_area_sft) {
+				yieldDiv.style.display = 'none';
+				return;
+			}
+
+			const totalArea = val * (1 + waste / 100);
+			const planks = Math.ceil(totalArea / p.plank_area_sft);
+			const billedSft = (planks * p.plank_area_sft).toFixed(2);
+			const clips = p.clips_per_plank ? (planks * p.clips_per_plank) : 0;
+
+			yieldDiv.style.display = 'flex';
+			yieldDiv.innerHTML = `
+				<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+				<span>${val} sq.ft + ${waste}% wastage → <strong>${planks} whole planks</strong> (${billedSft} sq.ft billed)${clips ? ` • <strong>${clips} clips</strong> auto-added` : ''}</span>
+			`;
+		}
+
+		function addProductToQuote(productId) {
+			const wrap = document.getElementById('quoteRows');
+			if (!wrap) return;
+
+			let targetRow = null;
+			const existingRows = wrap.querySelectorAll('.quote-row');
+			for (const r of existingRows) {
+				const input = r.querySelector('.quote-qty-input');
+				if (!input || !input.value) {
+					targetRow = r;
+					break;
+				}
+			}
+
+			if (!targetRow) {
+				addQuoteRow();
+				const allRows = wrap.querySelectorAll('.quote-row');
+				targetRow = allRows[allRows.length - 1];
+			}
+
+			if (targetRow) {
+				const sel = targetRow.querySelector('.quote-product-select');
+				if (sel) {
+					sel.value = productId;
+					updateQuoteRowLabel(sel);
+				}
+				const input = targetRow.querySelector('.quote-qty-input');
+				if (input) {
+					input.focus();
+				}
+			}
+
+			const studio = document.querySelector('.quote-studio-box');
+			if (studio) studio.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+			const p = productsData.find(x => x.id === productId);
+			showToast(`Added ${p ? p.name : 'product'} to Quote Builder.`);
+		}
+
+		function setQuoteWastage(pct) {
+			const el = document.getElementById('quoteWastage');
+			if (el) el.value = pct;
+			document.querySelectorAll('.quote-studio-box .ord-preset-chip').forEach(btn => {
+				if (btn.innerText.includes(pct + '%')) btn.classList.add('active');
+				else btn.classList.remove('active');
+			});
+			calculateQuote();
+		}
+
+		function resetQuoteStudio() {
+			const wrap = document.getElementById('quoteRows');
+			if (wrap) wrap.innerHTML = '';
+			addQuoteRow();
+			setQuoteWastage(10);
+			const out = document.getElementById('quoteResult');
+			if (out) {
+				out.innerHTML = `
+					<div style="text-align:center;padding:48px 16px;color:#94a3b8;">
+						<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 10px;display:block;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+						<div style="font-size:14px;font-weight:600;color:var(--adm-text-main);margin-bottom:4px;">No Calculation Yet</div>
+						<div style="font-size:12px;">Configure the area or quantity on the left and click <strong>Calculate</strong> to view commercial pricing.</div>
+					</div>
+				`;
+			}
+			showToast('Quote Calculator reset.');
+		}
+
+		function calculateQuoteLive() {
+			document.querySelectorAll('#quoteRows .quote-row').forEach(row => updateQuoteYieldPreview(row));
+			clearTimeout(quoteCalcDebounceTimer);
+			quoteCalcDebounceTimer = setTimeout(() => {
+				const hasValidInputs = Array.from(document.querySelectorAll('#quoteRows .quote-qty-input')).some(inp => parseFloat(inp.value) > 0);
+				if (hasValidInputs) {
+					calculateQuote(true);
+				}
+			}, 350);
+		}
+
+		async function calculateQuote(isAuto = false) {
 			const out = document.getElementById('quoteResult');
 			const items = [];
 			for (const row of document.querySelectorAll('#quoteRows .quote-row')) {
 				const p = productsData.find(x => x.id === row.querySelector('.quote-product-select').value);
 				const val = Number(row.querySelector('.quote-qty-input').value);
-				if (!p || !(val > 0)) { showToast('Enter a quantity or area greater than 0 for every row.', true); return; }
-				items.push(p.price_unit === 'SFT' ? { product_id: p.id, area_sft: val } : { product_id: p.id, qty: val });
+				if (p && val > 0) {
+					items.push(p.price_unit === 'SFT' ? { product_id: p.id, area_sft: val } : { product_id: p.id, qty: val });
+				} else if (!isAuto) {
+					showToast('Enter a quantity or area greater than 0 for every row.', true);
+					return;
+				}
 			}
-			if (!items.length) { showToast('Add at least one item.', true); return; }
-			const waste = Number(document.getElementById('quoteWastage').value);
-			if (!(waste >= 0 && waste <= 50)) { showToast('Wastage must be between 0 and 50%.', true); return; }
+
+			if (!items.length) {
+				if (!isAuto) showToast('Add at least one item.', true);
+				return;
+			}
+
+			const waste = Number(document.getElementById('quoteWastage').value) || 10;
+			if (!(waste >= 0 && waste <= 50)) {
+				if (!isAuto) showToast('Wastage must be between 0 and 50%.', true);
+				return;
+			}
 
 			try {
 				const q = await productsApi('POST', '/api/products/quote', { items, wastage_pct: waste });
 				lastCalculatedQuote = q;
 				lastCalculatedItems = items;
 				const inr = n => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 				out.innerHTML = `
-					<table class="crm-table" style="margin-top:14px;"><thead><tr><th>Item</th><th style="text-align:right;">Qty</th><th style="text-align:right;">Rate</th><th style="text-align:right;">Amount</th></tr></thead><tbody>
-					${q.lines.map(l => `<tr>
-						<td>${pEsc(l.name)}${l.planks ? `<span style="font-size:11px;color:var(--adm-text-muted);display:block;">${pEsc(l.area_sft)} sq.ft + ${pEsc(l.wastage_pct)}% wastage → ${pEsc(l.planks)} planks (${pEsc(l.billed_sft)} sq.ft billed)</span>` : ''}${l.auto ? '<span style="font-size:11px;color:var(--adm-text-muted);display:block;">auto-added accessory</span>' : ''}</td>
-						<td style="text-align:right;">${pEsc(l.qty)} ${pEsc(l.unit)}</td>
-						<td style="text-align:right;">${inr(l.rate)}</td>
-						<td style="text-align:right;"><strong>${inr(l.amount)}</strong></td></tr>`).join('')}
-					</tbody><tfoot>
-						<tr><td colspan="3" style="text-align:right;">Subtotal (excl. GST)</td><td style="text-align:right;">${inr(q.subtotal)}</td></tr>
-						<tr><td colspan="3" style="text-align:right;">GST</td><td style="text-align:right;">${inr(q.gst)}</td></tr>
-						<tr><td colspan="3" style="text-align:right;"><strong>Total</strong></td><td style="text-align:right;"><strong>${inr(q.total)}</strong></td></tr>
-					</tfoot></table>
-					<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;">
-						<button type="button" class="btn-outline" onclick="downloadQuoteDoc()">Download Quote (.doc)</button>
-						<button type="button" class="btn-outline" onclick="convertQuoteToPipeline()">Convert to Pipeline</button>
-						<button type="button" class="btn-primary" onclick="convertQuoteToOrder()">Convert to Order</button>
-					</div>`;
+					<div style="overflow-x:auto;">
+						<table class="crm-table" style="width:100%;margin-bottom:12px;">
+							<thead>
+								<tr>
+									<th>Specification Line Item</th>
+									<th style="text-align:right;">Billed Qty</th>
+									<th style="text-align:right;">Unit Rate</th>
+									<th style="text-align:right;">Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+								${q.lines.map(l => `
+									<tr style="${l.auto ? 'background:#f0f9ff;' : ''}">
+										<td>
+											<strong style="color:var(--adm-text-main);font-size:13px;">${pEsc(l.name)}</strong>
+											${l.planks ? `<div style="font-size:11px;color:#0369a1;margin-top:2px;">${pEsc(l.area_sft)} sq.ft + ${pEsc(l.wastage_pct)}% wastage → <strong>${pEsc(l.planks)} planks</strong> (${pEsc(l.billed_sft)} sq.ft billed)</div>` : ''}
+											${l.auto ? `<div style="font-size:11px;color:#0369a1;font-weight:600;margin-top:2px;">🔩 Auto-calculated locking clip accessory</div>` : ''}
+										</td>
+										<td style="text-align:right;font-weight:600;">${pEsc(l.qty)} ${pEsc(l.unit)}</td>
+										<td style="text-align:right;color:#475569;">${inr(l.rate)}</td>
+										<td style="text-align:right;font-weight:700;color:var(--adm-text-main);">${inr(l.amount)}</td>
+									</tr>
+								`).join('')}
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="3" style="text-align:right;font-weight:600;color:#64748b;">Subtotal (excl. GST):</td>
+									<td style="text-align:right;font-weight:700;color:var(--adm-text-main);">${inr(q.subtotal)}</td>
+								</tr>
+								<tr>
+									<td colspan="3" style="text-align:right;font-weight:600;color:#64748b;">Commercial GST (18%):</td>
+									<td style="text-align:right;font-weight:700;color:var(--adm-text-main);">${inr(q.gst)}</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<div class="quote-total-grand">
+						<div class="quote-total-grand-lbl">Total Commercial Value (All-Inclusive)</div>
+						<div class="quote-total-grand-val">${inr(q.total)}</div>
+					</div>
+
+					<div style="display:flex;gap:8px;flex-direction:column;margin-top:14px;">
+						<div style="display:flex;gap:8px;flex-wrap:wrap;">
+							<button type="button" class="btn-primary" style="flex:1;background:var(--adm-green);justify-content:center;height:40px;" onclick="convertQuoteToOrder()">
+								🏆 Convert to Confirmed Order
+							</button>
+							<button type="button" class="btn-outline" style="flex:1;justify-content:center;height:40px;" onclick="convertQuoteToPipeline()">
+								⏳ Convert to Pipeline Deal
+							</button>
+						</div>
+						<div style="display:flex;gap:8px;flex-wrap:wrap;">
+							<button type="button" class="btn-outline" style="flex:1;justify-content:center;height:36px;font-size:12px;" onclick="downloadQuoteDoc()">
+								📄 Download Word Quotation (.doc)
+							</button>
+							<button type="button" class="btn-outline" style="justify-content:center;height:36px;font-size:12px;" onclick="window.print()">
+								🖨 Print BOQ
+							</button>
+						</div>
+					</div>
+				`;
 			} catch (err) {
-				out.innerHTML = '';
-				showToast(err.status === 401 ? 'Quote calculator needs a live server session. Please sign in again.' : err.message, true);
+				out.innerHTML = `
+					<div style="padding:20px;text-align:center;color:#b91c1c;background:#fee2e2;border-radius:8px;font-size:13px;">
+						${pEsc(err.status === 401 ? 'Quote calculator needs a live server session. Please sign in again.' : err.message)}
+					</div>
+				`;
+				if (!isAuto) showToast(err.message, true);
 			}
 		}
 
