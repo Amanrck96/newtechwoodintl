@@ -1,9 +1,16 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/index.py"
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.py": {
+      "includeFiles": "db/**",
+      "excludeFiles": "{wp-content/**,blog/**,product*/**,wp-*/**,artifacts/**,tests/**,scratch/**,info-center/**,locations/**,projects/**,video*/**,galleries/**,download/**,pdf/**,admin/**,*.html}"
+    }
+  }
 }

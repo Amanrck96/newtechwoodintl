@@ -1,0 +1,27 @@
+# ==============================================================================
+# Vercel Deployment Ignore Rules
+# Exclude test suites, internal artifacts, scratch files, and crawl utilities
+# (Static web assets like wp-content/ and blog/ are kept so Vercel CDN can serve them)
+# ==============================================================================
+
+# Test files and caches
+tests/
+.pytest_cache/
+
+# Internal reports and artifacts
+artifacts/
+scratch/
+failed_urls.txt
+
+# Standalone scripts and crawlers
+build_projects.py
+check_urls.py
+fix_urls.py
+mirror_site.py
+
+# Query crawl artifacts
+query_p_*/
+
+# Local config & container configs
+Dockerfile
+render.yaml
