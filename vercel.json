@@ -9,8 +9,7 @@
   ],
   "functions": {
     "api/**/*.py": {
-      "includeFiles": "db/**",
-      "excludeFiles": "{wp-content/**,blog/**,product*/**,wp-*/**,artifacts/**,tests/**,scratch/**,info-center/**,locations/**,projects/**,video*/**,galleries/**,download/**,pdf/**,admin/**,*.html}"
+      "includeFiles": "db/**"
     }
   }
 }
