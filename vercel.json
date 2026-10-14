@@ -3,13 +3,25 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/wp-content/:path*",
+      "destination": "https://newtechwood.in/wp-content/:path*"
+    },
+    {
+      "source": "/wp-includes/:path*",
+      "destination": "https://newtechwood.in/wp-includes/:path*"
+    },
+    {
+      "source": "/wp-json/:path*",
+      "destination": "https://newtechwood.in/wp-json/:path*"
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "https://newtechwood.in/blog/:path*"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/index.py"
     }
-  ],
-  "functions": {
-    "api/**/*.py": {
-      "includeFiles": "db/**"
-    }
-  }
+  ]
 }
+

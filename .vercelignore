@@ -1,27 +1,42 @@
 # ==============================================================================
 # Vercel Deployment Ignore Rules
-# Exclude test suites, internal artifacts, scratch files, and crawl utilities
-# (Static web assets like wp-content/ and blog/ are kept so Vercel CDN can serve them)
+# ==============================================================================
+# IMPORTANT: wp-content/, blog/, wp-includes/ and wp-json/ are excluded here
+# because Vercel's Python builder bundles ALL git-tracked files into the
+# serverless function (ignoring vercel.json excludeFiles for Python).
+# Static assets are proxied from newtechwood.in via rewrites in vercel.json.
 # ==============================================================================
 
-# Test files and caches
+# ── Large static WordPress asset directories (457 MB + 32 MB + 0.3 MB + 4 MB) ─
+wp-content/
+blog/
+wp-includes/
+wp-json/
+
+# ── Test files and caches ─────────────────────────────────────────────────────
 tests/
 .pytest_cache/
 
-# Internal reports and artifacts
+# ── Internal reports and artifacts ───────────────────────────────────────────
 artifacts/
 scratch/
 failed_urls.txt
 
-# Standalone scripts and crawlers
+# ── Standalone scripts and crawlers ──────────────────────────────────────────
 build_projects.py
 check_urls.py
 fix_urls.py
 mirror_site.py
 
-# Query crawl artifacts
+# ── Query crawl artifacts ─────────────────────────────────────────────────────
 query_p_*/
+query_p_map.json
 
-# Local config & container configs
+# ── Local config & container configs ─────────────────────────────────────────
 Dockerfile
 render.yaml
+
+# ── Python build caches ───────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+
