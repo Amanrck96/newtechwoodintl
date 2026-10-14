@@ -13,6 +13,7 @@ if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 try:
+    # pyrefly: ignore [missing-import]
     import api_router
 except Exception as _import_err:
     api_router = None
