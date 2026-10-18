@@ -891,15 +891,123 @@
 			}, 3500);
 		}
 
+		// Provisioned enterprise partner & admin accounts (enables seamless login on static GitHub Pages hosting & offline)
+		const PROVISIONED_USERS = [
+			{
+				id: 'admin',
+				vendor_id: 'ADMIN-001',
+				email: 'admin@newtechwood.in',
+				alternate_usernames: ['admin', 'admin_user'],
+				passwords: ['admin', 'admin123', 'admin@ntw2024'],
+				full_name: 'Super Administrator',
+				role: 'superadmin',
+				status: 'active',
+				permissions: '*'
+			},
+			{
+				id: 'vnd_aaren_6890',
+				vendor_id: 'DLR-2026-6890',
+				email: 'jignesh@aarenintpro.com',
+				alternate_usernames: ['dlr-2026-6890', 'jignesh', 'aaren', 'aarenintpro'],
+				passwords: ['admin'],
+				full_name: 'Aaren Intrpro',
+				phone: '+91 98200 68901',
+				role: 'dealer',
+				status: 'active',
+				permissions: 'waltz_orders,wholesale_catalog,invitations'
+			},
+			{
+				id: 'dlr_01',
+				vendor_id: 'DLR-902-IND',
+				email: 'dealer@lumberlife.in',
+				alternate_usernames: ['dlr-902-ind'],
+				passwords: ['dealer@2026', 'dealer'],
+				full_name: 'Lumber Life Premier Partner',
+				phone: '+91 98111 67890',
+				role: 'dealer',
+				status: 'active',
+				permissions: 'waltz_orders,wholesale_catalog,invitations'
+			},
+			{
+				id: 'arch_01',
+				vendor_id: 'VND-2026-001',
+				email: 'architect@studio.design',
+				alternate_usernames: ['vnd-2026-001'],
+				passwords: ['ultrashield2026', 'architect'],
+				full_name: 'Skyline Architecture Studio',
+				phone: '+91 98200 12345',
+				role: 'architect',
+				status: 'active',
+				permissions: 'gopro_cad,pipeline_specs,meetings,invitations'
+			},
+			{
+				id: 'sales_01',
+				vendor_id: 'SAL-2026-001',
+				email: 'sales@newtechwood.in',
+				alternate_usernames: ['sales'],
+				passwords: ['sales123'],
+				full_name: 'Rohan Verma',
+				phone: '+91 98333 45678',
+				role: 'sales',
+				status: 'active',
+				permissions: 'pipeline,orders,meetings,visitors'
+			}
+		];
+
+		function findMatchingUser(userInput, userPassword) {
+			const uLower = (userInput || '').trim().toLowerCase();
+			const pLower = (userPassword || '').trim().toLowerCase();
+			if (!uLower || !pLower) return null;
+
+			// Gather provisioned users + any created via Admin in localStorage
+			const list = [...PROVISIONED_USERS];
+			try {
+				const localStr = localStorage.getItem('ntw_users');
+				if (localStr) {
+					const parsed = JSON.parse(localStr);
+					if (Array.isArray(parsed)) {
+						parsed.forEach(u => {
+							list.push({
+								id: u.id || ('vnd_' + Math.random().toString(36).substr(2, 6)),
+								vendor_id: u.vendorId || u.vendor_id || u.id || '',
+								email: (u.email || '').toLowerCase(),
+								passwords: [u.password ? String(u.password).toLowerCase() : ''],
+								full_name: u.name || u.full_name || 'Partner',
+								phone: u.phone || '',
+								role: (u.role || 'dealer').toLowerCase(),
+								status: u.status || 'active',
+								permissions: u.permissions || 'waltz_orders,wholesale_catalog,invitations'
+							});
+						});
+					}
+				}
+			} catch (e) {}
+
+			for (const u of list) {
+				const emailMatch = u.email && u.email.toLowerCase() === uLower;
+				const vidMatch = u.vendor_id && u.vendor_id.toLowerCase() === uLower;
+				const altMatch = u.alternate_usernames && u.alternate_usernames.some(a => a.toLowerCase() === uLower);
+
+				if (emailMatch || vidMatch || altMatch) {
+					const hasPwdMatch = (u.passwords && u.passwords.some(p => p.toLowerCase() === pLower)) ||
+					                    (u.password && String(u.password).toLowerCase() === pLower);
+					if (hasPwdMatch) {
+						return u;
+					}
+				}
+			}
+			return null;
+		}
+
 		async function handleLoginSubmit(e) {
 			e.preventDefault();
-			const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-			const password = document.getElementById('loginPassword').value.trim();
+			const emailInput = document.getElementById('loginEmail').value.trim();
+			const passwordInput = document.getElementById('loginPassword').value.trim();
 			const remember = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : true;
 			const btn = document.getElementById('submitBtn');
 			const btnText = document.getElementById('btnText');
 
-			if (!email || !password) {
+			if (!emailInput || !passwordInput) {
 				showToast('Please enter both username/email and password.', true);
 				return;
 			}
@@ -907,96 +1015,70 @@
 			btn.disabled = true;
 			btnText.innerText = 'Verifying credentials...';
 
-			// 1. Try Backend SQLite REST API first
+			function applySessionAndRedirect(userObj) {
+				const sessionUser = {
+					id: userObj.id,
+					vendorId: userObj.vendor_id || userObj.id,
+					vendor_id: userObj.vendor_id || userObj.id,
+					name: userObj.full_name || userObj.name || 'User',
+					email: userObj.email,
+					role: (userObj.role || 'dealer').toLowerCase(),
+					status: userObj.status || 'active',
+					permissions: userObj.permissions || '',
+					token: userObj.token || ('ntw_session_' + Date.now())
+				};
+
+				if (remember) {
+					localStorage.setItem('ntw_session', JSON.stringify(sessionUser));
+					sessionStorage.removeItem('ntw_session');
+				} else {
+					sessionStorage.setItem('ntw_session', JSON.stringify(sessionUser));
+					localStorage.removeItem('ntw_session');
+				}
+
+				btn.disabled = false;
+				btnText.innerText = 'Sign In';
+				showToast(`Welcome back, ${sessionUser.name}! Opening portal...`);
+
+				setTimeout(() => {
+					if (sessionUser.role === 'admin' || sessionUser.role === 'superadmin' || sessionUser.role === 'sales') {
+						window.location.href = '/admin/';
+					} else {
+						window.location.href = '/admin/vendor.html';
+					}
+				}, 400);
+			}
+
+			// 1. Try Backend SQLite REST API first (works when served by python serve.py)
 			try {
 				const resp = await fetch('/api/auth/login', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email, password, remember })
+					body: JSON.stringify({ email: emailInput.toLowerCase(), password: passwordInput, remember })
 				});
+
 				if (resp.ok) {
-					const data = await resp.json();
+					const data = await resp.json().catch(() => ({}));
 					if (data.success && data.user) {
-						const sessionUser = {
-							id: data.user.id,
-							vendorId: data.user.vendor_id || data.user.id,
-							name: data.user.full_name,
-							email: data.user.email,
-							role: data.user.role,
-							status: data.user.status,
-							permissions: data.user.permissions || '',
-							token: data.token
-						};
-
-						if (remember) {
-							localStorage.setItem('ntw_session', JSON.stringify(sessionUser));
-							sessionStorage.removeItem('ntw_session');
-						} else {
-							sessionStorage.setItem('ntw_session', JSON.stringify(sessionUser));
-							localStorage.removeItem('ntw_session');
-						}
-
-						btn.disabled = false;
-						btnText.innerText = 'Sign In';
-						showToast(`Welcome back, ${sessionUser.name}! Opening dashboard...`);
-
-						setTimeout(() => {
-							if (sessionUser.role === 'admin' || sessionUser.role === 'superadmin' || sessionUser.role === 'sales') {
-								window.location.href = '/admin/';
-							} else {
-								window.location.href = '/admin/vendor.html';
-							}
-						}, 400);
+						applySessionAndRedirect(data.user);
 						return;
 					}
 				}
 
-				// Parse error response from backend
-				let errMsg = 'Access Denied: Invalid credentials. Please verify your details.';
-				try {
-					const errData = await resp.json();
-					if (errData) {
-						if (errData.error && errData.details && errData.error !== errData.details) {
-							errMsg = `${errData.error} (${errData.details})`;
-						} else {
-							errMsg = errData.error || errData.details || errMsg;
-						}
-					}
-				} catch (e) {}
-
-				// Master Admin resilience fallback (allows immediate admin access even if server is static / offline / 404 / 500)
-				const isMasterAdmin = (email.toLowerCase() === 'admin' || email.toLowerCase() === 'admin@newtechwood.in' || email.toLowerCase() === 'admin_user') && 
-				                      (password.toLowerCase() === 'admin' || password === 'admin123' || password === 'Admin@NTW2024' || password.toLowerCase() === 'admin@ntw2024');
-
-				if ((resp.status === 404 || resp.status >= 500) && isMasterAdmin) {
-					const sessionUser = {
-						id: 'admin',
-						vendorId: 'admin',
-						name: 'Super Administrator',
-						email: 'admin@newtechwood.in',
-						role: 'superadmin',
-						status: 'active',
-						permissions: '*',
-						token: 'ntw_local_superadmin_session'
-					};
-					if (remember) {
-						localStorage.setItem('ntw_session', JSON.stringify(sessionUser));
-						sessionStorage.removeItem('ntw_session');
-					} else {
-						sessionStorage.setItem('ntw_session', JSON.stringify(sessionUser));
-						localStorage.removeItem('ntw_session');
-					}
-					btn.disabled = false;
-					btnText.innerText = 'Sign In';
-					showToast('Welcome back, Super Administrator! Opening dashboard...');
-					setTimeout(() => { window.location.href = '/admin/'; }, 400);
+				// If backend rejected POST or is static (HTTP 405 on GitHub Pages, 404, 500, etc.)
+				const staticMatch = findMatchingUser(emailInput, passwordInput);
+				if (staticMatch) {
+					applySessionAndRedirect(staticMatch);
 					return;
 				}
 
-				if (resp.status === 404) {
-					errMsg = 'API endpoint not found (404). Please ensure you opened http://localhost:8000/login.html via python serve.py.';
-				} else if (resp.status >= 500) {
-					errMsg = `Server error (${resp.status}): ${errMsg}`;
+				// If failed both API and static fallback
+				let errMsg = 'Access Denied: Invalid credentials. Please verify your Vendor ID/Email and password.';
+				if (resp.status !== 405 && resp.status !== 404) {
+					try {
+						const errData = await resp.json();
+						if (errData && errData.error) errMsg = errData.error;
+					} catch (errJson) {}
 				}
 
 				btn.disabled = false;
@@ -1004,35 +1086,16 @@
 				showToast(errMsg, true);
 				return;
 			} catch (apiErr) {
-				const isMasterAdmin = (email.toLowerCase() === 'admin' || email.toLowerCase() === 'admin@newtechwood.in' || email.toLowerCase() === 'admin_user') && 
-				                      (password.toLowerCase() === 'admin' || password === 'admin123' || password === 'Admin@NTW2024' || password.toLowerCase() === 'admin@ntw2024');
-				if (isMasterAdmin) {
-					const sessionUser = {
-						id: 'admin',
-						vendorId: 'admin',
-						name: 'Super Administrator',
-						email: 'admin@newtechwood.in',
-						role: 'superadmin',
-						status: 'active',
-						permissions: '*',
-						token: 'ntw_local_superadmin_session'
-					};
-					if (remember) {
-						localStorage.setItem('ntw_session', JSON.stringify(sessionUser));
-						sessionStorage.removeItem('ntw_session');
-					} else {
-						sessionStorage.setItem('ntw_session', JSON.stringify(sessionUser));
-						localStorage.removeItem('ntw_session');
-					}
-					btn.disabled = false;
-					btnText.innerText = 'Sign In';
-					showToast('Welcome back, Super Administrator! Opening dashboard...');
-					setTimeout(() => { window.location.href = '/admin/'; }, 400);
+				// Network error / offline / CORS - check static fallback
+				const staticMatch = findMatchingUser(emailInput, passwordInput);
+				if (staticMatch) {
+					applySessionAndRedirect(staticMatch);
 					return;
 				}
+
 				btn.disabled = false;
 				btnText.innerText = 'Sign In';
-				showToast('Cannot connect to authentication server. Please ensure python serve.py is running on http://localhost:8000.', true);
+				showToast('Access Denied: Invalid credentials or network unreachable.', true);
 				return;
 			}
 		}

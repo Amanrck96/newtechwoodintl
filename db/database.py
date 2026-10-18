@@ -93,6 +93,7 @@ def _bootstrap_db(db_path: str) -> None:
                     ("sales_01", "SAL-2026-001", "sales@newtechwood.in", _hash_pw("sales123"), "Rohan Verma", "+91 98333 45678", "sales", "active", "pipeline,orders,meetings,visitors", "RV"),
                     ("arch_01", "VND-2026-001", "architect@studio.design", _hash_pw("UltraShield2026"), "Skyline Architecture Studio", "+91 98200 12345", "architect", "active", "gopro_cad,pipeline_specs,meetings,invitations", "SK"),
                     ("dlr_01", "DLR-902-IND", "dealer@lumberlife.in", _hash_pw("Dealer@2026"), "Lumber Life Premier Partner", "+91 98111 67890", "dealer", "active", "waltz_orders,wholesale_catalog,invitations", "LL"),
+                    ("vnd_aaren_6890", "DLR-2026-6890", "jignesh@aarenintpro.com", _hash_pw("Admin"), "Aaren Intrpro", "+91 98200 68901", "dealer", "active", "waltz_orders,wholesale_catalog,invitations", "AI"),
                 ]
                 cur.executemany("""
                     INSERT OR REPLACE INTO users (id, vendor_id, email, password, full_name, phone, role, status, permissions, avatar_initials)

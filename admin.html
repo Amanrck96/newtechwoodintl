@@ -7460,8 +7460,24 @@
 				loaded = [
 					{ id: 'admin', vendor_id: 'ADMIN-001', full_name: 'Super Administrator', email: 'admin@newtechwood.in', password: 'admin', role: 'superadmin', status: 'active', phone: '+91 99999 00001', permissions: 'all' },
 					{ id: 'arch_01', vendor_id: 'VND-2026-001', full_name: 'Skyline Architecture Studio', email: 'architect@studio.design', password: 'UltraShield2026', role: 'architect', status: 'active', phone: '+91 98200 12345', permissions: 'gopro_cad,pipeline_specs,meetings,invitations' },
-					{ id: 'dlr_01', vendor_id: 'DLR-902-IND', full_name: 'Lumber Life Premier Partner', email: 'dealer@lumberlife.in', password: 'Dealer@2026', role: 'dealer', status: 'active', phone: '+91 98111 67890', permissions: 'waltz_orders,wholesale_catalog,invitations' }
+					{ id: 'dlr_01', vendor_id: 'DLR-902-IND', full_name: 'Lumber Life Premier Partner', email: 'dealer@lumberlife.in', password: 'Dealer@2026', role: 'dealer', status: 'active', phone: '+91 98111 67890', permissions: 'waltz_orders,wholesale_catalog,invitations' },
+					{ id: 'vnd_aaren_6890', vendor_id: 'DLR-2026-6890', full_name: 'Aaren Intrpro', email: 'jignesh@aarenintpro.com', password: 'Admin', role: 'dealer', status: 'active', phone: '+91 98200 68901', permissions: 'waltz_orders,wholesale_catalog,invitations' }
 				];
+			}
+
+			// Ensure Aaren Intrpro is always present in vendor roster
+			if (!loaded.some(v => (v.email || '').toLowerCase() === 'jignesh@aarenintpro.com' || (v.vendor_id || '').toLowerCase() === 'dlr-2026-6890')) {
+				loaded.push({
+					id: 'vnd_aaren_6890',
+					vendor_id: 'DLR-2026-6890',
+					full_name: 'Aaren Intrpro',
+					email: 'jignesh@aarenintpro.com',
+					password: 'Admin',
+					role: 'dealer',
+					status: 'active',
+					phone: '+91 98200 68901',
+					permissions: 'waltz_orders,wholesale_catalog,invitations'
+				});
 			}
 
 			vendorsList = loaded;
