@@ -954,13 +954,27 @@
 			}
 		];
 
+		// Dynamically preload vendors.json from static host on page startup
+		let remoteVendorsList = [];
+		(async function preloadVendors() {
+			try {
+				const res = await fetch('/vendors.json?t=' + Date.now());
+				if (res.ok) {
+					const data = await res.json();
+					if (Array.isArray(data)) {
+						remoteVendorsList = data;
+					}
+				}
+			} catch (e) {}
+		})();
+
 		function findMatchingUser(userInput, userPassword) {
 			const uLower = (userInput || '').trim().toLowerCase();
 			const pLower = (userPassword || '').trim().toLowerCase();
 			if (!uLower || !pLower) return null;
 
-			// Gather provisioned users + any created via Admin in localStorage
-			const list = [...PROVISIONED_USERS];
+			// Gather remote live vendors + provisioned defaults + local storage
+			const list = [...remoteVendorsList, ...PROVISIONED_USERS];
 			try {
 				const localStr = localStorage.getItem('ntw_users');
 				if (localStr) {

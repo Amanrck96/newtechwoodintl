@@ -1,0 +1,62 @@
+[
+  {
+    "id": "admin",
+    "vendor_id": "ADMIN-001",
+    "full_name": "Super Administrator",
+    "email": "admin@newtechwood.in",
+    "alternate_usernames": ["admin", "admin_user"],
+    "passwords": ["admin", "admin123", "admin@ntw2024"],
+    "role": "superadmin",
+    "status": "active",
+    "phone": "+91 99999 00001",
+    "permissions": "*"
+  },
+  {
+    "id": "vnd_aaren_6890",
+    "vendor_id": "DLR-2026-6890",
+    "full_name": "Aaren Intrpro",
+    "email": "jignesh@aarenintpro.com",
+    "alternate_usernames": ["dlr-2026-6890", "jignesh", "aaren", "aarenintpro"],
+    "passwords": ["admin"],
+    "role": "dealer",
+    "status": "active",
+    "phone": "+91 98200 68901",
+    "permissions": "waltz_orders,wholesale_catalog,invitations"
+  },
+  {
+    "id": "dlr_01",
+    "vendor_id": "DLR-902-IND",
+    "full_name": "Lumber Life Premier Partner",
+    "email": "dealer@lumberlife.in",
+    "alternate_usernames": ["dlr-902-ind"],
+    "passwords": ["dealer@2026", "dealer"],
+    "role": "dealer",
+    "status": "active",
+    "phone": "+91 98111 67890",
+    "permissions": "waltz_orders,wholesale_catalog,invitations"
+  },
+  {
+    "id": "arch_01",
+    "vendor_id": "VND-2026-001",
+    "full_name": "Skyline Architecture Studio",
+    "email": "architect@studio.design",
+    "alternate_usernames": ["vnd-2026-001"],
+    "passwords": ["ultrashield2026", "architect"],
+    "role": "architect",
+    "status": "active",
+    "phone": "+91 98200 12345",
+    "permissions": "gopro_cad,pipeline_specs,meetings,invitations"
+  },
+  {
+    "id": "sales_01",
+    "vendor_id": "SAL-2026-001",
+    "full_name": "Rohan Verma",
+    "email": "sales@newtechwood.in",
+    "alternate_usernames": ["sales"],
+    "passwords": ["sales123"],
+    "role": "sales",
+    "status": "active",
+    "phone": "+91 98333 45678",
+    "permissions": "pipeline,orders,meetings,visitors"
+  }
+]

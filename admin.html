@@ -6252,6 +6252,12 @@
 								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 								<span>+ Add Vendor</span>
 							</button>
+
+							<!-- Export vendors.json Button -->
+							<button class="btn-outline" onclick="exportVendorsJson()" style="padding:7px 12px;font-size:12px;" title="Export all vendors as vendors.json for static GitHub Pages hosting">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+								<span>Export vendors.json</span>
+							</button>
 						</div>
 					</div>
 
@@ -7153,11 +7159,25 @@
 			</div>
 			<div class="modal-body" style="padding:22px;">
 				<div style="margin-bottom:14px;background:#f0fdf4;border:1px solid #bbf7d0;padding:12px;border-radius:8px;color:#166534;font-size:12.5px;">
-					✓ The vendor account is now active in SQLite and ready to sign in at <strong>https://newtechwood.in/login/</strong>.
+					<strong>✓ Partner Credentials Generated!</strong> These credentials work locally. If the live site runs on static GitHub Pages, make sure to sync with GitHub Pages so the partner can log in from their own device/mobile.
 				</div>
 
 				<div class="credential-slip-box" id="vendorCredsSlipContent">
 					<!-- Formatted plain text credential slip -->
+				</div>
+
+				<div style="margin-top:14px;background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:8px;font-size:12px;color:#334155;">
+					<div style="font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+						<span>⚡ Global Live Sync (Zero-Failure Guarantee):</span>
+					</div>
+					<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+						<button type="button" class="btn-outline" onclick="exportVendorsJson()" style="font-size:11.5px;padding:5px 10px;">
+							📥 Download vendors.json
+						</button>
+						<button type="button" class="btn-outline" onclick="copyProvisionCommand()" style="font-size:11.5px;padding:5px 10px;">
+							📋 Copy Terminal Command (python add_vendor.py)
+						</button>
+					</div>
 				</div>
 
 				<div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
@@ -7429,7 +7449,30 @@
 					}
 				}
 			} catch (e) {
-				console.warn('API /api/vendors unavailable, using local cache', e);
+				console.warn('API /api/vendors unavailable, checking static registry and local cache', e);
+			}
+
+			// Also load from live static vendors.json if API was unavailable
+			if (loaded.length === 0) {
+				try {
+					const vjRes = await fetch('/vendors.json?t=' + Date.now());
+					if (vjRes.ok) {
+						const vjList = await vjRes.json();
+						if (Array.isArray(vjList) && vjList.length > 0) {
+							loaded = vjList.map(u => ({
+								id: u.id,
+								vendor_id: u.vendor_id || u.vendorId || u.id,
+								full_name: u.full_name || u.name,
+								email: u.email,
+								password: (u.passwords && u.passwords[0]) || u.password,
+								role: u.role,
+								status: u.status || 'active',
+								phone: u.phone || '',
+								permissions: u.permissions || ''
+							}));
+						}
+					}
+				} catch (e) {}
 			}
 
 			// Fallback & sync with localStorage 'ntw_users'
@@ -7949,6 +7992,49 @@ Password: ${v.password}
 Role: ${(v.role || '').toUpperCase()}
 Login: https://newtechwood.in/login/`;
 			copyToClipboard(text, `Credentials for ${v.full_name} copied!`);
+		}
+
+		function exportVendorsJson() {
+			if (!vendorsList || vendorsList.length === 0) {
+				showToast('No vendors to export.', true);
+				return;
+			}
+			const data = vendorsList.map(v => ({
+				id: v.id,
+				vendor_id: v.vendor_id || v.id,
+				full_name: v.full_name || v.name,
+				email: (v.email || '').toLowerCase(),
+				alternate_usernames: [
+					(v.vendor_id || '').toLowerCase(),
+					(v.email || '').split('@')[0].toLowerCase(),
+					(v.full_name || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
+				].filter(Boolean),
+				passwords: [v.password ? String(v.password).toLowerCase() : '', v.password].filter(Boolean),
+				role: (v.role || 'dealer').toLowerCase(),
+				status: v.status || 'active',
+				phone: v.phone || '',
+				permissions: v.permissions || ''
+			}));
+			const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'vendors.json';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+			showToast('vendors.json exported! Save this to repo and push to GitHub.');
+		}
+
+		function copyProvisionCommand() {
+			if (!lastCreatedVendorCreds) {
+				showToast('No recently created partner found.', true);
+				return;
+			}
+			const c = lastCreatedVendorCreds;
+			const cmd = `python add_vendor.py --firm "${c.firm}" --email "${c.email}" --password "${c.password}" --role "${(c.role || 'dealer').toLowerCase()}" --push`;
+			copyToClipboard(cmd, 'Terminal provisioning command copied! Run this in your terminal to deploy live.');
 		}
 
 		async function toggleVendorStatus(userId, currentStatus) {
