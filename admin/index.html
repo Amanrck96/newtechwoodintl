@@ -8251,46 +8251,59 @@ Login: https://newtechwood.in/login/`;
 			const tbody = document.getElementById('inboxTableBody');
 			if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--adm-text-muted);">Loading vendor requests...</td></tr>`;
 
+			let loaded = false;
 			try {
 				const res = await apiFetch('/api/admin/vendor-inbox?limit=100');
-				if (!res.ok) {
-					if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:#dc2626;">Failed to load vendor inbox.</td></tr>`;
-					return;
+				if (res && res.ok) {
+					const data = await res.json();
+					currentInboxRequests = data.requests || [];
+					loaded = true;
 				}
-				const data = await res.json();
-				currentInboxRequests = data.requests || [];
+			} catch (err) {}
 
-				// Update metrics
-				const totalEl = document.getElementById('inbox-count-total');
-				const newEl = document.getElementById('inbox-count-new');
-				const progEl = document.getElementById('inbox-count-progress');
-				const overdueEl = document.getElementById('inbox-count-overdue');
-				const badgeEl = document.getElementById('badge-inbox-new');
-
-				const totalCount = currentInboxRequests.length;
-				const newCount = currentInboxRequests.filter(r => r.status === 'New').length;
-				const progressCount = currentInboxRequests.filter(r => ['In Review', 'Quoted/Approved', 'In Progress'].includes(r.status)).length;
-				const overdueCount = currentInboxRequests.filter(r => r.sla && r.sla.color === 'red').length;
-
-				if (totalEl) totalEl.innerText = totalCount;
-				if (newEl) newEl.innerText = newCount;
-				if (progEl) progEl.innerText = progressCount;
-				if (overdueEl) overdueEl.innerText = overdueCount;
-
-				if (badgeEl) {
-					if (newCount > 0) {
-						badgeEl.innerText = newCount;
-						badgeEl.style.display = 'inline-block';
-					} else {
-						badgeEl.style.display = 'none';
+			if (!loaded || currentInboxRequests.length === 0) {
+				let localReqs = [];
+				try {
+					for (let i = 0; i < localStorage.length; i++) {
+						const k = localStorage.key(i);
+						if (k && k.startsWith('ntw_partner_requests_')) {
+							const arr = JSON.parse(localStorage.getItem(k));
+							if (Array.isArray(arr)) localReqs.push(...arr);
+						}
 					}
+				} catch (e) {}
+				if (localReqs.length > 0) {
+					currentInboxRequests = localReqs;
 				}
-
-				applyInboxFilters();
-			} catch (err) {
-				console.error('Error loading vendor inbox:', err);
-				if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:#dc2626;">Network error loading vendor inbox.</td></tr>`;
 			}
+
+			// Update metrics
+			const totalEl = document.getElementById('inbox-count-total');
+			const newEl = document.getElementById('inbox-count-new');
+			const progEl = document.getElementById('inbox-count-progress');
+			const overdueEl = document.getElementById('inbox-count-overdue');
+			const badgeEl = document.getElementById('badge-inbox-new');
+
+			const totalCount = currentInboxRequests.length;
+			const newCount = currentInboxRequests.filter(r => r.status === 'New').length;
+			const progressCount = currentInboxRequests.filter(r => ['In Review', 'Quoted/Approved', 'In Progress'].includes(r.status)).length;
+			const overdueCount = currentInboxRequests.filter(r => r.sla && r.sla.color === 'red').length;
+
+			if (totalEl) totalEl.innerText = totalCount;
+			if (newEl) newEl.innerText = newCount;
+			if (progEl) progEl.innerText = progressCount;
+			if (overdueEl) overdueEl.innerText = overdueCount;
+
+			if (badgeEl) {
+				if (newCount > 0) {
+					badgeEl.innerText = newCount;
+					badgeEl.style.display = 'inline-block';
+				} else {
+					badgeEl.style.display = 'none';
+				}
+			}
+
+			applyInboxFilters();
 		}
 
 		function applyInboxFilters() {

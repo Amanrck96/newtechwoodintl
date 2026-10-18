@@ -956,7 +956,7 @@
 
 		// Dynamically preload vendors.json from static host on page startup
 		let remoteVendorsList = [];
-		(async function preloadVendors() {
+		let preloadVendorsPromise = (async function preloadVendors() {
 			try {
 				const res = await fetch('/vendors.json?t=' + Date.now());
 				if (res.ok) {
@@ -1006,6 +1006,9 @@
 					const hasPwdMatch = (u.passwords && u.passwords.some(p => p.toLowerCase() === pLower)) ||
 					                    (u.password && String(u.password).toLowerCase() === pLower);
 					if (hasPwdMatch) {
+						if (u.status && u.status.toLowerCase() !== 'active') {
+							return { ...u, is_suspended: true };
+						}
 						return u;
 					}
 				}
@@ -1015,6 +1018,7 @@
 
 		async function handleLoginSubmit(e) {
 			e.preventDefault();
+			try { if (preloadVendorsPromise) await preloadVendorsPromise; } catch (e) {}
 			const emailInput = document.getElementById('loginEmail').value.trim();
 			const passwordInput = document.getElementById('loginPassword').value.trim();
 			const remember = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : true;
@@ -1082,6 +1086,12 @@
 				// If backend rejected POST or is static (HTTP 405 on GitHub Pages, 404, 500, etc.)
 				const staticMatch = findMatchingUser(emailInput, passwordInput);
 				if (staticMatch) {
+					if (staticMatch.is_suspended) {
+						btn.disabled = false;
+						btnText.innerText = 'Sign In';
+						showToast('Access Suspended: This account is currently deactivated. Please contact admin@newtechwood.in.', true);
+						return;
+					}
 					applySessionAndRedirect(staticMatch);
 					return;
 				}
@@ -1103,6 +1113,12 @@
 				// Network error / offline / CORS - check static fallback
 				const staticMatch = findMatchingUser(emailInput, passwordInput);
 				if (staticMatch) {
+					if (staticMatch.is_suspended) {
+						btn.disabled = false;
+						btnText.innerText = 'Sign In';
+						showToast('Access Suspended: This account is currently deactivated. Please contact admin@newtechwood.in.', true);
+						return;
+					}
 					applySessionAndRedirect(staticMatch);
 					return;
 				}
@@ -1144,7 +1160,7 @@
 				if (sessionStr) {
 					const sess = JSON.parse(sessionStr);
 					if (sess && sess.role) {
-						if (sess.role === 'admin' || sess.role === 'superadmin') {
+						if (sess.role === 'admin' || sess.role === 'superadmin' || sess.role === 'sales') {
 							window.location.replace('/admin/');
 						} else {
 							window.location.replace('/admin/vendor.html');
