@@ -150,7 +150,7 @@ class RangeRequestHandler(http.server.SimpleHTTPRequestHandler):
                           format % args))
 
 class ThreadingTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-    allow_reuse_address = True
+    allow_reuse_address = False if sys.platform == 'win32' else True
     daemon_threads = True
 
 def main():

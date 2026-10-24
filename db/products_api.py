@@ -17,7 +17,7 @@ import math
 import os
 import re
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 import database
 
@@ -38,7 +38,7 @@ COLUMNS = (
     "id, sl_no, name, code, category, item_type, image_url, dimensions, length_mm, "
     "width_mm, thickness_mm, price, dealer_price, architect_price, price_unit, gst_extra, "
     "gst_pct, application, clip_product_id, clips_per_plank, variants, validity_date, "
-    "stock_status, lead_time_days, needs_better_image, status, updated_at"
+    "stock_status, lead_time_days, needs_better_image, status, is_free_sample, updated_at"
 )
 
 
@@ -522,13 +522,26 @@ def generate_quote_document_html(quote_data, client_name="Valued Client", projec
 
 # ---------------------------------------------------------------- handlers
 def _list(handler, qs):
-    user = _auth(handler, READ_ROLES)
-    tier = qs.get('tier', [None])[0] or user.get('role', 'standard')
+    is_sample_query = (
+        qs.get('free_samples_only', ['0'])[0] in ('1', 'true', 'True') or
+        qs.get('sample_only', ['0'])[0] in ('1', 'true', 'True')
+    )
+    user = None
+    if not is_sample_query:
+        user = _auth(handler, READ_ROLES)
+        tier = qs.get('tier', [None])[0] or user.get('role', 'standard')
+    else:
+        tier = 'standard'
 
     where, params = [], []
     search = (qs.get('search', [''])[0] or '').strip().lower()
     category = (qs.get('category', ['all'])[0] or 'all').strip()
     status = (qs.get('status', ['all'])[0] or 'all').strip()
+
+    if is_sample_query:
+        where.append("is_free_sample = 1")
+        if status.lower() == 'all':
+            where.append("status = 'active'")
 
     if search:
         where.append("(lower(name) LIKE ? OR lower(COALESCE(code,'')) LIKE ? OR lower(COALESCE(application,'')) LIKE ?)")
@@ -554,6 +567,211 @@ def _get_one(handler, pid, qs):
     tier = qs.get('tier', [None])[0] or user.get('role', 'standard')
     p = get_product_for_tier(pid, tier=tier)
     _api().send_json(handler, {"success": True, "product": p})
+
+
+def _generate_sample_ref():
+    year = date.today().year
+    prefix = f"SMP-{year}-"
+    try:
+        with database.get_connection() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT ref_no FROM vendor_requests WHERE ref_no LIKE ? ORDER BY id DESC LIMIT 1", (f"{prefix}%",))
+            row = cur.fetchone()
+            if row and row[0]:
+                try:
+                    last_num = int(row[0].split("-")[-1])
+                    seq = last_num + 1
+                except Exception:
+                    seq = 1
+            else:
+                seq = 1
+            return f"{prefix}{seq:04d}"
+    except Exception:
+        return f"{prefix}{uuid.uuid4().hex[:4].upper()}"
+
+
+def _create_sample_request(handler, body):
+    client_name = (body.get('client_name') or body.get('name') or '').strip()
+    phone = (body.get('phone') or '').strip()
+    email = (body.get('email') or '').strip()
+    address = (body.get('shipping_address') or body.get('address') or '').strip()
+    city = (body.get('city') or '').strip()
+    state = (body.get('state') or '').strip()
+    pincode = (body.get('pincode') or '').strip()
+    profession = (body.get('profession') or body.get('role') or 'Architect').strip()
+    project_type = (body.get('project_type') or 'Residential').strip()
+    samples = body.get('samples') or []
+
+    if not client_name:
+        raise ApiError("Full name is required", 400)
+    if not phone or len(phone) < 8:
+        raise ApiError("Valid contact phone number is required", 400)
+    if not address:
+        raise ApiError("Shipping delivery address is required", 400)
+    if not samples or not isinstance(samples, list) or len(samples) == 0:
+        raise ApiError("Please select at least 1 free sample swatch", 400)
+
+    ref_no = _generate_sample_ref()
+    item_descs = [f"{s.get('product_name') or 'Product'} ({s.get('variant') or 'Finish'})" for s in samples[:3]]
+    title = f"Free Sample Kit: {', '.join(item_descs)} for {client_name} ({city or 'India'})"
+    if len(samples) > 3:
+        title += f" +{len(samples)-3} more"
+
+    details_payload = {
+        "client_name": client_name,
+        "phone": phone,
+        "email": email,
+        "profession": profession,
+        "project_type": project_type,
+        "shipping_address": address,
+        "city": city,
+        "state": state,
+        "pincode": pincode,
+        "samples": samples,
+        "sample_count": len(samples),
+        "notes": body.get('notes', ''),
+        "source": "Free Samples Web Pager",
+        "timestamp": datetime.now().isoformat()
+    }
+
+    due_date = (datetime.now() + timedelta(days=2)).strftime('%Y-%m-%d')
+    database.execute_commit("""
+        INSERT INTO vendor_requests (
+            ref_no, vendor_user_id, type, title, details, priority, status, assigned_to, due_date
+        ) VALUES (?, 'public_guest', 'Sample request', ?, ?, 'Medium', 'New', 'admin', ?);
+    """, (ref_no, title, json.dumps(details_payload), due_date))
+
+    # Add notification for admin CRM
+    try:
+        database.execute_commit("""
+            INSERT INTO notifications (
+                user_id, title, message, channel, is_read, metadata
+            ) VALUES ('admin', ?, ?, 'in_app', 0, ?);
+        """, (
+            f"New Sample Kit Request #{ref_no}",
+            f"{client_name} ({profession}, {city}) requested {len(samples)} architectural samples.",
+            json.dumps({"link": "/admin/index.html#requests", "ref_no": ref_no, "type": "sample_request"})
+        ))
+    except Exception:
+        pass
+
+    _api().send_json(handler, {
+        "success": True,
+        "ref_no": ref_no,
+        "sample_count": len(samples),
+        "message": "Your complimentary sample kit request has been received! Our dispatch team will send tracking details shortly."
+    }, 201)
+
+
+def _toggle_sample_eligibility(handler, pid, body):
+    _auth(handler, WRITE_ROLES)
+    val = 1 if body.get('is_free_sample') in (1, '1', True, 'true') else 0
+    p = database.execute_one("SELECT id, name FROM products WHERE id = ?;", (pid,))
+    if not p:
+        raise ApiError("Product not found", 404)
+    database.execute_commit("UPDATE products SET is_free_sample = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?;", (val, pid))
+    _api().send_json(handler, {
+        "success": True,
+        "product_id": pid,
+        "is_free_sample": val,
+        "message": f"Product sample eligibility {'enabled' if val == 1 else 'disabled'}"
+    })
+
+
+def _bulk_sample_eligibility(handler, body):
+    _auth(handler, WRITE_ROLES)
+    product_ids = body.get('product_ids') or []
+    if not product_ids or not isinstance(product_ids, list):
+        raise ApiError("product_ids list is required", 400)
+    val = 1 if body.get('is_free_sample') in (1, '1', True, 'true') else 0
+    placeholders = ','.join(['?'] * len(product_ids))
+    with database.get_connection() as conn:
+        conn.execute(f"UPDATE products SET is_free_sample = ?, updated_at = CURRENT_TIMESTAMP WHERE id IN ({placeholders});", (val, *product_ids))
+        conn.commit()
+    _api().send_json(handler, {
+        "success": True,
+        "updated_count": len(product_ids),
+        "is_free_sample": val,
+        "message": f"Successfully updated {len(product_ids)} products to {'Sample Eligible' if val == 1 else 'Sample Ineligible'}"
+    })
+
+
+def _create_product(handler, body):
+    _auth(handler, WRITE_ROLES)
+    name = (body.get('name') or '').strip()
+    if not name:
+        raise ApiError("Product name is required", 400)
+    category = body.get('category') or 'Cladding'
+    if category not in CATEGORIES:
+        raise ApiError(f"Category must be one of {CATEGORIES}", 400)
+    pid = body.get('id') or f"PRD-{uuid.uuid4().hex[:6].upper()}"
+    price = float(body.get('price') or 0.0)
+    price_unit = body.get('price_unit') or 'SFT'
+    variants_json = json.dumps(body.get('variants') or ["Antique", "Teak", "IPE", "Maple"]) if not isinstance(body.get('variants'), str) else body.get('variants')
+    is_free_sample = 1 if body.get('is_free_sample') in (1, '1', True, 'true') else 0
+
+    database.execute_commit("""
+        INSERT INTO products (
+            id, sl_no, name, code, category, item_type, image_url, dimensions,
+            length_mm, width_mm, thickness_mm, price, dealer_price, architect_price,
+            price_unit, gst_extra, gst_pct, application, clip_product_id, clips_per_plank,
+            variants, validity_date, stock_status, lead_time_days, needs_better_image,
+            status, is_free_sample
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """, (
+        pid, body.get('sl_no'), name, body.get('code'), category, body.get('item_type', 'main'),
+        body.get('image_url'), body.get('dimensions'), body.get('length_mm'), body.get('width_mm'),
+        body.get('thickness_mm'), price, body.get('dealer_price'), body.get('architect_price'),
+        price_unit, 1 if body.get('gst_extra', 1) else 0, float(body.get('gst_pct') or 18.0),
+        body.get('application'), body.get('clip_product_id'), body.get('clips_per_plank'),
+        variants_json, body.get('validity_date'), body.get('stock_status', 'in_stock'),
+        int(body.get('lead_time_days') or 7), 1 if body.get('needs_better_image') else 0,
+        body.get('status', 'active'), is_free_sample
+    ))
+    _api().send_json(handler, {"success": True, "product_id": pid, "message": "Product created successfully"}, 201)
+
+
+def _update_product(handler, pid, body):
+    _auth(handler, WRITE_ROLES)
+    p = database.execute_one("SELECT id FROM products WHERE id = ?;", (pid,))
+    if not p:
+        raise ApiError("Product not found", 404)
+
+    fields = []
+    params = []
+    updatable = [
+        'name', 'code', 'category', 'item_type', 'image_url', 'dimensions',
+        'length_mm', 'width_mm', 'thickness_mm', 'price', 'dealer_price', 'architect_price',
+        'price_unit', 'gst_extra', 'gst_pct', 'application', 'clip_product_id', 'clips_per_plank',
+        'variants', 'validity_date', 'stock_status', 'lead_time_days', 'needs_better_image',
+        'status', 'is_free_sample'
+    ]
+    for k in updatable:
+        if k in body:
+            val = body[k]
+            if k == 'variants' and not isinstance(val, str):
+                val = json.dumps(val)
+            elif k in ('is_free_sample', 'gst_extra', 'needs_better_image'):
+                val = 1 if val in (1, '1', True, 'true') else 0
+            fields.append(f"{k} = ?")
+            params.append(val)
+
+    if fields:
+        fields.append("updated_at = CURRENT_TIMESTAMP")
+        params.append(pid)
+        sql = f"UPDATE products SET {', '.join(fields)} WHERE id = ?;"
+        database.execute_commit(sql, tuple(params))
+
+    _api().send_json(handler, {"success": True, "product_id": pid, "message": "Product updated successfully"})
+
+
+def _delete_product(handler, pid):
+    _auth(handler, WRITE_ROLES)
+    p = database.execute_one("SELECT id, name FROM products WHERE id = ?;", (pid,))
+    if not p:
+        raise ApiError("Product not found", 404)
+    database.execute_commit("DELETE FROM products WHERE id = ?;", (pid,))
+    _api().send_json(handler, {"success": True, "product_id": pid, "message": "Product deleted successfully"})
 
 
 def _quote(handler, body):
@@ -641,7 +859,7 @@ def _upload_image(handler, body):
 
 # ---------------------------------------------------------------- router hook
 def route(handler, method, path, qs=None, body=None):
-    if not path.startswith('/api/products'):
+    if not (path.startswith('/api/products') or path.startswith('/api/samples')):
         return False
 
     parts = [p for p in path.split('/') if p]
@@ -649,9 +867,21 @@ def route(handler, method, path, qs=None, body=None):
     body = body or {}
 
     try:
+        # Public sample endpoints
+        if path == '/api/samples/products':
+            if method == 'GET':
+                _list(handler, {**qs, 'free_samples_only': ['1']})
+                return True
+        elif path == '/api/samples/request':
+            if method == 'POST':
+                _create_sample_request(handler, body)
+                return True
+
         if method == 'GET':
-            if len(parts) == 2:
+            if len(parts) == 2 and parts[1] == 'products':
                 _list(handler, qs)
+            elif len(parts) == 3 and parts[2] == 'samples':
+                _list(handler, {**qs, 'free_samples_only': ['1']})
             elif len(parts) == 3 and parts[2] == 'chart':
                 _api().send_json(handler, get_product_chart_data())
             elif len(parts) == 3:
@@ -666,7 +896,9 @@ def route(handler, method, path, qs=None, body=None):
                 raise ApiError("Endpoint not found", 404)
 
         elif method == 'POST':
-            if len(parts) == 3 and parts[2] == 'quote':
+            if len(parts) == 2 and parts[1] == 'products':
+                _create_product(handler, body)
+            elif len(parts) == 3 and parts[2] == 'quote':
                 _quote(handler, body)
             elif len(parts) == 4 and parts[2] == 'quote' and parts[3] == 'convert':
                 _convert_quote(handler, body)
@@ -689,6 +921,22 @@ def route(handler, method, path, qs=None, body=None):
                 _api().send_json(handler, res)
             elif len(parts) == 3 and parts[2] == 'upload-image':
                 _upload_image(handler, body)
+            else:
+                raise ApiError("Endpoint not found", 404)
+
+        elif method == 'PUT':
+            if len(parts) == 4 and parts[2] == 'sample-eligibility' and parts[3] == 'bulk':
+                _bulk_sample_eligibility(handler, body)
+            elif len(parts) == 4 and parts[3] == 'sample-eligibility':
+                _toggle_sample_eligibility(handler, parts[2], body)
+            elif len(parts) == 3:
+                _update_product(handler, parts[2], body)
+            else:
+                raise ApiError("Endpoint not found", 404)
+
+        elif method == 'DELETE':
+            if len(parts) == 3:
+                _delete_product(handler, parts[2])
             else:
                 raise ApiError("Endpoint not found", 404)
 

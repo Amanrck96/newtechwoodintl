@@ -66,15 +66,7 @@
     if (sampleCta) {
       sampleCta.addEventListener('click', (e) => {
         e.preventDefault();
-        window.dispatchEvent(new CustomEvent('ntw:open-sample-modal'));
-        const modal = document.getElementById('ntw-sample-modal');
-        if (modal) {
-          modal.classList.add('is-open');
-          modal.setAttribute('aria-hidden', 'false');
-          document.body.style.overflow = 'hidden';
-        } else {
-          window.location.href = '/#ntw-sample-request';
-        }
+        window.location.href = '/free-samples/index.html';
       });
     }
   }

@@ -117,6 +117,7 @@
 						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">GST %</label><input type="number" id="productInputGstPct" class="tbl-filter-input" style="height:38px;" min="0" max="100" step="any" value="18" /></div>
 					</div>
 					<label style="font-size:13px;display:flex;align-items:center;gap:8px;"><input type="checkbox" id="productInputGstExtra" checked /> Price is exclusive of GST (&quot;+ GST&quot;)</label>
+					<label style="font-size:13px;display:flex;align-items:center;gap:8px;font-weight:600;color:#166534;background:#f0fdf4;padding:8px 12px;border-radius:6px;border:1px solid #bbf7d0;"><input type="checkbox" id="productInputIsSample" /> 🎁 Eligible for Free Architectural Sample Kit Dispatch</label>
 					<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Application</label><input type="text" id="productInputApplication" class="tbl-filter-input" style="height:38px;" maxlength="200" placeholder="Cladding, Ceiling, Gate etc." /></div>
 					<div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;">
 						<div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px;">Clip used (auto-added in quotes)</label><select id="productInputClip" class="tbl-filter-select" style="height:38px;"></select></div>
@@ -5831,6 +5832,9 @@
 						<button type="button" class="prd-cat-pill" id="prdCatPillAccessories" onclick="setProductCategory('Accessories')">
 							Accessories <span class="prd-cat-badge" id="prdCatBadgeAccessories">4</span>
 						</button>
+						<button type="button" class="prd-cat-pill" id="prdCatPillSamples" onclick="setProductCategory('samples')" style="border-color:#86efac;color:#166534;background:#f0fdf4;">
+							🎁 Free Samples <span class="prd-cat-badge" id="prdCatBadgeSamples" style="background:#16a34a;color:#fff;">11</span>
+						</button>
 					</div>
 
 					<!-- Hidden select for compatibility -->
@@ -5840,7 +5844,24 @@
 						<option value="Decking">Decking</option>
 						<option value="Pergola">Pergola</option>
 						<option value="Accessories">Accessories</option>
+						<option value="samples">Free Samples Only</option>
 					</select>
+				</div>
+
+				<!-- Bulk Actions Toolbar for Free Sample and Catalog Management -->
+				<div id="productBulkActionBar" style="display:none;align-items:center;justify-content:space-between;padding:12px 18px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+					<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+						<span style="font-weight:700;font-size:13.5px;color:#166534;" id="productBulkCount">0 items selected</span>
+						<button type="button" class="btn-primary" style="background:#16a34a;padding:6px 14px;font-size:12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;" onclick="bulkSetFreeSample(1)">
+							<span>🎁</span> Mark as Free Sample
+						</button>
+						<button type="button" class="btn-outline" style="border-color:#fca5a5;color:#b91c1c;background:#fff;padding:6px 14px;font-size:12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;" onclick="bulkSetFreeSample(0)">
+							<span>✕</span> Remove from Free Sample
+						</button>
+					</div>
+					<button type="button" class="btn-outline" style="padding:4px 12px;font-size:12px;" onclick="clearProductSelection()">
+						Cancel Selection
+					</button>
 				</div>
 
 				<!-- Visual Spec Grid Container (Default Active) -->
@@ -5853,12 +5874,14 @@
 					<table class="crm-table" style="width:100%;">
 						<thead>
 							<tr>
-								<th style="min-width:90px;">Image</th>
-								<th style="min-width:200px;">Product</th>
-								<th style="min-width:200px;">Dimensions</th>
-								<th style="min-width:170px;">Price</th>
-								<th style="min-width:200px;">Application</th>
-								<th style="text-align:center;min-width:130px;">Action</th>
+								<th style="width:38px;text-align:center;"><input type="checkbox" id="prdSelectAll" onchange="toggleSelectAllProducts(this)" title="Select all products" /></th>
+								<th style="min-width:80px;">Image</th>
+								<th style="min-width:180px;">Product</th>
+								<th style="min-width:140px;">Dimensions</th>
+								<th style="min-width:140px;">Price</th>
+								<th style="min-width:160px;">Sample Eligibility</th>
+								<th style="min-width:180px;">Application</th>
+								<th style="text-align:center;min-width:140px;">Action</th>
 							</tr>
 						</thead>
 						<tbody id="productsTableBody"></tbody>
@@ -8457,13 +8480,50 @@ Login: https://newtechwood.in/login/`;
 					`;
 				}).join('');
 
+				let detailsDisplayHtml = '';
+				try {
+					const detObj = typeof r.details === 'string' ? JSON.parse(r.details) : r.details;
+					if (detObj && typeof detObj === 'object' && detObj.client_name) {
+						const sampleChips = (detObj.samples || []).map(s => {
+							const name = e(s.product_name || s.productName || 'Product');
+							const finish = e(s.variant || s.finish || 'Standard');
+							return `<span style="display:inline-flex;align-items:center;gap:6px;background:#eaf3ea;color:#2d6a2d;border:1px solid #c2dec2;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;">🪵 ${name} (${finish})</span>`;
+						}).join(' ');
+
+						detailsDisplayHtml = `
+							<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;background:#f8faf8;padding:12px;border-radius:8px;border:1px solid #e2e8e2;">
+								<div>
+									<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;">Recipient Contact</div>
+									<div style="font-size:14px;font-weight:700;color:#1e293b;">${e(detObj.client_name)}</div>
+									<div style="font-size:12px;color:#475569;">${e(detObj.profession || 'Architect')} &bull; ${e(detObj.project_type || 'Residential')}</div>
+									<div style="font-size:12px;color:#2563eb;margin-top:4px;">📞 <a href="tel:${e(detObj.phone)}" style="color:inherit;">${e(detObj.phone)}</a> &bull; ✉️ <a href="mailto:${e(detObj.email)}" style="color:inherit;">${e(detObj.email)}</a></div>
+								</div>
+								<div>
+									<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;">Dispatch Address</div>
+									<div style="font-size:13px;color:#334155;">${e(detObj.shipping_address || detObj.address || '')}</div>
+									<div style="font-size:13px;font-weight:600;color:#1e293b;">${e(detObj.city || '')}, ${e(detObj.state || '')} - ${e(detObj.pincode || '')}</div>
+								</div>
+							</div>
+							<div style="margin-bottom:12px;">
+								<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;margin-bottom:6px;">Requested Sample Swatches (${(detObj.samples || []).length}):</div>
+								<div style="display:flex;flex-wrap:wrap;gap:8px;">${sampleChips || '<span style="color:#666;">No swatches</span>'}</div>
+							</div>
+							${detObj.notes ? `<div style="font-size:12px;background:#fff;border:1px dashed #d1d5db;padding:8px 12px;border-radius:6px;color:#475569;"><strong>Client Notes:</strong> ${e(detObj.notes)}</div>` : ''}
+						`;
+					} else {
+						detailsDisplayHtml = `<div style="font-size:13px;color:#334155;line-height:1.6;white-space:pre-wrap;">${e(r.details || 'No additional details provided.')}</div>`;
+					}
+				} catch (err) {
+					detailsDisplayHtml = `<div style="font-size:13px;color:#334155;line-height:1.6;white-space:pre-wrap;">${e(r.details || 'No additional details provided.')}</div>`;
+				}
+
 				if (body) {
 					body.innerHTML = `
 						<div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;">
 							<div>
 								<div class="card-box" style="padding:14px;margin-bottom:16px;">
 									<div style="font-size:11px;font-weight:700;color:var(--adm-text-muted);text-transform:uppercase;margin-bottom:6px;">Request Information</div>
-									<div style="font-size:13px;color:#334155;line-height:1.6;white-space:pre-wrap;">${e(r.details || 'No additional details provided.')}</div>
+									${detailsDisplayHtml}
 									${r.linked_product_name ? `<div style="margin-top:10px;font-size:12px;color:var(--adm-green);font-weight:600;">🏷️ Linked Product: ${e(r.linked_product_name)}</div>` : ''}
 									${r.linked_order_number ? `<div style="margin-top:4px;font-size:12px;color:#0284c7;font-weight:600;">📦 Linked Order: ${e(r.linked_order_number)}</div>` : ''}
 								</div>
@@ -13837,6 +13897,7 @@ async function loadDashboardData() {
 			const deck = list.filter(p => (p.category || '').toLowerCase() === 'decking').length;
 			const perg = list.filter(p => (p.category || '').toLowerCase() === 'pergola').length;
 			const acc = list.filter(p => (p.category || '').toLowerCase() === 'accessories').length;
+			const samples = list.filter(p => Boolean(p.is_free_sample)).length;
 
 			const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
 			setTxt('prdStatTotal', total);
@@ -13849,6 +13910,7 @@ async function loadDashboardData() {
 			setTxt('prdCatBadgeDecking', deck);
 			setTxt('prdCatBadgePergola', perg);
 			setTxt('prdCatBadgeAccessories', acc);
+			setTxt('prdCatBadgeSamples', samples);
 		}
 
 		function switchProductView(mode) {
@@ -13876,7 +13938,7 @@ async function loadDashboardData() {
 			const sel = document.getElementById('productCategoryFilter');
 			if (sel) sel.value = cat;
 
-			['prdCatPillAll', 'prdCatPillCladding', 'prdCatPillDecking', 'prdCatPillPergola', 'prdCatPillAccessories'].forEach(id => {
+			['prdCatPillAll', 'prdCatPillCladding', 'prdCatPillDecking', 'prdCatPillPergola', 'prdCatPillAccessories', 'prdCatPillSamples'].forEach(id => {
 				const el = document.getElementById(id);
 				if (el) el.classList.remove('active');
 			});
@@ -13886,6 +13948,7 @@ async function loadDashboardData() {
 			else if (cat === 'Decking') document.getElementById('prdCatPillDecking')?.classList.add('active');
 			else if (cat === 'Pergola') document.getElementById('prdCatPillPergola')?.classList.add('active');
 			else if (cat === 'Accessories') document.getElementById('prdCatPillAccessories')?.classList.add('active');
+			else if (cat === 'samples') document.getElementById('prdCatPillSamples')?.classList.add('active');
 
 			applyProductFilters();
 		}
@@ -13895,11 +13958,14 @@ async function loadDashboardData() {
 			const q = (document.getElementById('productSearch')?.value || '').trim().toLowerCase();
 			const category = document.getElementById('productCategoryFilter')?.value || 'all';
 			const status = document.getElementById('productStatusFilter')?.value || 'all';
-			productsView = productsData.filter(p =>
-				(category === 'all' || p.category === category) &&
-				(status === 'all' || p.status === status) &&
-				(!q || (p.name + ' ' + (p.code || '') + ' ' + (p.application || '') + ' ' + (p.dimensions || '')).toLowerCase().includes(q)));
+			productsView = productsData.filter(p => {
+				const matchCat = category === 'all' ? true : (category === 'samples' ? Boolean(p.is_free_sample) : p.category === category);
+				const matchStatus = status === 'all' || p.status === status;
+				const matchQ = !q || (p.name + ' ' + (p.code || '') + ' ' + (p.application || '') + ' ' + (p.dimensions || '')).toLowerCase().includes(q);
+				return matchCat && matchStatus && matchQ;
+			});
 			renderProducts(productsView);
+			updateProductBulkUI();
 		}
 
 		function renderProducts(list) {
@@ -13936,14 +14002,21 @@ async function loadDashboardData() {
 						<span>${pEsc(p.clips_per_plank)} clips/plank auto-added</span>
 					</div>` : '';
 
+				const sampleBadge = p.is_free_sample ? `
+					<span style="position:absolute;top:10px;right:10px;background:#15803d;color:#ffffff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,0,0,0.25);z-index:2;">
+						🎁 Free Sample
+					</span>
+				` : '';
+
 				return `
-					<div class="prd-card">
+					<div class="prd-card" style="position:relative;">
 						<div class="prd-card-media">
 							<img src="${pEsc(imgUrl)}" alt="${pEsc(p.name)}" class="prd-card-img" onerror="this.src='/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg';this.style.objectFit='contain';this.style.padding='24px';" />
 							<span class="prd-card-category-badge">${pEsc(p.category)}</span>
 							<span class="prd-card-status-badge ${p.status === 'active' ? 'active' : 'inactive'}">
 								${p.status === 'active' ? 'Active' : 'Inactive'}
 							</span>
+							${sampleBadge}
 						</div>
 
 						<div class="prd-card-body">
@@ -13965,6 +14038,15 @@ async function loadDashboardData() {
 							<div class="prd-card-app">
 								<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;color:#64748b;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
 								<span>${pEsc(p.application || 'Standard WPC Installation')}</span>
+							</div>
+
+							<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
+								<span style="font-size:11.5px;color:#64748b;display:flex;align-items:center;gap:4px;">
+									🎁 Free Sample:
+								</span>
+								<button type="button" class="btn-outline" onclick="toggleProductSampleEligibility('${id}', ${p.is_free_sample ? 0 : 1})" style="padding:2px 8px;font-size:11px;border-radius:12px;border-color:${p.is_free_sample ? '#86efac' : '#cbd5e1'};background:${p.is_free_sample ? '#f0fdf4' : '#f8fafc'};color:${p.is_free_sample ? '#15803d' : '#64748b'};font-weight:600;cursor:pointer;">
+									${p.is_free_sample ? '✓ Active' : '+ Enable'}
+								</button>
 							</div>
 
 							${clipBadge}
@@ -13999,7 +14081,7 @@ async function loadDashboardData() {
 			const tbody = document.getElementById('productsTableBody');
 			if (!tbody) return;
 			if (!list.length) {
-				tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No products found.</td></tr>';
+				tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--adm-text-muted);">No products found.</td></tr>';
 				return;
 			}
 			tbody.innerHTML = list.map(p => {
@@ -14008,12 +14090,30 @@ async function loadDashboardData() {
 				const img = p.image_url ? `<img src="${pEsc(p.image_url)}" alt="${pEsc(p.name)}" style="width:52px;height:40px;object-fit:cover;background:#f3f4f2;border-radius:6px;border:1px solid var(--adm-border);" onerror="this.src='/wp-content/uploads/2025/07/newtechwood-Site-Favicon.svg';" />` : '<span style="color:var(--adm-text-muted);font-size:11px;">No image</span>';
 				const inactive = p.status !== 'active' ? ' <span class="user-role-badge" style="color:#b91c1c;background:rgba(185,28,28,0.1);">Inactive</span>' : '';
 				const id = pEsc(p.id);
+
+				const sampleCell = p.is_free_sample ? `
+					<div style="display:inline-flex;align-items:center;gap:6px;">
+						<span class="user-role-badge" style="background:#dcfce7;color:#15803d;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+							<span>🎁</span> Active
+						</span>
+						<button class="tbl-action-btn" onclick="toggleProductSampleEligibility('${id}', 0)" title="Disable Free Sample" style="color:#b91c1c;border-color:#fca5a5;padding:2px 6px;font-size:11px;">Remove</button>
+					</div>
+				` : `
+					<div style="display:inline-flex;align-items:center;gap:6px;">
+						<span class="user-role-badge" style="background:#f1f5f9;color:#64748b;">No</span>
+						<button class="tbl-action-btn" onclick="toggleProductSampleEligibility('${id}', 1)" title="Enable Free Sample" style="color:#15803d;border-color:#86efac;padding:2px 6px;font-size:11px;">+ Enable</button>
+					</div>
+				`;
+
 				const writeBtns = productsOffline ? '' : `
 					<button class="tbl-action-btn" onclick="openProductModal('${id}')" title="Edit">✎</button>
 					<button class="tbl-action-btn delete" onclick="deleteProduct('${id}')" title="Delete">🗑</button>`;
 				const histBtn = productsOffline ? '' : `<button class="tbl-action-btn" onclick="openProductHistory('${id}')" title="Price history">₹</button>`;
 				return `
 				<tr>
+					<td style="text-align:center;">
+						<input type="checkbox" class="prd-row-checkbox" value="${id}" onchange="onProductRowSelect()" />
+					</td>
 					<td>${img}</td>
 					<td>
 						<strong style="color:var(--adm-text-main);font-size:13.5px;">${pEsc(p.name)}${p.code ? ' – ' + pEsc(p.code) : ''}</strong>${inactive}
@@ -14021,6 +14121,7 @@ async function loadDashboardData() {
 					</td>
 					<td>${p.dimensions ? pEsc(p.dimensions) : '<span style="color:var(--adm-text-muted);">—</span>'}</td>
 					<td><strong>${formatPrice(p)}</strong>${perPlank}</td>
+					<td>${sampleCell}</td>
 					<td>${pEsc(p.application || '')}${clipNote}</td>
 					<td style="text-align:center;">
 						<div style="display:inline-flex;align-items:center;gap:4px;">
@@ -14033,10 +14134,80 @@ async function loadDashboardData() {
 			}).join('');
 		}
 
+		// ---------- Product Selection & Bulk Sample Actions ----------
+		function toggleSelectAllProducts(master) {
+			const checkboxes = document.querySelectorAll('.prd-row-checkbox');
+			checkboxes.forEach(cb => { cb.checked = master.checked; });
+			updateProductBulkUI();
+		}
+
+		function onProductRowSelect() {
+			const checkboxes = document.querySelectorAll('.prd-row-checkbox');
+			const allChecked = Array.from(checkboxes).length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+			const master = document.getElementById('prdSelectAll');
+			if (master) master.checked = allChecked;
+			updateProductBulkUI();
+		}
+
+		function getSelectedProductIds() {
+			return Array.from(document.querySelectorAll('.prd-row-checkbox:checked')).map(cb => cb.value);
+		}
+
+		function updateProductBulkUI() {
+			const selected = getSelectedProductIds();
+			const bar = document.getElementById('productBulkActionBar');
+			const count = document.getElementById('productBulkCount');
+			if (!bar) return;
+			if (selected.length > 0) {
+				bar.style.display = 'flex';
+				if (count) count.innerText = `${selected.length} product${selected.length > 1 ? 's' : ''} selected`;
+			} else {
+				bar.style.display = 'none';
+			}
+		}
+
+		function clearProductSelection() {
+			document.querySelectorAll('.prd-row-checkbox').forEach(cb => { cb.checked = false; });
+			const master = document.getElementById('prdSelectAll');
+			if (master) master.checked = false;
+			updateProductBulkUI();
+		}
+
+		async function toggleProductSampleEligibility(id, newStatus) {
+			try {
+				const res = await productsApi('PUT', '/api/products/' + encodeURIComponent(id) + '/sample-eligibility', {
+					is_free_sample: newStatus
+				});
+				showToast(res.message || `Product free sample eligibility updated.`);
+				await loadProducts();
+			} catch (err) {
+				showToast(err.message || 'Failed to update sample eligibility', true);
+			}
+		}
+
+		async function bulkSetFreeSample(newStatus) {
+			const selected = getSelectedProductIds();
+			if (!selected.length) {
+				showToast('Please select at least one product using the checkboxes.', true);
+				return;
+			}
+			try {
+				const res = await productsApi('PUT', '/api/products/sample-eligibility/bulk', {
+					product_ids: selected,
+					is_free_sample: newStatus
+				});
+				showToast(res.message || `Updated ${selected.length} products.`);
+				clearProductSelection();
+				await loadProducts();
+			} catch (err) {
+				showToast(err.message || 'Failed to bulk update products', true);
+			}
+		}
+
 		function clearProductFilters() {
 			['productSearch'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 			['productCategoryFilter', 'productStatusFilter'].forEach(id => { const el = document.getElementById(id); if (el) el.value = 'all'; });
-			['prdCatPillAll', 'prdCatPillCladding', 'prdCatPillDecking', 'prdCatPillPergola', 'prdCatPillAccessories'].forEach(id => {
+			['prdCatPillAll', 'prdCatPillCladding', 'prdCatPillDecking', 'prdCatPillPergola', 'prdCatPillAccessories', 'prdCatPillSamples'].forEach(id => {
 				const el = document.getElementById(id);
 				if (el) el.classList.remove('active');
 			});
@@ -14063,6 +14234,7 @@ async function loadDashboardData() {
 			set('Length', p?.length_mm); set('Width', p?.width_mm); set('Thickness', p?.thickness_mm);
 			set('Price', p?.price); set('Unit', p?.price_unit || 'SFT'); set('GstPct', p ? p.gst_pct : 18);
 			document.getElementById('productInputGstExtra').checked = p ? !!p.gst_extra : true;
+			document.getElementById('productInputIsSample').checked = p ? !!p.is_free_sample : false;
 			set('Application', p?.application); set('Image', p?.image_url);
 			set('ClipsPer', p?.clips_per_plank); set('Status', p?.status || 'active'); set('SlNo', p?.sl_no);
 			fillClipOptions(p?.clip_product_id, p?.id);
@@ -14083,6 +14255,7 @@ async function loadDashboardData() {
 				dimensions: v('Dimensions') || null, length_mm: num('Length'), width_mm: num('Width'), thickness_mm: num('Thickness'),
 				price: num('Price'), price_unit: v('Unit'), gst_pct: num('GstPct'),
 				gst_extra: document.getElementById('productInputGstExtra').checked ? 1 : 0,
+				is_free_sample: document.getElementById('productInputIsSample').checked ? 1 : 0,
 				application: v('Application') || null, image_url: v('Image') || null,
 				clip_product_id: v('Clip') || null, clips_per_plank: num('ClipsPer'),
 				status: v('Status'), sl_no: num('SlNo')

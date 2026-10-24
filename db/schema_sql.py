@@ -201,6 +201,7 @@ CREATE TABLE IF NOT EXISTS products (
     lead_time_days INTEGER DEFAULT 7,
     needs_better_image INTEGER DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'inactive')),
+    is_free_sample INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(clip_product_id) REFERENCES products(id) ON DELETE SET NULL
