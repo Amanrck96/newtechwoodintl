@@ -642,7 +642,7 @@
             </button>
             <div class="ntw-accordion-panel" id="ntw-drawer-res-panel">
               <a href="/#ntw-color-swatch-explorer" class="ntw-drawer-sublink"><strong>Colour Swatch Explorer</strong></a>
-              <a href="/#ntw-brochures-block" class="ntw-drawer-sublink">Architectural Catalogues &amp; Flipbook</a>
+              <a href="/downloads/" class="ntw-drawer-sublink">Architectural Catalogues &amp; Spec Sheets</a>
               <a href="/projects/" class="ntw-drawer-sublink">Project Portfolio &amp; Gallery</a>
             </div>
           </div>
@@ -870,7 +870,7 @@
      10. Smooth Scrolling with Sticky Offset (N3, N4)
      -------------------------------------------------------------------------- */
   function initSmoothScrollOffset() {
-    const selector = 'a[href*="#experience-centre"], a[href*="#ntw-color-swatch-explorer"], a[href*="#ntw-brochures-block"]';
+    const selector = 'a[href*="#experience-centre"], a[href*="#ntw-color-swatch-explorer"]';
     document.querySelectorAll(selector).forEach((link) => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');

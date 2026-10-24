@@ -654,10 +654,170 @@
 }
 
 @media (min-width: 992px) {
-  .elementor-widget-n-menu .e-n-menu {
+  .elementor-36 .elementor-element.elementor-element-a9e1494 > .e-con-inner,
+  .elementor-element.elementor-element-a9e1494 > .e-con-inner {
+    display: flex !important;
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 1440px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .elementor-36 .elementor-element.elementor-element-0b2e72d,
+  .elementor-element.elementor-element-0b2e72d {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .elementor-36 .elementor-element.elementor-element-440c307,
+  .elementor-element.elementor-element-440c307 {
+    --container-widget-width: auto !important;
+    width: auto !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: flex-end !important;
+  }
+
+  .elementor-widget-n-menu {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    --n-menu-heading-wrap: nowrap !important;
+    --n-menu-title-space-between: 0px !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-wrapper {
+    position: static !important;
+    left: 0 !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    transform: none !important;
+    --stretch-left: 0px !important;
+    width: auto !important;
+    flex: 0 1 auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-heading {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    row-gap: 0 !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-item {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    margin-inline-end: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-title {
+    padding: 6px 6px !important;
+    gap: 3px !important;
+    white-space: nowrap !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-title-text {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    white-space: nowrap !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-title-container {
+    gap: 3px !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon {
+    margin-inline-start: 1px !important;
+  }
+
+  .ntw-nav-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-left: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .ntw-nav-fav-btn {
+    display: none !important; /* Favourites counter is already in the top utility bar on desktop */
+  }
+
+  .ntw-nav-cta-btn {
+    padding: 7px 12px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    border-radius: 4px !important;
+  }
+
+  .ntw-fav-trigger-btn {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .elementor-widget-n-menu .e-n-menu-heading {
+    gap: 8px !important;
+  }
+  .elementor-widget-n-menu .e-n-menu-title {
+    padding: 6px 7px !important;
+  }
+  .elementor-widget-n-menu .e-n-menu-title-text {
+    font-size: 12px !important;
+    letter-spacing: 0.3px !important;
+  }
+  .ntw-nav-actions {
+    margin-left: 10px !important;
+    gap: 8px !important;
+  }
+  .ntw-nav-cta-btn {
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .elementor-widget-n-menu .e-n-menu-heading {
+    gap: 12px !important;
+  }
+  .elementor-widget-n-menu .e-n-menu-title-text {
+    font-size: 12.5px !important;
+    letter-spacing: 0.4px !important;
   }
 }
 

@@ -15,7 +15,7 @@
       desc: 'Engineered with 360-degree capping for total defense against stains, fading, and intense monsoon dampness. Covered by a 25-year structural warranty.',
       btnText: 'Explore Decking Systems',
       url: '/product/decking/',
-      img: '/product-images/deck.jpg',
+      img: '/wp-content/uploads/2025/09/NewTechWood-decking.jpg',
       alt: 'NewTechWood UltraShield composite decking poolside installation'
     },
     {
@@ -24,7 +24,7 @@
       desc: 'Distinctive fluted profiles and architectural shadowlines designed to elevate residential facades, modern villas, and commercial exteriors across India.',
       btnText: 'Explore Cladding Profiles',
       url: '/product/cladding/',
-      img: '/product-images/clads.jpg',
+      img: '/wp-content/uploads/2025/09/NewTechWood-cladding.jpg',
       alt: 'Architectural composite wall cladding facade with castellated wood texture'
     },
     {
@@ -33,7 +33,7 @@
       desc: 'Lightweight composite beams and continuous louvers delivering natural sunlight diffusion, aesthetic depth, and privacy without warp or rot.',
       btnText: 'Explore Louvers & Beams',
       url: '/product/screening/',
-      img: '/product-images/twix.jpg',
+      img: '/wp-content/uploads/2025/09/beams.jpg',
       alt: 'NewTechWood architectural composite screening and exterior louvers'
     },
     {

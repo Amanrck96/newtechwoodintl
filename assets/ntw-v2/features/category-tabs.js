@@ -15,7 +15,7 @@
       title: 'UltraShield® Naturale Decking Systems',
       desc: 'Engineered with 360-degree capping for total resistance against wine, oil, UV fading, and heavy monsoon humidity. Available in Naturale, Marina, and Old World textures.',
       url: '/product/decking/',
-      img: '/product-images/deck.jpg',
+      img: '/wp-content/uploads/2025/09/NewTechWood-decking.jpg',
       alt: 'UltraShield composite decking outdoor terrace',
       colorsCount: 6,
       swatches: [
@@ -34,7 +34,7 @@
       title: 'All-Weather & Castellated Wall Cladding',
       desc: 'Transform plain brick and concrete exterior walls with contemporary fluted shadowlines and natural wood grain textures. Engineered with hidden clip expansion systems.',
       url: '/product/cladding/',
-      img: '/product-images/clads.jpg',
+      img: '/wp-content/uploads/2025/09/NewTechWood-cladding.jpg',
       alt: 'NewTechWood castellated fluted wall cladding facade',
       colorsCount: 6,
       swatches: [
@@ -53,7 +53,7 @@
       title: 'Architectural Louvers & Sun Control Beams',
       desc: 'Continuous lightweight composite beams designed for outdoor pergolas, architectural fins, and decorative ceiling baffles that will never sag, split, or rot.',
       url: '/product/screening/',
-      img: '/product-images/twix.jpg',
+      img: '/wp-content/uploads/2025/09/beams.jpg',
       alt: 'Architectural composite louvers and pergola sun shading',
       colorsCount: 4,
       swatches: [

@@ -35,5 +35,34 @@ Corresponds to **Feature F11 (`material-calculator`)** mounted dynamically at `#
 
 ---
 
-## 4. Human Approval Checkpoint
-Per protocol: **Please confirm approval to proceed with removing this section.**
+# REMOVAL REPORT 2: "Technical Downloads / Architectural Catalogues & Spec Sheets"
+
+## 1. Summary of Identified Target Occurrences
+The section matching:
+- **Eyebrow**: *"Technical Downloads"*
+- **Title**: *"Architectural Catalogues & Spec Sheets"*
+- **Subtitle**: *"Download comprehensive product brochures, profile cross-sections, span tables, and installation manuals directly."*
+
+Corresponds to **Feature F12 (`brochure-viewer`)** mounted dynamically at `#ntw-brochures-block`.
+
+---
+
+## 2. Exact Files & Lines Removed / Modified
+
+| File | Line(s) | Role | Change Made |
+|---|:---:|---|---|
+| [`index.html`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/index.html) | 287 | CSS Link | Removed `<link rel="stylesheet" href="/assets/ntw-v2/features/brochure-viewer.css">` |
+| [`index.html`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/index.html) | 1032–1038 | Resources Mega Menu Card | Updated link target from `/#ntw-brochures-block` to `/downloads/` |
+| [`index.html`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/index.html) | 1807–1808 | JS Script Tag | Removed `<script src="/assets/ntw-v2/features/brochure-viewer.js" defer></script>` |
+| [`assets/ntw-v2/features/header.js`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/assets/ntw-v2/features/header.js) | 645 | Mobile Drawer Link | Updated link target from `/#ntw-brochures-block` to `/downloads/` |
+| [`assets/ntw-v2/features/header.js`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/assets/ntw-v2/features/header.js) | 873 | Smooth Scroll Selector | Removed `a[href*="#ntw-brochures-block"]` selector |
+| [`assets/ntw-v2/features/brochure-viewer.js`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/assets/ntw-v2/features/brochure-viewer.js) | All | Feature JS | Retired/disabled |
+| [`assets/ntw-v2/features/brochure-viewer.css`](file:///c:/Users/amanr/OneDrive/Documents/newtechwoodintl/assets/ntw-v2/features/brochure-viewer.css) | All | Feature CSS | Retired/disabled |
+
+---
+
+## 3. Impact & Status
+- **Zero dead DOM elements**: No orphaned brochure viewer markup rendered.
+- **Resources links preserved**: External and portal visitors can still access technical files via `/downloads/`.
+- **Status**: COMPLETE ✅
+
