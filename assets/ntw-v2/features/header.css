@@ -1,0 +1,514 @@
+/* ==========================================================================
+   F1: Header Enhancements (Utility Bar, Mega Menu Promo, Sticky Shrink, Drawer)
+   NewTechWood India — Premium Architectural Experience
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Utility Top Bar
+   -------------------------------------------------------------------------- */
+.ntw-utility-bar {
+  background-color: #0f2617;
+  color: #e5e7eb;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  font-size: 12px;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  position: relative;
+  z-index: 1002;
+  transition: var(--ntw-transition, all 0.25s ease);
+}
+
+.ntw-utility-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ntw-utility-left,
+.ntw-utility-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ntw-utility-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #d1d5db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.ntw-utility-item:hover,
+.ntw-utility-item:focus-visible {
+  color: var(--ntw-gold, #c9a84c);
+  outline: none;
+}
+
+.ntw-utility-item svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.ntw-utility-badge {
+  display: inline-block;
+  background: rgba(201, 168, 76, 0.18);
+  color: var(--ntw-gold, #c9a84c);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+}
+
+.ntw-utility-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f3f4f6;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--ntw-radius-full, 9999px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ntw-utility-search-btn:hover,
+.ntw-utility-search-btn:focus-visible {
+  background: rgba(201, 168, 76, 0.2);
+  border-color: var(--ntw-gold, #c9a84c);
+  color: #ffffff;
+  outline: none;
+}
+
+.ntw-utility-kbd {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #d1d5db;
+  font-size: 10px;
+  font-family: inherit;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+@media (max-width: 900px) {
+  .ntw-utility-bar {
+    display: none; /* Mobile bar and drawer handle quick actions */
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Sticky Header Shrink on Scroll
+   -------------------------------------------------------------------------- */
+.elementor-location-header {
+  transition: padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              box-shadow 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.elementor-location-header.ntw-header-shrunk {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.elementor-location-header.ntw-header-shrunk .elementor-element-a9e1494 {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  transition: padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.elementor-location-header.ntw-header-shrunk .elementor-widget-theme-site-logo img {
+  transform: scale(0.92);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   3. Mega Menu Promo Panel (Desktop)
+   -------------------------------------------------------------------------- */
+.ntw-products-grid-inner {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 20px !important;
+  padding: 24px 28px !important;
+  position: relative !important;
+}
+
+.ntw-mega-col {
+  flex: 1 1 0 !important;
+  min-width: 140px !important;
+}
+
+.ntw-mega-promo {
+  flex: 0 0 280px !important;
+  background: linear-gradient(145deg, #0e2917 0%, #163f24 100%);
+  border-radius: var(--ntw-radius, 12px);
+  padding: 20px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(15, 38, 23, 0.2);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.ntw-mega-promo::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ntw-mega-promo-tag {
+  display: inline-block;
+  background: rgba(201, 168, 76, 0.2);
+  color: var(--ntw-gold, #c9a84c);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+.ntw-mega-promo-img-wrap {
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  background: #1a4a1a;
+}
+
+.ntw-mega-promo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.ntw-mega-promo:hover .ntw-mega-promo-img {
+  transform: scale(1.05);
+}
+
+.ntw-mega-promo-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.ntw-mega-promo-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.ntw-mega-promo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--ntw-gold, #c9a84c);
+  color: #121614 !important;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+}
+
+.ntw-mega-promo-btn:hover {
+  background: #deb855;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.35);
+}
+
+.ntw-mega-promo-btn svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   4. Mobile Navigation Drawer & Accordions
+   -------------------------------------------------------------------------- */
+.ntw-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ntw-drawer-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ntw-mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 86vw);
+  background: #ffffff;
+  z-index: 2001;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+}
+
+.ntw-drawer-backdrop.is-open .ntw-mobile-drawer {
+  transform: translateX(0);
+}
+
+.ntw-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ntw-border, #e5e2dc);
+  background: #faf9f6;
+}
+
+.ntw-drawer-logo {
+  height: 32px;
+  width: auto;
+}
+
+.ntw-drawer-close {
+  background: none;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+.ntw-drawer-close:hover,
+.ntw-drawer-close:focus-visible {
+  background: #f3f4f6;
+  color: #111827;
+  outline: none;
+}
+
+.ntw-drawer-search-wrap {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--ntw-border-light, #f0ede8);
+}
+
+.ntw-drawer-search-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 10px 14px;
+  border-radius: var(--ntw-radius-sm, 6px);
+  color: #6b7280;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.ntw-drawer-search-btn:hover {
+  background: #ebeef2;
+  border-color: #d1d5db;
+  color: #1f2937;
+}
+
+.ntw-drawer-search-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.ntw-drawer-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+.ntw-accordion-item {
+  border-bottom: 1px solid var(--ntw-border-light, #f0ede8);
+}
+
+.ntw-accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ntw-accordion-trigger:hover,
+.ntw-accordion-trigger[aria-expanded="true"] {
+  background: #f9fafb;
+  color: var(--ntw-green, #2d6a2d);
+}
+
+.ntw-accordion-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform 0.25s ease;
+}
+
+.ntw-accordion-trigger[aria-expanded="true"] .ntw-accordion-icon {
+  transform: rotate(180deg);
+}
+
+.ntw-accordion-panel {
+  display: none;
+  background: #fafaf9;
+  padding: 8px 20px 14px 32px;
+}
+
+.ntw-accordion-panel.is-expanded {
+  display: block;
+}
+
+.ntw-drawer-sublink {
+  display: block;
+  padding: 7px 0;
+  font-size: 13px;
+  color: #4b5563;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.ntw-drawer-sublink:hover {
+  color: var(--ntw-green, #2d6a2d);
+  text-decoration: underline;
+}
+
+.ntw-drawer-direct-link {
+  display: block;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  text-decoration: none;
+  border-bottom: 1px solid var(--ntw-border-light, #f0ede8);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ntw-drawer-direct-link:hover {
+  background: #f9fafb;
+  color: var(--ntw-green, #2d6a2d);
+}
+
+.ntw-drawer-footer {
+  padding: 16px 20px;
+  background: #fbfaf8;
+  border-top: 1px solid var(--ntw-border, #e5e2dc);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ntw-drawer-cta-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: var(--ntw-radius-sm, 6px);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.ntw-drawer-cta-primary:hover {
+  background: var(--ntw-green-hover, #225222);
+}
+
+.ntw-drawer-contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ntw-drawer-contact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-radius: var(--ntw-radius-sm, 6px);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  color: #374151;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.ntw-drawer-contact-btn:hover {
+  border-color: var(--ntw-green, #2d6a2d);
+  color: var(--ntw-green, #2d6a2d);
+}
+
+.ntw-drawer-contact-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}

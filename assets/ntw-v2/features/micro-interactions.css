@@ -1,0 +1,62 @@
+/* ==========================================================================
+   F18: Micro-Interactions, Scroll Reveals & Polish
+   Smooth, premium UX enhancements with full reduced-motion accessibility
+   ========================================================================== */
+
+/* Scroll Reveal Base */
+.ntw-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.ntw-reveal.ntw-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay classes for cards in grids */
+.ntw-reveal-delay-1 { transition-delay: 0.1s; }
+.ntw-reveal-delay-2 { transition-delay: 0.2s; }
+.ntw-reveal-delay-3 { transition-delay: 0.3s; }
+.ntw-reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Subtle Interactive Card Hover Polish */
+.ntw-se-card,
+.ntw-cat-card,
+.ntw-boq-metric-card,
+.ntw-brochure-card,
+.ntw-pro-card,
+.ll-ec-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Image Fade-In Transition */
+.ntw-fade-in-ready {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.ntw-fade-in-ready.ntw-image-loaded {
+  opacity: 1;
+}
+
+/* Accessibility: User Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .ntw-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .ntw-se-card,
+  .ntw-cat-card,
+  .ntw-boq-metric-card,
+  .ntw-brochure-card,
+  .ntw-pro-card,
+  .ll-ec-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}

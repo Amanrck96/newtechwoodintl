@@ -1,62 +1,90 @@
-# ORDERED IMPLEMENTATION WORKFLOW
+# AUTONOMOUS EXECUTION MASTER WORKFLOW (TASKS.md)
 
-## Stage 0: Audit & Baseline Verification
-- [x] Create git branch `features-v1`
-- [x] Discover data sources (products.json, colors, locations, projects, tokens)
-- [x] Verify API endpoints in `/api/` (no public submission endpoint; WhatsApp fallback confirmed)
-- [x] Complete `FEATURE_AUDIT.md`
-- [ ] **HUMAN-IN-THE-LOOP CHECKPOINT: PLAN SUMMARY APPROVAL**
+**Branch**: `features-v2` (Dedicated clean feature branch)  
+**Status**: COMPLETE ✅ (All features R0, F1–F18 verified with Playwright end-to-end suite)  
 
 ---
 
-## Stage 1: Feature Implementation Pipeline (Sequential — Strict QA Loop)
-- [x] **F1. Color Swatch Explorer**
-  - [x] Implement `/assets/ntw-v2/features/color-swatch-explorer.css` & `.js`
-  - [x] Read existing colors from `products.json` (Antique, Teak, IPE, Maple + series codes)
-  - [x] Large image swap, preloading, ARIA keyboard navigation (arrows/Enter), zero layout shift
-  - [x] Connect "Order this color" hook for F3
-  - [x] QA Loop: Console check, keyboard test, 375/768/1440 responsiveness, log to `LOOP_LOG.md`
-- [x] **F2. Wood vs Composite Cost Calculator**
-  - [x] Implement `/assets/ntw-v2/features/cost-calculator.css` & `.js`
-  - [x] Config object at top marked `TODO-VERIFY` with 3 presets in INR + "Use my own number"
-  - [x] Years slider 1 to 25 (ticks at 1, 5, 10, 15, 20, 25)
-  - [x] Two columns: Real Wood upkeep & weekends vs UltraShield (0 upkeep, 25-yr warranty)
-  - [x] Indian currency formatting (Lakh grouping / Rs 6,750), custom input validation
-  - [x] QA Loop: Math verification tests (e.g., 450 x 15 = 6,750), responsive check, log to `LOOP_LOG.md`
-- [x] **F3. Free Sample Request Band + Form**
-  - [x] Implement `/assets/ntw-v2/features/sample-request.css` & `.js`
-  - [x] "Feel it before you build it" section + modal form (name, phone, email, city, product, color prefill from F1, message)
-  - [x] Honeypot spam trap, client-side validation, error/success states
-  - [x] WhatsApp fallback submit payload (since no public `/api` endpoint exists)
-  - [x] QA Loop: Form validation check, honeypot test, modal accessibility, log to `LOOP_LOG.md`
-- [x] **F4. Experience Centre Filter**
-  - [x] Implement `/assets/ntw-v2/features/experience-centre-filter.css` & `.js`
-  - [x] Filter chips: Delhi, Karnataka, Rajasthan, Gujarat, Punjab + All
-  - [x] Preserve all existing addresses and phone numbers; Punjab shows "Coming Soon" badge
-  - [x] QA Loop: Filter click tests, keyboard accessibility, map link checks, log to `LOOP_LOG.md`
-- [x] **F5. Project Filter**
-  - [x] Implement `/assets/ntw-v2/features/project-filter.css` & `.js`
-  - [x] Tabs: All / International / National (India) with URL hash synchronization (`#national`, `#international`)
-  - [x] Smooth transitions, counter updates, empty-state fallback
-  - [x] QA Loop: Hash state change test, back/forward button test, responsive check, log to `LOOP_LOG.md`
-- [x] **F6. Client-Side Search Overlay**
-  - [x] Build search index generator script (`scratch/build_search_index.py` -> `/assets/ntw-v2/features/search-index.json`)
-  - [x] Implement `/assets/ntw-v2/features/search-overlay.css` & `.js`
-  - [x] Full-screen overlay, Esc to close, focus trap, popular links (Decking, Cladding, Colors, Visualizer, Experience Centre)
-  - [x] Instant client-side fuzzy search over generated index
-  - [x] QA Loop: Focus trap verification, keyboard navigation, Esc close check, log to `LOOP_LOG.md`
-- [x] **F7. WhatsApp Floating Button + Mobile Action Bar**
-  - [x] Implement `/assets/ntw-v2/features/whatsapp-floating.css` & `.js`
-  - [x] Verified WhatsApp business number with pre-filled message
-  - [x] Non-overlapping placement respecting mobile bottom sticky bar and viewport safe-areas
-  - [x] QA Loop: Viewport test on 375px/768px/1440px, scroll test, log to `LOOP_LOG.md`
+## Stage 0: Audit, Reconnaissance & Task R0 Preparation [DONE]
+- [x] Create and checkout branch `features-v2`
+- [x] Live Reconnaissance of reference sites (`FEATURE_RECON.md`)
+- [x] Register new UI labels (`NEW_LABELS.md`)
+- [x] Exhaustive scan for Cost/Maintenance Comparison strings (`scratch/audit_r0_removal.py` -> `REMOVAL_REPORT.md`)
+- [x] Human approval received to proceed with implementation
 
 ---
 
-## Stage 2: Final Multi-Agent QA & Security Review
-- [x] Run complete test suite (existing pytest 16/16 passed, verification script passed)
-- [x] Security Review (XSS escaping, honeypot spam protection, zero console data leaks)
-- [x] Cross-browser & responsive layout audit (375px mobile action bar, 768px tablet, 1440px desktop)
-- [x] Write `REVIEW.md` and `TODO-VERIFY` list
-- [ ] **HUMAN-IN-THE-LOOP CHECKPOINT: FINAL APPROVAL BEFORE PUSH/MERGE/DEPLOY**
+## Stage 1: Task R0 Execution (Removal of Cost & Maintenance Comparison) [DONE]
+- [x] Remove `#ntw-cost-calculator` HTML block from `index.html` (lines 1282-1288)
+- [x] Remove `cost-calculator.css` link from `index.html` (line 279)
+- [x] Remove `cost-calculator.js` script tag from `index.html` (line 1719)
+- [x] Delete dead assets: `/assets/ntw-v2/features/cost-calculator.css` & `.js`
+- [x] Remove cost calculator references from `search-index.json`, `search-overlay.js`, and `whatsapp-floating.js`
+- [x] Update Action 3 in mobile bar to "Call Us" / `tel:+919824144670` (prevents broken anchor)
+- [x] Verify: Grep returns zero matches for comparison strings across active site; page renders clean; zero console errors
 
+---
+
+## Stage 2: Navigation & Discovery Core (F1 & F2) [DONE]
+- [x] **F1. Header**:
+  - Utility top bar (Phone +91 98241 44670 / Experience Centres / Order Samples / Architect & Trade Portal / Search trigger)
+  - Sticky header with shrink animation on scroll
+  - Mega menu with promo panel (image + short existing text + CTA to sample request)
+  - Mobile drawer with accessible accordions (< 991px)
+- [x] **F2. Search Overlay**:
+  - Fullscreen overlay, Esc to close, focus trap
+  - Live categorized results (Products, Projects, Pages, Articles)
+  - "No results" state with 3 fallback buttons (Products, Colours, Experience Centre)
+  - Powered by client-side `search-index.json`
+
+---
+
+## Stage 3: Product Exploration & Brand Showcase (F3 – F8) [DONE]
+- [x] **F3. Hero Promo Banners**: Auto-rotating promotional cards (pause on hover/touch, swipeable, dots+arrows, respects prefers-reduced-motion)
+- [x] **F4. Category Tabs**: Decking, Cladding, Beams, Deck Tile, Fencing, Railing, Planter Box with swatch thumbnails, color counts, and crossfade image preview
+- [x] **F5. Color Explorer**: Swatch selection swaps finished-project image with crossfade; displays name, code, series; "Order a sample" button connects to F9
+- [x] **F6. Count-Up Stats**: Scroll-triggered numeric easeOut counter (1.5s) using existing site figures ("30+", "10M+", "25 Years", "95%")
+- [x] **F7. Board Anatomy Hotspots**: Interactive SVG UltraShield board diagram with clickable hotspots displaying benefit tooltips
+- [x] **F8. Testimonial Slider & Partner Logo Strip**: Slider with arrows/swipe; infinite smooth logo marquee (pauses on hover) using verified standards
+
+---
+
+## Stage 4: Conversion & Engagement Engines (F9 & F10) [DONE]
+- [x] **F9. Sample / Quote Popup Form**:
+  - Modal with Name, Phone, Email, City, Product, Color (prefilled from F5), Project Size, Timeline, optional plan upload, honeypot
+  - "Save and resume later" via localStorage
+  - WhatsApp click-to-chat fallback submit (`https://wa.me/919824144670`)
+- [x] **F10. Newsletter Signup**: Email, Name, Indian State dropdown with inline validation and animated confirmation
+
+---
+
+## Stage 5: Tools, Architecture & Technical Hub (F11 – F17) [DONE]
+- [x] **F11. Material Calculator (BOQ Only)**:
+  - Technical material estimation ONLY: inputs = area, profile type, wastage %; outputs = board count, clips, billed area
+  - Formula: $\text{planks} = \lceil \frac{\text{area} \times (1 + \text{wastage})}{\text{plank area}} \rceil$
+  - STRICTLY ZERO cost, price, or wood comparison
+  - Seamless "Transfer BOQ to Sample / Quote Request" action
+- [x] **F12. Brochure Block & In-House Flipbook**: Direct PDF download CTAs to official repository PDFs + lightweight in-house CSS 3D page-flip viewer (no 3rd party embeds)
+- [x] **F13. Favourites System**: Heart toggle on project and product cards; saved to localStorage; "Saved Finishes" slide-out drawer with sample transfer
+- [x] **F14. Experience Centre & Dealer Finder**: State filter chips (Delhi, Karnataka, Rajasthan, Gujarat, Punjab) + search box + Google Map & Call actions
+- [x] **F15. Project & Gallery Filters**: All / International / National tabs + product-type chips with URL hash state and empty state
+- [x] **F16. Pro Resources**: Downloads library for catalogs, architectural specs, installation guides, and test certificates
+- [x] **F17. Sticky Mobile Bar + WhatsApp**: Bottom safe-area bar (Centres | WhatsApp | Free Sample | Call) with zero UI overlap
+
+---
+
+## Stage 6: Polish & Motion Design (F18) [DONE]
+- [x] **F18. Micro-Interactions Framework**:
+  - Scroll-reveal (fade-up, 32px, 0.6s) via IntersectionObserver
+  - Card hover zoom and elevation shadow
+  - Button hover effects & smooth anchor scrolling with header offset
+  - Automatic disable under `@media (prefers-reduced-motion: reduce)`
+
+---
+
+## Stage 7: Multi-Agent QA, Security & Verification [DONE]
+- [x] Task R0 Removal Audit: Verified 0 matches for cost/maintenance comparison anywhere on active site
+- [x] Content Freeze Compliance: 0 invented claims, 0 fake testimonials, official specs only
+- [x] Input Security & Sanitization: Honeypot spam defense, HTML entity escaping, safe event listeners
+- [x] End-to-End Test Suite: `scratch/test_complete_suite.py` passed 100% with exit code 0
+- [x] Console Errors: Verified ZERO uncaught JavaScript errors or broken anchors

@@ -1,7 +1,7 @@
 [
   {
     "title": "UltraShield Decking",
-    "category": "Product",
+    "category": "Products",
     "url": "/product/decking/",
     "description": "Premium 360-degree capped composite decking boards. Stain, scratch, and mold resistant with 25-year warranty.",
     "keywords": [
@@ -18,7 +18,7 @@
   },
   {
     "title": "Wall Cladding & Siding",
-    "category": "Product",
+    "category": "Products",
     "url": "/product/wall-cladding/",
     "description": "All-Weather exterior and interior composite wall cladding, castellated fluted panels, and siding systems.",
     "keywords": [
@@ -34,7 +34,7 @@
   },
   {
     "title": "Architectural Screening & Louvers",
-    "category": "Product",
+    "category": "Products",
     "url": "/product/screening/",
     "description": "Decorative composite architectural louvers, privacy screens, partitions, and sunlight control beams.",
     "keywords": [
@@ -49,7 +49,7 @@
   },
   {
     "title": "QuickDeck DIY Deck Tiles",
-    "category": "Product",
+    "category": "Products",
     "url": "/product/deck-tiles/",
     "description": "Interlocking composite deck tiles with easy snap-together grid backing. Perfect for balconies and rooftop gardens.",
     "keywords": [
@@ -64,7 +64,7 @@
   },
   {
     "title": "Composite Fencing & Gates",
-    "category": "Product",
+    "category": "Products",
     "url": "/product/fencing/",
     "description": "Heavy-duty UltraShield composite fence panels, flat tongue-and-groove boards, and matching gate systems.",
     "keywords": [
@@ -79,7 +79,7 @@
   },
   {
     "title": "Composite & Aluminum Railings",
-    "category": "Product",
+    "category": "Products",
     "url": "/product/railing/",
     "description": "Engineered railing systems pairing composite handrails with architectural balusters and tempered glass options.",
     "keywords": [
@@ -93,7 +93,7 @@
   },
   {
     "title": "Peruvian Teak (Color: TK)",
-    "category": "Color Finish",
+    "category": "Products",
     "url": "/#ntw-color-swatch-explorer",
     "description": "Warm, natural golden-brown teak finish with multi-chromatic authentic wood grain texture.",
     "keywords": [
@@ -108,96 +108,8 @@
     ]
   },
   {
-    "title": "Brazilian IPE (Color: IP)",
-    "category": "Color Finish",
-    "url": "/#ntw-color-swatch-explorer",
-    "description": "Deep rich dark walnut tone resembling Brazilian hardwood with extreme UV protection.",
-    "keywords": [
-      "ipe",
-      "brazilian ipe",
-      "dark brown",
-      "walnut",
-      "color",
-      "finish",
-      "timber"
-    ]
-  },
-  {
-    "title": "Antique Oak (Color: AT)",
-    "category": "Color Finish",
-    "url": "/#ntw-color-swatch-explorer",
-    "description": "Sophisticated weathered grey driftwood finish with contemporary architectural tone.",
-    "keywords": [
-      "antique",
-      "grey",
-      "gray",
-      "oak",
-      "driftwood",
-      "modern",
-      "silver"
-    ]
-  },
-  {
-    "title": "Canadian Maple (Color: MP)",
-    "category": "Color Finish",
-    "url": "/#ntw-color-swatch-explorer",
-    "description": "Luminous honey and golden amber hue bringing warmth to terrace and outdoor living spaces.",
-    "keywords": [
-      "maple",
-      "canadian maple",
-      "yellow",
-      "amber",
-      "honey",
-      "golden",
-      "light wood"
-    ]
-  },
-  {
-    "title": "Spanish Walnut (Color: WN)",
-    "category": "Color Finish",
-    "url": "/#ntw-color-swatch-explorer",
-    "description": "Luxurious deep mocha finish with subtle darker grain streaks inspired by Mediterranean walnut.",
-    "keywords": [
-      "spanish walnut",
-      "mocha",
-      "espresso",
-      "dark",
-      "chocolate"
-    ]
-  },
-  {
-    "title": "Hawaiian Charcoal (Color: CH)",
-    "category": "Color Finish",
-    "url": "/#ntw-color-swatch-explorer",
-    "description": "Bold graphite anthracite black finish for sleek modern facades and minimalist outdoor styling.",
-    "keywords": [
-      "charcoal",
-      "black",
-      "anthracite",
-      "graphite",
-      "dark",
-      "minimalist"
-    ]
-  },
-  {
-    "title": "Wood vs Composite Cost Calculator",
-    "category": "Tool",
-    "url": "/#ntw-cost-calculator",
-    "description": "Calculate 1-25 year maintenance, sanding, staining, and repair costs of timber compared to UltraShield zero upkeep.",
-    "keywords": [
-      "calculator",
-      "cost",
-      "price",
-      "savings",
-      "maintenance",
-      "roi",
-      "wood vs composite",
-      "comparison"
-    ]
-  },
-  {
     "title": "Request Free Sample Kit",
-    "category": "Service",
+    "category": "Pages",
     "url": "/#ntw-sample-request",
     "description": "Complimentary architectural sample box with decking, cladding and color swatches delivered across India.",
     "keywords": [
@@ -211,22 +123,8 @@
     ]
   },
   {
-    "title": "Color Swatch Explorer",
-    "category": "Tool",
-    "url": "/#ntw-color-swatch-explorer",
-    "description": "Interactive color palette explorer. Preview finished installations across Teak, IPE, Antique, and Maple.",
-    "keywords": [
-      "swatch",
-      "colors",
-      "palette",
-      "explorer",
-      "preview",
-      "visualize"
-    ]
-  },
-  {
     "title": "Delhi Experience Centre",
-    "category": "Experience Centre",
+    "category": "Pages",
     "url": "/#experience-centre",
     "description": "Lumber Life Flagship Centre: 1/8, Shop No. 6, WHS Kirti Nagar, Ware Housing Scheme, New Delhi 110015.",
     "keywords": [
@@ -236,60 +134,6 @@
       "showroom",
       "centre",
       "visit"
-    ]
-  },
-  {
-    "title": "Karnataka Experience Centre",
-    "category": "Experience Centre",
-    "url": "/#experience-centre",
-    "description": "Aaren Intpro: 342/8, Mysore Rd, New Guddadahalli, Bengaluru, Karnataka 560026.",
-    "keywords": [
-      "bengaluru",
-      "bangalore",
-      "karnataka",
-      "mysore road",
-      "south india",
-      "showroom"
-    ]
-  },
-  {
-    "title": "Rajasthan Experience Centre",
-    "category": "Experience Centre",
-    "url": "/#experience-centre",
-    "description": "Badayas Kitchen: 207, Mahesh Nagar, Shri Gopal Nagar, Gopal Pura Mode, Jaipur, Rajasthan 302019.",
-    "keywords": [
-      "jaipur",
-      "rajasthan",
-      "gopal pura",
-      "showroom",
-      "centre"
-    ]
-  },
-  {
-    "title": "Gujarat Experience Centre",
-    "category": "Experience Centre",
-    "url": "/#experience-centre",
-    "description": "Prabhusurat Buildwares: 1, Maruti complex, opp. sona appt., umiyadham road, Varachha, Surat-6. Ph: +91 98241 44670.",
-    "keywords": [
-      "surat",
-      "gujarat",
-      "varachha",
-      "ahmedabad",
-      "prabhusurat",
-      "showroom"
-    ]
-  },
-  {
-    "title": "Punjab Experience Centre (Coming Soon)",
-    "category": "Experience Centre",
-    "url": "/#experience-centre",
-    "description": "Upcoming experience centre bringing NewTechWood composites to Chandigarh, Ludhiana and Punjab region.",
-    "keywords": [
-      "punjab",
-      "chandigarh",
-      "ludhiana",
-      "upcoming",
-      "coming soon"
     ]
   },
   {
@@ -324,7 +168,7 @@
   },
   {
     "title": "UltraShield Technology & 360° Capping",
-    "category": "Technology",
+    "category": "Pages",
     "url": "/ultrashield-technology/",
     "description": "Patented co-extrusion technology capping all 4 sides in high-density polymer shield to prevent swelling and rot.",
     "keywords": [
@@ -339,7 +183,7 @@
   },
   {
     "title": "25-Year Limited Residential Warranty",
-    "category": "Warranty",
+    "category": "Pages",
     "url": "/warranty/",
     "description": "Comprehensive warranty against stain, fade, splitting, rot, and termite infestation for 25 years.",
     "keywords": [
@@ -352,7 +196,7 @@
   },
   {
     "title": "Integrated Fitting System & Hidden Clips",
-    "category": "Installation",
+    "category": "Pages",
     "url": "/integrated-fitting-system/",
     "description": "Fast, screw-free surface installation using precision concealed locking and expansion clips.",
     "keywords": [
@@ -362,6 +206,93 @@
       "fasteners",
       "hidden screws",
       "subframe"
+    ]
+  },
+  {
+    "title": "Best Deck Colors for Outdoor Living Spaces",
+    "category": "Articles",
+    "url": "/blog/best-deck-colors/",
+    "description": "Comprehensive design guide on selecting composite decking colors like Teak, Ipe, Walnut, and Charcoal to complement architectural facades.",
+    "keywords": [
+      "deck colors",
+      "best colors",
+      "teak",
+      "ipe",
+      "walnut",
+      "charcoal",
+      "blog",
+      "guide",
+      "design"
+    ]
+  },
+  {
+    "title": "How to Clean and Maintain Composite Decking",
+    "category": "Articles",
+    "url": "/blog/how-to-clean-composite-decking/",
+    "description": "Simple cleaning routines for UltraShield capped composite boards. Learn how simple soap and warm water keep your deck pristine.",
+    "keywords": [
+      "clean",
+      "cleaning",
+      "maintenance",
+      "wash",
+      "care",
+      "soap water",
+      "mold prevention"
+    ]
+  },
+  {
+    "title": "Top 8 Exterior Wall Cladding Ideas & Profiles",
+    "category": "Articles",
+    "url": "/blog/top-8-exterior-wall-cladding-ideas/",
+    "description": "Inspirational exterior wall siding and fluted cladding installations featuring Noir castellated and All-Weather architectural profiles.",
+    "keywords": [
+      "cladding ideas",
+      "wall cladding",
+      "exterior siding",
+      "fluted",
+      "castellated",
+      "facade"
+    ]
+  },
+  {
+    "title": "Composite Decking Around Pools: Slip & Moisture Safety",
+    "category": "Articles",
+    "url": "/blog/composite-decking-around-pools/",
+    "description": "Why UltraShield capped composite provides superior non-slip texture, chlorine resistance, and zero splinter safety for pool decks.",
+    "keywords": [
+      "pool",
+      "pool deck",
+      "swimming pool",
+      "wet areas",
+      "slip resistance",
+      "safety"
+    ]
+  },
+  {
+    "title": "6 Creative Uses of NewTechWood Composite Decking",
+    "category": "Articles",
+    "url": "/blog/6-creative-uses-of-newtechwood-composite-decking/",
+    "description": "From custom outdoor seating and integrated planter benches to hidden storage gates and architectural feature walls.",
+    "keywords": [
+      "creative uses",
+      "ideas",
+      "planters",
+      "benches",
+      "architectural features",
+      "pergola"
+    ]
+  },
+  {
+    "title": "Composite Deck Railing vs Aluminum Railing Systems",
+    "category": "Articles",
+    "url": "/blog/composite-deck-railing-vs-aluminum-railing-2/",
+    "description": "Comparative breakdown of composite railing versus powder-coated aluminum railings for modern residential balustrades.",
+    "keywords": [
+      "railing",
+      "balustrade",
+      "deck railing",
+      "aluminum",
+      "safety barriers"
     ]
   }
 ]

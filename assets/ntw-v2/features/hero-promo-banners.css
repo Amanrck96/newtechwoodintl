@@ -1,0 +1,226 @@
+/* ==========================================================================
+   F3: Hero Promo Banners
+   Auto-rotating cards, swipeable, pause on hover, accessible dots & arrows
+   ========================================================================== */
+
+.ntw-hero-promo-section {
+  background: #ffffff;
+  padding: 32px 20px 48px;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--ntw-border-light, #f0ede8);
+}
+
+.ntw-hero-promo-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ntw-hero-promo-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.ntw-hero-promo-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ntw-gold, #c9a84c);
+  margin-bottom: 4px;
+}
+
+.ntw-hero-promo-title {
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 700;
+  color: var(--ntw-dark, #121614);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.ntw-hero-promo-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ntw-hero-promo-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  background: #ffffff;
+  color: var(--ntw-dark, #121614);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ntw-hero-promo-arrow:hover,
+.ntw-hero-promo-arrow:focus-visible {
+  background: var(--ntw-green, #2d6a2d);
+  border-color: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  outline: none;
+}
+
+.ntw-hero-promo-arrow svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Slider Track */
+.ntw-hero-promo-slider {
+  overflow: hidden;
+  border-radius: var(--ntw-radius, 12px);
+  position: relative;
+}
+
+.ntw-hero-promo-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.ntw-hero-promo-card {
+  flex: 0 0 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  background: #fbfaf8;
+  border-radius: var(--ntw-radius, 12px);
+  overflow: hidden;
+  border: 1px solid var(--ntw-border-light, #f0ede8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.ntw-hero-promo-card-content {
+  padding: clamp(28px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ntw-hero-promo-card-tag {
+  display: inline-block;
+  background: rgba(45, 106, 45, 0.1);
+  color: var(--ntw-green, #2d6a2d);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: fit-content;
+  margin-bottom: 14px;
+}
+
+.ntw-hero-promo-card-h3 {
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.ntw-hero-promo-card-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 0 24px 0;
+}
+
+.ntw-hero-promo-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.ntw-hero-promo-card-btn:hover {
+  background: var(--ntw-green-hover, #225222);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(45, 106, 45, 0.3);
+}
+
+.ntw-hero-promo-card-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.ntw-hero-promo-card-media {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background: #e5e7eb;
+}
+
+.ntw-hero-promo-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dots */
+.ntw-hero-promo-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.ntw-hero-promo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.ntw-hero-promo-dot.active {
+  background: var(--ntw-green, #2d6a2d);
+  width: 28px;
+  border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .ntw-hero-promo-card {
+    grid-template-columns: 1fr;
+  }
+  .ntw-hero-promo-card-media {
+    height: 200px;
+    order: -1;
+  }
+  .ntw-hero-promo-card-content {
+    padding: 24px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ntw-hero-promo-track {
+    transition: none !important;
+  }
+}

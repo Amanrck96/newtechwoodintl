@@ -1,0 +1,320 @@
+/* ==========================================================================
+   F12: Brochure Block & Interactive Catalog Viewer
+   CSS 3D book preview + real PDF download links
+   ========================================================================== */
+
+.ntw-brochure-section {
+  background: #fbfaf8;
+  padding: 64px 20px;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  border-top: 1px solid var(--ntw-border, #e5e2dc);
+}
+
+.ntw-brochure-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ntw-brochure-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 48px;
+}
+
+.ntw-brochure-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ntw-gold, #c9a84c);
+  margin-bottom: 8px;
+}
+
+.ntw-brochure-title {
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  color: var(--ntw-dark, #121614);
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.ntw-brochure-subtitle {
+  font-size: 15px;
+  color: var(--ntw-text-muted, #6b7280);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 3-Column Catalog Grid */
+.ntw-brochure-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 900px) {
+  .ntw-brochure-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ntw-brochure-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ntw-brochure-card {
+  background: #ffffff;
+  border-radius: var(--ntw-radius, 14px);
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ntw-brochure-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* 3D Book Graphic */
+.ntw-book-wrap {
+  perspective: 800px;
+  margin: 0 auto 20px;
+  width: 170px;
+  height: 230px;
+}
+
+.ntw-book {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-18deg) rotateX(6deg);
+  transition: transform 0.4s ease;
+  box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.18);
+  border-radius: 4px 10px 10px 4px;
+}
+
+.ntw-brochure-card:hover .ntw-book {
+  transform: rotateY(-6deg) rotateX(2deg) scale(1.03);
+}
+
+.ntw-book-cover {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 10px 10px 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 14px;
+  color: #ffffff;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+}
+
+.ntw-book-cover.decking {
+  background: linear-gradient(145deg, #183e18 0%, #2b632b 100%);
+  border-left: 6px solid #112a11;
+}
+
+.ntw-book-cover.cladding {
+  background: linear-gradient(145deg, #442a17 0%, #6d4222 100%);
+  border-left: 6px solid #2b1a0d;
+}
+
+.ntw-book-cover.tiles {
+  background: linear-gradient(145deg, #1b3544 0%, #2b556d 100%);
+  border-left: 6px solid #10212b;
+}
+
+.ntw-book-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ntw-gold, #c9a84c);
+}
+
+.ntw-book-name {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 8px 0;
+  color: #ffffff;
+}
+
+.ntw-book-edition {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* Card Content */
+.ntw-brochure-info h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ntw-dark, #121614);
+  margin: 0 0 8px;
+}
+
+.ntw-brochure-info p {
+  font-size: 13px;
+  color: var(--ntw-text-muted, #6b7280);
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.ntw-brochure-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ntw-btn-download-pdf {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--ntw-green, #1b441b);
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.ntw-btn-download-pdf:hover {
+  background: #255a25;
+}
+
+.ntw-btn-preview-flipbook {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ntw-btn-preview-flipbook:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+/* Accessible Flipbook Viewer Modal */
+.ntw-flipbook-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.ntw-flipbook-modal.active {
+  display: flex;
+}
+
+.ntw-flipbook-dialog {
+  background: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.ntw-flipbook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ntw-flipbook-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: #111827;
+}
+
+.ntw-flipbook-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+  line-height: 1;
+}
+
+.ntw-flipbook-viewer {
+  background: #23272a;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+.ntw-flipbook-page-canvas {
+  background: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  min-height: 420px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.ntw-flipbook-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.ntw-fb-btn {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ntw-fb-counter {
+  font-size: 13px;
+  color: #4b5563;
+  font-weight: 500;
+}

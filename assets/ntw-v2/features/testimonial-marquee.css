@@ -1,0 +1,249 @@
+/* ==========================================================================
+   F8: Testimonial Slider & Infinite Partner Logo Strip
+   Swipeable slider with controls + continuous logo marquee that pauses on hover
+   ========================================================================== */
+
+.ntw-tm-section {
+  background: #ffffff;
+  padding: 80px 20px;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--ntw-border-light, #f0ede8);
+}
+
+.ntw-tm-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ntw-tm-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 40px;
+}
+
+.ntw-tm-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ntw-gold, #c9a84c);
+  margin-bottom: 8px;
+}
+
+.ntw-tm-title {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 700;
+  color: var(--ntw-dark, #121614);
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+}
+
+/* Testimonial Slider */
+.ntw-tm-slider-wrap {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto 64px;
+}
+
+.ntw-tm-slider {
+  overflow: hidden;
+  border-radius: var(--ntw-radius, 16px);
+  background: #fbfaf8;
+  border: 1px solid var(--ntw-border-light, #f0ede8);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.ntw-tm-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.ntw-tm-card {
+  flex: 0 0 100%;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: clamp(32px, 5vw, 48px);
+  text-align: center;
+}
+
+.ntw-tm-quote-icon {
+  width: 36px;
+  height: 36px;
+  fill: var(--ntw-gold, #c9a84c);
+  opacity: 0.6;
+  margin: 0 auto 16px;
+}
+
+.ntw-tm-quote-text {
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 500;
+  line-height: 1.6;
+  color: #1f2937;
+  margin: 0 0 24px 0;
+  font-style: italic;
+}
+
+.ntw-tm-author-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ntw-tm-author-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.ntw-tm-author-role {
+  font-size: 13px;
+  color: var(--ntw-green, #2d6a2d);
+  font-weight: 600;
+}
+
+.ntw-tm-author-loc {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Slider Controls */
+.ntw-tm-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.ntw-tm-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  background: #ffffff;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ntw-tm-arrow:hover {
+  background: var(--ntw-green, #2d6a2d);
+  border-color: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+}
+
+.ntw-tm-arrow svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.ntw-tm-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ntw-tm-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ntw-tm-dot.active {
+  background: var(--ntw-green, #2d6a2d);
+  width: 20px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Infinite Partner Logo Marquee
+   -------------------------------------------------------------------------- */
+.ntw-marquee-block {
+  padding-top: 32px;
+  border-top: 1px solid var(--ntw-border-light, #f0ede8);
+}
+
+.ntw-marquee-label {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #9ca3af;
+  margin-bottom: 24px;
+}
+
+.ntw-marquee-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.ntw-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  width: max-content;
+  animation: ntwMarqueeScroll 28s linear infinite;
+}
+
+.ntw-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ntwMarqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ntw-partner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  padding: 10px 20px;
+  border-radius: var(--ntw-radius-full, 9999px);
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.ntw-partner-pill:hover {
+  border-color: var(--ntw-green, #2d6a2d);
+  color: var(--ntw-green, #2d6a2d);
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ntw-partner-pill svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--ntw-gold, #c9a84c);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ntw-marquee-track {
+    animation: none !important;
+    overflow-x: auto;
+  }
+}

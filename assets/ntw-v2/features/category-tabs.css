@@ -1,0 +1,290 @@
+/* ==========================================================================
+   F4: Category Tabs
+   Decking / Cladding / Beams / Deck Tile / Fencing / Railing / Planter Box
+   Interactive tabs with swatch thumbnails, color counts, and image crossfade
+   ========================================================================== */
+
+.ntw-cat-tabs-section {
+  background: var(--ntw-bg, #f8f7f4);
+  padding: 80px 20px;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  position: relative;
+}
+
+.ntw-cat-tabs-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.ntw-cat-tabs-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+.ntw-cat-tabs-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ntw-gold, #c9a84c);
+  margin-bottom: 8px;
+}
+
+.ntw-cat-tabs-title {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 700;
+  color: var(--ntw-dark, #121614);
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+}
+
+.ntw-cat-tabs-subtitle {
+  font-size: 15px;
+  color: var(--ntw-text-muted, #6b7280);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Tabs Navigation Bar */
+.ntw-cat-tabs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 4px 16px;
+  margin-bottom: 32px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+.ntw-cat-tabs-nav::-webkit-scrollbar {
+  height: 4px;
+}
+.ntw-cat-tabs-nav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.ntw-cat-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  padding: 10px 18px;
+  border-radius: var(--ntw-radius-full, 9999px);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.ntw-cat-tab-btn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+.ntw-cat-tab-btn.active {
+  background: var(--ntw-green, #2d6a2d);
+  border-color: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(45, 106, 45, 0.25);
+}
+
+.ntw-cat-tab-count {
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.ntw-cat-tab-btn.active .ntw-cat-tab-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Tab Panel & Content Box */
+.ntw-cat-panel {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.ntw-cat-panel-left {
+  padding: clamp(32px, 4.5vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ntw-cat-panel-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ntw-green, #2d6a2d);
+  margin-bottom: 8px;
+}
+
+.ntw-cat-panel-h3 {
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+  line-height: 1.25;
+}
+
+.ntw-cat-panel-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 0 24px 0;
+}
+
+.ntw-cat-swatches-box {
+  margin-bottom: 28px;
+}
+
+.ntw-cat-swatches-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ntw-cat-swatches-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ntw-cat-swatch-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ntw-cat-swatch-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--ntw-green, #2d6a2d);
+}
+
+.ntw-cat-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ntw-cat-panel-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ntw-cat-panel-btn-primary:hover {
+  background: var(--ntw-green-hover, #225222);
+  transform: translateY(-1px);
+}
+
+.ntw-cat-panel-btn-primary svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.ntw-cat-panel-btn-sample {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  padding: 11px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ntw-cat-panel-btn-sample:hover {
+  border-color: var(--ntw-gold, #c9a84c);
+  color: var(--ntw-gold, #c9a84c);
+}
+
+/* Image Crossfade Container */
+.ntw-cat-panel-media {
+  position: relative;
+  min-height: 380px;
+  background: #1a2f23;
+  overflow: hidden;
+}
+
+.ntw-cat-panel-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out, transform 0.6s ease;
+}
+
+.ntw-cat-panel-img.crossfade-out {
+  opacity: 0;
+}
+
+.ntw-cat-panel:hover .ntw-cat-panel-img {
+  transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ntw-cat-panel {
+    grid-template-columns: 1fr;
+  }
+  .ntw-cat-panel-media {
+    min-height: 260px;
+    order: -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ntw-cat-panel-img {
+    transition: none !important;
+  }
+}

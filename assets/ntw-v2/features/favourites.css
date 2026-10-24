@@ -1,0 +1,258 @@
+/* ==========================================================================
+   F13: Favourites Drawer & Wishlist
+   Persistent client-side saved products & finishes with instant sample transfer
+   ========================================================================== */
+
+/* Floating Favourites Button (bottom left, above mobile bar) */
+.ntw-fav-trigger-btn {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  z-index: 9980;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.ntw-fav-trigger-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  border-color: #9ca3af;
+}
+
+.ntw-fav-trigger-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: #dc2626;
+  transition: transform 0.2s ease;
+}
+
+.ntw-fav-trigger-btn:hover svg {
+  transform: scale(1.15);
+}
+
+.ntw-fav-badge {
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Slide-out Drawer */
+.ntw-fav-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10001;
+  display: none;
+  justify-content: flex-end;
+  backdrop-filter: blur(2px);
+}
+
+.ntw-fav-drawer-backdrop.active {
+  display: flex;
+}
+
+.ntw-fav-drawer {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.ntw-fav-drawer-backdrop.active .ntw-fav-drawer {
+  transform: translateX(0);
+}
+
+.ntw-fav-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ntw-fav-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ntw-dark, #121614);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ntw-fav-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+  line-height: 1;
+  padding: 4px;
+}
+
+.ntw-fav-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Empty State */
+.ntw-fav-empty {
+  text-align: center;
+  padding: 40px 10px;
+  color: #6b7280;
+}
+
+.ntw-fav-empty-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+  fill: #d1d5db;
+}
+
+.ntw-fav-empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 6px 0;
+}
+
+.ntw-fav-empty-text {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Item Card */
+.ntw-fav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.ntw-fav-item-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #e5e7eb;
+}
+
+.ntw-fav-item-info {
+  flex: 1;
+}
+
+.ntw-fav-item-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 2px 0;
+}
+
+.ntw-fav-item-series {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.ntw-fav-item-remove {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 6px;
+  transition: color 0.2s;
+}
+
+.ntw-fav-item-remove:hover {
+  color: #dc2626;
+}
+
+/* Footer Action */
+.ntw-fav-footer {
+  padding: 18px 20px;
+  border-top: 1px solid #e5e7eb;
+  background: #fdfdfd;
+}
+
+.ntw-fav-sample-cta {
+  width: 100%;
+  background: var(--ntw-green, #1b441b);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.ntw-fav-sample-cta:hover {
+  background: #255a25;
+}
+
+.ntw-fav-sample-cta:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* Heart Toggle Buttons inside category / swatch cards */
+.ntw-heart-toggle-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ntw-heart-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: #9ca3af;
+  transition: fill 0.2s, transform 0.2s;
+}
+
+.ntw-heart-toggle-btn.is-active svg {
+  fill: #dc2626;
+  transform: scale(1.15);
+}

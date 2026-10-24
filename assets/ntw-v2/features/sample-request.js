@@ -1,17 +1,24 @@
 /**
- * F3: Free Sample Request Band + Modal Form
- * Handles sample request dialog, prefilling from color swatch explorer,
- * honeypot spam protection, and WhatsApp routing fallback.
+ * F9: Free Sample Request Band + Quote Modal Form
+ * Full accessibility, honeypot protection, draft saving & restoration via localStorage,
+ * project size/timeline options, file upload preview, and WhatsApp click-to-chat fallback.
  */
 
 (function () {
   'use strict';
 
   const WA_NUMBER = '919824144670'; // Gujarat Experience Centre official phone
+  const STORAGE_KEY = 'ntw_sample_draft_v2';
 
   function initSampleRequest() {
-    const mount = document.getElementById('ntw-sample-request');
-    if (!mount) return;
+    let mount = document.getElementById('ntw-sample-request');
+    if (!mount) {
+      const anchor = document.getElementById('ntw-color-swatch-explorer') || document.querySelector('footer');
+      if (!anchor) return;
+      mount = document.createElement('div');
+      mount.id = 'ntw-sample-request';
+      anchor.parentNode.insertBefore(mount, anchor.nextSibling);
+    }
 
     // Render Band Markup
     mount.innerHTML = `
@@ -46,6 +53,12 @@
           </div>
 
           <div class="ntw-modal-body">
+
+            <!-- Draft Resume Banner -->
+            <div class="ntw-draft-banner" id="ntw-draft-banner">
+              <span>Draft restored from previous visit.</span>
+              <button type="button" class="ntw-draft-clear-btn" id="ntw-draft-clear-btn">Clear Draft</button>
+            </div>
             
             <!-- Form State -->
             <form id="ntw-sample-form" novalidate>
@@ -103,18 +116,47 @@
                   </select>
                 </div>
 
+                <div class="ntw-form-group">
+                  <label class="ntw-form-label" for="ntw-select-size">Estimated Project Size</label>
+                  <select id="ntw-select-size" class="ntw-form-select">
+                    <option value="< 500 sq ft">&lt; 500 sq ft (Residential Balcony / Terrace)</option>
+                    <option value="500 - 1500 sq ft">500 – 1,500 sq ft (Villa Deck / Garden)</option>
+                    <option value="1500 - 5000 sq ft">1,500 – 5,000 sq ft (Commercial / Clubhouse)</option>
+                    <option value="5000+ sq ft">5,000+ sq ft (Resort / Large Commercial)</option>
+                  </select>
+                </div>
+
+                <div class="ntw-form-group">
+                  <label class="ntw-form-label" for="ntw-select-timeline">Execution Timeline</label>
+                  <select id="ntw-select-timeline" class="ntw-form-select">
+                    <option value="Immediate">Immediate (Within 15–30 days)</option>
+                    <option value="1 - 3 Months">1 – 3 Months</option>
+                    <option value="Planning Phase">Planning / Design Phase (&gt; 3 Months)</option>
+                  </select>
+                </div>
+
+                <div class="ntw-form-group full-width">
+                  <label class="ntw-form-label" for="ntw-input-plan">Attach Architectural Plan / Reference (Optional)</label>
+                  <input type="file" id="ntw-input-plan" class="ntw-form-input" accept=".pdf,.jpg,.jpeg,.png" style="padding: 8px 12px;" />
+                  <div class="ntw-form-file-hint">Optional plan, sketch or photo (PDF, JPG, PNG). Helps us calculate exact quantities.</div>
+                  <div id="ntw-plan-filename" style="font-size: 0.8rem; color: #15803d; margin-top: 4px; display: none;"></div>
+                </div>
+
                 <div class="ntw-form-group full-width">
                   <label class="ntw-form-label" for="ntw-input-address">Delivery Address / Project Notes</label>
-                  <textarea id="ntw-input-address" class="ntw-form-textarea" placeholder="Provide postal address or project dimensions for customized sample packaging..."></textarea>
+                  <textarea id="ntw-input-address" class="ntw-form-textarea" placeholder="Provide postal delivery address or site dimensions..."></textarea>
                 </div>
 
               </div>
 
               <div class="ntw-form-footer">
-                <button type="submit" class="ntw-form-submit-btn" id="ntw-form-submit-btn">
-                  <span>Submit Sample Request</span>
-                  <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
+                <div class="ntw-form-actions-row">
+                  <button type="submit" class="ntw-form-submit-btn" id="ntw-form-submit-btn">
+                    <span>Submit Sample Request</span>
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                  </button>
+                  <button type="button" class="ntw-form-resume-btn" id="ntw-form-save-btn">Save Draft</button>
+                </div>
                 <div class="ntw-form-trust-note">
                   🔒 Zero spam. Your details are solely used by our regional team to dispatch your physical sample kit.
                 </div>
@@ -154,12 +196,106 @@
     const successBox = document.getElementById('ntw-modal-success');
     const waLink = document.getElementById('ntw-wa-link');
     const colorSelect = document.getElementById('ntw-select-color');
+    const saveDraftBtn = document.getElementById('ntw-form-save-btn');
+    const draftBanner = document.getElementById('ntw-draft-banner');
+    const clearDraftBtn = document.getElementById('ntw-draft-clear-btn');
+    const planInput = document.getElementById('ntw-input-plan');
+    const planFilename = document.getElementById('ntw-plan-filename');
+
+    let uploadedFileName = '';
 
     if (!modal) return;
 
+    if (planInput && planFilename) {
+      planInput.addEventListener('change', function () {
+        if (planInput.files && planInput.files[0]) {
+          uploadedFileName = planInput.files[0].name;
+          planFilename.textContent = `Attached: ${uploadedFileName}`;
+          planFilename.style.display = 'block';
+        } else {
+          uploadedFileName = '';
+          planFilename.style.display = 'none';
+        }
+      });
+    }
+
+    function saveDraftToStorage(notify = false) {
+      const data = {
+        name: (document.getElementById('ntw-input-name') || {}).value || '',
+        phone: (document.getElementById('ntw-input-phone') || {}).value || '',
+        email: (document.getElementById('ntw-input-email') || {}).value || '',
+        city: (document.getElementById('ntw-input-city') || {}).value || '',
+        product: (document.getElementById('ntw-select-product') || {}).value || '',
+        color: (document.getElementById('ntw-select-color') || {}).value || '',
+        size: (document.getElementById('ntw-select-size') || {}).value || '',
+        timeline: (document.getElementById('ntw-select-timeline') || {}).value || '',
+        address: (document.getElementById('ntw-input-address') || {}).value || '',
+        planFile: uploadedFileName || ''
+      };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        if (notify && saveDraftBtn) {
+          const original = saveDraftBtn.textContent;
+          saveDraftBtn.textContent = 'Saved ✓';
+          setTimeout(() => { saveDraftBtn.textContent = original; }, 2000);
+        }
+      } catch (e) {
+        console.warn('LocalStorage error:', e);
+      }
+    }
+
+    function restoreDraftFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const data = JSON.parse(raw);
+        if (!data) return false;
+
+        const hasContent = data.name || data.phone || data.email || data.city || data.address;
+        if (!hasContent) return false;
+
+        if (data.name) (document.getElementById('ntw-input-name') || {}).value = data.name;
+        if (data.phone) (document.getElementById('ntw-input-phone') || {}).value = data.phone;
+        if (data.email) (document.getElementById('ntw-input-email') || {}).value = data.email;
+        if (data.city) (document.getElementById('ntw-input-city') || {}).value = data.city;
+        if (data.product) (document.getElementById('ntw-select-product') || {}).value = data.product;
+        if (data.color) (document.getElementById('ntw-select-color') || {}).value = data.color;
+        if (data.size) (document.getElementById('ntw-select-size') || {}).value = data.size;
+        if (data.timeline) (document.getElementById('ntw-select-timeline') || {}).value = data.timeline;
+        if (data.address) (document.getElementById('ntw-input-address') || {}).value = data.address;
+        if (data.planFile && planFilename) {
+          uploadedFileName = data.planFile;
+          planFilename.textContent = `Attached: ${data.planFile}`;
+          planFilename.style.display = 'block';
+        }
+
+        if (draftBanner) draftBanner.classList.add('active');
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    if (saveDraftBtn) {
+      saveDraftBtn.addEventListener('click', () => saveDraftToStorage(true));
+    }
+
+    if (clearDraftBtn) {
+      clearDraftBtn.addEventListener('click', () => {
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (e) {}
+        if (form) form.reset();
+        uploadedFileName = '';
+        if (planFilename) planFilename.style.display = 'none';
+        if (draftBanner) draftBanner.classList.remove('active');
+      });
+    }
+
     function openModal(prefill) {
+      const restored = restoreDraftFromStorage();
+
       if (prefill && prefill.color && colorSelect) {
-        // Find best match in select
         for (let i = 0; i < colorSelect.options.length; i++) {
           if (colorSelect.options[i].value.toLowerCase().includes(prefill.color.toLowerCase())) {
             colorSelect.selectedIndex = i;
@@ -172,17 +308,18 @@
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
 
-      // Reset form view if previously successful
       if (form) form.style.display = 'block';
       if (successBox) successBox.classList.remove('active');
 
       const firstInput = document.getElementById('ntw-input-name');
-      if (firstInput) {
+      if (firstInput && !restored) {
         setTimeout(() => firstInput.focus(), 100);
       }
     }
 
     function closeModal() {
+      // Auto-save draft on close if anything filled
+      saveDraftToStorage(false);
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -197,14 +334,12 @@
       closeBtn.addEventListener('click', closeModal);
     }
 
-    // Backdrop click
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         closeModal();
       }
     });
 
-    // Keyboard ESC & Tab trap
     window.addEventListener('keydown', (e) => {
       if (!modal.classList.contains('is-open')) return;
 
@@ -230,7 +365,6 @@
       }
     });
 
-    // Listen for custom trigger from Color Swatch Explorer (F1)
     window.addEventListener('ntw:open-sample-modal', (e) => {
       openModal(e.detail);
     });
@@ -243,7 +377,6 @@
         // 1. Honeypot test
         const hp = form.querySelector('.ntw-hp-field');
         if (hp && hp.value) {
-          // Bot detected, silently show success without sending
           form.style.display = 'none';
           if (successBox) successBox.classList.add('active');
           return;
@@ -256,6 +389,8 @@
         const cityInput = document.getElementById('ntw-input-city');
         const productSelect = document.getElementById('ntw-select-product');
         const colorSelectElem = document.getElementById('ntw-select-color');
+        const sizeSelect = document.getElementById('ntw-select-size');
+        const timelineSelect = document.getElementById('ntw-select-timeline');
         const addressInput = document.getElementById('ntw-input-address');
 
         let isValid = true;
@@ -300,12 +435,15 @@
         const phone = phoneInput.value.trim();
         const email = emailInput.value.trim();
         const city = cityInput.value.trim();
-        const product = productSelect.value;
-        const color = colorSelectElem.value;
+        const product = productSelect ? productSelect.value : '';
+        const color = colorSelectElem ? colorSelectElem.value : '';
+        const size = sizeSelect ? sizeSelect.value : '';
+        const timeline = timelineSelect ? timelineSelect.value : '';
+        const planNote = uploadedFileName ? `\n*File Attached:* ${uploadedFileName}` : '';
         const address = addressInput.value.trim() || 'Not specified';
 
         const text = 
-`*Free Sample Box Request — NewTechWood India*
+`*Free Sample Box & Quote Request — NewTechWood India*
 ----------------------------------------
 *Name:* ${name}
 *Phone:* ${phone}
@@ -313,6 +451,8 @@
 *City:* ${city}
 *Product:* ${product}
 *Color:* ${color}
+*Est. Size:* ${size}
+*Timeline:* ${timeline}${planNote}
 *Address/Notes:* ${address}
 ----------------------------------------
 (Sent via newtechwood.in sample portal)`;
@@ -322,24 +462,20 @@
           waLink.href = waUrl;
         }
 
+        // Clear stored draft upon successful submission
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (err) {}
+
         // 4. Update UI to Success State
         form.style.display = 'none';
+        if (draftBanner) draftBanner.classList.remove('active');
         if (successBox) successBox.classList.add('active');
 
-        // Optional: auto open WA in background tab
+        // Optional: auto open WA
         window.open(waUrl, '_blank', 'noopener,noreferrer');
       });
     }
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
   }
 
   if (document.readyState === 'loading') {
@@ -348,4 +484,3 @@
     initSampleRequest();
   }
 })();
-
