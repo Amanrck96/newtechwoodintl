@@ -146,18 +146,76 @@
 .ntw-products-grid-inner {
   display: flex !important;
   flex-wrap: nowrap !important;
-  gap: 20px !important;
+  gap: 16px !important;
   padding: 24px 28px !important;
   position: relative !important;
 }
 
 .ntw-mega-col {
   flex: 1 1 0 !important;
-  min-width: 140px !important;
+  min-width: 130px !important;
+}
+
+/* Category Architectural Thumbnail on Top of Column */
+.ntw-mega-col-thumb-link {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background-color: #f3efe6;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.ntw-mega-col-thumb-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.ntw-mega-col-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ntw-mega-col-thumb-link:hover .ntw-mega-col-thumb {
+  transform: scale(1.06);
+}
+
+.ntw-mega-col h6.elementor-heading-title {
+  margin-bottom: 10px !important;
+}
+
+.ntw-mega-col h6.elementor-heading-title a {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+
+.ntw-mega-col h6.elementor-heading-title a:hover {
+  color: var(--ntw-green, #2d6a2d) !important;
+}
+
+/* On standard screens with 7 image columns, hide the side promo card so all 7 columns get full width */
+.ntw-mega-promo {
+  display: none !important;
+}
+
+@media (min-width: 1560px) {
+  .ntw-mega-promo {
+    display: flex !important;
+    flex: 0 0 260px !important;
+  }
 }
 
 .ntw-mega-promo {
-  flex: 0 0 280px !important;
   background: linear-gradient(145deg, #0e2917 0%, #163f24 100%);
   border-radius: var(--ntw-radius, 12px);
   padding: 20px;
@@ -750,28 +808,36 @@
 }
 
 /* --------------------------------------------------------------------------
-   N10. Active Page Underline & Indicator
+   N10. Active Page Underline & Open Menu Indicator Dot (Matches newtechwood.com)
    -------------------------------------------------------------------------- */
 .e-n-menu-item.ntw-nav-active > .e-n-menu-title .e-n-menu-title-text,
+.e-n-menu-item.ntw-hover-open > .e-n-menu-title .e-n-menu-title-text,
 .ntw-drawer-sublink.ntw-nav-active,
 .ntw-drawer-direct-link.ntw-nav-active {
   color: var(--ntw-green, #2d6a2d) !important;
   font-weight: 700 !important;
 }
 
-.e-n-menu-item.ntw-nav-active > .e-n-menu-title .e-n-menu-title-text {
+.e-n-menu-title .e-n-menu-title-text {
   position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Circular dot indicator centered under the active / open menu title as shown in official site */
+.e-n-menu-item.ntw-hover-open > .e-n-menu-title .e-n-menu-title-text::after,
 .e-n-menu-item.ntw-nav-active > .e-n-menu-title .e-n-menu-title-text::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--ntw-gold, #c9a84c);
-  border-radius: 2px;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: #111827;
+  border-radius: 50%;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 /* --------------------------------------------------------------------------
