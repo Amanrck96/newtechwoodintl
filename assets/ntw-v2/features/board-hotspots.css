@@ -1,6 +1,7 @@
 /* ==========================================================================
-   F7: Board Anatomy Hotspots
-   Interactive SVG UltraShield board diagram with clickable benefit hotspots
+   F7: Board Anatomy Hotspots & 360° Technology Inspection
+   Interactive 3D UltraShield board diagram with clickable benefit hotspots,
+   interactive 360° capping comparison tool, and active shield aura.
    ========================================================================== */
 
 .ntw-hotspots-section {
@@ -12,13 +13,13 @@
 }
 
 .ntw-hotspots-container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
 .ntw-hotspots-header {
   text-align: center;
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto 48px;
 }
 
@@ -50,13 +51,13 @@
 /* Interactive Stage Grid */
 .ntw-hotspots-stage {
   display: grid;
-  grid-template-columns: 1.3fr 0.9fr;
-  gap: 40px;
-  align-items: center;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 36px;
+  align-items: flex-start;
   background: #fbfaf8;
   border: 1px solid var(--ntw-border-light, #f0ede8);
   border-radius: 20px;
-  padding: 40px;
+  padding: 36px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
 
@@ -69,7 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 24px 40px;
+  padding: 30px 20px 40px;
   box-sizing: border-box;
   overflow: hidden;
   box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.02);
@@ -93,11 +94,83 @@
   pointer-events: none;
 }
 
-/* Callout Badges */
+/* 360 Shield Aura Highlight */
+.ntw-360-aura-wrapper {
+  position: absolute;
+  inset: -12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.ntw-360-aura-wrapper.active {
+  opacity: 1;
+}
+
+.ntw-360-aura-ring {
+  position: absolute;
+  inset: 10% 8% 8% 8%;
+  border-radius: 24px;
+  border: 2px dashed rgba(201, 168, 76, 0.7);
+  box-shadow: 0 0 25px rgba(201, 168, 76, 0.25), inset 0 0 25px rgba(201, 168, 76, 0.1);
+  animation: ntwAuraRotate 8s linear infinite;
+}
+
+@keyframes ntwAuraRotate {
+  0% { transform: scale(0.99); opacity: 0.7; }
+  50% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(0.99); opacity: 0.7; }
+}
+
+.ntw-360-tag-pill {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  background: rgba(18, 22, 20, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #c9a84c;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ntw-360-pill-icon {
+  background: #c9a84c;
+  color: #121614;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* Callout Badges (Interactive Buttons) */
 .ntw-callout-badge {
   position: absolute;
   z-index: 8;
-  pointer-events: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+.ntw-callout-badge:hover {
+  transform: translateY(-2px);
+}
+
+.ntw-callout-badge:focus-visible .ntw-callout-badge-content {
+  box-shadow: 0 0 0 2px var(--ntw-green, #2d6a2d);
 }
 
 .ntw-callout-core {
@@ -112,15 +185,23 @@
 }
 
 .ntw-callout-badge-content {
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: 2px;
+  transition: all 0.2s ease;
+}
+
+.ntw-callout-badge.active .ntw-callout-badge-content {
+  border-color: var(--ntw-gold, #c9a84c);
+  box-shadow: 0 0 0 2px var(--ntw-gold, #c9a84c), 0 6px 18px rgba(201, 168, 76, 0.25);
+  background: #ffffff;
 }
 
 .ntw-callout-badge-title {
@@ -160,6 +241,7 @@
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
   transform: translate(-50%, -50%);
   z-index: 10;
+  outline: none;
 }
 
 .ntw-hotspot-pin::before {
@@ -181,7 +263,7 @@
 .ntw-hotspot-pin:hover,
 .ntw-hotspot-pin.active {
   background: var(--ntw-gold, #c9a84c);
-  transform: translate(-50%, -50%) scale(1.15);
+  transform: translate(-50%, -50%) scale(1.18);
   box-shadow: 0 6px 16px rgba(201, 168, 76, 0.5);
 }
 
@@ -194,8 +276,15 @@
   background: #ffffff;
   border: 1px solid var(--ntw-border, #e5e2dc);
   border-radius: 16px;
-  padding: 32px;
+  padding: 30px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.ntw-hp-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .ntw-hotspot-badge {
@@ -206,16 +295,21 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 4px;
-  margin-bottom: 12px;
+}
+
+.ntw-hp-active-num {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
 }
 
 .ntw-hotspot-title {
   font-size: 22px;
   font-weight: 700;
   color: #111827;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   line-height: 1.3;
 }
 
@@ -223,29 +317,116 @@
   font-size: 14px;
   line-height: 1.6;
   color: #4b5563;
-  margin: 0 0 24px 0;
+  margin: 0 0 20px 0;
+}
+
+/* 360 Comparison Interactive Box */
+.ntw-360-comparison-box {
+  background: #fbfaf8;
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 22px;
+}
+
+.ntw-360-tabs-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ntw-360-tab-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.ntw-360-tab-btn.active {
+  background: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  border-color: var(--ntw-green, #2d6a2d);
+}
+
+.ntw-360-tab-btn#ntw-tab-360-uncapped.active {
+  background: #991b1b;
+  color: #ffffff;
+  border-color: #991b1b;
+}
+
+.ntw-360-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.ntw-360-point-item:last-child {
+  margin-bottom: 0;
+}
+
+.ntw-check-icon {
+  width: 16px;
+  height: 16px;
+  fill: #16a34a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ntw-cross-icon {
+  width: 16px;
+  height: 16px;
+  fill: #dc2626;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ntw-warn-point span {
+  color: #7f1d1d;
+}
+
+/* Hotspots List */
+.ntw-hotspot-list-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
+  margin-bottom: 8px;
 }
 
 .ntw-hotspot-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 
 .ntw-hotspot-item-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border-radius: 8px;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
   background: #f9fafb;
   border: 1px solid #f3f4f6;
   color: #374151;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
   text-align: left;
   transition: all 0.2s ease;
+  outline: none;
 }
 
 .ntw-hotspot-item-btn:hover,
@@ -256,8 +437,8 @@
 }
 
 .ntw-hotspot-item-num {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #e5e7eb;
   color: #4b5563;
@@ -266,6 +447,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .ntw-hotspot-item-btn.active .ntw-hotspot-item-num {
@@ -273,16 +455,51 @@
   color: #ffffff;
 }
 
+/* Action Button */
+.ntw-hp-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ntw-hp-btn-sample {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ntw-green, #2d6a2d);
+  color: #ffffff !important;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(45, 106, 45, 0.2);
+}
+
+.ntw-hp-btn-sample:hover {
+  background: var(--ntw-green-hover, #225222);
+  transform: translateY(-1px);
+}
+
+.ntw-hp-btn-sample svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .ntw-hotspots-stage {
     grid-template-columns: 1fr;
-    padding: 24px;
+    padding: 20px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ntw-hotspot-pin::before {
+  .ntw-hotspot-pin::before,
+  .ntw-360-aura-ring {
     animation: none !important;
   }
 }

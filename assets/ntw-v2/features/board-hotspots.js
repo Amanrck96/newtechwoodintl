@@ -1,7 +1,7 @@
 /**
- * F7: Board Anatomy Hotspots
- * Real Photographic / 3D Render UltraShield 360 board with interactive benefit hotspots:
- * 1. 360° All-Round Protective Shield
+ * F7: Board Anatomy Hotspots & 360° Technology Inspection
+ * Real Photorealistic 3D Render UltraShield 360 board with interactive benefit hotspots:
+ * 1. 360° All-Round Protective Shield (Interactive 360 Capping Inspection)
  * 2. Advanced UV Protection
  * 3. Mold & Mildew Resistance
  * 4. 25-Year Warranty
@@ -20,8 +20,23 @@
       x: 36,
       y: 74,
       title: '360° All-Round Protective Shield',
-      tag: 'Patented Co-Extrusion',
-      desc: 'Unlike conventional composites that leave bottoms and grooves exposed to moisture, UltraShield is 100% encapsulated on all four sides and inside the hidden clip channels, preventing swelling and delamination.'
+      tag: 'Patented 4-Side Co-Extrusion',
+      desc: 'Unlike conventional composites that leave bottoms and hidden clip grooves exposed to moisture, UltraShield is 100% encapsulated on all four sides and inside the hidden clip channels, preventing swelling, delamination, and rotting.',
+      is360: true,
+      comparison: {
+        cappedTitle: 'UltraShield® 360° Complete Polymer Shield',
+        cappedPoints: [
+          '100% 4-sided polymer envelope including inside fastener grooves',
+          '0.0% moisture penetration — prevents swelling, rotting, and fungal decay',
+          'High-temperature co-extrusion fusing shield directly to core (zero glues)'
+        ],
+        uncappedTitle: 'Conventional / Uncapped Composite',
+        uncappedPoints: [
+          'Exposed bottom and grooves absorb rainwater and morning condensation',
+          'Susceptible to internal mold growth, warping, and surface cracking',
+          'Requires harsh chemical treatments and ongoing maintenance'
+        ]
+      }
     },
     {
       id: 'uv-protection',
@@ -97,21 +112,32 @@
     }
 
     let activeIndex = 0;
+    let comparisonMode = 'capped'; // 'capped' or 'uncapped'
 
     mount.innerHTML = `
-      <section class="ntw-hotspots-section" aria-label="UltraShield Board Anatomy and Technology">
+      <section class="ntw-hotspots-section" id="ntw-hotspots-section" aria-label="UltraShield Board Anatomy and Technology">
         <div class="ntw-hotspots-container">
           
           <div class="ntw-hotspots-header">
             <span class="ntw-hotspots-eyebrow">Anatomy of Innovation</span>
             <h2 class="ntw-hotspots-title">What Makes UltraShield® Different?</h2>
-            <p class="ntw-hotspots-subtitle">Click on any hotspot below to explore the advanced co-extrusion technology engineered into every NewTechWood profile.</p>
+            <p class="ntw-hotspots-subtitle">Click on any hotspot or feature badge below to explore the advanced co-extrusion technology engineered into every NewTechWood profile.</p>
           </div>
 
           <div class="ntw-hotspots-stage">
             
             <div class="ntw-hotspots-diagram-wrap">
               <div class="ntw-hotspots-image-container">
+                
+                <!-- 360 Shield Aura Highlight -->
+                <div class="ntw-360-aura-wrapper active" id="ntw-360-aura" aria-hidden="true">
+                  <div class="ntw-360-aura-ring"></div>
+                  <div class="ntw-360-tag-pill">
+                    <span class="ntw-360-pill-icon">360°</span>
+                    <span>FULL 4-SIDED ENCAPSULATION</span>
+                  </div>
+                </div>
+
                 <!-- Real Photorealistic 3D Render of UltraShield 360 Board Profile -->
                 <img 
                   src="/wp-content/uploads/2026/04/UltraShield-360.png" 
@@ -121,23 +147,23 @@
                   height="523"
                 />
 
-                <!-- 1. Left Core Callout Badge -->
-                <div class="ntw-callout-badge ntw-callout-core">
+                <!-- 1. Left Core Callout Badge (Interactive Button) -->
+                <button type="button" class="ntw-callout-badge ntw-callout-core" id="ntw-btn-badge-core" aria-label="Explore Dense Recycled Composite Core">
                   <div class="ntw-callout-badge-line"></div>
                   <div class="ntw-callout-badge-content">
                     <span class="ntw-callout-badge-title">DENSE RECYCLED COMPOSITE CORE</span>
                     <span class="ntw-callout-badge-sub">95% Reclaimed Hardwood Fiber &amp; Polyethylene</span>
                   </div>
-                </div>
+                </button>
 
-                <!-- 2. Right/Bottom Shield Callout Badge -->
-                <div class="ntw-callout-badge ntw-callout-shield">
+                <!-- 2. Right/Bottom Shield Callout Badge (Interactive Button) -->
+                <button type="button" class="ntw-callout-badge ntw-callout-shield active" id="ntw-btn-badge-shield" aria-label="Explore 360° All-Round Protective Shield">
                   <div class="ntw-callout-badge-line"></div>
                   <div class="ntw-callout-badge-content">
                     <span class="ntw-callout-badge-title">360° ALL-ROUND PROTECTIVE SHIELD</span>
-                    <span class="ntw-callout-badge-sub">100% Encapsulated Co-Extrusion Outer Capping</span>
+                    <span class="ntw-callout-badge-sub">100% Encapsulated Co-Extrusion Outer Capping &bull; Click to Inspect</span>
                   </div>
-                </div>
+                </button>
 
                 <!-- Hotspot Pins Positioned Directly on the Real Board -->
                 ${HOTSPOTS.map((h, idx) => `
@@ -155,10 +181,47 @@
             </div>
 
             <div class="ntw-hotspot-panel" id="ntw-hotspot-panel">
-              <span class="ntw-hotspot-badge" id="ntw-hp-tag">${escapeHtml(HOTSPOTS[0].tag)}</span>
+              <div class="ntw-hp-top-row">
+                <span class="ntw-hotspot-badge" id="ntw-hp-tag">${escapeHtml(HOTSPOTS[0].tag)}</span>
+                <span class="ntw-hp-active-num" id="ntw-hp-active-num">Benefit #1 of 7</span>
+              </div>
+
               <h3 class="ntw-hotspot-title" id="ntw-hp-title">${escapeHtml(HOTSPOTS[0].title)}</h3>
               <p class="ntw-hotspot-desc" id="ntw-hp-desc">${escapeHtml(HOTSPOTS[0].desc)}</p>
 
+              <!-- Interactive 360 Technology Comparison Box -->
+              <div class="ntw-360-comparison-box" id="ntw-360-comparison-box">
+                <div class="ntw-360-tabs-row" role="tablist" aria-label="360 Technology Comparison">
+                  <button type="button" class="ntw-360-tab-btn active" id="ntw-tab-360-capped" role="tab" aria-selected="true">
+                    <span>✓ UltraShield 360°</span>
+                  </button>
+                  <button type="button" class="ntw-360-tab-btn" id="ntw-tab-360-uncapped" role="tab" aria-selected="false">
+                    <span>✗ Uncapped Ordinary</span>
+                  </button>
+                </div>
+
+                <div class="ntw-360-tab-content" id="ntw-360-tab-content">
+                  <div class="ntw-360-points-list" id="ntw-360-points-list">
+                    <div class="ntw-360-point-item">
+                      <svg viewBox="0 0 24 24" class="ntw-check-icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      <span>100% 4-sided polymer envelope wraps all four sides and clip grooves.</span>
+                    </div>
+                    <div class="ntw-360-point-item">
+                      <svg viewBox="0 0 24 24" class="ntw-check-icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      <span>0.0% moisture absorption prevents swelling, rotting, and mold decay.</span>
+                    </div>
+                    <div class="ntw-360-point-item">
+                      <svg viewBox="0 0 24 24" class="ntw-check-icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      <span>Simultaneous high-temp co-extrusion creates permanent impermeable bond.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hotspots List Navigation -->
+              <div class="ntw-hotspot-list-header">
+                <span>All 7 Engineering Benefits</span>
+              </div>
               <div class="ntw-hotspot-list" role="tablist" aria-label="Board Benefits">
                 ${HOTSPOTS.map((h, idx) => `
                   <button type="button" class="ntw-hotspot-item-btn ${idx === 0 ? 'active' : ''}" data-hotspot-idx="${idx}" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}">
@@ -167,6 +230,15 @@
                   </button>
                 `).join('')}
               </div>
+
+              <!-- Action Bar -->
+              <div class="ntw-hp-actions">
+                <button type="button" class="ntw-hp-btn-sample" id="ntw-hp-btn-sample">
+                  <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                  <span>Request 360° Sample Kit</span>
+                </button>
+              </div>
+
             </div>
 
           </div>
@@ -180,9 +252,67 @@
     const tagEl = document.getElementById('ntw-hp-tag');
     const titleEl = document.getElementById('ntw-hp-title');
     const descEl = document.getElementById('ntw-hp-desc');
+    const activeNumEl = document.getElementById('ntw-hp-active-num');
+    const auraEl = document.getElementById('ntw-360-aura');
+    const comparisonBox = document.getElementById('ntw-360-comparison-box');
+    const tabCapped = document.getElementById('ntw-tab-360-capped');
+    const tabUncapped = document.getElementById('ntw-tab-360-uncapped');
+    const pointsList = document.getElementById('ntw-360-points-list');
+    const sampleBtn = document.getElementById('ntw-hp-btn-sample');
+
+    const badgeShield = document.getElementById('ntw-btn-badge-shield');
+    const badgeCore = document.getElementById('ntw-btn-badge-core');
+
+    function updateComparison(mode) {
+      comparisonMode = mode;
+      const isCapped = mode === 'capped';
+
+      if (tabCapped) {
+        tabCapped.classList.toggle('active', isCapped);
+        tabCapped.setAttribute('aria-selected', isCapped ? 'true' : 'false');
+      }
+      if (tabUncapped) {
+        tabUncapped.classList.toggle('active', !isCapped);
+        tabUncapped.setAttribute('aria-selected', !isCapped ? 'true' : 'false');
+      }
+
+      if (isCapped) {
+        pointsList.innerHTML = `
+          <div class="ntw-360-point-item">
+            <svg viewBox="0 0 24 24" class="ntw-check-icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <span><strong>100% 4-Sided Envelope:</strong> Wraps all four sides and fastener grooves with zero exposed core.</span>
+          </div>
+          <div class="ntw-360-point-item">
+            <svg viewBox="0 0 24 24" class="ntw-check-icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <span><strong>0.0% Moisture Absorption:</strong> Eliminates swelling, cupping, warping, and mold decay.</span>
+          </div>
+          <div class="ntw-360-point-item">
+            <svg viewBox="0 0 24 24" class="ntw-check-icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <span><strong>High-Temp Co-Extrusion:</strong> Fuses polymer shield to dense core without chemical adhesives.</span>
+          </div>
+        `;
+      } else {
+        pointsList.innerHTML = `
+          <div class="ntw-360-point-item ntw-warn-point">
+            <svg viewBox="0 0 24 24" class="ntw-cross-icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            <span><strong>Exposed Grooves &amp; Bottom:</strong> Rainwater enters untreated wood fibers beneath the board.</span>
+          </div>
+          <div class="ntw-360-point-item ntw-warn-point">
+            <svg viewBox="0 0 24 24" class="ntw-cross-icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            <span><strong>Water Absorption Risk:</strong> Internal dampness promotes mold infestation, rotting, and swelling.</span>
+          </div>
+          <div class="ntw-360-point-item ntw-warn-point">
+            <svg viewBox="0 0 24 24" class="ntw-cross-icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            <span><strong>Ongoing Maintenance Required:</strong> Vulnerable to staining, surface delamination, and bleaching.</span>
+          </div>
+        `;
+      }
+    }
+
+    if (tabCapped) tabCapped.addEventListener('click', () => updateComparison('capped'));
+    if (tabUncapped) tabUncapped.addEventListener('click', () => updateComparison('uncapped'));
 
     function selectHotspot(idx) {
-      if (idx === activeIndex) return;
       activeIndex = idx;
       const h = HOTSPOTS[idx];
 
@@ -200,29 +330,77 @@
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
+      // Update badges
+      if (badgeShield) badgeShield.classList.toggle('active', idx === 0);
+      if (badgeCore) badgeCore.classList.toggle('active', idx === 6);
+
+      // 360 Aura highlight
+      if (auraEl) {
+        auraEl.classList.toggle('active', idx === 0);
+      }
+
+      // Comparison box visibility
+      if (comparisonBox) {
+        comparisonBox.style.display = idx === 0 ? 'block' : 'none';
+      }
+
       // Update text
       tagEl.textContent = h.tag;
       titleEl.textContent = h.title;
       descEl.textContent = h.desc;
+      activeNumEl.textContent = `Benefit #${h.num} of 7`;
     }
 
+    // Pin click listeners
     pins.forEach((p, idx) => {
       p.addEventListener('click', () => selectHotspot(idx));
     });
 
+    // List item click listeners
     listBtns.forEach((btn, idx) => {
       btn.addEventListener('click', () => selectHotspot(idx));
     });
+
+    // Callout badges interactive triggers
+    if (badgeShield) {
+      badgeShield.addEventListener('click', () => {
+        selectHotspot(0);
+        updateComparison('capped');
+      });
+    }
+
+    if (badgeCore) {
+      badgeCore.addEventListener('click', () => {
+        selectHotspot(6);
+      });
+    }
+
+    // Sample button click listener
+    if (sampleBtn) {
+      sampleBtn.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('ntw:open-sample-modal', {
+          detail: { notes: 'Requested sample kit highlighting UltraShield 360-degree protective shield.' }
+        }));
+        const modal = document.getElementById('ntw-sample-modal');
+        if (modal) {
+          modal.classList.add('is-open');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        } else {
+          window.location.href = '/#ntw-sample-request';
+        }
+      });
+    }
   }
 
   function escapeHtml(str) {
     if (!str) return '';
     return String(str)
       .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
+      .replace(/&lt;/g, '&lt;')
+      .replace(/&gt;/g, '&gt;')
       .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+      .replace(/'/g, '&#039;');
   }
 
 })();
