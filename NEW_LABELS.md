@@ -31,6 +31,12 @@ The following functional UI labels are required solely for interactive accessibi
 | **F16** | Pro Resources | `Download Architectural Specs`, `Download CAD Details`, `Download BIM Models`, `Download Test Certificates` | Technical resource download buttons |
 | **F17** | Sticky Mobile Bar | `Find Centre`, `Get Samples`, `Call`, `WhatsApp` | Mobile bottom bar buttons |
 | **F18** | Micro-Interactions | N/A (CSS/JS animation tokens only) | No visible text |
+| **N1** | Header Favourites | `Favourites`, `Saved ({count})` | Header heart button and drawer entry |
+| **N2** | Main Navbar CTA | `Order Free Samples` | Desktop navigation highlighted CTA button |
+| **N3** | Calculator Link | `Material Calculator` | Utility bar & menu link to F11 |
+| **N5** | Resources Menu | `Resources`, `Tools & Downloads` | Navigation mega-menu heading |
+| **N9** | Accessibility Skip | `Skip to content` | Keyboard screen-reader skip link |
+| **N11** | Mobile Sub-Nav | `Back`, `Close` | Mobile drawer sub-level navigation controls |
 
 ---
 

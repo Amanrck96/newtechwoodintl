@@ -512,3 +512,390 @@
   height: 14px;
   fill: currentColor;
 }
+
+/* ==========================================================================
+   NAVIGATION UPGRADE ENHANCEMENTS (N1 - N12)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   N9. Skip Link High-Visibility Focus
+   -------------------------------------------------------------------------- */
+.skip-link.screen-reader-text {
+  position: absolute;
+  top: -9999px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100005;
+  background: var(--ntw-gold, #c9a84c);
+  color: #0f2617 !important;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  outline: 3px solid #0f2617;
+  outline-offset: 2px;
+  font-size: 14px;
+  text-decoration: none;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  transition: top 0.2s ease;
+}
+
+.skip-link.screen-reader-text:focus {
+  top: 14px;
+  clip: auto !important;
+  clip-path: none !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   N1 & N3. Utility Bar Favourites & Calculator Actions
+   -------------------------------------------------------------------------- */
+.ntw-utility-fav-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ntw-fav-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9999px;
+  background: var(--ntw-gold, #c9a84c);
+  color: #0f2617;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease;
+}
+
+.ntw-fav-bump {
+  animation: ntwFavBump 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes ntwFavBump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   N1 & N2. Desktop Navbar Actions (Favourites & CTA Button)
+   -------------------------------------------------------------------------- */
+.ntw-nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 20px;
+}
+
+@media (min-width: 992px) {
+  .elementor-widget-n-menu .e-n-menu {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+  }
+}
+
+#e-n-menu-content-resources {
+  background: #ffffff !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12) !important;
+  border-bottom: 2px solid var(--ntw-gold, #c9a84c) !important;
+  width: 100% !important;
+}
+
+@media (max-width: 991px) {
+  .ntw-nav-actions {
+    display: none !important;
+  }
+}
+
+.ntw-nav-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #f4f3ef;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: #1a3826;
+  transition: all 0.2s ease;
+}
+
+.ntw-nav-fav-btn:hover,
+.ntw-nav-fav-btn:focus-visible {
+  background: #ffffff;
+  border-color: var(--ntw-gold, #c9a84c);
+  color: var(--ntw-gold, #c9a84c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.2);
+  outline: 2px solid var(--ntw-gold, #c9a84c);
+}
+
+.ntw-nav-fav-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.ntw-nav-fav-btn .ntw-fav-count-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ntw-nav-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
+  border-radius: var(--ntw-radius-full, 9999px);
+  background: linear-gradient(135deg, #2d6a2d 0%, #1e4a1e 100%);
+  color: #ffffff !important;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(45, 106, 45, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
+  font-family: inherit;
+}
+
+.ntw-nav-cta-btn:hover {
+  background: linear-gradient(135deg, #c9a84c 0%, #b8973b 100%);
+  color: #0f2617 !important;
+  border-color: #c9a84c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(201, 168, 76, 0.35);
+}
+
+.ntw-nav-cta-btn:focus-visible {
+  outline: 2px solid var(--ntw-gold, #c9a84c);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   N5. Resources Mega Menu Dropdown Grid
+   -------------------------------------------------------------------------- */
+.ntw-resources-dropdown-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+  padding: 24px 20px 28px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+@media (min-width: 1200px) {
+  .ntw-resources-dropdown-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 14px !important;
+  }
+}
+
+.ntw-resources-dropdown-card {
+  background: #f9f9f7 !important;
+  border-radius: 10px !important;
+  padding: 18px 20px !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  text-decoration: none !important;
+  transition: all 0.25s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+}
+
+.ntw-resources-dropdown-card:hover,
+.ntw-resources-dropdown-card:focus-visible {
+  background: #ffffff !important;
+  border-color: var(--ntw-gold, #c9a84c) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+  outline: 2px solid var(--ntw-gold, #c9a84c) !important;
+}
+
+/* --------------------------------------------------------------------------
+   N8. Visible High-Contrast Focus Rings for Keyboard Accessibility
+   -------------------------------------------------------------------------- */
+.e-n-menu-item a:focus-visible,
+.e-n-menu-item button:focus-visible,
+.e-n-menu-title:focus-visible,
+.e-n-menu-title-container:focus-visible,
+.ntw-utility-item:focus-visible,
+.ntw-projects-dropdown-card:focus-visible,
+.ntw-resources-dropdown-card:focus-visible,
+.ntw-drawer-sublink:focus-visible,
+.ntw-drawer-direct-link:focus-visible,
+.ntw-drawer-contact-btn:focus-visible,
+.ntw-drawer-fav-link:focus-visible {
+  outline: 2px solid var(--ntw-gold, #c9a84c) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   N10. Active Page Underline & Indicator
+   -------------------------------------------------------------------------- */
+.e-n-menu-item.ntw-nav-active > .e-n-menu-title .e-n-menu-title-text,
+.ntw-drawer-sublink.ntw-nav-active,
+.ntw-drawer-direct-link.ntw-nav-active {
+  color: var(--ntw-green, #2d6a2d) !important;
+  font-weight: 700 !important;
+}
+
+.e-n-menu-item.ntw-nav-active > .e-n-menu-title .e-n-menu-title-text {
+  position: relative;
+}
+
+.e-n-menu-item.ntw-nav-active > .e-n-menu-title .e-n-menu-title-text::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ntw-gold, #c9a84c);
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   N6. Dynamic Mega Menu Preview Crossfade
+   -------------------------------------------------------------------------- */
+.ntw-mega-promo-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.ntw-mega-promo-img {
+  transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+.ntw-mega-promo-img.ntw-crossfading {
+  opacity: 0.3;
+  transform: scale(0.97);
+}
+
+.ntw-mega-promo-title,
+.ntw-mega-promo-desc,
+.ntw-mega-promo-tag {
+  transition: opacity 0.2s ease;
+}
+
+.ntw-mega-promo.ntw-text-fading .ntw-mega-promo-title,
+.ntw-mega-promo.ntw-text-fading .ntw-mega-promo-desc,
+.ntw-mega-promo.ntw-text-fading .ntw-mega-promo-tag {
+  opacity: 0.2;
+}
+
+/* --------------------------------------------------------------------------
+   N11. Mobile Drawer Enhancements (Favourites, Search & Drill-Down)
+   -------------------------------------------------------------------------- */
+.ntw-drawer-fav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #fbf9f4;
+  border-bottom: 1px solid var(--ntw-border-light, #f0ede8);
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.ntw-drawer-fav-link:hover,
+.ntw-drawer-fav-link:focus-visible {
+  background: #f3efe6;
+  outline: none;
+}
+
+.ntw-drawer-fav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ntw-drawer-fav-left svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--ntw-gold, #c9a84c);
+}
+
+.ntw-drawer-search-form {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--ntw-radius-sm, 6px);
+  padding: 2px 8px;
+  width: 100%;
+}
+
+.ntw-drawer-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px;
+  font-size: 13px;
+  color: #111827;
+  outline: none;
+  font-family: inherit;
+}
+
+.ntw-drawer-search-submit {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.ntw-drawer-search-submit svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   N12. Smart Scroll Header Motion (Configurable via JS flag)
+   -------------------------------------------------------------------------- */
+.elementor-location-header {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              box-shadow 0.3s ease,
+              padding 0.3s ease;
+}
+
+.elementor-location-header.ntw-header-hidden {
+  transform: translateY(-100%);
+}
+
+.elementor-location-header.ntw-header-visible {
+  transform: translateY(0);
+}
+
+.elementor-location-header.ntw-header-transparent:not(.ntw-header-shrunk) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
