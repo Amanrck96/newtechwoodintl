@@ -1,0 +1,188 @@
+/**
+ * F5: Project Filter Styling
+ * Enhances /projects/ with smooth card transitions, hash sync visual states,
+ * and responsive tab scrolling.
+ */
+
+/* ==========================================================================
+   TABS & FILTER BAR
+   ========================================================================== */
+.filter-wrapper {
+  background: #ffffff;
+  padding: 20px 24px;
+  border-radius: var(--ntw-radius, 12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+  margin-bottom: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.filter-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #1e293b;
+  transform: translateY(-1px);
+}
+
+.filter-btn.active {
+  background: #2d6a2d;
+  color: #ffffff;
+  border-color: #2d6a2d;
+  box-shadow: 0 4px 12px rgba(45, 106, 45, 0.28);
+}
+
+.filter-btn.active-gold {
+  background: #c9a84c;
+  color: #1b441b;
+  border-color: #c9a84c;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.28);
+}
+
+.filter-counter {
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 0.88rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   PROJECT CARD TRANSITIONS
+   ========================================================================== */
+.project-card {
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card.is-hidden {
+  display: none !important;
+}
+
+.project-card.is-entering {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+/* ==========================================================================
+   EMPTY STATE FALLBACK
+   ========================================================================== */
+.ntw-projects-empty-state {
+  display: none;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 24px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: var(--ntw-radius, 12px);
+  margin: 20px 0;
+}
+
+.ntw-projects-empty-state.is-visible {
+  display: block;
+}
+
+.ntw-empty-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.ntw-empty-icon svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.ntw-empty-title {
+  font-family: var(--ntw-font-serif, 'Playfair Display', serif);
+  font-size: 1.4rem;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.ntw-empty-desc {
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 0.95rem;
+  color: #64748b;
+  max-width: 480px;
+  margin: 0 auto 20px auto;
+  line-height: 1.5;
+}
+
+.ntw-empty-reset-btn {
+  background: #2d6a2d;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ntw-empty-reset-btn:hover {
+  background: #1b441b;
+}
+
+/* ==========================================================================
+   RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 768px) {
+  .filter-wrapper {
+    padding: 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-btn {
+    white-space: nowrap;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+  }
+}

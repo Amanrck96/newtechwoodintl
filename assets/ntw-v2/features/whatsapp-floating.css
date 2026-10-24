@@ -1,0 +1,184 @@
+/**
+ * F7: WhatsApp Floating Button + Mobile Action Bar
+ * High-conversion contact widget with mobile safe-areas and zero layout obstruction.
+ */
+
+/* ==========================================================================
+   DESKTOP FLOATING WHATSAPP BUTTON
+   ========================================================================== */
+.ntw-wa-floating-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(18, 140, 126, 0.35);
+  cursor: pointer;
+  z-index: 99990;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.ntw-wa-floating-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 12px 30px rgba(18, 140, 126, 0.45);
+}
+
+.ntw-wa-floating-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: #ffffff;
+}
+
+/* Online Indicator Dot */
+.ntw-wa-online-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #ffffff;
+}
+
+/* Hover Tooltip on Desktop */
+.ntw-wa-tooltip {
+  position: absolute;
+  right: 72px;
+  background: #1e293b;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ntw-wa-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #1e293b;
+}
+
+.ntw-wa-floating-btn:hover .ntw-wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   MOBILE ACTION BAR (< 768px)
+   ========================================================================== */
+.ntw-mobile-action-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid #e2e8f0;
+  z-index: 99995;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.ntw-mab-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  height: 100%;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.ntw-mab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-decoration: none;
+  color: #475569;
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.ntw-mab-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.ntw-mab-btn.primary {
+  background: #2d6a2d;
+  color: #ffffff;
+  border-radius: 8px;
+  height: 44px;
+  margin: 0 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(45, 106, 45, 0.3);
+}
+
+.ntw-mab-btn.primary svg {
+  fill: #ffffff;
+}
+
+.ntw-mab-btn:active {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   RESPONSIVE SWITCHING
+   ========================================================================== */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 64px !important;
+  }
+
+  .ntw-wa-floating-btn {
+    bottom: 74px; /* Elevate above mobile action bar so it remains accessible if user prefers */
+    right: 18px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .ntw-wa-floating-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .ntw-wa-tooltip {
+    display: none;
+  }
+
+  .ntw-mobile-action-bar {
+    display: block;
+  }
+}

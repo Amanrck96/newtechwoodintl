@@ -1,0 +1,125 @@
+/**
+ * F4: Experience Centre Filter Styling
+ * Enhances existing #experience-centre sections on index.html and locations/index.html
+ */
+
+/* ==========================================================================
+   FILTER BAR / CHIPS
+   ========================================================================== */
+.ntw-ec-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px auto 36px auto;
+  max-width: 800px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.ntw-ec-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.ntw-ec-filter-chip:hover {
+  border-color: #2d6a2d;
+  color: #2d6a2d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 106, 45, 0.12);
+}
+
+.ntw-ec-filter-chip.active {
+  background: #2d6a2d;
+  border-color: #2d6a2d;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(45, 106, 45, 0.28);
+}
+
+.ntw-ec-filter-chip .chip-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.ntw-ec-filter-chip.active .chip-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   CARD FILTER TRANSITIONS & ANIMATIONS
+   ========================================================================== */
+.ll-ec-card {
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ll-ec-card.ntw-filter-hidden {
+  display: none !important;
+}
+
+.ll-ec-card.ntw-filter-entering {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Empty State if filter returns no result */
+.ntw-ec-empty-state {
+  display: none;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+.ntw-ec-empty-state.is-visible {
+  display: block;
+}
+
+.ntw-ec-empty-state p {
+  margin: 0;
+  color: #64748b;
+  font-family: var(--ntw-font-sans, system-ui, sans-serif);
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .ntw-ec-filter-bar {
+    gap: 8px;
+    margin: 20px auto 28px auto;
+  }
+
+  .ntw-ec-filter-chip {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+}

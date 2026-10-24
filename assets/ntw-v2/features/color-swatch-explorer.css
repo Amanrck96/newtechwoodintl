@@ -1,0 +1,235 @@
+/* ==========================================================================
+   F1: COLOR SWATCH EXPLORER (NewTechWood India)
+   ========================================================================== */
+
+.ntw-swatch-explorer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 48px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
+  color: var(--ntw-text, #2c302e);
+}
+
+.ntw-se-card {
+  background: var(--ntw-card-bg, #ffffff);
+  border: 1px solid var(--ntw-border, #e5e2dc);
+  border-radius: var(--ntw-radius-lg, 18px);
+  padding: 36px;
+  box-shadow: var(--ntw-shadow, 0 4px 20px rgba(0, 0, 0, 0.06));
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .ntw-se-card {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 28px;
+  }
+}
+
+/* Image Showcase (Zero Layout Shift via Aspect Ratio) */
+.ntw-se-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--ntw-radius, 12px);
+  overflow: hidden;
+  background: #e9ecef;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.ntw-se-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.35s ease, transform 0.4s ease;
+  opacity: 1;
+}
+
+.ntw-se-img.fade-out {
+  opacity: 0.15;
+  transform: scale(1.02);
+}
+
+.ntw-se-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(18, 22, 20, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: var(--ntw-radius-full, 9999px);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ntw-se-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ntw-gold, #c9a84c);
+  display: inline-block;
+}
+
+/* Content Details Panel */
+.ntw-se-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ntw-se-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ntw-green, #2d6a2d);
+  margin-bottom: 8px;
+}
+
+.ntw-se-title {
+  font-family: var(--ntw-font-serif, 'Butler', Georgia, serif);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  color: var(--ntw-dark, #121614);
+}
+
+.ntw-se-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ntw-se-code {
+  background: var(--ntw-green-light, #eef6ee);
+  color: var(--ntw-green, #2d6a2d);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--ntw-radius-sm, 6px);
+  letter-spacing: 0.05em;
+}
+
+.ntw-se-series {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ntw-text-muted, #6b7280);
+}
+
+.ntw-se-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 0 24px;
+  min-height: 48px;
+}
+
+/* Swatches Row */
+.ntw-se-swatches-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ntw-text-muted, #6b7280);
+  margin-bottom: 12px;
+}
+
+.ntw-se-swatches-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+  role: radiogroup;
+}
+
+.ntw-se-swatch {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--ntw-border, #e5e2dc), 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 0;
+  background-clip: padding-box;
+}
+
+.ntw-se-swatch:hover,
+.ntw-se-swatch:focus-visible {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--ntw-green, #2d6a2d), 0 4px 12px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.ntw-se-swatch.active {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 3px var(--ntw-gold, #c9a84c), 0 4px 14px rgba(201, 168, 76, 0.35);
+}
+
+.ntw-se-swatch.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Order Sample Button */
+.ntw-se-btn-order {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--ntw-green, #2d6a2d);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 26px;
+  border-radius: var(--ntw-radius-full, 9999px);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--ntw-transition);
+  box-shadow: 0 4px 12px rgba(45, 106, 45, 0.25);
+  width: fit-content;
+}
+
+.ntw-se-btn-order:hover,
+.ntw-se-btn-order:focus-visible {
+  background: var(--ntw-green-hover, #225222);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45, 106, 45, 0.35);
+  outline: 2px solid var(--ntw-gold, #c9a84c);
+  outline-offset: 2px;
+}
+
+.ntw-se-btn-order svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
