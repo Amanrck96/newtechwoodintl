@@ -680,9 +680,17 @@
     flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: flex-end !important;
+    position: static !important;
   }
 
-  .elementor-widget-n-menu {
+  .elementor-36 .elementor-element.elementor-element-a9e1494,
+  .elementor-element.elementor-element-a9e1494 {
+    position: relative !important;
+  }
+
+  .elementor-widget-n-menu,
+  .elementor-element.elementor-widget-n-menu {
+    position: static !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
     max-width: none !important;
@@ -698,6 +706,15 @@
     justify-content: flex-end !important;
     gap: 8px !important;
     width: 100% !important;
+    position: static !important;
+  }
+
+  .elementor-widget-n-menu .e-n-menu:not([data-layout="dropdown"]) .e-n-menu-content {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    top: 100% !important;
+    position: absolute !important;
   }
 
   .elementor-widget-n-menu .e-n-menu-wrapper {
@@ -943,27 +960,44 @@
 /* --------------------------------------------------------------------------
    Projects Mega Menu Rich Architectural Showcase (N5-P)
    -------------------------------------------------------------------------- */
+#e-n-menu-content-projects {
+  background: #ffffff !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-bottom: 2px solid var(--ntw-gold, #c9a84c) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
 .ntw-projects-dropdown-grid {
   display: grid !important;
-  grid-template-columns: 320px 1fr 1fr !important;
+  grid-template-columns: 350px minmax(0, 1fr) minmax(0, 1fr) !important;
   gap: 24px !important;
-  max-width: 1220px !important;
+  max-width: 1240px !important;
   margin: 0 auto !important;
-  padding: 24px 30px 28px !important;
+  padding: 24px 28px 28px !important;
   box-sizing: border-box !important;
   width: 100% !important;
   align-items: stretch !important;
+  white-space: normal !important;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) and (min-width: 992px) {
   .ntw-projects-dropdown-grid {
-    grid-template-columns: 280px 1fr !important;
+    grid-template-columns: 320px minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 18px !important;
+    padding: 20px 20px 24px !important;
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 991px) {
   .ntw-projects-dropdown-grid {
-    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 16px !important;
   }
 }
 
@@ -972,6 +1006,7 @@
   flex-direction: column !important;
   gap: 12px !important;
   justify-content: center !important;
+  min-width: 0 !important;
 }
 
 .ntw-projects-dropdown-card {
@@ -984,6 +1019,19 @@
   display: flex !important;
   flex-direction: column !important;
   box-sizing: border-box !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+.ntw-projects-dropdown-card * {
+  white-space: normal;
+}
+
+.ntw-projects-dropdown-card .ntw-proj-cta,
+.ntw-projects-dropdown-card span[style*="View All"],
+.ntw-projects-dropdown-card span[style*="Explore"] {
+  white-space: nowrap !important;
 }
 
 .ntw-projects-dropdown-card:hover,
@@ -1006,7 +1054,14 @@
   text-decoration: none !important;
   transition: all 0.3s cubic-bezier(0.2, 0, 0, 1) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07) !important;
-  min-height: 210px !important;
+  min-height: 220px !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+}
+
+.ntw-proj-showcase-title,
+.ntw-proj-showcase-desc {
+  white-space: normal !important;
 }
 
 .ntw-proj-showcase-card:hover {
@@ -1020,6 +1075,7 @@
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
+  background: linear-gradient(135deg, #152219 0%, #0d1a10 100%) !important;
   overflow: hidden !important;
 }
 

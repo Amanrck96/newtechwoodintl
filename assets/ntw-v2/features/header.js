@@ -515,34 +515,34 @@
     existingGrid.innerHTML = `
       <div class="ntw-projects-nav-col">
         <a href="/projects/" class="ntw-projects-dropdown-card">
-          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
-            <span style="display:flex;align-items:center;gap:8px;">
-              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#c9a84c;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-              All Projects
+          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#c9a84c;flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              <span>All Projects</span>
             </span>
-            <span style="font-size:12px;color:#c9a84c;font-weight:700;">View All &rarr;</span>
+            <span style="font-size:12px;color:#c9a84c;font-weight:700;white-space:nowrap;flex-shrink:0;">View All &rarr;</span>
           </div>
           <div style="font-size:12px;color:#666;line-height:1.4;">Comprehensive portfolio of architectural &amp; composite installations worldwide.</div>
         </a>
 
         <a href="/projects/international/" class="ntw-projects-dropdown-card">
-          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
-            <span style="display:flex;align-items:center;gap:8px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:#c9a84c;display:inline-block;"></span>
-              International Landmarks
+          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#c9a84c;display:inline-block;flex-shrink:0;"></span>
+              <span>International Landmarks</span>
             </span>
-            <span style="font-size:12px;color:#c9a84c;font-weight:700;">Explore &rarr;</span>
+            <span style="font-size:12px;color:#c9a84c;font-weight:700;white-space:nowrap;flex-shrink:0;">Explore &rarr;</span>
           </div>
           <div style="font-size:12px;color:#666;line-height:1.4;">Iconic global architecture across USA, Europe, UAE, Asia &amp; Australia.</div>
         </a>
 
         <a href="/projects/national/" class="ntw-projects-dropdown-card">
-          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
-            <span style="display:flex;align-items:center;gap:8px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:#2d6a2d;display:inline-block;"></span>
-              National (India)
+          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <span style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#2d6a2d;display:inline-block;flex-shrink:0;"></span>
+              <span>National (India)</span>
             </span>
-            <span style="font-size:12px;color:#2d6a2d;font-weight:700;">Explore &rarr;</span>
+            <span style="font-size:12px;color:#2d6a2d;font-weight:700;white-space:nowrap;flex-shrink:0;">Explore &rarr;</span>
           </div>
           <div style="font-size:12px;color:#666;line-height:1.4;">Luxury estates, resorts &amp; commercial hubs across India by Lumber Life.</div>
         </a>
@@ -551,7 +551,7 @@
       <!-- Featured Card 1: India Showcase -->
       <a href="/projects/national/" class="ntw-proj-showcase-card">
         <div class="ntw-proj-showcase-img-wrap">
-          <img src="/wp-content/uploads/2025/10/newtechwood-decking.jpg" alt="Luxury Villa Composite Decking India" class="ntw-proj-showcase-img" loading="lazy" />
+          <img src="/wp-content/uploads/2018/12/NewTechWood_UltraShield_Decking_359.jpg" alt="Luxury Villa Composite Decking India" class="ntw-proj-showcase-img" loading="lazy" />
         </div>
         <div class="ntw-proj-showcase-overlay">
           <span class="ntw-proj-showcase-badge badge-india">India Showcase</span>
@@ -566,7 +566,7 @@
       <!-- Featured Card 2: Global Showcase -->
       <a href="/projects/international/" class="ntw-proj-showcase-card">
         <div class="ntw-proj-showcase-img-wrap">
-          <img src="/wp-content/uploads/2025/10/NewTechWood-cladding.jpg" alt="Commercial Architectural Facade Global" class="ntw-proj-showcase-img" loading="lazy" />
+          <img src="/wp-content/uploads/2025/08/All-Weather-Cladding.jpg" alt="Commercial Architectural Facade Global" class="ntw-proj-showcase-img" loading="lazy" />
         </div>
         <div class="ntw-proj-showcase-overlay">
           <span class="ntw-proj-showcase-badge badge-intl">Global Landmark</span>
