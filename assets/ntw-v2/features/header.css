@@ -133,6 +133,21 @@
 }
 
 /* --------------------------------------------------------------------------
+   Header Site Logo — Clean Single Brand Presentation (No Co-Branding)
+   -------------------------------------------------------------------------- */
+.elementor-widget-theme-site-logo a[href*="lumber"],
+.elementor-widget-theme-site-logo img[alt*="Lumber Life"],
+.elementor-widget-theme-site-logo img[src*="lumber-life"],
+.elementor-location-header img[src*="lumber-life-logo"] {
+  display: none !important;
+}
+
+.elementor-widget-theme-site-logo div[style*="width:1px"],
+.elementor-widget-theme-site-logo div[style*="width: 1px"] {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
    3. Mega Menu Promo Panel (Desktop)
    -------------------------------------------------------------------------- */
 .elementor-element-eed08c6.ntw-products-grid-inner,
