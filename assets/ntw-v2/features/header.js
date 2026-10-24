@@ -39,6 +39,7 @@
     initKeyboardNavigation();
     initActivePageHighlight();
     injectMegaMenuPromos();
+    enhanceProjectsMegaMenu();
     initMobileDrawer();
     initFavouritesSync();
     initSmoothScrollOffset();
@@ -343,11 +344,10 @@
       });
 
       if (!matched && (currentPath === '/' || window.location.pathname.includes('index.html'))) {
-        const firstMenuItem = document.querySelector('.e-n-menu-item');
-        if (firstMenuItem) {
-          firstMenuItem.classList.add('ntw-nav-active');
-          const titleText = firstMenuItem.querySelector('.e-n-menu-title-text');
-          if (titleText) titleText.setAttribute('aria-current', 'page');
+        const homeLogoLink = document.querySelector('.elementor-widget-theme-site-logo a, .elementor-widget-theme-site-logo');
+        if (homeLogoLink) {
+          homeLogoLink.classList.add('ntw-nav-active');
+          homeLogoLink.setAttribute('aria-current', 'page');
         }
       }
     }
@@ -499,7 +499,89 @@
   }
 
   /* --------------------------------------------------------------------------
-     8. Accessible Mobile Drawer with Accordions & Swipe Dismiss (N11)
+     8. Projects Mega Menu Enhancement (N5-P)
+     Transforms single-column text links into a luxury 3-column architectural showcase
+     -------------------------------------------------------------------------- */
+  function enhanceProjectsMegaMenu() {
+    const projectsContent = document.getElementById('e-n-menu-content-projects') || document.querySelector('.elementor-element-d4b5f04');
+    if (!projectsContent) return;
+
+    const existingGrid = projectsContent.querySelector('.ntw-projects-dropdown-grid');
+    if (!existingGrid) return;
+
+    // Check if showcase cards already exist
+    if (existingGrid.querySelector('.ntw-proj-showcase-card')) return;
+
+    existingGrid.innerHTML = `
+      <div class="ntw-projects-nav-col">
+        <a href="/projects/" class="ntw-projects-dropdown-card">
+          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:flex;align-items:center;gap:8px;">
+              <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#c9a84c;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              All Projects
+            </span>
+            <span style="font-size:12px;color:#c9a84c;font-weight:700;">View All &rarr;</span>
+          </div>
+          <div style="font-size:12px;color:#666;line-height:1.4;">Comprehensive portfolio of architectural &amp; composite installations worldwide.</div>
+        </a>
+
+        <a href="/projects/international/" class="ntw-projects-dropdown-card">
+          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:flex;align-items:center;gap:8px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#c9a84c;display:inline-block;"></span>
+              International Landmarks
+            </span>
+            <span style="font-size:12px;color:#c9a84c;font-weight:700;">Explore &rarr;</span>
+          </div>
+          <div style="font-size:12px;color:#666;line-height:1.4;">Iconic global architecture across USA, Europe, UAE, Asia &amp; Australia.</div>
+        </a>
+
+        <a href="/projects/national/" class="ntw-projects-dropdown-card">
+          <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="display:flex;align-items:center;gap:8px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#2d6a2d;display:inline-block;"></span>
+              National (India)
+            </span>
+            <span style="font-size:12px;color:#2d6a2d;font-weight:700;">Explore &rarr;</span>
+          </div>
+          <div style="font-size:12px;color:#666;line-height:1.4;">Luxury estates, resorts &amp; commercial hubs across India by Lumber Life.</div>
+        </a>
+      </div>
+
+      <!-- Featured Card 1: India Showcase -->
+      <a href="/projects/national/" class="ntw-proj-showcase-card">
+        <div class="ntw-proj-showcase-img-wrap">
+          <img src="/wp-content/uploads/2025/10/newtechwood-decking.jpg" alt="Luxury Villa Composite Decking India" class="ntw-proj-showcase-img" loading="lazy" />
+        </div>
+        <div class="ntw-proj-showcase-overlay">
+          <span class="ntw-proj-showcase-badge badge-india">India Showcase</span>
+          <div class="ntw-proj-showcase-meta">
+            <h5 class="ntw-proj-showcase-title">Luxury Villa Deck &amp; Louvers</h5>
+            <p class="ntw-proj-showcase-desc">Private Coastal Estate in Goa featuring UltraShield® Peruvian Teak and Brazilian Ipe decking.</p>
+            <span class="ntw-proj-showcase-cta">View India Projects &rarr;</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Featured Card 2: Global Showcase -->
+      <a href="/projects/international/" class="ntw-proj-showcase-card">
+        <div class="ntw-proj-showcase-img-wrap">
+          <img src="/wp-content/uploads/2025/10/NewTechWood-cladding.jpg" alt="Commercial Architectural Facade Global" class="ntw-proj-showcase-img" loading="lazy" />
+        </div>
+        <div class="ntw-proj-showcase-overlay">
+          <span class="ntw-proj-showcase-badge badge-intl">Global Landmark</span>
+          <div class="ntw-proj-showcase-meta">
+            <h5 class="ntw-proj-showcase-title">Waterfront Boardwalk &amp; Facades</h5>
+            <p class="ntw-proj-showcase-desc">High-traffic public boardwalk and fluted cladding installations in 30+ countries worldwide.</p>
+            <span class="ntw-proj-showcase-cta">Explore Global Gallery &rarr;</span>
+          </div>
+        </div>
+      </a>
+    `;
+  }
+
+  /* --------------------------------------------------------------------------
+     9. Accessible Mobile Drawer with Accordions & Swipe Dismiss (N11)
      -------------------------------------------------------------------------- */
   function initMobileDrawer() {
     if (document.getElementById('ntw-mobile-drawer-root')) return;
