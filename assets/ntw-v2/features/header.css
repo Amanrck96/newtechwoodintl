@@ -7,15 +7,7 @@
    1. Utility Top Bar
    -------------------------------------------------------------------------- */
 .ntw-utility-bar {
-  background-color: #0f2617;
-  color: #e5e7eb;
-  font-family: var(--ntw-font-sans, 'Inter', sans-serif);
-  font-size: 12px;
-  line-height: 1.4;
-  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
-  position: relative;
-  z-index: 1002;
-  transition: var(--ntw-transition, all 0.25s ease);
+  display: none !important;
 }
 
 .ntw-utility-inner {

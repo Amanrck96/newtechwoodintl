@@ -32,7 +32,7 @@
   }
 
   function initAllHeaderFeatures() {
-    renderUtilityBar();
+    removeUtilityBar();
     initDesktopNavActions();
     initStickyHeaderMotion();
     initHoverIntentAndDismiss();
@@ -45,63 +45,11 @@
   }
 
   /* --------------------------------------------------------------------------
-     1. Top Utility Bar (N1, N3, N4)
+     1. Top Utility Bar (RETIRED per user request: "REMOVE THIS IT LOOK BAD")
      -------------------------------------------------------------------------- */
-  function renderUtilityBar() {
-    if (document.getElementById('ntw-utility-bar')) return;
-
-    const header = document.querySelector('.elementor-location-header') || document.querySelector('header');
-    if (!header) return;
-
-    const bar = document.createElement('div');
-    bar.id = 'ntw-utility-bar';
-    bar.className = 'ntw-utility-bar';
-    bar.innerHTML = `
-      <div class="ntw-utility-inner">
-        <div class="ntw-utility-left">
-          <a href="tel:+919824144670" class="ntw-utility-item" aria-label="Call NewTechWood India Support">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            <span>+91 98241 44670</span>
-          </a>
-          <span class="ntw-utility-badge">Official India Partner: Lumber Life</span>
-        </div>
-        <div class="ntw-utility-right">
-          <a href="/#experience-centre" class="ntw-utility-item" id="ntw-utility-centre-link">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            <span>Experience Centres</span>
-          </a>
-          <button type="button" class="ntw-utility-item ntw-utility-fav-btn" id="ntw-utility-fav-btn" aria-label="View Saved Items">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            <span>Favourites</span>
-            <span class="ntw-fav-count-badge" id="ntw-utility-fav-count">0</span>
-          </button>
-          <a href="/login/index.html" class="ntw-utility-item">
-            <span>Architect &amp; Trade Portal</span>
-          </a>
-          <button type="button" class="ntw-utility-search-btn" id="ntw-utility-search-trigger" aria-label="Open Search (Ctrl+K)">
-            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <span>Search</span>
-            <kbd class="ntw-utility-kbd">Ctrl K</kbd>
-          </button>
-        </div>
-      </div>
-    `;
-
-    header.parentNode.insertBefore(bar, header);
-
-    // Bind Search Trigger
-    const searchTrigger = bar.querySelector('#ntw-utility-search-trigger');
-    if (searchTrigger) {
-      searchTrigger.addEventListener('click', () => {
-        window.dispatchEvent(new CustomEvent('ntw:open-search'));
-      });
-    }
-
-    // Bind Utility Favourites Button
-    const favBtn = bar.querySelector('#ntw-utility-fav-btn');
-    if (favBtn) {
-      favBtn.addEventListener('click', openFavouritesDrawer);
-    }
+  function removeUtilityBar() {
+    const existing = document.getElementById('ntw-utility-bar');
+    if (existing) existing.remove();
   }
 
   /* --------------------------------------------------------------------------

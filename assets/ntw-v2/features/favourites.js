@@ -135,6 +135,10 @@
       if (!e.detail || !e.detail.id) return;
       toggleItem(e.detail);
     });
+
+    window.addEventListener('ntw:open-favourites', () => {
+      openDrawer();
+    });
   }
 
   function openDrawer() {
