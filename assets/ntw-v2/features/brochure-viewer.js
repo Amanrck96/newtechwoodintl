@@ -114,7 +114,7 @@
   function initBrochureViewer() {
     let mount = document.getElementById('ntw-brochures-block');
     if (!mount) {
-      const anchor = document.getElementById('ntw-material-calculator') || document.getElementById('ntw-sample-request');
+      const anchor = document.getElementById('ntw-color-swatch-explorer') || document.getElementById('ntw-sample-request');
       if (!anchor) return;
       mount = document.createElement('div');
       mount.id = 'ntw-brochures-block';
