@@ -135,17 +135,57 @@
 /* --------------------------------------------------------------------------
    3. Mega Menu Promo Panel (Desktop)
    -------------------------------------------------------------------------- */
+.elementor-element-eed08c6.ntw-products-grid-inner,
 .ntw-products-grid-inner {
   display: flex !important;
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
   gap: 16px !important;
-  padding: 24px 28px !important;
+  max-width: 1320px !important;
+  margin-top: 16px !important;
+  margin-bottom: 24px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 20px 24px 28px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
   position: relative !important;
+  white-space: normal !important;
 }
 
 .ntw-mega-col {
   flex: 1 1 0 !important;
-  min-width: 130px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  white-space: normal !important;
+}
+
+.ntw-mega-col .elementor-widget-text-editor {
+  white-space: normal !important;
+}
+
+.ntw-mega-col .elementor-widget-text-editor p {
+  margin-bottom: 6px !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+}
+
+.ntw-mega-col .elementor-widget-text-editor a {
+  font-size: 13px !important;
+  color: #4b5563 !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.ntw-mega-col .elementor-widget-text-editor a:hover {
+  color: var(--ntw-green, #2d6a2d) !important;
+  transform: translateX(2px) !important;
 }
 
 /* Category Architectural Thumbnail on Top of Column */
@@ -195,16 +235,9 @@
   color: var(--ntw-green, #2d6a2d) !important;
 }
 
-/* On standard screens with 7 image columns, hide the side promo card so all 7 columns get full width */
+/* On desktop screens with 7 image columns, hide the side promo card so all 7 columns get full balanced width */
 .ntw-mega-promo {
   display: none !important;
-}
-
-@media (min-width: 1560px) {
-  .ntw-mega-promo {
-    display: flex !important;
-    flex: 0 0 260px !important;
-  }
 }
 
 .ntw-mega-promo {
@@ -830,6 +863,23 @@
   }
 }
 
+/* Full-Width Standard for all Header Mega Menu Dropdown Panels */
+.elementor-widget-n-menu .e-n-menu:not([data-layout="dropdown"]) .e-n-menu-content,
+#e-n-menu-content-1851,
+#e-n-menu-content-1852,
+#e-n-menu-content-projects,
+#e-n-menu-content-resources {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  top: 100% !important;
+  position: absolute !important;
+  background: #ffffff !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12) !important;
+  border-bottom: 2px solid var(--ntw-gold, #c9a84c) !important;
+}
+
 #e-n-menu-content-resources {
   background: #ffffff !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12) !important;
@@ -919,23 +969,26 @@
    -------------------------------------------------------------------------- */
 .ntw-resources-dropdown-grid {
   display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 16px !important;
-  max-width: 1100px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+  max-width: 1200px !important;
   margin: 0 auto !important;
-  padding: 24px 20px 28px !important;
+  padding: 24px 24px 28px !important;
   box-sizing: border-box !important;
   width: 100% !important;
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 991px) {
   .ntw-resources-dropdown-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 14px !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 16px !important;
   }
 }
 
 .ntw-resources-dropdown-card {
+  min-width: 0 !important;
+  max-width: 100% !important;
   background: #f9f9f7 !important;
   border-radius: 10px !important;
   padding: 18px 20px !important;
@@ -946,6 +999,13 @@
   flex-direction: column !important;
   justify-content: space-between !important;
   box-sizing: border-box !important;
+  white-space: normal !important;
+  word-break: normal !important;
+}
+
+.ntw-resources-dropdown-card * {
+  white-space: normal !important;
+  word-break: normal !important;
 }
 
 .ntw-resources-dropdown-card:hover,
