@@ -66,6 +66,13 @@
     if (sampleCta) {
       sampleCta.addEventListener('click', (e) => {
         e.preventDefault();
+        if (window.location.pathname.includes('/free-samples')) {
+          const target = document.querySelector('.pager-stepper-wrap') || document.querySelector('.samples-main-wrap');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+        }
         window.location.href = '/free-samples/index.html';
       });
     }
@@ -81,8 +88,9 @@
     let lastScrollY = window.scrollY;
     let ticking = false;
 
-    // Check if on home page for transparent hero
-    const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/');
+    // Check if on home page for transparent hero (only root path or /index.html)
+    const p = window.location.pathname.replace(/\/+$/, '') || '/';
+    const isHomePage = p === '/' || p === '/index.html';
 
     function updateHeaderMotion() {
       const currentScrollY = window.scrollY;
@@ -155,6 +163,7 @@
         closeAllDropdowns(item);
 
         toggleBtn.setAttribute('aria-expanded', 'true');
+        dropdown.classList.add('e-active');
         const con = dropdown.querySelector('.e-con');
         if (con) con.classList.add('e-active');
         item.classList.add('ntw-hover-open');
@@ -163,6 +172,7 @@
       function closeMenu() {
         clearTimeout(openTimer);
         toggleBtn.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('e-active');
         const con = dropdown.querySelector('.e-con');
         if (con) con.classList.remove('e-active');
         item.classList.remove('ntw-hover-open');
@@ -216,6 +226,8 @@
       menuItems.forEach((m) => {
         if (m === exceptItem) return;
         const btn = m.querySelector('.e-n-menu-dropdown-icon');
+        const d = m.querySelector('.e-n-menu-content');
+        if (d) d.classList.remove('e-active');
         const con = m.querySelector('.e-n-menu-content .e-con');
         if (btn) btn.setAttribute('aria-expanded', 'false');
         if (con) con.classList.remove('e-active');
@@ -664,7 +676,7 @@
             </button>
             <div class="ntw-accordion-panel" id="ntw-drawer-res-panel">
               <a href="/#ntw-color-swatch-explorer" class="ntw-drawer-sublink"><strong>Colour Swatch Explorer</strong></a>
-              <a href="/downloads/" class="ntw-drawer-sublink">Architectural Catalogues &amp; Spec Sheets</a>
+              <a href="/download/" class="ntw-drawer-sublink">Architectural Catalogues &amp; Spec Sheets</a>
               <a href="/projects/" class="ntw-drawer-sublink">Project Portfolio &amp; Gallery</a>
             </div>
           </div>

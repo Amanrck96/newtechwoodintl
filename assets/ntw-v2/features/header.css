@@ -902,6 +902,25 @@
   width: 100% !important;
 }
 
+@media (min-width: 992px) {
+  .elementor-widget-n-menu .e-n-menu:not([data-layout="dropdown"]) .e-n-menu-content {
+    display: none !important;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .elementor-widget-n-menu .e-n-menu-heading > .e-n-menu-item:hover > .e-n-menu-content,
+  .elementor-widget-n-menu .e-n-menu-heading > .e-n-menu-item.ntw-hover-open > .e-n-menu-content,
+  .elementor-widget-n-menu .e-n-menu-heading > .e-n-menu-item:focus-within > .e-n-menu-content,
+  .elementor-widget-n-menu .e-n-menu-content.e-active {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+
 @media (max-width: 991px) {
   .ntw-nav-actions {
     display: none !important;
