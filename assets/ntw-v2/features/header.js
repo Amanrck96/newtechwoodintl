@@ -91,19 +91,25 @@
     // Check if on home page for transparent hero (only root path or /index.html)
     const p = window.location.pathname.replace(/\/+$/, '') || '/';
     const isHomePage = p === '/' || p === '/index.html';
+    // Pages with sticky sub-bars (like /free-samples) should keep the header docked
+    const hasStickySubnav = p.includes('free-samples') || !!document.querySelector('.pager-stepper-wrap');
 
     function updateHeaderMotion() {
       const currentScrollY = window.scrollY;
 
-      // 1. Sticky Shrink (Always active)
+      // 1. Publish dynamic header height to CSS variable
+      const headerH = header.offsetHeight || 60;
+      document.documentElement.style.setProperty('--ntw-header-height', headerH + 'px');
+
+      // 2. Sticky Shrink (Always active)
       if (currentScrollY > 60) {
         header.classList.add('ntw-header-shrunk');
       } else {
         header.classList.remove('ntw-header-shrunk');
       }
 
-      // 2. Smart Scroll Hide/Show
-      if (HEADER_CONFIG.enableSmartScroll) {
+      // 3. Smart Scroll Hide/Show (exempt pages with sticky sub-bars)
+      if (HEADER_CONFIG.enableSmartScroll && !hasStickySubnav) {
         if (currentScrollY > 140 && currentScrollY > lastScrollY && (currentScrollY - lastScrollY > 6)) {
           // Scrolling down -> hide header
           header.classList.add('ntw-header-hidden');
@@ -113,9 +119,11 @@
           header.classList.remove('ntw-header-hidden');
           header.classList.add('ntw-header-visible');
         }
+      } else {
+        header.classList.remove('ntw-header-hidden');
       }
 
-      // 3. Hero Video Transparency
+      // 4. Hero Video Transparency
       if (HEADER_CONFIG.enableTransparentHero && isHomePage) {
         if (currentScrollY < 80) {
           header.classList.add('ntw-header-transparent');
@@ -133,6 +141,10 @@
         window.requestAnimationFrame(updateHeaderMotion);
         ticking = true;
       }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      updateHeaderMotion();
     }, { passive: true });
 
     // Initial check

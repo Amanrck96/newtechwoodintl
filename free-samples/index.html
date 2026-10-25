@@ -160,11 +160,12 @@
 		/* Pager Stepper Indicator */
 		.pager-stepper-wrap {
 			background: #ffffff;
-			border-bottom: 1px solid var(--ntw-border);
+			border-bottom: 1px solid rgba(0,0,0,0.08);
 			position: sticky;
-			top: 64px;
-			z-index: 90;
-			box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+			top: var(--ntw-header-height, 60px);
+			z-index: 99;
+			box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+			transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 		}
 		.pager-stepper {
 			max-width: 1100px;
@@ -173,43 +174,51 @@
 			align-items: center;
 			justify-content: space-between;
 			padding: 12px 20px;
+			gap: 16px;
 		}
 		.stepper-steps {
 			display: flex;
 			align-items: center;
-			gap: 28px;
+			gap: 16px;
+			flex-wrap: nowrap;
 		}
 		.step-node {
-			display: flex;
+			display: inline-flex;
 			align-items: center;
 			gap: 10px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
-			color: #888;
+			color: #64748b;
 			cursor: pointer;
 			background: none;
 			border: none;
 			padding: 6px 0;
-			transition: color 0.2s;
+			transition: all 0.2s ease;
+			white-space: nowrap;
+		}
+		.step-node:hover {
+			color: #1e293b;
 		}
 		.step-node.active {
 			color: var(--ntw-green);
+			font-weight: 700;
 		}
 		.step-node.completed {
-			color: #222;
+			color: #1e293b;
 		}
 		.step-badge {
 			width: 26px;
 			height: 26px;
 			border-radius: 50%;
-			background: #eee;
-			color: #777;
+			background: #f1f5f9;
+			color: #64748b;
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
 			font-size: 12px;
 			font-weight: 700;
 			transition: all 0.2s;
+			flex-shrink: 0;
 		}
 		.step-node.active .step-badge {
 			background: var(--ntw-green);
@@ -217,36 +226,51 @@
 			box-shadow: 0 0 0 3px rgba(45,106,45,0.2);
 		}
 		.step-node.completed .step-badge {
-			background: #2a2c2a;
+			background: #1e293b;
 			color: #fff;
 		}
 		.step-divider {
-			width: 20px;
+			width: 28px;
 			height: 2px;
-			background: #e2e5df;
+			background: #e2e8f0;
+			border-radius: 2px;
+			flex-shrink: 0;
 		}
 
 		.stepper-kit-status {
 			display: flex;
 			align-items: center;
 			gap: 12px;
+			flex-shrink: 0;
 		}
 		.kit-counter-pill {
-			background: var(--ntw-green-light);
-			border: 1px solid rgba(45,106,45,0.2);
+			background: #f0fdf4;
+			border: 1px solid rgba(45,106,45,0.25);
 			color: var(--ntw-green);
 			padding: 6px 14px;
-			border-radius: 20px;
+			border-radius: 24px;
 			font-size: 13px;
 			font-weight: 700;
-			display: flex;
+			display: inline-flex;
 			align-items: center;
-			gap: 6px;
+			gap: 8px;
+			white-space: nowrap;
+			flex-shrink: 0;
+		}
+		.kit-counter-pill .kit-count-badge {
+			background: var(--ntw-green);
+			color: #ffffff;
+			padding: 2px 8px;
+			border-radius: 12px;
+			font-size: 12px;
+			font-weight: 800;
+			letter-spacing: 0.5px;
+			line-height: 1.2;
 		}
 		.kit-checkout-btn-top {
 			background: var(--ntw-green);
 			color: #fff;
-			border: none;
+			border: 1px solid transparent;
 			padding: 8px 18px;
 			border-radius: 6px;
 			font-size: 13px;
@@ -254,17 +278,23 @@
 			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
-			gap: 6px;
-			transition: all 0.2s;
+			gap: 8px;
+			transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+			white-space: nowrap;
+			flex-shrink: 0;
 		}
-		.kit-checkout-btn-top:hover {
+		.kit-checkout-btn-top:hover:not(:disabled) {
 			background: var(--ntw-green-dark);
 			transform: translateY(-1px);
+			box-shadow: 0 4px 12px rgba(45,106,45,0.25);
 		}
 		.kit-checkout-btn-top:disabled {
-			background: #ccc;
+			background: #e2e8f0;
+			color: #94a3b8;
+			border-color: #cbd5e1;
 			cursor: not-allowed;
 			transform: none;
+			box-shadow: none;
 		}
 
 		/* Main Content Container */
@@ -1324,27 +1354,28 @@
 			<div class="stepper-steps">
 				<button type="button" class="step-node active" id="stepNode1" onclick="switchPagerStep(1)">
 					<span class="step-badge">1</span>
-					<span class="step-text">01. Curate Swatches</span>
+					<span class="step-text">Curate Swatches</span>
 				</button>
 				<span class="step-divider"></span>
 				<button type="button" class="step-node" id="stepNode2" onclick="switchPagerStep(2)">
 					<span class="step-badge">2</span>
-					<span class="step-text">02. Studio &amp; Shipping Details</span>
+					<span class="step-text">Studio &amp; Shipping Details</span>
 				</button>
 				<span class="step-divider"></span>
 				<button type="button" class="step-node" id="stepNode3" style="cursor:default;">
 					<span class="step-badge">3</span>
-					<span class="step-text">03. Dispatch Tracking</span>
+					<span class="step-text">Dispatch Tracking</span>
 				</button>
 			</div>
 
 			<div class="stepper-kit-status">
 				<div class="kit-counter-pill">
-					<span id="topKitCount">0 / 4</span> Swatches Selected
+					<span id="topKitCount" class="kit-count-badge">0/4</span>
+					<span class="kit-count-label">Swatches Selected</span>
 				</div>
 				<button type="button" class="kit-checkout-btn-top" id="topProceedBtn" onclick="switchPagerStep(2)" disabled>
 					<span>Proceed to Delivery</span>
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
 				</button>
 			</div>
 		</div>
@@ -1908,7 +1939,7 @@
 		// Update UI elements based on selected kit
 		function updateKitUI() {
 			const count = selectedSwatches.length;
-			const countStr = `${count} / 4`;
+			const countStr = `${count}/4`;
 
 			// Top pill and button
 			const topCount = document.getElementById('topKitCount');
